@@ -206,6 +206,8 @@ PlayerOne.prototype.update = function() {
         if (!this.collide(plat)) {
           this.falling = true;
           this.yvel = 100;
+        } else {
+          break;
         }
       }
     }
