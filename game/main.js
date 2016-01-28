@@ -83,7 +83,7 @@ function PlayerOne(game, spritesheet) {
   this.crouchAnimation = new Animation(spritesheet, 38, 40, 0.40, 2, true, false, "crouch");
   this.jumpAnimation = new Animation(spritesheet, 28, 26, 0.15, 4, true, false, "jump");
 
-  this.animation = this.jumpAnimation;
+  this.animation = this.idleAnimation;
 }
 
 PlayerOne.prototype.draw = function () {
@@ -91,14 +91,24 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
-    var move = this.animation.type;
-
-    if (move === "right") {
-      this.x += this.game.clockTick * 200;
-    } else if (move === "left") {
-      this.x -= this.game.clockTick * 200;
-    } else if (move === "jump") {
-      //figure out jumping
+    if (this.game.left === true) {
+      this.animation = this.rightAnimation;
+      this.x -= this.game.clockTick * 200;;
+    }
+    if (this.game.right === true) {
+      this.animation = this.rightAnimation;
+      this.x += this.game.clockTick * 200;;
+    }
+    if (this.game.up === true) {
+      this.animation = this.jumpAnimation;
+      this.y -= this.game.clockTick * 200;;
+    }
+    if (this.game.down === true) {
+      this.animation = this.jumpAnimation;
+      this.y += this.game.clockTick * 200;;
+    }
+    if (!(this.game.down || this.game.left || this.game.right || this.game.up)) {
+      this.animation = this.idleAnimation;
     }
 }
 
@@ -165,7 +175,7 @@ Gizmo.prototype.update = function() {
       this.animation.timesLooped = 0;
     }
 }
-AM.queueDownload("./img/gizmosheet.png");
+
 AM.queueDownload("./img/area51main.png");
 
 AM.downloadAll(function () {

@@ -14,12 +14,17 @@ function GameEngine() {
     this.ctx = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
+    this.left = null;
+    this.right = null;
+    this.up = null;
+    this.down = null;
 }
 
 GameEngine.prototype.init = function (ctx) {
     this.ctx = ctx;
     this.surfaceWidth = this.ctx.canvas.width;
     this.surfaceHeight = this.ctx.canvas.height;
+    this.startInput();
     this.timer = new Timer();
     console.log('game initialized');
 }
@@ -31,6 +36,60 @@ GameEngine.prototype.start = function () {
         that.loop();
         requestAnimFrame(gameLoop, that.ctx.canvas);
     })();
+}
+GameEngine.prototype.startInput = function () {
+    console.log('Starting input');
+    var that = this;
+
+    this.ctx.canvas.addEventListener("keydown", function (e) {
+        if (e.keyCode === 37) that.left = true;
+          console.log(e);
+        e.preventDefault();
+    }, false);
+
+    this.ctx.canvas.addEventListener("keydown", function (e) {
+        if (e.keyCode === 39) that.right = true;
+          console.log(e);
+        e.preventDefault();
+    }, false);
+
+    this.ctx.canvas.addEventListener("keydown", function (e) {
+        if (e.keyCode === 38) that.up = true;
+          console.log(e);
+        e.preventDefault();
+    }, false);
+
+    this.ctx.canvas.addEventListener("keydown", function (e) {
+        if (e.keyCode === 40) that.down = true;
+          console.log(e);
+        e.preventDefault();
+    }, false);
+
+
+    this.ctx.canvas.addEventListener("keyup", function (e) {
+        if (e.keyCode === 37) that.left = false;
+          console.log(e);
+        e.preventDefault();
+    }, false);
+
+    this.ctx.canvas.addEventListener("keyup", function (e) {
+        if (e.keyCode === 39) that.right = false;
+          console.log(e);
+        e.preventDefault();
+    }, false);
+
+    this.ctx.canvas.addEventListener("keyup", function (e) {
+        if (e.keyCode === 38) that.up = false;
+          console.log(e);
+        e.preventDefault();
+    }, false);
+
+    this.ctx.canvas.addEventListener("keyup", function (e) {
+        if (e.keyCode === 40) that.down = false;
+          console.log(e);
+        e.preventDefault();
+    }, false);
+    console.log('Input started');
 }
 
 GameEngine.prototype.addEntity = function (entity) {
