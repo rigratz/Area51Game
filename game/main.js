@@ -13,10 +13,13 @@ function Animation(spriteSheet, frameWidth, frameHeight, frameDuration, frames, 
     this.reverse = reverse;
     this.type = type;
     this.timesLooped = 0;
+
+    this.time = 0;
 }
 
 Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     this.elapsedTime += tick;
+    this.time += tick;
     if (this.isDone()) {
         if (this.loop) this.elapsedTime = 0;
     }
@@ -65,21 +68,59 @@ Animation.prototype.isDone = function () {
     return (this.elapsedTime >= this.totalTime);
 }
 
+function BoundingRect(x, y, w, h) {
+  this.x = x;
+  this.y = y;
+  this.width = w;
+  this.height = h;
+
+  this.top = this.y;
+  this.left = this.x;
+  this.bottom = this.y + this.height;
+  this.right = this.x + this.width;
+}
+
+function Platform(game) {
+  this.ctx = game.ctx;
+  this.x = 200;
+  this.y = 624;
+  this.width = 100;
+  this.height = 200;
+  this.debug = true;
+  this.boundingRect = new BoundingRect(200, 624, 100, 200);
+}
+Platform.prototype.update = function() {
+}
+Platform.prototype.draw = function () {
+  this.ctx.strokeStyle = "yellow";
+  this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+  this.ctx.fillStyle = "red";
+  this.ctx.fillRect(this.x, this.y, this.width, this.height);
+
+}
+
 function PlayerOne(game, spritesheet) {
-  //0 = idle
-  //1 = move right
-  //2 = move left
-  //3 = crouch
-  //4 = jump
   this.game = game;
   this.ctx = game.ctx;
   this.x = 200;
-  this.y = 500;
+  this.y = 300;
+  this.xvel = 0;
+  this.yvel = 0;
+  this.boundingRect = new BoundingRect(200, 500, 90, 124);
+  this.debug = true;
+
+  this.falling = false;
+  this.fallTime = 0;
+
+  this.jumping = false;
+  this.jumpHeight = 300;
+  this.jumpTime = 0;
+  this.totalJump = 2;
 
   this.moveState = 0;
-  this.idleAnimation = new Animation(spritesheet, 38, 40, 0.40, 2, true, false, "idle");
-  this.rightAnimation = new Animation(spritesheet, 37, 40, 0.25, 4, true, false, "right");
-  this.leftAnimation = new Animation(spritesheet, 38, 40, 0.40, 2, true, false, "left");
+  this.idleAnimation = new Animation(spritesheet, 38, 42, 0.40, 2, true, false, "idle");
+  this.rightAnimation = new Animation(spritesheet, 37, 42, 0.25, 4, true, false, "right");
+  this.leftAnimation = new Animation(spritesheet, 38, 42, 0.40, 2, true, false, "left");
   this.crouchAnimation = new Animation(spritesheet, 38, 40, 0.40, 2, true, false, "crouch");
   this.jumpAnimation = new Animation(spritesheet, 28, 26, 0.15, 4, true, false, "jump");
 
@@ -88,92 +129,95 @@ function PlayerOne(game, spritesheet) {
 
 PlayerOne.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    var bb = this.boundingRect;
+
+    if (this.debug) {
+      this.ctx.strokeStyle = "blue";
+      this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
+    }
 }
 
 PlayerOne.prototype.update = function() {
     if (this.game.left === true) {
       this.animation = this.rightAnimation;
-      this.x -= this.game.clockTick * 200;;
+      this.xvel = -200;
     }
     if (this.game.right === true) {
       this.animation = this.rightAnimation;
-      this.x += this.game.clockTick * 200;;
+      this.xvel = 200;
     }
     if (this.game.up === true) {
       this.animation = this.jumpAnimation;
-      this.y -= this.game.clockTick * 200;;
+      if (!this.jumping) {
+        this.jumping = true;
+        this.yvel = -600;
+      }
     }
     if (this.game.down === true) {
       this.animation = this.jumpAnimation;
-      this.y += this.game.clockTick * 200;;
+      if (!this.jumping) {
+        this.jumping = true;
+        this.yvel = -600;
+      }
     }
     if (!(this.game.down || this.game.left || this.game.right || this.game.up)) {
       this.animation = this.idleAnimation;
+      this.xvel = 0;
     }
-}
-
-function Gizmo(game, spritesheet, type) {
-    this.downAnimation = new Animation(spritesheet, 40, 32, 0.15, 4, true, false, "down");
-    this.upAnimation = new Animation(spritesheet, 40, 32, 0.15, 4, true, false, "up");
-    this.leftAnimation = new Animation(spritesheet, 24, 32, 0.15, 4, true, false, "left");
-    this.rightAnimation = new Animation(spritesheet, 24, 32, 0.15, 4, true, false, "right");
-
-    if (type === "down") {
-      this.animation = this.downAnimation;
-      this.x = 100;
-      this.y = 100;
-    } else if (type === "up") {
-      this.animation = this.upAnimation;
-      this.x = 500;
-      this.y = 500;
-    } else if (type === "left") {
-      this.animation = this.leftAnimation;
-      this.x = 500;
-      this.y = 100;
-    } else if (type === "right") {
-      this.animation = this.rightAnimation;
-      this.x = 100;
-      this.y = 500;
-    } else if (type === "dizzy") {
-      this.animation = this.downAnimation;
-      this.x = 300;
-      this.y = 300;
-      this.startType = "dizzy";
+    this.boundingRect = new BoundingRect(this.x, this.y, 90, 124);
+    if (this.game.up || this.game.down) {
+      this.boundingRect.height = 80;
+      this.boundingRect.bottom = this.boundingRect.y + 80;
     }
-    this.game = game;
-    this.ctx = game.ctx;
-}
+    if (this.jumping) {
+      this.boundingRect = new BoundingRect(this.x, this.y, 90, 80);
+      this.animation = this.jumpAnimation;
+      this.jumpTime += this.game.clockTick;
+      this.yvel += this.jumpTime * 60;
+      if (this.yvel > 700) this.yvel = 700;
 
-Gizmo.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-}
-
-Gizmo.prototype.update = function() {
-    var move = this.animation.type;
-
-    if (this.startType === "dizzy") {
-      //break;
-    } else if (move === "down") {
-      this.y += this.game.clockTick * 100;
-    } else if (move === "up") {
-      this.y -= this.game.clockTick * 100;
-    } else if (move === "left") {
-      this.x -= this.game.clockTick * 100;
-    } else if (move === "right") {
-      this.x += this.game.clockTick * 100;
-    }
-    if (this.animation.timesLooped >= 50) {
-      if (move === "down") {
-        this.animation = this.rightAnimation;
-      } else if (move === "up") {
-        this.animation = this.leftAnimation;
-      } else if (move === "left") {
-        this.animation = this.downAnimation;
-      } else if (move === "right") {
-        this.animation = this.upAnimation;
+      for (var i = 0; i < this.game.platforms.length; i++) {
+        var plat = this.game.platforms[i];
+        if (this.collide(plat)) {
+          this.jumping = false;
+          this.yvel = 0;
+          this.jumpTime = 0;
+           this.y = plat.boundingRect.top - 124;
+          console.log(plat.top);
+        }
       }
-      this.animation.timesLooped = 0;
+    } else if (this.falling) {
+        this.fallTime += this.game.clockTick;
+        this.yvel += this.fallTime * 60;
+        if (this.yvel > 700) this.yvel = 700;
+        for (var i = 0; i < this.game.platforms.length; i++) {
+          var plat = this.game.platforms[i];
+          if (this.collide(plat)) {
+            this.falling = false;
+            this.yvel = 0;
+            this.fallTime = 0;
+             this.y = plat.boundingRect.top - 124;
+
+          }
+        }
+    } else {
+      for (var i = 0; i < this.game.platforms.length; i++) {
+        var plat = this.game.platforms[i];
+        if (!this.collide(plat)) {
+          this.falling = true;
+          this.yvel = 100;
+        }
+      }
     }
+    this.x += this.xvel * this.game.clockTick;
+    this.y += this.yvel * this.game.clockTick;
+
+}
+PlayerOne.prototype.collide = function(other) {
+  return (this.boundingRect.bottom >= other.boundingRect.top) &&
+  (this.boundingRect.left <= other.boundingRect.right) &&
+  (this.boundingRect.right >= other.boundingRect.left) &&
+  (this.boundingRect.top <= other.boundingRect.bottom);
 }
 
 AM.queueDownload("./img/area51main.png");
@@ -186,8 +230,8 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
 
+    gameEngine.platforms.push((new Platform(gameEngine)));
     gameEngine.addEntity(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
-    //gameEngine.addEntity(new Gizmo(gameEngine, AM.getAsset("./img/gizmosheet.png"), "dizzy"));
 
     console.log("All Done!");
 });

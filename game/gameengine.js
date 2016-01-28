@@ -11,6 +11,8 @@ window.requestAnimFrame = (function () {
 
 function GameEngine() {
     this.entities = [];
+    this.platforms = [];
+
     this.ctx = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
@@ -43,50 +45,50 @@ GameEngine.prototype.startInput = function () {
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 37) that.left = true;
-          console.log(e);
+          //console.log(e);
         e.preventDefault();
     }, false);
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 39) that.right = true;
-          console.log(e);
+          //console.log(e);
         e.preventDefault();
     }, false);
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 38) that.up = true;
-          console.log(e);
+          //console.log(e);
         e.preventDefault();
     }, false);
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 40) that.down = true;
-          console.log(e);
+          //console.log(e);
         e.preventDefault();
     }, false);
 
 
     this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.keyCode === 37) that.left = false;
-          console.log(e);
+          //console.log(e);
         e.preventDefault();
     }, false);
 
     this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.keyCode === 39) that.right = false;
-          console.log(e);
+          //console.log(e);
         e.preventDefault();
     }, false);
 
     this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.keyCode === 38) that.up = false;
-          console.log(e);
+          //console.log(e);
         e.preventDefault();
     }, false);
 
     this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.keyCode === 40) that.down = false;
-          console.log(e);
+          //console.log(e);
         e.preventDefault();
     }, false);
     console.log('Input started');
@@ -102,6 +104,9 @@ GameEngine.prototype.draw = function () {
     this.ctx.save();
     for (var i = 0; i < this.entities.length; i++) {
         this.entities[i].draw(this.ctx);
+    }
+    for (var i = 0; i < this.platforms.length; i++) {
+        this.platforms[i].draw(this.ctx);
     }
     this.ctx.restore();
 }
