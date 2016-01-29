@@ -80,14 +80,14 @@ function BoundingRect(x, y, w, h) {
   this.right = this.x + this.width;
 }
 
-function Platform(game) {
+function Platform(game, x, y, w, h) {
   this.ctx = game.ctx;
-  this.x = 200;
-  this.y = 624;
-  this.width = 100;
-  this.height = 200;
+  this.x = x;
+  this.y = y;
+  this.width = w;
+  this.height = h;
   this.debug = true;
-  this.boundingRect = new BoundingRect(200, 624, 100, 200);
+  this.boundingRect = new BoundingRect(x, y, w, h);
 }
 Platform.prototype.update = function() {
 }
@@ -148,14 +148,14 @@ PlayerOne.prototype.update = function() {
     }
     if (this.game.up === true) {
       this.animation = this.jumpAnimation;
-      if (!this.jumping) {
+      if (!this.jumping && !this.falling) {
         this.jumping = true;
         this.yvel = -600;
       }
     }
     if (this.game.down === true) {
       this.animation = this.jumpAnimation;
-      if (!this.jumping) {
+      if (!this.jumping && !this.falling) {
         this.jumping = true;
         this.yvel = -600;
       }
@@ -178,15 +178,21 @@ PlayerOne.prototype.update = function() {
 
       for (var i = 0; i < this.game.platforms.length; i++) {
         var plat = this.game.platforms[i];
+        if ((this.collideLeft(plat) || this.collideRight(plat))) {
+          console.log("COLLIDE RIGHT/LEFT");
+          this.xvel = 0;
+        }
         if (this.collide(plat)) {
           this.jumping = false;
           this.yvel = 0;
           this.jumpTime = 0;
-           this.y = plat.boundingRect.top - 124;
-          console.log(plat.top);
+          this.y = plat.boundingRect.top - 124;
+
         }
       }
     } else if (this.falling) {
+        console.log("FALLING");
+        this.animation = this.jumpAnimation;
         this.fallTime += this.game.clockTick;
         this.yvel += this.fallTime * 60;
         if (this.yvel > 700) this.yvel = 700;
@@ -196,17 +202,20 @@ PlayerOne.prototype.update = function() {
             this.falling = false;
             this.yvel = 0;
             this.fallTime = 0;
-             this.y = plat.boundingRect.top - 124;
-
+            this.y = plat.boundingRect.top - 124;
+            console.log("BOO");
           }
         }
     } else {
       for (var i = 0; i < this.game.platforms.length; i++) {
         var plat = this.game.platforms[i];
+
         if (!this.collide(plat)) {
           this.falling = true;
           this.yvel = 100;
         } else {
+          this.falling = false;
+          this.yvel = 0;
           break;
         }
       }
@@ -221,6 +230,38 @@ PlayerOne.prototype.collide = function(other) {
   (this.boundingRect.right >= other.boundingRect.left) &&
   (this.boundingRect.top <= other.boundingRect.bottom);
 }
+PlayerOne.prototype.collideTop = function(other) {
+  var t = this.top - other.bottom;
+  var b = this.bottom - other.top;
+  var l = this.right - other.left;
+  var r = this.left - other.right;
+
+  return (t < b && t < l && t < r);
+}
+PlayerOne.prototype.collideLeft = function(other) {
+  var t = this.top - other.bottom;
+  var b = this.bottom - other.top;
+  var l = this.right - other.left;
+  var r = this.left - other.right;
+
+  return (l < b && l < t && l < r);
+}
+PlayerOne.prototype.collideRight = function(other) {
+  var t = this.top - other.bottom;
+  var b = this.bottom - other.top;
+  var l = this.right - other.left;
+  var r = this.left - other.right;
+
+  return (r < b && r < l && r < t);
+}
+PlayerOne.prototype.collideBottom = function(other) {
+  var t = this.top - other.bottom;
+  var b = this.bottom - other.top;
+  var l = this.right - other.left;
+  var r = this.left - other.right;
+
+  return (b < t && b < l && b < r);
+}
 
 AM.queueDownload("./img/area51main.png");
 
@@ -232,7 +273,9 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
 
-    gameEngine.platforms.push((new Platform(gameEngine)));
+    gameEngine.platforms.push((new Platform(gameEngine, 0, 0, 50, 800)));
+    gameEngine.platforms.push((new Platform(gameEngine, 0, 650, 800, 50)));
+    gameEngine.platforms.push((new Platform(gameEngine, 750, 0, 50, 800)));
     gameEngine.addEntity(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
 
     console.log("All Done!");
