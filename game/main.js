@@ -178,20 +178,28 @@ PlayerOne.prototype.update = function() {
 
       for (var i = 0; i < this.game.platforms.length; i++) {
         var plat = this.game.platforms[i];
-        if ((this.collideLeft(plat) || this.collideRight(plat))) {
-          console.log("COLLIDE RIGHT/LEFT");
-          this.xvel = 0;
-        }
-        if (this.collide(plat)) {
-          this.jumping = false;
-          this.yvel = 0;
-          this.jumpTime = 0;
-          this.y = plat.boundingRect.top - 124;
 
+        if (this.collide(plat)) {
+          if (this.collideBottom(plat)) {
+            this.jumping = false;
+            this.yvel = 0;
+            this.jumpTime = 0;
+            this.y = plat.boundingRect.top - 124;
+          } else if (this.collideLeft(plat)) {
+            this.xvel = 0;
+            this.x += 1;
+          } else if (this.collideRight(plat)) {
+            this.xvel = 0;
+            this.x -= 1;
+          } else if (this.collideTop(plat)) {
+            console.log("TOP");
+            this.yvel = 0;
+            this.y += 1;
+          }
         }
       }
     } else if (this.falling) {
-        console.log("FALLING");
+        //console.log("FALLING");
         this.animation = this.jumpAnimation;
         this.fallTime += this.game.clockTick;
         this.yvel += this.fallTime * 60;
@@ -199,25 +207,72 @@ PlayerOne.prototype.update = function() {
         for (var i = 0; i < this.game.platforms.length; i++) {
           var plat = this.game.platforms[i];
           if (this.collide(plat)) {
-            this.falling = false;
-            this.yvel = 0;
-            this.fallTime = 0;
-            this.y = plat.boundingRect.top - 124;
-            console.log("BOO");
+            if (this.collideBottom(plat)) {
+              this.falling = false;
+              this.yvel = 0;
+              this.fallTime = 0;
+              this.y = plat.boundingRect.top - 124;
+              //console.log("BOO");
+            } else if (this.collideLeft(plat)) {
+              this.xvel = 0;
+              this.x += 1;
+            } else if (this.collideRight(plat)) {
+              this.xvel = 0;
+              this.x -= 1;
+            } else if (this.collideTop(plat)) {
+              console.log("TOP");
+              this.yvel = 0;
+              this.y += 1;
+            }
           }
         }
     } else {
+      //this.falling = true;
+      var land = false;
+      var leftWall = false;
+      var rightWall = false;
       for (var i = 0; i < this.game.platforms.length; i++) {
         var plat = this.game.platforms[i];
 
-        if (!this.collide(plat)) {
-          this.falling = true;
-          this.yvel = 100;
-        } else {
-          this.falling = false;
-          this.yvel = 0;
-          break;
+        // if (!this.collide(plat)) {
+        //   this.falling = true;
+        //   this.yvel = 100;
+        // } else {
+        //
+        //   this.falling = false;
+        //   this.yvel = 0;
+        //   break;
+        // }
+
+        if (this.collide(plat)) {
+          if (this.collideBottom(plat)) {
+            land = true;
+          } else if (this.collideLeft(plat)) {
+            //leftWall = true;
+            this.xvel = 0;
+            this.x += 1;
+          } else if (this.collideRight(plat)) {
+            //rightWall = true;
+            this.xvel = 0;
+            this.x -= 1;
+          }
         }
+
+      }
+      if (land) {
+        this.falling = false;
+        this.yvel = 0;
+      } else {
+        this.falling = true;
+        this.yvel = 100;
+      }
+      if (leftWall) {
+        this.xvel = 0;
+        this.x += 1;
+      }
+      if (rightWall) {
+        this.xvel = 0;
+        this.x -= 1;
       }
     }
     this.x += this.xvel * this.game.clockTick;
@@ -231,36 +286,27 @@ PlayerOne.prototype.collide = function(other) {
   (this.boundingRect.top <= other.boundingRect.bottom);
 }
 PlayerOne.prototype.collideTop = function(other) {
-  var t = this.top - other.bottom;
-  var b = this.bottom - other.top;
-  var l = this.right - other.left;
-  var r = this.left - other.right;
 
-  return (t < b && t < l && t < r);
+  return this.boundingRect.top <= other.boundingRect.bottom &&
+          this.boundingRect.bottom >= other.boundingRect.bottom;
 }
 PlayerOne.prototype.collideLeft = function(other) {
-  var t = this.top - other.bottom;
-  var b = this.bottom - other.top;
-  var l = this.right - other.left;
-  var r = this.left - other.right;
 
-  return (l < b && l < t && l < r);
+
+  return this.boundingRect.left <= other.boundingRect.right &&
+              this.boundingRect.right >= other.boundingRect.right;
 }
 PlayerOne.prototype.collideRight = function(other) {
-  var t = this.top - other.bottom;
-  var b = this.bottom - other.top;
-  var l = this.right - other.left;
-  var r = this.left - other.right;
 
-  return (r < b && r < l && r < t);
+
+  return this.boundingRect.right >= other.boundingRect.left &&
+              this.boundingRect.left <= other.boundingRect.left;
 }
 PlayerOne.prototype.collideBottom = function(other) {
-  var t = this.top - other.bottom;
-  var b = this.bottom - other.top;
-  var l = this.right - other.left;
-  var r = this.left - other.right;
 
-  return (b < t && b < l && b < r);
+
+  return this.boundingRect.bottom >= other.boundingRect.top &&
+          this.boundingRect.top <= other.boundingRect.top;
 }
 
 AM.queueDownload("./img/area51main.png");
@@ -276,6 +322,10 @@ AM.downloadAll(function () {
     gameEngine.platforms.push((new Platform(gameEngine, 0, 0, 50, 800)));
     gameEngine.platforms.push((new Platform(gameEngine, 0, 650, 800, 50)));
     gameEngine.platforms.push((new Platform(gameEngine, 750, 0, 50, 800)));
+    gameEngine.platforms.push((new Platform(gameEngine, 0, 0, 800, 50)));
+    gameEngine.platforms.push((new Platform(gameEngine, 400, 400, 500, 50)));
+    gameEngine.platforms.push((new Platform(gameEngine, 500, 550, 500, 50)));
+    gameEngine.platforms.push((new Platform(gameEngine, 500, 350, 500, 50)));
     gameEngine.addEntity(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
 
     console.log("All Done!");
