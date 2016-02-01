@@ -1,7 +1,8 @@
 var AM = new AssetManager();
 // var timesLooped = 0;
 
-function Animation(spriteSheet, frameWidth, frameHeight, frameDuration, frames, loop, reverse, type) {
+function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDuration, frames, loop, reverse, type) {
+    this.entityType = entityType;
     this.spriteSheet = spriteSheet;
     this.frameWidth = frameWidth;
     this.frameDuration = frameDuration;
@@ -15,6 +16,7 @@ function Animation(spriteSheet, frameWidth, frameHeight, frameDuration, frames, 
     this.timesLooped = 0;
 
     this.time = 0;
+    console.log(this.spriteSheet);
 }
 
 Animation.prototype.drawFrame = function (tick, ctx, x, y) {
@@ -29,8 +31,15 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     // if (frame > 7) {
     //     frame = 14 - frame;
     // }
-    xindex = frame % 4;
-    yindex = Math.floor(frame / 7);
+    if (this.entityType === "player") {
+        xindex = frame % 4;
+        yindex = Math.floor(frame / 7);
+    }
+    if (this.entityType === "bird_enemy") {
+        xindex = frame % 8;
+        yindex = 0;
+    }
+
 
     //console.log(frame + " " + xindex + " " + yindex);
 
@@ -118,11 +127,11 @@ function PlayerOne(game, spritesheet) {
   this.totalJump = 2;
 
   this.moveState = 0;
-  this.idleAnimation = new Animation(spritesheet, 38, 42, 0.40, 2, true, false, "idle");
-  this.rightAnimation = new Animation(spritesheet, 37, 42, 0.25, 4, true, false, "right");
-  this.leftAnimation = new Animation(spritesheet, 38, 42, 0.40, 2, true, false, "left");
-  this.crouchAnimation = new Animation(spritesheet, 38, 40, 0.40, 2, true, false, "crouch");
-  this.jumpAnimation = new Animation(spritesheet, 28, 26, 0.15, 4, true, false, "jump");
+  this.idleAnimation = new Animation("player", spritesheet, 38, 42, 0.40, 2, true, false, "idle");
+  this.rightAnimation = new Animation("player", spritesheet, 37, 42, 0.25, 4, true, false, "right");
+  this.leftAnimation = new Animation("player", spritesheet, 38, 42, 0.40, 2, true, false, "left");
+  this.crouchAnimation = new Animation("player", spritesheet, 38, 40, 0.40, 2, true, false, "crouch");
+  this.jumpAnimation = new Animation("player", spritesheet, 28, 26, 0.15, 4, true, false, "jump");
 
   this.animation = this.idleAnimation;
 }
@@ -275,6 +284,17 @@ PlayerOne.prototype.update = function() {
         this.x -= 1;
       }
     }
+    /*
+    * This loop checks if the player has touched any other entities except for himself.
+    * If so, the bounding box disappears to represent the player taking damage/dying.
+    * We will add this later.
+    */
+    for (var i = 0; i < this.game.entities.length; i++) {
+        var enemy = this.game.entities[i];
+        if (this != enemy && this.collide(enemy)) {
+            this.debug = false;
+        }
+    }
     this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
 
@@ -309,7 +329,37 @@ PlayerOne.prototype.collideBottom = function(other) {
           this.boundingRect.top <= other.boundingRect.top;
 }
 
+function BirdEnemy(game, spritesheet) {
+  this.game = game;
+  this.ctx = game.ctx;
+  this.x =80;
+  this.y = 50;
+  this.xvel = 0;
+  this.yvel = 0;
+  this.boundingRect = new BoundingRect(200, 500, 90, 124);
+  this.debug = true;
+  this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "idle");
+  // this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 200, 0.14, 8, true, false, "right");
+  // this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 300, 0.14, 8, true, false, "left");
+  this.animation = this.idleAnimation;
+}
+BirdEnemy.prototype.draw = function () {
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    var bb = this.boundingRect;
+    if (this.debug) {
+      this.ctx.strokeStyle = "blue";
+      this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
+    }
+}
+BirdEnemy.prototype.update = function() {
+    this.boundingRect = new BoundingRect(this.x + 40, this.y + 50, 2 * 95, 2 * 100);
+    //this.x += this.xvel * this.game.clockTick;
+    //this.y += this.yvel * this.game.clockTick;
+}
+
+
 AM.queueDownload("./img/area51main.png");
+AM.queueDownload("./img/bird_enemy_spritesheet.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -327,6 +377,7 @@ AM.downloadAll(function () {
     gameEngine.platforms.push((new Platform(gameEngine, 500, 550, 500, 50)));
     gameEngine.platforms.push((new Platform(gameEngine, 500, 350, 500, 50)));
     gameEngine.addEntity(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
+    gameEngine.addEntity(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));
 
     console.log("All Done!");
 });
