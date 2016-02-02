@@ -190,14 +190,19 @@ PlayerOne.prototype.update = function() {
 
         if (this.collide(plat)) {
           if (this.collideBottom(plat)) {
+              console.log("Bottom");
             this.jumping = false;
             this.yvel = 0;
             this.jumpTime = 0;
             this.y = plat.boundingRect.top - 124;
           } else if (this.collideLeft(plat)) {
+
             this.xvel = 0;
             this.x += 1;
           } else if (this.collideRight(plat)) {
+
+              //console.log("THIS RIGHT!");
+
             this.xvel = 0;
             this.x -= 1;
           } else if (this.collideTop(plat)) {
@@ -226,7 +231,7 @@ PlayerOne.prototype.update = function() {
               this.xvel = 0;
               this.x += 1;
             } else if (this.collideRight(plat)) {
-              this.xvel = 0;
+                this.xvel = 0;
               this.x -= 1;
             } else if (this.collideTop(plat)) {
               console.log("TOP");
@@ -237,6 +242,9 @@ PlayerOne.prototype.update = function() {
         }
     } else {
       //this.falling = true;
+
+
+
       var land = false;
       var leftWall = false;
       var rightWall = false;
@@ -252,20 +260,30 @@ PlayerOne.prototype.update = function() {
         //   this.yvel = 0;
         //   break;
         // }
+        //  console.log(this.boundingRect.right, " ", plat.boundingRect.left);
+          
+          if (this.collide(plat)) {
+              //console.log("COLLIDE");
+              if (this.collideBottom(plat)) {   // if the current platform is being walked on, it can't be collided to the right/left at the same time
+                  land = true;
+                  //console.log("BOTTOM COLLISION");
+              } else {      // otherwise we're walking on a different platform, and colliding right/left with this one
+                  if (this.collideLeft(plat)) {
+                      console.log("LEFT");
 
-        if (this.collide(plat)) {
-          if (this.collideBottom(plat)) {
-            land = true;
-          } else if (this.collideLeft(plat)) {
-            //leftWall = true;
-            this.xvel = 0;
-            this.x += 1;
-          } else if (this.collideRight(plat)) {
-            //rightWall = true;
-            this.xvel = 0;
-            this.x -= 1;
+                      //leftWall = true;
+                      this.xvel = 0;
+                      this.x += 1;
+                  } else if (this.collideRight(plat)) {
+
+                      console.log("RIGHT");
+                      //rightWall = true;
+                      this.xvel = 0;
+                          this.x -= 1;
+                  }
+              }
+              //console.log("DONE");
           }
-        }
 
       }
       if (land) {
@@ -275,14 +293,14 @@ PlayerOne.prototype.update = function() {
         this.falling = true;
         this.yvel = 100;
       }
-      if (leftWall) {
-        this.xvel = 0;
-        this.x += 1;
-      }
-      if (rightWall) {
-        this.xvel = 0;
-        this.x -= 1;
-      }
+      //if (leftWall) {
+      //  this.xvel = 0;
+      //  this.x += 1;
+      //}
+      //if (rightWall) {
+      //  this.xvel = 0;
+      //  this.x -= 1;
+      //}
     }
     /*
     * This loop checks if the player has touched any other entities except for himself.
@@ -326,7 +344,10 @@ PlayerOne.prototype.collideBottom = function(other) {
 
 
   return this.boundingRect.bottom >= other.boundingRect.top &&
-          this.boundingRect.top <= other.boundingRect.top;
+          this.boundingRect.top <= other.boundingRect.top &&
+            this.boundingRect.bottom <= other.boundingRect.bottom;  // added this line because if the character's bottom
+        // is less than the platform bottom then we know he is standing on the platform. otherwise collisions are still detected
+        // even when he is just standing next to the platform
 }
 
 function BirdEnemy(game, spritesheet) {
@@ -375,7 +396,7 @@ AM.downloadAll(function () {
     gameEngine.platforms.push((new Platform(gameEngine, 0, 0, 800, 50)));
     gameEngine.platforms.push((new Platform(gameEngine, 400, 400, 500, 50)));
     gameEngine.platforms.push((new Platform(gameEngine, 500, 550, 500, 50)));
-    gameEngine.platforms.push((new Platform(gameEngine, 500, 350, 500, 50)));
+    //gameEngine.platforms.push((new Platform(gameEngine, 500, 350, 500, 50)));
     gameEngine.addEntity(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
     gameEngine.addEntity(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));
 
