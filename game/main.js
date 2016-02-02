@@ -127,7 +127,7 @@ function PlayerOne(game, spritesheet) {
     this.totalJump = 2;
 
     this.moveState = 0;
-    this.idleAnimation = new Animation("player", spritesheet, 38, 42, 0.40, 2, true, false, "idle");
+    this.idleAnimation = new Animation("player", spritesheet, 37.5, 42, 0.40, 2, true, false, "idle");
     this.rightAnimation = new Animation("player", spritesheet, 37, 42, 0.25, 4, true, false, "right");
     this.leftAnimation = new Animation("player", spritesheet, 38, 42, 0.40, 2, true, false, "left");
     this.crouchAnimation = new Animation("player", spritesheet, 38, 40, 0.40, 2, true, false, "crouch");
