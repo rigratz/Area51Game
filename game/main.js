@@ -61,12 +61,17 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
         xframe = 1 + (xindex * this.frameWidth);
         yframe = 45;
     }
+
+    width_mult = 3;
+    height_mult = 3;
+
+
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,
         x, y,
-        this.frameWidth *3,
-        this.frameHeight*3);
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
 }
 
 Animation.prototype.currentFrame = function () {
@@ -378,6 +383,20 @@ BirdEnemy.prototype.update = function() {
     //this.y += this.yvel * this.game.clockTick;
 }
 
+function CatTreat(game, spritesheet) {
+    this.game = game;
+    this.ctx = game.ctx;
+    this.x = 0;
+    this.y = 0;
+    this.boundingRect = new BoundingRect(0, 0, 237, 295);
+    this.animation = new Animation("treats", spritesheet, 66, 82, 1, 1, true, false, null);
+}
+CatTreat.prototype.draw = function() {
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+}
+CatTreat.prototype.update = function() {
+
+}
 
 AM.queueDownload("./img/area51main.png");
 AM.queueDownload("./img/bird_enemy_spritesheet.png");
