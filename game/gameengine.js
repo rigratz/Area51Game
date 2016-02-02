@@ -11,7 +11,7 @@ window.requestAnimFrame = (function () {
 
 function GameEngine() {
     this.entities = [];
-    this.platforms = [];
+    this.platforms = []; // platforms should be an entity
 
     this.ctx = null;
     this.surfaceWidth = null;
@@ -105,7 +105,7 @@ GameEngine.prototype.draw = function () {
     for (var i = 0; i < this.entities.length; i++) {
         this.entities[i].draw(this.ctx);
     }
-    for (var i = 0; i < this.platforms.length; i++) {
+    for (var i = 0; i < this.platforms.length; i++) {//SHOULDNT NEED THIS ONCE ENTITIES IS FIXED
         this.platforms[i].draw(this.ctx);
     }
     this.ctx.restore();
@@ -117,7 +117,15 @@ GameEngine.prototype.update = function () {
     for (var i = 0; i < entitiesCount; i++) {
         var entity = this.entities[i];
 
-        entity.update();
+        if (!entity.removeFromWorld) {
+            entity.update();
+        }
+    }
+
+    for (var i = this.entities.length - 1; i >= 0; --i) {
+        if (this.entities[i].removeFromWorld) {
+            this.entities.splice(i, 1);
+        }
     }
 }
 
@@ -126,6 +134,28 @@ GameEngine.prototype.loop = function () {
     this.update();
     this.draw();
 }
+
+
+function Entity(game, x, y) {
+    this.game = game;
+    this.x = x;
+    this.y = y;
+    this.removeFromWorld = false;
+}
+
+Entity.prototype.update = function () {
+}
+
+Entity.prototype.draw = function (ctx) {
+    if (this.game.showOutlines && this.radius) {
+        this.game.ctx.beginPath();
+        this.game.ctx.strokeStyle = "green";
+        this.game.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        this.game.ctx.stroke();
+        this.game.ctx.closePath();
+    }
+}
+
 
 function Timer() {
     this.gameTime = 0;

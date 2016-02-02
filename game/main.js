@@ -94,24 +94,15 @@ function BoundingRect(x, y, w, h) {
     this.right = this.x + this.width;
 }
 
-function Platform(game, x, y, w, h) {
-    this.ctx = game.ctx;
-    this.x = x;
-    this.y = y;
-    this.width = w;
-    this.height = h;
-    this.debug = true;
-    this.boundingRect = new BoundingRect(x, y, w, h);
-}
-Platform.prototype.update = function() {
-}
-Platform.prototype.draw = function () {
-    this.ctx.strokeStyle = "yellow";
-    this.ctx.strokeRect(this.x, this.y, this.width, this.height);
-    this.ctx.fillStyle = "red";
-    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+/*
+This could be useful for collisions. Found it in the sample code.
+*/
 
-}
+// BoundingRect.prototype.collide = function (oth) {
+//     if (this.right > oth.left && this.left < oth.right && this.top < oth.bottom && this.bottom > oth.top) return true;
+//     return false;
+// }
+
 
 function PlayerOne(game, spritesheet) {
     this.game = game;
@@ -120,6 +111,7 @@ function PlayerOne(game, spritesheet) {
     this.y = 300;
     this.xvel = 0;
     this.yvel = 0;
+    this.platform = game.platforms[0];
     this.boundingRect = new BoundingRect(200, 500, 90, 124);
     this.debug = true;
 
@@ -139,16 +131,21 @@ function PlayerOne(game, spritesheet) {
     this.jumpAnimation = new Animation("player", spritesheet, 28, 26, 0.15, 4, true, false, "jump");
 
     this.animation = this.idleAnimation;
+    Entity.call(this, game, this.x, this.y); 
 }
 
+PlayerOne.prototype = new Entity();
+PlayerOne.prototype.constructor = PlayerOne;
+
 PlayerOne.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+   this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
 
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
         this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
     }
+    Entity.prototype.draw.call(this);
 }
 
 PlayerOne.prototype.update = function() {
@@ -183,6 +180,10 @@ PlayerOne.prototype.update = function() {
         this.boundingRect.height = 80;
         this.boundingRect.bottom = this.boundingRect.y + 80;
     }
+
+
+
+
     if (this.jumping) {
         this.boundingRect = new BoundingRect(this.x, this.y, 90, 80);
         this.animation = this.jumpAnimation;
@@ -320,6 +321,7 @@ PlayerOne.prototype.update = function() {
     }
     this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
+    Entity.prototype.update.call(this);
 
 }
 PlayerOne.prototype.collide = function(other) {
@@ -365,10 +367,17 @@ function BirdEnemy(game, spritesheet) {
     this.boundingRect = new BoundingRect(200, 500, 90, 124);
     this.debug = true;
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "idle");
+    Entity.call(this, game, this.x, this.y);
     // this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 200, 0.14, 8, true, false, "right");
     // this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 300, 0.14, 8, true, false, "left");
     this.animation = this.idleAnimation;
 }
+
+
+BirdEnemy.prototype = new Entity();
+BirdEnemy.prototype.constructor = BirdEnemy;
+
+
 BirdEnemy.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
@@ -376,12 +385,45 @@ BirdEnemy.prototype.draw = function () {
         this.ctx.strokeStyle = "blue";
         this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
     }
+    Entity.prototype.draw.call(this);
 }
 BirdEnemy.prototype.update = function() {
     this.boundingRect = new BoundingRect(this.x + 40, this.y + 50, 2 * 95, 2 * 100);
     //this.x += this.xvel * this.game.clockTick;
     //this.y += this.yvel * this.game.clockTick;
+    Entity.prototype.update.call(this);
 }
+
+function Platform(game, x, y, w, h) {
+    this.ctx = game.ctx;
+    this.x = x;
+    this.y = y;
+    this.width = w;
+    this.height = h;
+    this.debug = true;
+    this.boundingRect = new BoundingRect(x, y, w, h);
+    Entity.call(this, game, this.x, this.y);
+}
+
+
+
+Platform.prototype = new Entity();
+Platform.prototype.constructor = Platform;
+
+Platform.prototype.update = function() {
+}
+
+
+Platform.prototype.draw = function (ctx) {
+    ctx.strokeStyle = "yellow";
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
+    ctx.fillStyle = "red";
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    Entity.prototype.draw.call(this);
+
+}
+
+
 
 AM.queueDownload("./img/area51main.png");
 AM.queueDownload("./img/bird_enemy_spritesheet.png");
@@ -394,15 +436,39 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
 
-    gameEngine.platforms.push((new Platform(gameEngine, 0, 0, 50, 800)));
-    gameEngine.platforms.push((new Platform(gameEngine, 0, 650, 800, 50)));
-    gameEngine.platforms.push((new Platform(gameEngine, 750, 0, 50, 800)));
-    gameEngine.platforms.push((new Platform(gameEngine, 0, 0, 800, 50)));
-    gameEngine.platforms.push((new Platform(gameEngine, 400, 400, 500, 50)));
-    gameEngine.platforms.push((new Platform(gameEngine, 500, 550, 500, 50)));
-    gameEngine.platforms.push((new Platform(gameEngine, 500, 300, 500, 50)));
+
+    /*
+   This will probably be different once we can read from a text file but im not sure how.
+    */
+    var platforms = [];
+    var pf = new Platform(gameEngine, 0, 650, 800, 50);
+    gameEngine.addEntity(pf);
+    platforms.push(pf);
+    pf = new Platform(gameEngine, 0, 0, 50, 800);
+    gameEngine.addEntity(pf);
+    platforms.push(pf);
+    pf = new Platform(gameEngine, 750, 0, 50, 800);
+    gameEngine.addEntity(pf);
+    platforms.push(pf);
+    pf = new Platform(gameEngine,  0, 0, 800, 50);
+    gameEngine.addEntity(pf);
+    platforms.push(pf);
+    pf = new Platform(gameEngine, 400, 400, 500, 50);
+    gameEngine.addEntity(pf);
+    platforms.push(pf);
+    pf = new Platform(gameEngine,  500, 550, 500, 50);
+    gameEngine.addEntity(pf);
+    platforms.push(pf);
+    pf = new Platform(gameEngine,  500, 300, 500, 50);
+    gameEngine.addEntity(pf);
+    platforms.push(pf);
+    
+    gameEngine.platforms = platforms;
     gameEngine.addEntity(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
     gameEngine.addEntity(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));
+
+    gameEngine.playerone = playerone;
+    gameEngine.birdenemy = birdenemy;
 
     console.log("All Done!");
 });
