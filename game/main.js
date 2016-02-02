@@ -383,21 +383,6 @@ BirdEnemy.prototype.update = function() {
     //this.y += this.yvel * this.game.clockTick;
 }
 
-function CatTreat(game, spritesheet) {
-    this.game = game;
-    this.ctx = game.ctx;
-    this.x = 0;
-    this.y = 0;
-    this.boundingRect = new BoundingRect(0, 0, 237, 295);
-    this.animation = new Animation("treats", spritesheet, 66, 82, 1, 1, true, false, null);
-}
-CatTreat.prototype.draw = function() {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-}
-CatTreat.prototype.update = function() {
-
-}
-
 AM.queueDownload("./img/area51main.png");
 AM.queueDownload("./img/bird_enemy_spritesheet.png");
 
