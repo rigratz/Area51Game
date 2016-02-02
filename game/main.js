@@ -261,7 +261,7 @@ PlayerOne.prototype.update = function() {
         //   break;
         // }
         //  console.log(this.boundingRect.right, " ", plat.boundingRect.left);
-          
+
           if (this.collide(plat)) {
               //console.log("COLLIDE");
               if (this.collideBottom(plat)) {   // if the current platform is being walked on, it can't be collided to the right/left at the same time
