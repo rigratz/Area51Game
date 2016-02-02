@@ -52,7 +52,7 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     var xframe = 0;
     var yframe = 0;
     if (this.type === "idle") {
-      xframe = 3 + (xindex * this.frameWidth);
+      xframe = -2 + (xindex * this.frameWidth);
       yframe = 2;
     } else if (this.type === "right") {
       xframe = 3 + (xindex * this.frameWidth);
