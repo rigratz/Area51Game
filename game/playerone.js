@@ -19,6 +19,11 @@ function PlayerOne(game, x, y, spritesheet) {
     this.jumpTime = 0;
     this.totalJump = 2;
 
+    this.canShoot = true;
+    this.shotCooldown = 0;
+
+    this.facing = "right";
+
     this.moveState = 0;
     this.idleAnimation = new Animation("player", spritesheet, 37.5, 42, 0.40, 2, true, false, "idle");
     this.rightAnimation = new Animation("player", spritesheet, 37, 42, 0.25, 4, true, false, "right");
@@ -47,12 +52,14 @@ PlayerOne.prototype.draw = function () {
 PlayerOne.prototype.update = function() {
     if (this.game.left === true) {
         this.animation = this.rightAnimation;
+        this.facing = "left";
         if (this.xvel > 0) this.xvel = 0;
         this.xvel -=10;
         if (this.xvel <= -250) this.xvel = -250;
     }
     if (this.game.right === true) {
         this.animation = this.rightAnimation;
+        this.facing = "right";
         if (this.xvel < 0) this.xvel = 0;
         this.xvel += 10;
         if (this.xvel >= 250) this.xvel = 250;
@@ -70,9 +77,16 @@ PlayerOne.prototype.update = function() {
         this.falling = true;
       }
     }
-    if (this.game.fire) {
-      var bullet = new Bullet(this.game, this.x +40, this.y + 40);
+    if (this.game.fire && this.canShoot) {
+      var dir = null;
+      if (this.game.up) {
+        dir = "up";
+      } else {
+        dir = this.facing;
+      }
+      var bullet = new Bullet(this.game, this.x +40, this.y + 40, dir);
       this.game.addEntity(bullet);
+      this.canShoot = false;
     }
     if (!(this.game.jump || this.game.left || this.game.right)) {
         this.animation = this.idleAnimation;
@@ -226,6 +240,13 @@ PlayerOne.prototype.update = function() {
     // }
     this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
+    if (!this.canShoot) {
+      this.shotCooldown += this.game.clockTick;
+      if (this.shotCooldown > 0.25) {
+        this.canShoot = true;
+        this.shotCooldown = 0;
+      }
+    }
     Entity.prototype.update.call(this);
 
 }
