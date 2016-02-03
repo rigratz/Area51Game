@@ -51,7 +51,7 @@ AM.downloadAll(function () {
     pf = new Platform(gameEngine,  500, 300, 500, 50);
     gameEngine.addEntity(pf);
     platforms.push(pf);
-    
+
     gameEngine.platforms = platforms;
     gameEngine.addEntity(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
     gameEngine.addEntity(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));

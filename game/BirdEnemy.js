@@ -8,11 +8,10 @@ function BirdEnemy(game, spritesheet) {
     this.boundingRect = new BoundingRect(200, 500, 90, 124);
     this.debug = true;
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "idle");
-
-    Entity.call(this, game, this.x, this.y);
     // this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 200, 0.14, 8, true, false, "right");
-    // this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 300, 0.14, 8, true, false, "left");
-    this.animation = this.idleAnimation;
+    this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "left");
+    this.animation = this.leftAnimation;
+    Entity.call(this, game, this.x, this.y);
 }
 
 
@@ -35,4 +34,3 @@ BirdEnemy.prototype.update = function() {
     //this.y += this.yvel * this.game.clockTick;
     Entity.prototype.update.call(this);
 }
-

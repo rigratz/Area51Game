@@ -56,13 +56,16 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     } else if (this.type === "right") {
         xframe = 3 + (xindex * this.frameWidth);
         yframe = 81;
+    } else if (this.type === "left") {
+        xframe = (xindex * this.frameWidth);
+        yframe = 81;
     } else if (this.type === "jump") {
         xframe = 1 + (xindex * this.frameWidth);
         yframe = 45;
     }
 
-    width_mult = 3;
-    height_mult = 3;
+    var width_mult = 3;
+    var height_mult = 3;
 
 
     ctx.drawImage(this.spriteSheet,
