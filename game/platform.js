@@ -21,7 +21,7 @@ Platform.prototype.update = function() {
 Platform.prototype.draw = function (ctx) {
     ctx.strokeStyle = "yellow";
     ctx.strokeRect(this.x, this.y, this.width, this.height);
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "green";
     ctx.fillRect(this.x, this.y, this.width, this.height);
     Entity.prototype.draw.call(this);
 

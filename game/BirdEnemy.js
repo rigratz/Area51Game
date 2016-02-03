@@ -3,7 +3,7 @@ function BirdEnemy(game, x, y, spritesheet) {
     this.ctx = game.ctx;
     this.x = x;
     this.y = y;
-    this.xvel = 200;
+    this.xvel = 100;
     this.yvel = 0;
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = true;

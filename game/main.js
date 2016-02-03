@@ -42,36 +42,7 @@ AM.downloadAll(function () {
     "XXXXXXXXXXXXXXXX           "
     ];
     var currLevel = new Level(levelPlan, gameEngine);
-    /*
-   This will probably be different once we can read from a text file but im not sure how.
-    */
-    // var platforms = [];
-    // var pf = new Platform(gameEngine, 0, 650, 800, 50);
-    // gameEngine.addEntity(pf);
-    // platforms.push(pf);
-    // pf = new Platform(gameEngine, 0, 0, 50, 800);
-    // gameEngine.addEntity(pf);
-    // platforms.push(pf);
-    // pf = new Platform(gameEngine, 750, 0, 50, 800);
-    // gameEngine.addEntity(pf);
-    // platforms.push(pf);
-    // pf = new Platform(gameEngine,  0, 0, 800, 50);
-    // gameEngine.addEntity(pf);
-    // platforms.push(pf);
-    // pf = new Platform(gameEngine, 400, 400, 500, 50);
-    // gameEngine.addEntity(pf);
-    // platforms.push(pf);
-    // pf = new Platform(gameEngine,  500, 550, 500, 50);
-    // gameEngine.addEntity(pf);
-    // platforms.push(pf);
-    // pf = new Platform(gameEngine,  500, 300, 500, 50);
-    // gameEngine.addEntity(pf);
-    // platforms.push(pf);
-    //
-    // gameEngine.platforms = platforms;
-    // gameEngine.addEntity(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
-    // gameEngine.addEntity(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));
-
+  
     var ch;
     for (var i = 0; i < currLevel.grid[0].length; i++) {
       for (var j = 0; j < currLevel.grid.length; j++) {
