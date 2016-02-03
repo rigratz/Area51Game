@@ -61,8 +61,8 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
         yframe = 45;
     }
 
-    width_mult = 3;
-    height_mult = 3;
+    width_mult = 2.5;
+    height_mult = 2.5;
 
 
     ctx.drawImage(this.spriteSheet,

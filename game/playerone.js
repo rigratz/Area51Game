@@ -1,12 +1,12 @@
-function PlayerOne(game, spritesheet) {
+function PlayerOne(game, x, y, spritesheet) {
     this.game = game;
     this.ctx = game.ctx;
-    this.x = 200;
-    this.y = 300;
+    this.x = x;
+    this.y = y;
     this.xvel = 0;
     this.yvel = 0;
     this.platform = game.platforms[0];
-    this.boundingRect = new BoundingRect(200, 500, 90, 124);
+    this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = true;
 
     this.falling = false;
@@ -25,7 +25,7 @@ function PlayerOne(game, spritesheet) {
     this.jumpAnimation = new Animation("player", spritesheet, 28, 26, 0.15, 4, true, false, "jump");
 
     this.animation = this.idleAnimation;
-    Entity.call(this, game, this.x, this.y); 
+    Entity.call(this, game, this.x, this.y);
 }
 
 PlayerOne.prototype = new Entity();
@@ -69,17 +69,17 @@ PlayerOne.prototype.update = function() {
         this.animation = this.idleAnimation;
         this.xvel = 0;
     }
-    this.boundingRect = new BoundingRect(this.x, this.y, 90, 124);
+    this.boundingRect = new BoundingRect(this.x, this.y, 80, 102);
     if (this.game.up || this.game.down) {
-        this.boundingRect.height = 80;
-        this.boundingRect.bottom = this.boundingRect.y + 80;
+        this.boundingRect.height = 60;
+        this.boundingRect.bottom = this.boundingRect.y + 60;
     }
 
 
 
 
     if (this.jumping) {
-        this.boundingRect = new BoundingRect(this.x, this.y, 90, 80);
+        this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
         this.animation = this.jumpAnimation;
         this.jumpTime += this.game.clockTick;
         this.yvel += this.jumpTime * 60;
@@ -94,7 +94,7 @@ PlayerOne.prototype.update = function() {
                     this.jumping = false;
                     this.yvel = 0;
                     this.jumpTime = 0;
-                    this.y = plat.boundingRect.top - 124;
+                    this.y = plat.boundingRect.top - 102;
                 } else if (this.collideLeft(plat)) {
 
                     this.xvel = 0;
@@ -125,7 +125,7 @@ PlayerOne.prototype.update = function() {
                     this.falling = false;
                     this.yvel = 0;
                     this.fallTime = 0;
-                    this.y = plat.boundingRect.top - 124;
+                    this.y = plat.boundingRect.top - 102;
                     //console.log("BOO");
                 } else if (this.collideLeft(plat)) {
                     this.xvel = 0;
@@ -207,12 +207,12 @@ PlayerOne.prototype.update = function() {
      * If so, the bounding box disappears to represent the player taking damage/dying.
      * We will add this later.
      */
-    for (var i = 0; i < this.game.entities.length; i++) {
-        var enemy = this.game.entities[i];
-        if (this != enemy && this.collide(enemy)) {
-            this.debug = false;
-        }
-    }
+    // for (var i = 0; i < this.game.entities.length; i++) {
+    //     var enemy = this.game.entities[i];
+    //     if (this != enemy && this.collide(enemy)) {
+    //         this.debug = false;
+    //     }
+    // }
     this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
     Entity.prototype.update.call(this);
