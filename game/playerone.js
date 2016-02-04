@@ -248,7 +248,7 @@ PlayerOne.prototype.update = function() {
       }
     }
     Entity.prototype.update.call(this);
-    this.game.camera.follow(this, 400, 325);
+    this.game.camera.follow(this, 400, 175);
     this.game.camera.update();
 
 }

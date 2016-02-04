@@ -65,7 +65,12 @@ AM.downloadAll(function () {
         } else if (ch === "bird") {
           gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png")));
         } else if (ch === "platform") {
-          gameEngine.platforms.push((new Platform(gameEngine, i * 50, j * 50, 50, 50)));
+          var mult = 1;
+          while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
+            currLevel.grid[j+mult][i] = "used_platform";
+            mult += 1;
+          }
+          gameEngine.platforms.push((new Platform(gameEngine, i * 50, j * 50, 50, 50 * mult)));
         }
       }
     }
