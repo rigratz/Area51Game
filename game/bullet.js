@@ -32,15 +32,17 @@ Bullet.prototype.update = function() {
 }
 
 Bullet.prototype.draw = function () {
-
   this.ctx.strokeStyle = "yellow";
   this.ctx.strokeRect(this.x, this.y, this.width, this.height);
   this.ctx.fillStyle = "orange";
   this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    Entity.prototype.draw.call(this);
+  //Entity.prototype.draw.call(this);
 }
 
+
+// for some reason can't get this to work using the bullet bounding box, so I used x and y 
 Bullet.prototype.collide = function(other) {
-    //console.log(this.x, other.x);
-    return (this.x <= (other.boundingRect.right - (other.boundingRect.width / 2)));
+    return (this.x <= (other.boundingRect.right - (other.boundingRect.width / 2))) &&
+        (this.x > other.boundingRect.left) &&
+        (this.y > (other.boundingRect.top) && (this.y < other.boundingRect.bottom));
 }

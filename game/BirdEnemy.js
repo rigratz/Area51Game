@@ -8,11 +8,10 @@ function BirdEnemy(game, x, y, spritesheet) {
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = true;
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "idle");
-
-    Entity.call(this, game, this.x, this.y);
     // this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 200, 0.14, 8, true, false, "right");
-    // this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 300, 0.14, 8, true, false, "left");
+    this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "left");
     this.animation = this.idleAnimation;
+    Entity.call(this, game, this.x, this.y);
 }
 
 
