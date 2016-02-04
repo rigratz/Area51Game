@@ -39,7 +39,7 @@ PlayerOne.prototype = new Entity();
 PlayerOne.prototype.constructor = PlayerOne;
 
 PlayerOne.prototype.draw = function () {
-   this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+   this.animation.drawFramePlayerOne(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
 
     if (this.debug) {

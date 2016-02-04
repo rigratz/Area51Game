@@ -29,10 +29,9 @@ Bullet.prototype.update = function() {
 }
 
 Bullet.prototype.draw = function () {
-
   this.ctx.strokeStyle = "yellow";
   this.ctx.strokeRect(this.x, this.y, this.width, this.height);
   this.ctx.fillStyle = "orange";
   this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    Entity.prototype.draw.call(this);
+  //Entity.prototype.draw.call(this);
 }

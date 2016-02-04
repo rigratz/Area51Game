@@ -10,7 +10,7 @@ function BirdEnemy(game, x, y, spritesheet) {
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "idle");
     // this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 200, 0.14, 8, true, false, "right");
     this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "left");
-    this.animation = this.leftAnimation;
+    this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
 }
 
@@ -20,7 +20,7 @@ BirdEnemy.prototype.constructor = BirdEnemy;
 
 
 BirdEnemy.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    this.animation.drawFrameBirdEnemy(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
