@@ -131,6 +131,10 @@ GameEngine.prototype.addEntity = function (entity) {
 GameEngine.prototype.draw = function () {
     this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
     this.ctx.save();
+    if (this.camera != null) {
+      console.log("TRANSFORMING");
+      this.ctx.translate(-this.camera.xView, -this.camera.yView);
+    }
     for (var i = 0; i < this.entities.length; i++) {
         this.entities[i].draw(this.ctx);
     }
