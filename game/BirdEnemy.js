@@ -20,7 +20,7 @@ BirdEnemy.prototype.constructor = BirdEnemy;
 
 
 BirdEnemy.prototype.draw = function () {
-    this.animation.drawFrameBirdEnemy(this.game.clockTick, this.ctx, this.x, this.y);
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
     if (this.debug) {
         this.ctx.strokeStyle = "blue";

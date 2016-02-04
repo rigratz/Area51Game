@@ -17,8 +17,12 @@ function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDurati
 }
 
 Animation.prototype.drawFrame = function (tick, ctx, x, y) {
-    //this.drawFramePlayerOne(tick, ctx, x, y);
-    //this.drawFrameBirdEnemy(tick, ctx, x, y);
+    if (this.entityType === 'player') {
+        this.drawFramePlayerOne(tick, ctx, x, y);
+    }
+    else if (this.entityType === 'bird_enemy') {
+        this.drawFrameBirdEnemy(tick, ctx, x, y);
+    }
 }
 
 Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
