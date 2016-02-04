@@ -27,22 +27,31 @@ AM.downloadAll(function () {
 
 
     var levelPlan = [
-    "X B            X           ",
-    "X              X           ",
-    "X              X           ",
-    "X              X           ",
-    "X         XXXXXX           ",
-    "X                         X",
-    "X                         X",
-    "XXXXXX                    X",
-    "X              XXXXXXXXXXXX",
-    "X        XXXXXXX           ",
-    "X              X           ",
-    "X @   XXXXXXXXXX           ",
-    "XXXXXXXXXXXXXXXX           "
+    "X B            X            XXXXXXX         X",
+    "X              X                            X",
+    "X              X                            X",
+    "X              X                            X",
+    "X         XXXXXX                            X",
+    "X                         XXXXXXXXXXX       X",
+    "X                         X                 X",
+    "XXXXXX                    X                 X",
+    "X              XXXXXXXXXXXXXXXXX       XXXXXX",
+    "X        XXXXXXX                            X",
+    "X              X                            X",
+    "X @   XXXXXXXXXX                            X",
+    "XXXXXXXXXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXX",
+    "X              X                            X",
+    "X              X                            X",
+    "X              X                            X",
+    "X              X                            X",
+    "X              X                            X",
+    "X                                           X",
+    "X                                           X",
+    "X                                           X",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     ];
     var currLevel = new Level(levelPlan, gameEngine);
-    gameEngine.camera = new Camera(0, 0, 800, 650, 1500, 650);
+    gameEngine.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
     var ch;
     for (var i = 0; i < currLevel.grid[0].length; i++) {
       for (var j = 0; j < currLevel.grid.length; j++) {
