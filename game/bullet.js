@@ -39,6 +39,7 @@ Bullet.prototype.draw = function () {
   //Entity.prototype.draw.call(this);
 }
 
+
 // for some reason can't get this to work using the bullet bounding box, so I used x and y 
 Bullet.prototype.collide = function(other) {
     return (this.x <= (other.boundingRect.right - (other.boundingRect.width / 2))) &&
