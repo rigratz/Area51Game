@@ -20,6 +20,8 @@ function GameEngine() {
     this.right = null;
     this.up = null;
     this.down = null;
+    this.jump = null;
+    this.fire = null;
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -63,6 +65,33 @@ GameEngine.prototype.startInput = function () {
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 40) that.down = true;
+          //console.log(e);
+        e.preventDefault();
+    }, false);
+
+
+    this.ctx.canvas.addEventListener("keydown", function (e) {
+        if (e.keyCode === 90) that.jump = true;
+          //console.log(e);
+        e.preventDefault();
+    }, false);
+
+
+    this.ctx.canvas.addEventListener("keydown", function (e) {
+        if (e.keyCode === 88) that.fire = true;
+          //console.log(e);
+        e.preventDefault();
+    }, false);
+
+
+    this.ctx.canvas.addEventListener("keyup", function (e) {
+        if (e.keyCode === 88) that.fire = false;
+          //console.log(e);
+        e.preventDefault();
+    }, false);
+
+    this.ctx.canvas.addEventListener("keyup", function (e) {
+        if (e.keyCode === 90) that.jump = false;
           //console.log(e);
         e.preventDefault();
     }, false);

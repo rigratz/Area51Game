@@ -1,12 +1,14 @@
-function PlayerOne(game, spritesheet) {
+function PlayerOne(game, x, y, spritesheet) {
     this.game = game;
     this.ctx = game.ctx;
-    this.x = 200;
-    this.y = 300;
+    this.x = x;
+    this.y = y;
     this.xvel = 0;
     this.yvel = 0;
     this.platform = game.platforms[0];
-    this.boundingRect = new BoundingRect(200, 500, 90, 124);
+    this.bullets = [];
+
+    this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = true;
 
     this.falling = false;
@@ -17,6 +19,11 @@ function PlayerOne(game, spritesheet) {
     this.jumpTime = 0;
     this.totalJump = 2;
 
+    this.canShoot = true;
+    this.shotCooldown = 0;
+
+    this.facing = "right";
+
     this.moveState = 0;
     this.idleAnimation = new Animation("player", spritesheet, 37.5, 42, 0.40, 2, true, false, "idle");
     this.rightAnimation = new Animation("player", spritesheet, 37, 42, 0.25, 4, true, false, "right");
@@ -25,7 +32,7 @@ function PlayerOne(game, spritesheet) {
     this.jumpAnimation = new Animation("player", spritesheet, 28, 26, 0.15, 4, true, false, "jump");
 
     this.animation = this.idleAnimation;
-    Entity.call(this, game, this.x, this.y); 
+    Entity.call(this, game, this.x, this.y);
 }
 
 PlayerOne.prototype = new Entity();
@@ -45,45 +52,62 @@ PlayerOne.prototype.draw = function () {
 PlayerOne.prototype.update = function() {
     if (this.game.left === true) {
         this.animation = this.rightAnimation;
-        this.xvel = -200;
+        this.facing = "left";
+        if (this.xvel > 0) this.xvel = 0;
+        this.xvel -=10;
+        if (this.xvel <= -250) this.xvel = -250;
     }
     if (this.game.right === true) {
         this.animation = this.rightAnimation;
-        this.xvel = 200;
+        this.facing = "right";
+        if (this.xvel < 0) this.xvel = 0;
+        this.xvel += 10;
+        if (this.xvel >= 250) this.xvel = 250;
     }
-    if (this.game.up === true) {
-        this.animation = this.jumpAnimation;
-        if (!this.jumping && !this.falling) {
-            this.jumping = true;
-            this.yvel = -600;
-        }
+    if (this.game.jump === true) {
+      this.animation = this.jumpAnimation;
+      if (!this.jumping && !this.falling) {
+          this.jumping = true;
+          this.yvel = -600;
+      }
+    } else {
+      if (this.game.jumping && this.yvel < 0) {
+        this.yvel = 0;
+        this.jumping = false;
+        this.falling = true;
+      }
     }
-    if (this.game.down === true) {
-        this.animation = this.jumpAnimation;
-        if (!this.jumping && !this.falling) {
-            this.jumping = true;
-            this.yvel = -600;
-        }
+    if (this.game.fire && this.canShoot) {
+      var dir = null;
+      if (this.game.up) {
+        dir = "up";
+      } else {
+        dir = this.facing;
+      }
+      var bullet = new Bullet(this.game, this.x +40, this.y + 40, dir);
+      this.game.addEntity(bullet);
+      this.canShoot = false;
     }
-    if (!(this.game.down || this.game.left || this.game.right || this.game.up)) {
+    if (!(this.game.jump || this.game.left || this.game.right)) {
         this.animation = this.idleAnimation;
         this.xvel = 0;
     }
-    this.boundingRect = new BoundingRect(this.x, this.y, 90, 124);
-    if (this.game.up || this.game.down) {
-        this.boundingRect.height = 80;
-        this.boundingRect.bottom = this.boundingRect.y + 80;
+    this.boundingRect = new BoundingRect(this.x, this.y, 80, 102);
+    if (this.game.jump) {
+        this.boundingRect.height = 60;
+        this.boundingRect.bottom = this.boundingRect.y + 60;
     }
 
 
 
 
     if (this.jumping) {
-        this.boundingRect = new BoundingRect(this.x, this.y, 90, 80);
+        this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
         this.animation = this.jumpAnimation;
         this.jumpTime += this.game.clockTick;
         this.yvel += this.jumpTime * 60;
         if (this.yvel > 700) this.yvel = 700;
+        //if (!this.game.jump && this.yvel > 0) this.yvel = 0;
 
         for (var i = 0; i < this.game.platforms.length; i++) {
             var plat = this.game.platforms[i];
@@ -94,7 +118,11 @@ PlayerOne.prototype.update = function() {
                     this.jumping = false;
                     this.yvel = 0;
                     this.jumpTime = 0;
-                    this.y = plat.boundingRect.top - 124;
+                    this.y = plat.boundingRect.top - 101;
+                } else if (this.collideTop(plat)) {
+                    console.log("TOP");
+                    this.yvel = 0;
+                    this.y += 1;
                 } else if (this.collideLeft(plat)) {
 
                     this.xvel = 0;
@@ -105,11 +133,8 @@ PlayerOne.prototype.update = function() {
 
                     this.xvel = 0;
                     this.x -= 1;
-                } else if (this.collideTop(plat)) {
-                    console.log("TOP");
-                    this.yvel = 0;
-                    this.y += 1;
                 }
+
             }
         }
     } else if (this.falling) {
@@ -125,7 +150,7 @@ PlayerOne.prototype.update = function() {
                     this.falling = false;
                     this.yvel = 0;
                     this.fallTime = 0;
-                    this.y = plat.boundingRect.top - 124;
+                    this.y = plat.boundingRect.top - 101;
                     //console.log("BOO");
                 } else if (this.collideLeft(plat)) {
                     this.xvel = 0;
@@ -168,13 +193,13 @@ PlayerOne.prototype.update = function() {
                     land = true;
                     //console.log("BOTTOM COLLISION");
                 } else {      // otherwise we're walking on a different platform, and colliding right/left with this one
-                    if (this.collideLeft(plat)) {
+                    if (this.collideLeft(plat) && plat.boundingRect.top < this.boundingRect.bottom) {
                         console.log("LEFT");
 
                         //leftWall = true;
                         this.xvel = 0;
                         this.x += 1;
-                    } else if (this.collideRight(plat)) {
+                    } else if (this.collideRight(plat) && plat.boundingRect.top < this.boundingRect.bottom) {
 
                         console.log("RIGHT");
                         //rightWall = true;
@@ -207,14 +232,21 @@ PlayerOne.prototype.update = function() {
      * If so, the bounding box disappears to represent the player taking damage/dying.
      * We will add this later.
      */
-    for (var i = 0; i < this.game.entities.length; i++) {
-        var enemy = this.game.entities[i];
-        if (this != enemy && this.collide(enemy)) {
-            this.debug = false;
-        }
-    }
+    // for (var i = 0; i < this.game.entities.length; i++) {
+    //     var enemy = this.game.entities[i];
+    //     if (this != enemy && this.collide(enemy)) {
+    //         this.debug = false;
+    //     }
+    // }
     this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
+    if (!this.canShoot) {
+      this.shotCooldown += this.game.clockTick;
+      if (this.shotCooldown > 0.25) {
+        this.canShoot = true;
+        this.shotCooldown = 0;
+      }
+    }
     Entity.prototype.update.call(this);
 
 }
