@@ -42,6 +42,19 @@ BirdEnemy.prototype.update = function() {
         break;
       }
     }
+
+    for(var i = 0; i < this.game.entities.length; i++) {
+        var entity = this.game.entities[i];
+        if(entity instanceof Bullet && entity.x > 0) {
+            //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
+            if(entity.collide(this)) {
+                this.removeFromWorld = true;
+            }
+        }
+    }
+
+
+
     // if (this.collide()) {
     //   this.xvel = this.xvel * -1;
     // }

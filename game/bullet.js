@@ -14,7 +14,7 @@ function Bullet(game, x, y, dir) {//, spritesheet) {
     } else if (dir === "right") {
       this.xvel = 400;
     }
-    //this.boundingRect = new BoundingRect(x, y, 90, 124);
+    this.boundingRect = new BoundingRect(x, y, 5, 5);
     //this.debug = true;
     //this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "idle");
 
@@ -26,6 +26,9 @@ function Bullet(game, x, y, dir) {//, spritesheet) {
 Bullet.prototype.update = function() {
   this.x += this.xvel * this.game.clockTick;
   this.y += this.yvel * this.game.clockTick;
+
+
+
 }
 
 Bullet.prototype.draw = function () {
@@ -34,4 +37,9 @@ Bullet.prototype.draw = function () {
   this.ctx.fillStyle = "orange";
   this.ctx.fillRect(this.x, this.y, this.width, this.height);
   //Entity.prototype.draw.call(this);
+}
+
+Bullet.prototype.collide = function(other) {
+    //console.log(this.x, other.x);
+    return (this.x <= (other.boundingRect.right - (other.boundingRect.width / 2)));
 }
