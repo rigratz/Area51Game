@@ -42,12 +42,16 @@ AM.downloadAll(function () {
     ];
     var currLevel = new Level(levelPlan, gameEngine);
 
+    gameEngine.camera = new Camera(0, 0, 800, 650, 1500, 650);
+
     var ch;
     for (var i = 0; i < currLevel.grid[0].length; i++) {
       for (var j = 0; j < currLevel.grid.length; j++) {
         ch = currLevel.grid[j][i];
         if (ch === "player") {
-          gameEngine.addEntity(new PlayerOne(gameEngine, i * 50, j * 50 - 125, AM.getAsset("./img/area51main.png")));
+          var player = new PlayerOne(gameEngine, i * 50, j * 50 - 125, AM.getAsset("./img/area51main.png"))
+          gameEngine.addEntity(player);
+          gameEngine.camera.follow(player, 100, 100);
         } else if (ch === "bird") {
           gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png")));
         } else if (ch === "platform") {
@@ -55,6 +59,7 @@ AM.downloadAll(function () {
         }
       }
     }
+
 
     console.log("All Done!");
 });
