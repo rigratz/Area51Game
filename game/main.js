@@ -25,7 +25,6 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
 
-
     var levelPlan = [
     "X B            X            XXXXXXX         X",
     "X              X                            X",
@@ -51,7 +50,9 @@ AM.downloadAll(function () {
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     ];
     var currLevel = new Level(levelPlan, gameEngine);
+
     gameEngine.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
+
     var ch;
     for (var i = 0; i < currLevel.grid[0].length; i++) {
       for (var j = 0; j < currLevel.grid.length; j++) {

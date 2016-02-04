@@ -9,8 +9,6 @@ function Platform(game, x, y, w, h) {
     Entity.call(this, game, this.x, this.y);
 }
 
-
-
 Platform.prototype = new Entity();
 Platform.prototype.constructor = Platform;
 
