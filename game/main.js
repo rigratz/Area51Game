@@ -26,6 +26,7 @@ AM.downloadAll(function () {
     gameEngine.start();
 
     var levelPlan = [
+    //"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     "X B            X            XXXXXXX         X",
     "X              X                            X",
     "X              X                            X",
