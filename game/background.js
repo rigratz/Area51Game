@@ -10,12 +10,10 @@ Background.prototype.constructor = Background;
 Background.prototype.update = function() {
 }
 
-
 Background.prototype.draw = function (ctx) {
-    ctx.drawImage(this.backgroundImage, 0, 0);
-    ctx.drawImage(this.backgroundImage, 0, 736);
-    ctx.drawImage(this.backgroundImage, 736, 0);
-    ctx.drawImage(this.backgroundImage, 736, 736);
-    ctx.drawImage(this.backgroundImage, 736*2, 0);
-    ctx.drawImage(this.backgroundImage, 736*2, 736);
+    /*Draws tiles of the background image*/
+    for (var i = 0; i <= 2; i += 1) {
+        ctx.drawImage(this.backgroundImage, i*this.width, 0);
+        ctx.drawImage(this.backgroundImage, i * this.width, this.height);
+    }
 }

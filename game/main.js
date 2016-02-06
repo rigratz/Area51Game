@@ -28,8 +28,8 @@ AM.downloadAll(function () {
 
     /*This is probably not the best way to do this*/
     gameEngine.backgroundImage = new Background(AM.getAsset("./img/cement_background.jpg"),
-                                                gameEngine, canvas.width, canvas.height);
-    /**********************************************/                                            
+                                                gameEngine, 736, 736);
+    /**********************************************/
     gameEngine.init(ctx);
     gameEngine.start();
 
