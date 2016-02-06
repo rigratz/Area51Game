@@ -12,6 +12,10 @@ Background.prototype.update = function() {
 
 
 Background.prototype.draw = function (ctx) {
-    console.log("Drawing background");
     ctx.drawImage(this.backgroundImage, 0, 0);
+    ctx.drawImage(this.backgroundImage, 0, 736);
+    ctx.drawImage(this.backgroundImage, 736, 0);
+    ctx.drawImage(this.backgroundImage, 736, 736);
+    ctx.drawImage(this.backgroundImage, 736*2, 0);
+    ctx.drawImage(this.backgroundImage, 736*2, 736);
 }
