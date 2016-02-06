@@ -12,8 +12,9 @@ Background.prototype.update = function() {
 
 Background.prototype.draw = function (ctx) {
     /*Draws tiles of the background image*/
-    for (var i = 0; i <= 2; i += 1) {
-        ctx.drawImage(this.backgroundImage, i*this.width, 0);
-        ctx.drawImage(this.backgroundImage, i * this.width, this.height);
+    for (var i = 0; i <= 4; i += 1) {
+      for (var j = 0; j <= 4; j+= 1) {
+        ctx.drawImage(this.backgroundImage, i*this.width, j*this.height);
+      }
     }
 }

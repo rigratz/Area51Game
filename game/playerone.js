@@ -97,6 +97,7 @@ PlayerOne.prototype.update = function() {
       }
       var bullet = new Bullet(this.game, this.x +40, this.y + 40, dir);
       this.game.addEntity(bullet);
+      this.game.shotsFired += 1;
       this.canShoot = false;
     }
     if (!(this.game.jump || this.game.left || this.game.right || this.game.up || this.game.down)) {
@@ -133,13 +134,13 @@ PlayerOne.prototype.update = function() {
 
             if (this.collide(plat)) {
                 if (this.collideBottom(plat)) {
-                    console.log("Bottom");
+                    //console.log("Bottom");
                     this.jumping = false;
                     this.yvel = 0;
                     this.jumpTime = 0;
                     this.y = plat.boundingRect.top - 101;
                 } else if (this.collideTop(plat)) {
-                    console.log("TOP");
+                    //console.log("TOP");
                     this.yvel = 0;
                     this.y += 1;
                 } else if (this.collideLeft(plat)) {
@@ -182,7 +183,7 @@ PlayerOne.prototype.update = function() {
                     this.xvel = 0;
                     this.x -= 1;
                 } else if (this.collideTop(plat)) {
-                    console.log("TOP");
+                    //console.log("TOP");
                     this.yvel = 0;
                     this.y += 1;
                 }
@@ -217,14 +218,14 @@ PlayerOne.prototype.update = function() {
                     //console.log("BOTTOM COLLISION");
                 } else {      // otherwise we're walking on a different platform, and colliding right/left with this one
                     if (this.collideLeft(plat) && plat.boundingRect.top < this.boundingRect.bottom) {
-                        console.log("LEFT");
+                        //console.log("LEFT");
 
                         //leftWall = true;
                         this.xvel = 0;
                         this.x += 1;
                     } else if (this.collideRight(plat) && plat.boundingRect.top < this.boundingRect.bottom) {
 
-                        console.log("RIGHT");
+                        //console.log("RIGHT");
                         //rightWall = true;
                         this.xvel = 0;
                         this.x -= 1;

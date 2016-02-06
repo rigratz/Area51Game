@@ -13,6 +13,7 @@ function GameEngine() {
     this.entities = [];
     this.platforms = []; // platforms should be an entity
     this.ctx = null;
+    this.camera = null;
     this.backgroundImage = null;    //This is kinda hacky.
     this.surfaceWidth = null;
     this.surfaceHeight = null;
@@ -22,6 +23,8 @@ function GameEngine() {
     this.down = null;
     this.jump = null;
     this.fire = null;
+    this.deadBirds = 0;
+    this.shotsFired = 0;
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -148,6 +151,11 @@ GameEngine.prototype.draw = function () {
     for (var i = 0; i < this.platforms.length; i++) {//SHOULDNT NEED THIS ONCE ENTITIES IS FIXED
         this.platforms[i].draw(this.ctx);
     }
+    if (this.deadBirds >= 9) {
+      this.ctx.fillStyle = "blue";
+      this.ctx.font = "bold 32px Arial";
+      this.ctx.fillText("You killed all 9 birds!", this.camera.xView + 100, this.camera.yView + 100);
+    }
     this.ctx.restore();
 }
 
@@ -167,6 +175,7 @@ GameEngine.prototype.update = function () {
             this.entities.splice(i, 1);
         }
     }
+
 }
 
 GameEngine.prototype.loop = function () {

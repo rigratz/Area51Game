@@ -57,34 +57,49 @@ AM.downloadAll(function () {
     // "X                                           X",
     // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     // ];
-    "XXXXXXXXXXXXXXXXXXXX                  XX",
-    "X             B    X                  XX",
-    "X                  X                  XX",
-    "X @                X                  XX",
-    "XTTTTTTTTTTTTT     X                  XX",
-    "XXXXXXXXXXXXXX     X B                XX",
-    "XXXXXXXXXXXXXX     X                  XX",
-    "XXXXXXXXXXXXXX     X                  XX",
-    "XXXXXXXXXXXXXX     X     B            XX",
-    "XXXXXXXXXXXXXX     X                  XX",
-    "XXXXXXXXXXXXXX     X                  XX",
-    "XXXXXXXXXXXXXX     X                  XX",
-    "XXXXXXXXXXXXXX     X                  XX",
-    "XXXXXXXXXXXXXX     X                  XX",
-    "XXXXXXXXXXXXXX     X       T     TTTTTXX",
-    "X                          X     XXXXXXX",
-    "X B           B            X     XXXXXXX",
-    "X                          XTTTTTXXXXXXX",
-    "X                    TTTTTTXXXXXXXXXXXXX",
-    "X                    XXXXXXXXXXXXXXXXXXX",
-    "X                    XXXXXXXXXXXXXXXXXXX",
-    "X                TTTTXXXXXXXXXXXXXXXXXXX",
-    "X                XXXXXXXXXXXXXXXXXXXXXXX",
-    "X                XXXXXXXXXXXXXXXXXXXXXXX",
-    "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXX"
+    "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "X             B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "X                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "X @                X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XTTTTTTTTTTTTT     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X     B            XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X                                         XX",
+    "XXXXXXXXXXXXXX     X                                         XX",
+    "XXXXXXXXXXXXXX     X                                         XX",
+    "XXXXXXXXXXXXXX     X                                         XX",
+    "XXXXXXXXXXXXXX     X       T     TTTTTTTTTTTTTTTTTTTTT       XX",
+    "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
+    "X B           B            X     XXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                          XTTTTTXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                    TTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XX                                                           XX",
+    "XX              B                                            XX",
+    "XX                                                           XX",
+    "XX B         TT           TT B          TT    B              XX",
+    "XX           XX           XX            XX                   XX",
+    "XX           XX           XX            XX                   XX",
+    "XX           XX           XX            XX                   XX",
+    "XXTTTTTTTTTTTXXTTTTTTTTTTTXXTTTTTTTTTTTTXXTTTTTTTTTTTTTTTTTTTXX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   ];
     var currLevel = new Level(levelPlan, gameEngine);
-
+    var levelWidth = currLevel.grid[0].length;
+    var levelHeight = currLevel.grid.length;
     gameEngine.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
 
     var ch;
@@ -110,5 +125,13 @@ AM.downloadAll(function () {
         }
       }
     }
+
     console.log("All Done!");
+    console.log("Controls:");
+    console.log("Move Left: Left Arrow");
+    console.log("Move Right: Right Arrow");
+    console.log("Aim Up: Up Arrow");
+    console.log("Crouch: Down Arrow");
+    console.log("Jump: Z");
+    console.log("Shoot: X");
 });

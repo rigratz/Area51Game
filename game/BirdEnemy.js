@@ -37,8 +37,8 @@ BirdEnemy.prototype.update = function() {
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {
         this.xvel = this.xvel * -1;
-        console.log("kaboom");
-        console.log(this.xvel);
+        //console.log("kaboom");
+        //console.log(this.xvel);
         break;
       }
     }
@@ -49,6 +49,8 @@ BirdEnemy.prototype.update = function() {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
             if (entity.collide(this)) {
                 this.removeFromWorld = true;
+                entity.removeFromWorld = true;
+                this.game.deadBirds += 1;
             }
         }
     }
