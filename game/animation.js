@@ -42,15 +42,27 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
     if (this.type === "idle") {
         xframe = 3 + (xindex * this.frameWidth);
         yframe = 2;
-    } else if (this.type === "right") {
+    } else if (this.type === "idleleft") {
+        xframe = 132 + (xindex * this.frameWidth);
+        yframe = 2;
+    }else if (this.type === "right") {
         xframe = 3 + (xindex * this.frameWidth);
         yframe = 81;
     } else if (this.type === "left") {
-        xframe = (xindex * this.frameWidth);
-        yframe = 81;
+        xframe = 3+ (xindex * this.frameWidth);
+        yframe = 177;
     } else if (this.type === "jump") {
         xframe = 1 + (xindex * this.frameWidth);
         yframe = 45;
+    } else if (this.type === "jumpleft") {
+      xframe = 152 + (xindex * this.frameWidth);
+      yframe = 45;
+    } else if (this.type === "crouch") {
+      xframe = 9;
+      yframe = 233;
+    } else if (this.type === "up") {
+      xframe = 9;
+      yframe = 275;
     }
     var width_mult = 2.5;
     var height_mult = 2.5;

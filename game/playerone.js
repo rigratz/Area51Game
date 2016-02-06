@@ -26,10 +26,13 @@ function PlayerOne(game, x, y, spritesheet) {
 
     this.moveState = 0;
     this.idleAnimation = new Animation("player", spritesheet, 37.5, 42, 0.40, 2, true, false, "idle");
+    this.idleLeftAnimation = new Animation("player", spritesheet, 37.5, 42, 0.40, 2, true, false, "idleleft");
     this.rightAnimation = new Animation("player", spritesheet, 37, 42, 0.25, 4, true, false, "right");
-    this.leftAnimation = new Animation("player", spritesheet, 38, 42, 0.40, 2, true, false, "left");
-    this.crouchAnimation = new Animation("player", spritesheet, 38, 40, 0.40, 2, true, false, "crouch");
+    this.leftAnimation = new Animation("player", spritesheet, 37, 42, 0.25, 4, true, false, "left");
+    this.upAnimation = new Animation("player", spritesheet, 38, 55, 0.40, 1, true, false, "up");
+    this.crouchAnimation = new Animation("player", spritesheet, 38, 32, 0.40, 1, true, false, "crouch");
     this.jumpAnimation = new Animation("player", spritesheet, 28, 26, 0.15, 4, true, false, "jump");
+    this.jumpLeftAnimation = new Animation("player", spritesheet, 28, 26, 0.15, 4, true, false, "jumpleft");
 
     this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
@@ -51,7 +54,7 @@ PlayerOne.prototype.draw = function () {
 
 PlayerOne.prototype.update = function() {
     if (this.game.left === true) {
-        this.animation = this.rightAnimation;
+        this.animation = this.leftAnimation;
         this.facing = "left";
         if (this.xvel > 0) this.xvel = 0;
         this.xvel -=10;
@@ -63,6 +66,14 @@ PlayerOne.prototype.update = function() {
         if (this.xvel < 0) this.xvel = 0;
         this.xvel += 10;
         if (this.xvel >= 250) this.xvel = 250;
+    }
+    if (this.game.up === true) {
+        this.animation = this.upAnimation;
+        this.xvel = 0;
+    }
+    if (this.game.down === true) {
+        this.animation = this.crouchAnimation;
+        this.xvel = 0;
     }
     if (this.game.jump === true) {
       this.animation = this.jumpAnimation;
@@ -88,8 +99,12 @@ PlayerOne.prototype.update = function() {
       this.game.addEntity(bullet);
       this.canShoot = false;
     }
-    if (!(this.game.jump || this.game.left || this.game.right)) {
-        this.animation = this.idleAnimation;
+    if (!(this.game.jump || this.game.left || this.game.right || this.game.up || this.game.down)) {
+        if (this.facing === "left") {
+          this.animation = this.idleLeftAnimation;
+        } else {
+          this.animation = this.idleAnimation;
+        }
         this.xvel = 0;
     }
     this.boundingRect = new BoundingRect(this.x, this.y, 80, 102);
@@ -103,7 +118,11 @@ PlayerOne.prototype.update = function() {
 
     if (this.jumping) {
         this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
-        this.animation = this.jumpAnimation;
+        if (this.facing === "left") {
+          this.animation = this.jumpLeftAnimation;
+        } else {
+          this.animation = this.jumpAnimation;
+        }
         this.jumpTime += this.game.clockTick;
         this.yvel += this.jumpTime * 60;
         if (this.yvel > 700) this.yvel = 700;
@@ -139,7 +158,11 @@ PlayerOne.prototype.update = function() {
         }
     } else if (this.falling) {
         //console.log("FALLING");
-        this.animation = this.jumpAnimation;
+        if (this.facing === "left") {
+          this.animation = this.jumpLeftAnimation;
+        } else {
+          this.animation = this.jumpAnimation;
+        }
         this.fallTime += this.game.clockTick;
         this.yvel += this.fallTime * 60;
         if (this.yvel > 700) this.yvel = 700;

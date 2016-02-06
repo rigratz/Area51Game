@@ -8,11 +8,11 @@ function Bullet(game, x, y, dir) {//, spritesheet) {
     this.xvel = 0;
     this.yvel = 0;
     if (dir === "up") {
-      this.yvel = -400;
+      this.yvel = -500;
     } else if (dir === "left") {
-      this.xvel = -400;
+      this.xvel = -500;
     } else if (dir === "right") {
-      this.xvel = 400;
+      this.xvel = 500;
     }
     this.boundingRect = new BoundingRect(x, y, 5, 5);
     //this.debug = true;
@@ -40,7 +40,7 @@ Bullet.prototype.draw = function () {
 }
 
 
-// for some reason can't get this to work using the bullet bounding box, so I used x and y 
+// for some reason can't get this to work using the bullet bounding box, so I used x and y
 Bullet.prototype.collide = function(other) {
     return (this.x <= (other.boundingRect.right - (other.boundingRect.width / 2))) &&
         (this.x > other.boundingRect.left) &&
