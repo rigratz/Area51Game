@@ -16,6 +16,8 @@ function BoundingRect(x, y, w, h) {
 
 AM.queueDownload("./img/area51main.png");
 AM.queueDownload("./img/bird_enemy_spritesheet.png");
+AM.queueDownload("./img/cement_background.jpg");
+AM.queueDownload("./img/textures.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -69,11 +71,10 @@ AM.downloadAll(function () {
             currLevel.grid[j+mult][i] = "used_platform";
             mult += 1;
           }
-          gameEngine.platforms.push((new Platform(gameEngine, i * 50, j * 50, 50, 50 * mult)));
+          //game, x, y, w, h
+          gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i * 50, j * 50, 50, 50 * mult)));
         }
       }
     }
-
-
     console.log("All Done!");
 });
