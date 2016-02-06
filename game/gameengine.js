@@ -139,7 +139,7 @@ GameEngine.prototype.draw = function () {
     if (this.camera != null) {
       this.ctx.translate(-this.camera.xView, -this.camera.yView);
     }
-    console.log(this.backgroundImage)
+    //console.log(this.backgroundImage)
     this.backgroundImage.draw(this.ctx);              //Probably should change how we do this
 
     for (var i = 0; i < this.entities.length; i++) {

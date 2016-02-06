@@ -61,7 +61,7 @@ AM.downloadAll(function () {
     "X             B    X                  XX",
     "X                  X                  XX",
     "X @                X                  XX",
-    "XXXXXXXXXXXXXX     X                  XX",
+    "XTTTTTTTTTTTTT     X                  XX",
     "XXXXXXXXXXXXXX     X B                XX",
     "XXXXXXXXXXXXXX     X                  XX",
     "XXXXXXXXXXXXXX     X                  XX",
@@ -71,17 +71,17 @@ AM.downloadAll(function () {
     "XXXXXXXXXXXXXX     X                  XX",
     "XXXXXXXXXXXXXX     X                  XX",
     "XXXXXXXXXXXXXX     X                  XX",
-    "XXXXXXXXXXXXXX     X       X     XXXXXXX",
+    "XXXXXXXXXXXXXX     X       T     TTTTTXX",
     "X                          X     XXXXXXX",
     "X B           B            X     XXXXXXX",
-    "X                          XXXXXXXXXXXXX",
+    "X                          XTTTTTXXXXXXX",
+    "X                    TTTTTTXXXXXXXXXXXXX",
     "X                    XXXXXXXXXXXXXXXXXXX",
     "X                    XXXXXXXXXXXXXXXXXXX",
-    "X                    XXXXXXXXXXXXXXXXXXX",
+    "X                TTTTXXXXXXXXXXXXXXXXXXX",
     "X                XXXXXXXXXXXXXXXXXXXXXXX",
     "X                XXXXXXXXXXXXXXXXXXXXXXX",
-    "X                XXXXXXXXXXXXXXXXXXXXXXX",
-    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXX"
   ];
     var currLevel = new Level(levelPlan, gameEngine);
 
@@ -104,7 +104,9 @@ AM.downloadAll(function () {
             mult += 1;
           }
 
-          gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i * 50, j * 50, 50, 50 * mult)));
+          gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i * 50, j * 50, 50, 50 * mult, "X")));
+        } else if (ch === "platformtop") {
+          gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i*50, j*50, 50, 50, "T")));
         }
       }
     }

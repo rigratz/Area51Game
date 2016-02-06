@@ -26,9 +26,11 @@ function Level(plan, gameEngine) {
       if (ch === "@")
         //this.entities.push(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
         fieldType = "player";
-      else if (ch == "X")
+      else if (ch === "X")
         fieldType = "platform";
-      else if (ch == "B")
+      else if (ch === "T")
+        fieldType = "platformtop";
+      else if (ch === "B")
         fieldType = "bird";
         //this.entities.push(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));
       gridLine.push(fieldType);
