@@ -23,7 +23,13 @@ AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
 
+
     var gameEngine = new GameEngine();
+
+    /*This is probably not the best way to do this*/
+    gameEngine.backgroundImage = new Background(AM.getAsset("./img/cement_background.jpg"),
+                                                gameEngine, canvas.width, canvas.height);
+    /**********************************************/                                            
     gameEngine.init(ctx);
     gameEngine.start();
 
@@ -71,7 +77,7 @@ AM.downloadAll(function () {
             currLevel.grid[j+mult][i] = "used_platform";
             mult += 1;
           }
-          //game, x, y, w, h
+
           gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i * 50, j * 50, 50, 50 * mult)));
         }
       }

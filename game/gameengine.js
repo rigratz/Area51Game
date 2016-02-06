@@ -12,8 +12,8 @@ window.requestAnimFrame = (function () {
 function GameEngine() {
     this.entities = [];
     this.platforms = []; // platforms should be an entity
-
     this.ctx = null;
+    this.backgroundImage = null;    //This is kinda hacky.
     this.surfaceWidth = null;
     this.surfaceHeight = null;
     this.left = null;
@@ -128,12 +128,20 @@ GameEngine.prototype.addEntity = function (entity) {
     this.entities.push(entity);
 }
 
+GameEngine.prototype.addBackgroundImage = function(image) {
+    console.log("Added background");
+    this.backgroundImage = image;
+}
+
 GameEngine.prototype.draw = function () {
     this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
     this.ctx.save();
     if (this.camera != null) {
       this.ctx.translate(-this.camera.xView, -this.camera.yView);
     }
+    console.log(this.backgroundImage)
+    this.backgroundImage.draw(this.ctx);              //Probably should change how we do this
+
     for (var i = 0; i < this.entities.length; i++) {
         this.entities[i].draw(this.ctx);
     }
