@@ -48,7 +48,7 @@ Dragon.prototype.update = function() {
         var entity = this.game.entities[i];
         if (entity instanceof Bullet && entity.x > 0) {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
-            if (entity.collide(this)) {
+            if (entity.collideEnemy(this)) {
                 this.removeFromWorld = true;
                 entity.removeFromWorld = true;
                 this.game.deadBirds += 1;
