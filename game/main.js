@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var AM = new AssetManager();
 // var timesLooped = 0;
 
@@ -68,20 +69,17 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
         this.frameWidth *2.5,
         this.frameHeight*2.5);
 }
+=======
+>>>>>>> master
 
-Animation.prototype.currentFrame = function () {
-    return Math.floor(this.elapsedTime / this.frameDuration);
-}
-
-Animation.prototype.isDone = function () {
-    return (this.elapsedTime >= this.totalTime);
-}
+var AM = new AssetManager();
 
 function BoundingRect(x, y, w, h) {
     this.x = x;
     this.y = y;
     this.width = w;
     this.height = h;
+<<<<<<< HEAD
 
     this.top = this.y;
     this.left = this.x;
@@ -105,9 +103,16 @@ Platform.prototype.draw = function () {
     this.ctx.strokeRect(this.x, this.y, this.width, this.height);
     this.ctx.fillStyle = "red";
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
+=======
+>>>>>>> master
 
+    this.top = this.y;
+    this.left = this.x;
+    this.bottom = this.y + this.height;
+    this.right = this.x + this.width;
 }
 
+<<<<<<< HEAD
 function PlayerOne(game, x, y, spritesheet) {
     this.game = game;
     this.ctx = game.ctx;
@@ -356,6 +361,8 @@ PlayerOne.prototype.collideBottom = function(other) {
     // is less than the platform bottom then we know he is standing on the platform. otherwise collisions are still detected
     // even when he is just standing next to the platform
 }
+=======
+>>>>>>> master
 
 function BirdEnemy(game, x, y, spritesheet) {
     this.game = game;
@@ -405,16 +412,29 @@ BirdEnemy.prototype.collide = function(other) {
 
 AM.queueDownload("./img/area51main.png");
 AM.queueDownload("./img/bird_enemy_spritesheet.png");
+<<<<<<< HEAD
+=======
+AM.queueDownload("./img/cement_background.jpg");
+AM.queueDownload("./img/textures.png");
+AM.queueDownload("./img/dragon.png");
+>>>>>>> master
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
 
+
     var gameEngine = new GameEngine();
+
+    /*This is probably not the best way to do this*/
+    gameEngine.backgroundImage = new Background(AM.getAsset("./img/cement_background.jpg"),
+                                                gameEngine, 736, 736);
+    /**********************************************/
     gameEngine.init(ctx);
     gameEngine.start();
 
     var levelPlan = [
+<<<<<<< HEAD
     "X B            X           ",
     "X              X           ",
     "X              X           ",
@@ -441,12 +461,82 @@ AM.downloadAll(function () {
     // gameEngine.addEntity(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
     // gameEngine.addEntity(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));
     //console.log(currLevel.grid[0]);
+=======
+    // "X B            X            XXXXXXX         X",
+    // "X              X                            X",
+    // "X              X                            X",
+    // "X              X                            X",
+    // "X         XXXXXX                            X",
+    // "X                         XXXXXXXXXXX       X",
+    // "X                         X                 X",
+    // "XXXXXX                    X                 X",
+    // "X              XXXXXXXXXXXXXXXXX       XXXXXX",
+    // "X        XXXXXXX                            X",
+    // "X              X                            X",
+    // "X @   XXXXXXXXXX                            X",
+    // "XXXXXXXXXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXX",
+    // "X              X                            X",
+    // "X              X                            X",
+    // "X              X                            X",
+    // "X              X                            X",
+    // "X              X                            X",
+    // "X                                           X",
+    // "X                                           X",
+    // "X                                           X",
+    // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    // ];
+    "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "X             B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "X                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "X @                X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XTTTTTTTTTTTTT     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX  D  X     B            XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX     X                                         XX",
+    "XXXXXXXXXXXXXX     X                                         XX",
+    "XXXXXXXXXXXXXX     X                                         XX",
+    "XXXXXXXXXXXXXX     X                                         XX",
+    "XXXXXXXXXXXXXX     X       T     TTTTTTTTTTTTTTTTTTTTT       XX",
+    "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
+    "X B           B            X     XXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                          XTTTTTXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                    TTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X       D        TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   D   XX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "XX                                                           XX",
+    "XX              B                                            XX",
+    "XX                                                           XX",
+    "XX B         TT           TT B          TT    B              XX",
+    "XX           XX           XX            XX                   XX",
+    "XX           XX      D    XX            XX            D      XX",
+    "XX           XX           XX            XX                   XX",
+    "XXTTTTTTTTTTTXXTTTTTTTTTTTXXTTTTTTTTTTTTXXTTTTTTTTTTTTTTTTTTTXX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  ];
+    var currLevel = new Level(levelPlan, gameEngine);
+    var levelWidth = currLevel.grid[0].length;
+    var levelHeight = currLevel.grid.length;
+    gameEngine.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
+>>>>>>> master
 
     var ch;
     for (var i = 0; i < currLevel.grid[0].length; i++) {
       for (var j = 0; j < currLevel.grid.length; j++) {
         ch = currLevel.grid[j][i];
         if (ch === "player") {
+<<<<<<< HEAD
           gameEngine.addEntity(new PlayerOne(gameEngine, i * 50, j * 50 - 125, AM.getAsset("./img/area51main.png")));
         } else if (ch === "bird") {
           gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png")));
@@ -455,5 +545,35 @@ AM.downloadAll(function () {
         }
       }
     }
+=======
+          var player = new PlayerOne(gameEngine, i * 50, j * 50 - 125, AM.getAsset("./img/area51main.png"));
+          gameEngine.addEntity(player);
+          gameEngine.camera.follow(player, 100, 100);
+        } else if (ch === "bird") {
+          gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png")));
+        } else if (ch === "platform") {
+          var mult = 1;
+          while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
+            currLevel.grid[j+mult][i] = "used_platform";
+            mult += 1;
+          }
+
+          gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i * 50, j * 50, 50, 50 * mult, "X")));
+        } else if (ch === "platformtop") {
+          gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i*50, j*50, 50, 50, "T")));
+        } else if (ch === "dragon") {
+            gameEngine.addEntity(new Dragon(gameEngine, i * 50, j * 50, AM.getAsset("./img/dragon.png")));
+        }
+      }
+    }
+
+>>>>>>> master
     console.log("All Done!");
+    console.log("Controls:");
+    console.log("Move Left: Left Arrow");
+    console.log("Move Right: Right Arrow");
+    console.log("Aim Up: Up Arrow");
+    console.log("Crouch: Down Arrow");
+    console.log("Jump: Z");
+    console.log("Shoot: X");
 });
