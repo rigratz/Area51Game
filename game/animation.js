@@ -63,9 +63,11 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
     } else if (this.type === "crouch") {
       xframe = 9;
       yframe = 233;
+        y = y + 21;
     } else if (this.type === "up") {
       xframe = 9;
       yframe = 275;
+        y = y - 37;
     }
     var width_mult = 2.5;
     var height_mult = 2.5;
