@@ -37,11 +37,11 @@ BirdEnemy.prototype.update = function() {
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {
         this.xvel = this.xvel * -1;
-        //console.log("kaboom");
-        //console.log(this.xvel);
         break;
       }
     }
+    if (this.xvel > 0) this.animation.type = "idle";
+    if (this.xvel < 0) this.animation.type = "left";
 
     for (var i = 0; i < this.game.entities.length; i++) {
         var entity = this.game.entities[i];
