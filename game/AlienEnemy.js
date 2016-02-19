@@ -7,7 +7,7 @@ function AlienEnemy(game, x, y, spritesheet, xvel) {
     this.yvel = 0;
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = false;
-    this.idleAnimation = new Animation("alien_enemy", spritesheet, 102, 106, 0.10, 7, true, false, "idle");
+    this.idleAnimation = new Animation("alien_enemy", spritesheet, 102, 106, 0.15, 7, true, false, "idle");
     // this.rightAnimation = new Animation("alien_enemy", spritesheet, 95, 100, 0.10, 7, true, false, "right");
     // this.leftAnimation = new Animation("alien_enemy", spritesheet, 95, 100, 0.10, 7, true, false, "left");
     this.animation = this.idleAnimation;
