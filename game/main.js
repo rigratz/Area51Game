@@ -15,6 +15,7 @@ function BoundingRect(x, y, w, h) {
 
 AM.queueDownload("./img/area51main.png");
 AM.queueDownload("./img/bird_enemy_spritesheet.png");
+AM.queueDownload("./img/alien_enemy.png");
 AM.queueDownload("./img/cement_background.jpg");
 AM.queueDownload("./img/textures.png");
 AM.queueDownload("./img/dragon.png");
@@ -58,7 +59,7 @@ AM.downloadAll(function () {
     // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     // ];
     "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "X             b    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "X      a      b    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
     "X                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
     "X @                X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
     "XTTTTTTTTTTTTT     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -78,7 +79,7 @@ AM.downloadAll(function () {
     "X                    TTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
     "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
     "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "X       D        TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+    "X                TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
     "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
     "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
     "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
@@ -112,8 +113,10 @@ AM.downloadAll(function () {
           gameEngine.camera.follow(player, 100, 100);
         } else if (ch === "bird") {
           gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png"), 150));
-      } else if (ch === "idle_bird") {
+        } else if (ch === "idle_bird") {
           gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png"), 0));
+        } else if (ch === "idle_alien") {
+          gameEngine.addEntity(new AlienEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/alien_enemy.png"), 0));
         } else if (ch === "platform") {
           var mult = 1;
           while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {

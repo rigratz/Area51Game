@@ -23,6 +23,9 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     else if (this.entityType === 'bird_enemy') {
         this.drawFrameBirdEnemy(tick, ctx, x, y);
     }
+    else if (this.entityType === 'alien_enemy') {
+        this.drawFrameAlienEnemy(tick, ctx, x, y);
+    }
     else if (this.entityType === 'dragon') {
         this.drawFrameDragon(tick, ctx, x, y);
     }
@@ -71,6 +74,88 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
     }
     var width_mult = 2.5;
     var height_mult = 2.5;
+    ctx.drawImage(this.spriteSheet,
+        xframe, yframe,  // source from sheet
+        this.frameWidth, this.frameHeight,
+        x, y,
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
+}
+
+Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
+    this.elapsedTime += tick;
+    this.time += tick;
+    if (this.isDone()) {
+        if (this.loop) this.elapsedTime = 0;
+    }
+    var frame = this.currentFrame();
+    var xindex = 0;
+    if (this.entityType === "player") {
+        xindex = frame % 4;
+        yindex = Math.floor(frame / 7);
+    }
+    var xframe = 0;
+    var yframe = 0;
+    if (this.type === "idle") {
+        xframe = 3 + (xindex * this.frameWidth);
+        yframe = 2;
+    } else if (this.type === "idleleft") {
+        xframe = 132 + (xindex * this.frameWidth);
+        yframe = 2;
+    }else if (this.type === "right") {
+        xframe = 3 + (xindex * this.frameWidth);
+        yframe = 81;
+    } else if (this.type === "left") {
+        xframe = 3+ (xindex * this.frameWidth);
+        yframe = 177;
+    } else if (this.type === "jump") {
+        xframe = 1 + (xindex * this.frameWidth);
+        yframe = 45;
+    } else if (this.type === "jumpleft") {
+      xframe = 152 + (xindex * this.frameWidth);
+      yframe = 45;
+    } else if (this.type === "crouch") {
+      xframe = 9;
+      yframe = 233;
+        y = y + 21;
+    } else if (this.type === "up") {
+      xframe = 9;
+      yframe = 275;
+        y = y - 37;
+    }
+    var width_mult = 2.5;
+    var height_mult = 2.5;
+    ctx.drawImage(this.spriteSheet,
+        xframe, yframe,  // source from sheet
+        this.frameWidth, this.frameHeight,
+        x, y,
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
+}
+
+Animation.prototype.drawFrameAlienEnemy = function(tick, ctx, x, y) {
+    this.elapsedTime += tick;
+    this.time += tick;
+    if (this.isDone()) {
+        if (this.loop) this.elapsedTime = 0;
+    }
+    var frame = this.currentFrame();
+    var xindex = frame % 7;
+    var yindex = 0;
+    var xframe = 0;
+    var yframe = 0;
+    if (this.type === "idle") {
+        xframe = xindex * this.frameWidth;
+        yframe = 0;     //shuld be 0?
+    } else if (this.type === "left") {
+        xframe = xindex * this.frameWidth;
+        yframe = 100;
+    } else if (this.type === "right") {
+        xframe = xindex * this.frameWidth;
+        yframe = 200;
+    }
+    var width_mult = 1.5;
+    var height_mult = 1.5;
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,

@@ -205,7 +205,6 @@ Entity.prototype.draw = function (ctx) {
     }
 }
 
-
 function Timer() {
     this.gameTime = 0;
     this.maxStep = 0.05;

@@ -24,7 +24,6 @@ function Level(plan, gameEngine) {
       var ch = line[x], fieldType = null;
       //var Actor = actorChars[ch];
       if (ch === "@")
-        //this.entities.push(new PlayerOne(gameEngine, AM.getAsset("./img/area51main.png")));
         fieldType = "player";
       else if (ch === "X")
         fieldType = "platform";
@@ -34,7 +33,8 @@ function Level(plan, gameEngine) {
         fieldType = "bird";
       else if (ch === "b")
         fieldType = "idle_bird";
-        //this.entities.push(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));
+      else if (ch === "a")
+        fieldType = "idle_alien";
       else if (ch === "D")
         fieldType = "dragon";
       gridLine.push(fieldType);
