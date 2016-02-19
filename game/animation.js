@@ -92,10 +92,13 @@ Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {
     var yframe = 0;
     if (this.type === "idle") {
         xframe = xindex * this.frameWidth;
-        yframe = 2;
+        yframe = 2;     //shuld be 0?
     } else if (this.type === "left") {
         xframe = xindex * this.frameWidth;
-        yframe = 90;
+        yframe = 100;
+    } else if (this.type === "right") {
+        xframe = xindex * this.frameWidth;
+        yframe = 200;
     }
     var width_mult = 2.5;
     var height_mult = 2.5;

@@ -59,7 +59,7 @@ AM.downloadAll(function () {
     // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     // ];
     "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "X             B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "X             b    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
     "X                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
     "X @                X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
     "XTTTTTTTTTTTTT     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -91,7 +91,7 @@ AM.downloadAll(function () {
     "XX                                                           XX",
     "XX              B                                            XX",
     "XX                                                           XX",
-    "XX B         TT      D    TT B          TT    B              XX",
+    "XX   b       TT      D    TT   b        TT     b             XX",
     "XX           XX           XX            XX                   XX",
     "XX           XX           XX            XX                   XX",
     "XX           XX           XX            XX                   XX",
@@ -112,14 +112,15 @@ AM.downloadAll(function () {
           gameEngine.addEntity(player);
           gameEngine.camera.follow(player, 100, 100);
         } else if (ch === "bird") {
-          gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png")));
+          gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png"), 150));
+      } else if (ch === "idle_bird") {
+          gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png"), 0));
         } else if (ch === "platform") {
           var mult = 1;
           while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
             currLevel.grid[j+mult][i] = "used_platform";
             mult += 1;
           }
-
           gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i * 50, j * 50, 50, 50 * mult, "X")));
         } else if (ch === "platformtop") {
           gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i*50, j*50, 50, 50, "T")));

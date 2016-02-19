@@ -1,15 +1,15 @@
-function BirdEnemy(game, x, y, spritesheet) {
+function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.game = game;
     this.ctx = game.ctx;
     this.x = x;
     this.y = y;
-    this.xvel = 100;
+    this.xvel = xvel;
     this.yvel = 0;
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = false;
-    this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "idle");
-    // this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 200, 0.14, 8, true, false, "right");
-    this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "left");
+    this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "idle");
+    this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "right");
+    this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "left");
     this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
 }
@@ -40,8 +40,9 @@ BirdEnemy.prototype.update = function() {
         break;
       }
     }
-    if (this.xvel > 0) this.animation.type = "idle";
-    if (this.xvel < 0) this.animation.type = "left";
+    if (this.xvel === 0) this.animation = this.idleAnimation;
+    else if (this.xvel > 0) this.animation = this.rightAnimation;
+    else if (this.xvel < 0) this.animation = this.leftAnimation;
 
     for (var i = 0; i < this.game.entities.length; i++) {
         var entity = this.game.entities[i];
