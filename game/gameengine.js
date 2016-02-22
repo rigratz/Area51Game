@@ -12,6 +12,9 @@ window.requestAnimFrame = (function () {
 function GameEngine() {
     this.entities = [];
     this.platforms = []; // platforms should be an entity
+    this.exits = [];
+    this.worlds = [];
+    this.currentWorld = null;
     this.ctx = null;
     this.camera = null;
     this.backgroundImage = null;    //This is kinda hacky.
@@ -23,8 +26,6 @@ function GameEngine() {
     this.down = null;
     this.jump = null;
     this.fire = null;
-    this.deadBirds = 0;
-    this.shotsFired = 0;
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -36,8 +37,105 @@ GameEngine.prototype.init = function (ctx) {
     console.log('game initialized');
 }
 
+GameEngine.prototype.generateWorlds = function() {
+  this.worlds["Area 51"] = new World("Area 51", this);
+}
+GameEngine.prototype.clearLevel = function() {
+  for (var i = 0; i < this.entities.length; i++) {
+    this.entities[i].removeFromWorld = true;
+  }
+  for (var i = 0; i < this.platforms.length; i++) {
+    this.platforms[i].removeFromWorld = true;
+  }
+  for (var i = 0; i < this.exits.length; i++) {
+    this.exits[i].removeFromWorld = true;
+  }
+  //console.log(this.currentWorld.currentRoom);
+}
+GameEngine.prototype.setLevel = function() {
+  console.log("setting Level");
+  // this.entities = [];
+  // this.platforms = [];
+  // this.exits = [];
+  console.log(this.platforms.length);
+  //this.clearLevel();
+  console.log(this.platforms.length);
+  var currLevel = this.currentWorld.currentRoom;
+  console.log(currLevel);
+  console.log(this.currentWorld);
+  var levelWidth = currLevel.grid[0].length;
+  var levelHeight = currLevel.grid.length;
+  this.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
+
+  var ch;
+  for (var i = 0; i < currLevel.grid[0].length; i++) {
+    for (var j = 0; j < currLevel.grid.length; j++) {
+      ch = currLevel.grid[j][i];
+      if (ch === "player") {
+        //console.log("adding player!!!!!!!!!");
+        var player = new PlayerOne(this, i * 50, j * 50 - 125, AM.getAsset("./img/area51main.png"));
+        this.addEntity(player);
+        this.camera.follow(player, 100, 100);
+      } else if (ch === "bird") {
+        this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png")));
+      } else if (ch === "platform") {
+        var mult = 1;
+        while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
+          currLevel.grid[j+mult][i] = "used_platform";
+          mult += 1;
+        }
+
+        this.platforms.push((new Platform(AM.getAsset("./img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
+      } else if (ch === "platformtop") {
+        this.platforms.push((new Platform(AM.getAsset("./img/textures.png"), this, i*50, j*50, 50, 50, "T")));
+      } else if (ch === "dragon") {
+          this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./img/dragon.png")));
+      } else if (ch === "exit") {
+        var exitDir = null;
+        if (i === 0) {
+          exitDir = "west";
+        } else if (i === currLevel.grid[0].length - 1) {
+          exitDir = "east";
+        } else if (j === 0) {
+          exitDir = "north";
+        } else if (j === currLevel.grid.length - 1) {
+          exitDir = "south";
+        }
+        this.exits.push((new Exit(AM.getAsset("./img/textures.png"), this, i*50, j*50, 50, 50, "exit", exitDir)));
+      } else if (ch === "used_platform") {
+        currLevel.grid[j][i] = "platform";
+      }
+    }
+  }
+}
+
+GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
+  // console.log(this.currentWorld);
+  // console.log(i);
+  // console.log(j);
+  // console.log(exitedFrom);
+  this.clearLevel();
+  console.log(this.currentWorld.rooms[i][j-1]);
+  if (exitedFrom === "north") {
+    this.currentWorld.currentRoom = this.currentWorld.rooms[i-1][j];
+  } else if (exitedFrom === "south") {
+    this.currentWorld.currentRoom = this.currentWorld.rooms[i+1][j];
+  } else if (exitedFrom === "east") {
+    this.currentWorld.currentRoom = this.currentWorld.rooms[i][j+1];
+  } else if (exitedFrom === "west") {
+    this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
+  }
+  //console.log(this.currentWorld.currentRoom);
+
+  this.setLevel();
+}
 GameEngine.prototype.start = function () {
     console.log("starting game");
+    this.generateWorlds();
+    this.currentWorld = this.worlds["Area 51"];
+    //console.log(this.currentWorld);
+    this.setLevel();
+
     var that = this;
     (function gameLoop() {
         that.loop();
@@ -127,12 +225,12 @@ GameEngine.prototype.startInput = function () {
 }
 
 GameEngine.prototype.addEntity = function (entity) {
-    console.log('added entity');
+    //console.log('added entity');
     this.entities.push(entity);
 }
 
 GameEngine.prototype.addBackgroundImage = function(image) {
-    console.log("Added background");
+    //console.log("Added background");
     this.backgroundImage = image;
 }
 
@@ -151,11 +249,6 @@ GameEngine.prototype.draw = function () {
     for (var i = 0; i < this.platforms.length; i++) {//SHOULDNT NEED THIS ONCE ENTITIES IS FIXED
         this.platforms[i].draw(this.ctx);
     }
-    if (this.deadBirds >= 9) {
-      this.ctx.fillStyle = "blue";
-      this.ctx.font = "bold 32px Arial";
-      this.ctx.fillText("You killed all 9 birds!", this.camera.xView + 100, this.camera.yView + 100);
-    }
     this.ctx.restore();
 }
 
@@ -169,10 +262,28 @@ GameEngine.prototype.update = function () {
             entity.update();
         }
     }
+    var platformCount = this.platforms.length;
+
+    // for (var i = 0; i < platformCount; i++) {
+    //   var plat = this.platforms[i];
+    //   if (!plat.removeFromWorld) {
+    //     plat.update();
+    //   }
+    // }
 
     for (var i = this.entities.length - 1; i >= 0; --i) {
         if (this.entities[i].removeFromWorld) {
             this.entities.splice(i, 1);
+        }
+    }
+    for (var i = this.platforms.length - 1; i >= 0; --i) {
+        if (this.platforms[i].removeFromWorld) {
+            this.platforms.splice(i, 1);
+        }
+    }
+    for (var i = this.exits.length - 1; i >= 0; --i) {
+        if (this.exits[i].removeFromWorld) {
+            this.exits.splice(i, 1);
         }
     }
 

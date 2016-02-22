@@ -50,7 +50,6 @@ BirdEnemy.prototype.update = function() {
             if (entity.collide(this)) {
                 this.removeFromWorld = true;
                 entity.removeFromWorld = true;
-                this.game.deadBirds += 1;
             }
         }
     }

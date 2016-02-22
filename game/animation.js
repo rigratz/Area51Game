@@ -13,7 +13,7 @@ function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDurati
     this.timesLooped = 0;
 
     this.time = 0;
-    console.log(this.spriteSheet);
+    //console.log(this.spriteSheet);
 }
 
 Animation.prototype.drawFrame = function (tick, ctx, x, y) {
