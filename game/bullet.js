@@ -7,6 +7,10 @@ function Bullet(game, x, y, dir) {//, spritesheet) {
     this.height = 5;
     this.xvel = 0;
     this.yvel = 0;
+    this.startX = x;
+    this.startY = y;
+
+    this.distanceTraveled = 0;
     if (dir === "up") {
       this.yvel = -500;
     } else if (dir === "left") {
@@ -26,7 +30,15 @@ function Bullet(game, x, y, dir) {//, spritesheet) {
 Bullet.prototype.update = function() {
   this.x += this.xvel * this.game.clockTick;
   this.y += this.yvel * this.game.clockTick;
+  this.distanceTraveled = (this.x - this.startX) + (this.y - this.startY);
+  if (Math.abs(this.distanceTraveled) > 650) this.removeFromWorld = true;
 
+  for (var i = 0; i < this.game.platforms.length; i++) {
+    if (this.collideEnemy(this.game.platforms[i])) {
+      this.removeFromWorld = true;
+      break;
+    }
+  }
     // trying to add something here to remove the bullet from the world when it collides with platforms.
 }
 

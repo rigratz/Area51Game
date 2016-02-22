@@ -81,7 +81,7 @@ GameEngine.prototype.setLevel = function() {
     for (var j = 0; j < currLevel.grid.length; j++) {
       ch = currLevel.grid[j][i];
       if (ch === "player") {
-        var player = new PlayerOne(this, i * 50, j * 50 - 125, AM.getAsset("./img/area51main.png"));
+        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./img/area51main.png"));
         this.addEntity(player);
         this.camera.follow(player, 100, 100);
       } else if (ch === "bird") {
