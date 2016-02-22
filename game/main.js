@@ -18,6 +18,7 @@ AM.queueDownload("./img/bird_enemy_spritesheet.png");
 AM.queueDownload("./img/cement_background.jpg");
 AM.queueDownload("./img/textures.png");
 AM.queueDownload("./img/dragon.png");
+AM.queueDownload("./img/grumpy_cat.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -76,9 +77,9 @@ AM.downloadAll(function () {
         "X B           B            X     XXXXXXXXXXXXXXXXXXXXX       XX",
         "X                          XTTTTTXXXXXXXXXXXXXXXXXXXXX       XX",
         "X                    TTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+        "X       C            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
         "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-        "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-        "X       D        TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+        "X                TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
         "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
         "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
         "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
@@ -125,6 +126,8 @@ AM.downloadAll(function () {
                 gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i*50, j*50, 50, 50, "T")));
             } else if (ch === "dragon") {
                 gameEngine.addEntity(new Dragon(gameEngine, i * 50, j * 50, AM.getAsset("./img/dragon.png")));
+            } else if (ch === "cat") {
+                gameEngine.addEntity(new BirdEnemy(gameEngine, i*50, j*50, AM.getAsset("./img/grumpy_cat.png"), 0));
             }
         }
     }
