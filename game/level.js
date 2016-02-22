@@ -32,6 +32,8 @@ function Level(plan, gameEngine) {
         fieldType = "platformtop";
       else if (ch === "B")
         fieldType = "bird";
+      else if (ch === "b")
+        fieldType = "idle_bird";
         //this.entities.push(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));
       else if (ch === "D")
         fieldType = "dragon";
