@@ -10,6 +10,7 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "idle");
     this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "right");
     this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "left");
+    this.catAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "cat");
     this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
 }
@@ -41,6 +42,7 @@ BirdEnemy.prototype.update = function() {
       }
     }
     if (this.xvel === 0) this.animation = this.idleAnimation;
+    else if(this.xvel === 2) this.animation = this.catAnimation;
     else if (this.xvel > 0) this.animation = this.rightAnimation;
     else if (this.xvel < 0) this.animation = this.leftAnimation;
 

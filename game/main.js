@@ -75,9 +75,9 @@ AM.downloadAll(function () {
         "XXXXXXXXXXXXXX     X       T     TTTTTTTTTTTTTTTTTTTTT       XX",
         "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
         "X B           B            X     XXXXXXXXXXXXXXXXXXXXX       XX",
-        "X                          XTTTTTXXXXXXXXXXXXXXXXXXXXX       XX",
+        "X       C                  XTTTTTXXXXXXXXXXXXXXXXXXXXX       XX",
         "X                    TTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-        "X       C            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+        "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
         "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
         "X                TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
         "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
@@ -127,7 +127,7 @@ AM.downloadAll(function () {
             } else if (ch === "dragon") {
                 gameEngine.addEntity(new Dragon(gameEngine, i * 50, j * 50, AM.getAsset("./img/dragon.png")));
             } else if (ch === "cat") {
-                gameEngine.addEntity(new BirdEnemy(gameEngine, i*50, j*50, AM.getAsset("./img/grumpy_cat.png"), 0));
+                gameEngine.addEntity(new BirdEnemy(gameEngine, i*50, j*50, AM.getAsset("./img/grumpy_cat.png"), 2));
             }
         }
     }
