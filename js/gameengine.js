@@ -12,9 +12,11 @@ window.requestAnimFrame = (function () {
 function GameEngine() {
     this.entities = [];
     this.platforms = [];
+    this.powerups = [];
     this.exits = [];
     this.worlds = [];
     this.currentWorld = null;
+    this.currentPowerUp = " ";
     this.ctx = null;
     this.camera = null;
     this.backgroundImage = null;    //This is kinda hacky.
@@ -26,11 +28,16 @@ function GameEngine() {
     this.down = null;
     this.jump = null;
     this.fire = null;
+    this.toggle = null;
 
     this.mouse = null;
     this.click = null;
     this.running = false;
     this.lives = 3;
+
+    this.speed = 10;
+    this.maxspeed = 250;
+
     this.deadBirds = 0;
     this.shotsFired = 0;
     this.maxHealth = 100;
@@ -57,6 +64,7 @@ GameEngine.prototype.clearLevel = function() {
     this.entities[i].removeFromWorld = true;
     console.log("this should do something");
     console.log(this.entities[i].removeFromWorld);
+
   }
   for (var i = 0; i < this.platforms.length; i++) {
     this.platforms[i].removeFromWorld = true;
@@ -81,11 +89,13 @@ GameEngine.prototype.setLevel = function() {
     for (var j = 0; j < currLevel.grid.length; j++) {
       ch = currLevel.grid[j][i];
       if (ch === "player") {
-        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./img/area51main.png"));
+
+        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
+
         this.addEntity(player);
         this.camera.follow(player, 100, 100);
       } else if (ch === "bird") {
-        this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png"), 10));
+        this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"), 10));
       } else if (ch === "platform") {
         var mult = 1;
         while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
@@ -93,13 +103,13 @@ GameEngine.prototype.setLevel = function() {
           mult += 1;
         }
 
-        this.platforms.push((new Platform(AM.getAsset("./img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
+        this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
       } else if (ch === "platformtop") {
-        this.platforms.push((new Platform(AM.getAsset("./img/textures.png"), this, i*50, j*50, 50, 50, "T")));
+        this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "T")));
       } else if (ch === "dragon") {
-          this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./img/dragon.png")));
+          this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
       } else if (ch == "speedboost") {
-          this.addEntity(new PowerUp(AM.getAsset("./img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
+          this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
       } else if (ch === "exit") {
         var exitDir = null;
         if (i === 0) {
@@ -111,7 +121,7 @@ GameEngine.prototype.setLevel = function() {
         } else if (j === currLevel.grid.length - 1) {
           exitDir = "south";
         }
-        this.exits.push((new Exit(AM.getAsset("./img/textures.png"), this, i*50, j*50, 50, 50, "exit", exitDir)));
+        this.exits.push((new Exit(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "exit", exitDir)));
       } else if (ch === "used_platform") {
         currLevel.grid[j][i] = "platform";
       }
@@ -179,6 +189,7 @@ GameEngine.prototype.startInput = function () {
     }, false);
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
+        if (e.keyCode === 32) that.toggle = true;
         if (e.keyCode === 37) that.left = true;
         if (e.keyCode === 39) that.right = true;
         if (e.keyCode === 38) that.up = true;
@@ -190,6 +201,7 @@ GameEngine.prototype.startInput = function () {
     }, false);
 
     this.ctx.canvas.addEventListener("keyup", function (e) {
+        if (e.keyCode === 32) that.toggle = false;
         if (e.keyCode === 88) that.fire = false;
         if (e.keyCode === 90) that.jump = false;
         if (e.keyCode === 37) that.left = false;
@@ -245,8 +257,19 @@ GameEngine.prototype.draw = function () {
         this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 100 * this.percent, 15);
         this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
-        this.ctx.fillText("Lives " + this.lives, this.camera.xView + 700, this.camera.yView + 15);
-
+        this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
+        this.ctx.fillText("Current Powerup", this.camera.xView + 500, this.camera.yView + 15);
+        console.log(this.currentPowerUp);
+        console.log(this.powerups.length);
+        if (this.currentPowerUp === null || this.currentPowerUp === " ") {
+            this.ctx.strokeStyle = "black";
+            this.ctx.strokeRect(this.camera.xView + 660, this.camera.yView + 5, 50, 50);
+        }
+         else if (this.currentPowerUp === "S") {
+           var img = AM.getAsset("./js/img/speed_upgrade_icon.png");
+           this.ctx.drawImage(img,
+           0, 0,  50, 50, this.camera.xView + 660, this.camera.yView + 5, 50, 50);
+       }
     }
     this.ctx.restore();
 }
