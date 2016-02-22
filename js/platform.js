@@ -28,33 +28,42 @@ Platform.prototype.reset = function () {
 
 
 Platform.prototype.draw = function (ctx) {
+    switch (this.platType) {
+        case "T":
+        console.log('hmm');
+            this.drawTrussPlatformTop(ctx);
+        case "X":
+            this.drawTrussPlatform(ctx);
+    }
+}
 
-    if (this.platType === "T") {
+Platform.prototype.drawTrussPlatformTop = function(ctx) {
+    ctx.drawImage(this.textureSheet,
+        0, 0,  // source from sheet
+        50, 50,
+        this.x, this.y ,
+        this.width,
+        this.height);
+}
+
+Platform.prototype.drawTrussPlatform = function(ctx) {
+    var mult = this.height / 50;
+    var i = 0;
+    var y = this.y;
+    for (i = 1; i <= mult; i++) {
       ctx.drawImage(this.textureSheet,
-          0, 0,  // source from sheet
-          50, 50,
-          this.x, this.y ,
-          this.width,
-          this.height);
-    } else if (this.platType === "X"){
-          var mult = this.height / 50;
-          var i = 0;
-          var y = this.y;
-          for (i = 1; i <= mult; i++) {
-            ctx.drawImage(this.textureSheet,
-              100, 0,  // source from sheet
-              50, 50,
-              this.x, this.y,
-              50,
-              50);
-              this.y += 50;
-          }
-          this.y = y;
-          ctx.drawImage(this.textureSheet,
-              0, 0,  // source from sheet
-              50, 50,
-              this.x, this.y ,
-              50,
-              50);
-        }
+        100, 0,  // source from sheet
+        50, 50,
+        this.x, this.y,
+        50,
+        50);
+        this.y += 50;
+    }
+    this.y = y;
+    ctx.drawImage(this.textureSheet,
+        0, 0,  // source from sheet
+        50, 50,
+        this.x, this.y ,
+        50,
+        50);
 }
