@@ -35,6 +35,8 @@ function Level(plan, gameEngine) {
         //this.entities.push(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));
       else if (ch === "D")
         fieldType = "dragon";
+      else if (ch === "C")
+        fieldType = "cat";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
