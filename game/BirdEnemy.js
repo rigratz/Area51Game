@@ -23,6 +23,7 @@ BirdEnemy.prototype.constructor = BirdEnemy;
 
 BirdEnemy.prototype.draw = function () {
     if (!this.game.running) return;
+
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
     if (this.debug) {
@@ -32,10 +33,7 @@ BirdEnemy.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 }
 BirdEnemy.prototype.update = function() {
-    // this.boundingRect = new BoundingRect(this.x + 40, this.y + 50, 2 * 95, 2 * 100);
-    // //this.x += this.xvel * this.game.clockTick;
-    // //this.y += this.yvel * this.game.clockTick;
-    // Entity.prototype.update.call(this);
+
     this.boundingRect = new BoundingRect(this.x + 40, this.y + 50, 2 * 95, 2 * 100);
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {

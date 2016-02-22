@@ -3,19 +3,20 @@ function PlayGame(game, x, y) {
     this.ctx = game.ctx;
     this.x = x;
     this.y = y;
+    this.removeFromWorld = false;
     Entity.call(this, game, x, y);
 }
 
 PlayGame.prototype = new Entity();
 PlayGame.prototype.constructor = PlayGame;
 
-PlayGame.prototype.reset = function () { 
+PlayGame.prototype.reset = function () {
     this.game.running = false;
 }
 PlayGame.prototype.update = function () {
     if (this.game.click && this.game.lives > 0) {
         this.game.running = true;
-        console.log(this.game.lives);
+        //console.log(this.game.lives);
     } else if (this.game.lives <= 0) {
       this.game.running = false;
     }

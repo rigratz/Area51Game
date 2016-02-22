@@ -27,10 +27,7 @@ Platform.prototype.reset = function () {
 
 
 Platform.prototype.draw = function (ctx) {
-    // ctx.strokeStyle = "yellow";
-    // ctx.strokeRect(this.x, this.y, this.width, this.height);
-    // ctx.fillStyle = "green";
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
+
     if (this.platType === "T") {
       ctx.drawImage(this.textureSheet,
           0, 0,  // source from sheet
@@ -52,9 +49,6 @@ Platform.prototype.draw = function (ctx) {
           50,
           50);
           this.y += 50;
-      //     Entity.prototype.draw.call(this);
-      // ctx.strokeStyle = "blue";
-      // ctx.strokeRect(this.x, this.y * mult, this.width, 50);
       }
       this.y = y;
       ctx.drawImage(this.textureSheet,
@@ -64,12 +58,4 @@ Platform.prototype.draw = function (ctx) {
           50,
           50);
     }
-    // ctx.drawImage(this.textureSheet,
-    //     0, 0,  // source from sheet
-    //     50, 50,
-    //     this.x, this.y ,
-    //     this.width,
-    //     this.height);
-    //Entity.prototype.draw.call(this);
-
 }

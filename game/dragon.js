@@ -9,9 +9,6 @@ function Dragon(game, x, y, spritesheet) {
     this.debug = false;
     this.collided = false;
     this.animation = new Animation("dragon", spritesheet, 96, 96, 0.14, 3, true, false, "idle");
-    // this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 200, 0.14, 8, true, false, "right");
-    //this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "left");
-    //this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
 }
 
@@ -22,7 +19,7 @@ Dragon.prototype.constructor = Dragon;
 
 Dragon.prototype.draw = function () {
         if (!this.game.running) return;
-    //console.log("draw dragon");
+
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
     if (this.debug) {
@@ -33,10 +30,7 @@ Dragon.prototype.draw = function () {
 }
 Dragon.prototype.update = function() {
      this.boundingRect = new BoundingRect(this.x + 40, this.y + 50, 2 * 95, 2 * 100);
-    // //this.x += this.xvel * this.game.clockTick;
-    // //this.y += this.yvel * this.game.clockTick;
-    // Entity.prototype.update.call(this);
-    //this.boundingRect = new BoundingRect(this.x + 40, this.y + 50, 2 * 95, 2 * 100);
+
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {
         this.xvel = this.xvel * -1;
@@ -53,18 +47,9 @@ Dragon.prototype.update = function() {
             if (entity.collideEnemy(this)) {
                 this.removeFromWorld = true;
                 entity.removeFromWorld = true;
-                this.game.deadBirds += 1;
             }
         }
     }
-
-
-
-
-
-
-
-
     // if (this.collide()) {
     //   this.xvel = this.xvel * -1;
     // }

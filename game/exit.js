@@ -1,4 +1,3 @@
-//exit.js
 function Exit(textureSheet, game, x, y, w, h, type, exitDir) {
     this.textureSheet = textureSheet;
     this.ctx = game.ctx;

@@ -11,7 +11,7 @@ window.requestAnimFrame = (function () {
 
 function GameEngine() {
     this.entities = [];
-    this.platforms = []; // platforms should be an entity
+    this.platforms = [];
     this.exits = [];
     this.worlds = [];
     this.currentWorld = null;
@@ -51,6 +51,7 @@ GameEngine.prototype.init = function (ctx) {
 GameEngine.prototype.generateWorlds = function() {
   this.worlds["Area 51"] = new World("Area 51", this);
 }
+
 GameEngine.prototype.clearLevel = function() {
   for (var i = 0; i < this.entities.length; i++) {
     this.entities[i].removeFromWorld = true;
@@ -61,19 +62,12 @@ GameEngine.prototype.clearLevel = function() {
   for (var i = 0; i < this.exits.length; i++) {
     this.exits[i].removeFromWorld = true;
   }
-  //console.log(this.currentWorld.currentRoom);
 }
+
 GameEngine.prototype.setLevel = function() {
-  //console.log("setting Level");
-  // this.entities = [];
-  // this.platforms = [];
-  // this.exits = [];
-  // console.log(this.platforms.length);
-  // //this.clearLevel();
-  // console.log(this.platforms.length);
+
   var currLevel = this.currentWorld.currentRoom;
-  // console.log(currLevel);
-  // console.log(this.currentWorld);
+
   var levelWidth = currLevel.grid[0].length;
   var levelHeight = currLevel.grid.length;
   this.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
@@ -83,13 +77,11 @@ GameEngine.prototype.setLevel = function() {
     for (var j = 0; j < currLevel.grid.length; j++) {
       ch = currLevel.grid[j][i];
       if (ch === "player") {
-        //console.log("adding player!!!!!!!!!");
         var player = new PlayerOne(this, i * 50, j * 50 - 125, AM.getAsset("./img/area51main.png"));
         this.addEntity(player);
         this.camera.follow(player, 100, 100);
       } else if (ch === "bird") {
-        console.log("adding bird!");
-        this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png")));
+        this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png"), 10));
       } else if (ch === "platform") {
         var mult = 1;
         while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
@@ -119,15 +111,13 @@ GameEngine.prototype.setLevel = function() {
       }
     }
   }
+  for (var i = 0; i < this.entities.length; i++) {
+    this.entities[i].removeFromWorld = false;
+  }
 }
 
 GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
-  // console.log(this.currentWorld);
-  // console.log(i);
-  // console.log(j);
-  // console.log(exitedFrom);
   this.clearLevel();
-  console.log(this.currentWorld.rooms[i][j-1]);
   if (exitedFrom === "north") {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i-1][j];
   } else if (exitedFrom === "south") {
@@ -137,15 +127,13 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
   } else if (exitedFrom === "west") {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
   }
-  //console.log(this.currentWorld.currentRoom);
-
   this.setLevel();
 }
 GameEngine.prototype.start = function () {
     console.log("starting game");
     this.generateWorlds();
     this.currentWorld = this.worlds["Area 51"];
-    //console.log(this.currentWorld);
+
     this.setLevel();
 
     var that = this;
@@ -172,6 +160,7 @@ GameEngine.prototype.startInput = function () {
 
     this.ctx.canvas.addEventListener("click", function (e) {
         that.click = getXandY(e);
+
     }, false);
 
     this.ctx.canvas.addEventListener("mousemove", function (e) {
@@ -184,79 +173,26 @@ GameEngine.prototype.startInput = function () {
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 37) that.left = true;
-          //console.log(e);
-        e.preventDefault();
-    }, false);
-
-    this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 39) that.right = true;
-          //console.log(e);
-        e.preventDefault();
-    }, false);
-
-    this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 38) that.up = true;
-          //console.log(e);
-        e.preventDefault();
-    }, false);
-
-    this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 40) that.down = true;
-          //console.log(e);
-        e.preventDefault();
-    }, false);
-
-
-    this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 90) that.jump = true;
-          //console.log(e);
-        e.preventDefault();
-    }, false);
-
-
-    this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 88) that.fire = true;
-          //console.log(e);
+
         e.preventDefault();
     }, false);
-
 
     this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.keyCode === 88) that.fire = false;
-          //console.log(e);
-        e.preventDefault();
-    }, false);
-
-    this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.keyCode === 90) that.jump = false;
-          //console.log(e);
-        e.preventDefault();
-    }, false);
-
-
-    this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.keyCode === 37) that.left = false;
-          //console.log(e);
-        e.preventDefault();
-    }, false);
-
-    this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.keyCode === 39) that.right = false;
-          //console.log(e);
-        e.preventDefault();
-    }, false);
-
-    this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.keyCode === 38) that.up = false;
-          //console.log(e);
+        if (e.keyCode === 40) that.down = false;
+
         e.preventDefault();
     }, false);
 
-    this.ctx.canvas.addEventListener("keyup", function (e) {
-        if (e.keyCode === 40) that.down = false;
-          //console.log(e);
-        e.preventDefault();
-    }, false);
     console.log('Input started');
 }
 
@@ -276,21 +212,16 @@ GameEngine.prototype.draw = function () {
     if (this.camera != null) {
       this.ctx.translate(-this.camera.xView, -this.camera.yView);
     }
-    //console.log(this.backgroundImage)
+
     this.backgroundImage.draw(this.ctx);              //Probably should change how we do this
 
     for (var i = 0; i < this.entities.length; i++) {
         this.entities[i].draw(this.ctx);
     }
-    for (var i = 0; i < this.platforms.length; i++) {//SHOULDNT NEED THIS ONCE ENTITIES IS FIXED
+    for (var i = 0; i < this.platforms.length; i++) {
         this.platforms[i].draw(this.ctx);
     }
 
-    if (this.deadBirds >= 9) {
-      this.ctx.fillStyle = "blue";
-      this.ctx.font = "bold 32px Arial";
-      this.ctx.fillText("You killed all 9 birds!", this.camera.xView + 100, this.camera.yView + 100);
-    }
     if(this.camera != null && this.running) {
        this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
@@ -308,8 +239,9 @@ GameEngine.prototype.draw = function () {
         this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
         this.ctx.fillText("Lives " + this.lives, this.camera.xView + 700, this.camera.yView + 15);
-        this.ctx.restore();
+
     }
+    this.ctx.restore();
 }
 
 GameEngine.prototype.update = function () {
@@ -322,14 +254,7 @@ GameEngine.prototype.update = function () {
             entity.update();
         }
     }
-    var platformCount = this.platforms.length;
 
-    // for (var i = 0; i < platformCount; i++) {
-    //   var plat = this.platforms[i];
-    //   if (!plat.removeFromWorld) {
-    //     plat.update();
-    //   }
-    // }
 
     for (var i = this.entities.length - 1; i >= 0; --i) {
         if (this.entities[i].removeFromWorld) {

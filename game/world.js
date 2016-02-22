@@ -15,14 +15,13 @@ function World(name, gameEngine) {
 
 World.prototype.makeRoomPlans = function (name) {
   var builder = [];
-  //var builderLine = [];
   for (var i = 0; i < 10; i++) {
     builder[i] = [];
     for (var j = 0; j < 10; j++) {
       builder[i][j] = null;
     }
   }
-  console.log(builder);
+  
   if (name === "Area 51") {
     builder = [
       "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -103,10 +102,3 @@ World.prototype.makeRoomPlans = function (name) {
     this.currentRoom = this.rooms[0][6];
   }
 };
-
-// World.prototype.generateWorld = function(plans) {
-//   // for (var i = 0; i < plans.length; i++) {
-//   //   var tempLevel = new Level(plans[i], this.game);
-//   //
-//   // }
-// }

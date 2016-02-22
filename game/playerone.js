@@ -119,11 +119,9 @@ PlayerOne.prototype.update = function() {
 
   this.game.camera.follow(this, 100, 100);
     var collideExit = false;
-    //console.log(this.game.exits.length);
     for (var i = 0; i < this.game.exits.length; i++) {
       if (this.collide(this.game.exits[i])) {
         collideExit = true;
-        //console.log(this.game.exits[i]);
         this.game.switchLevel(this.game.exits[i].exitDir, this.game.currentWorld.currentRoom.iIndex, this.game.currentWorld.currentRoom.jIndex);
         break;
       }
