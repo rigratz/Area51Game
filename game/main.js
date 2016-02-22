@@ -13,6 +13,7 @@ function BoundingRect(x, y, w, h) {
 }
 
 
+
 AM.queueDownload("./img/area51main.png");
 AM.queueDownload("./img/bird_enemy_spritesheet.png");
 AM.queueDownload("./img/cement_background.jpg");
@@ -27,12 +28,17 @@ AM.downloadAll(function () {
 
     var gameEngine = new GameEngine();
 
+
+   
     /*This is probably not the best way to do this*/
     gameEngine.backgroundImage = new Background(AM.getAsset("./img/cement_background.jpg"),
         gameEngine, 736, 736);
     /**********************************************/
     gameEngine.init(ctx);
     gameEngine.start();
+
+    gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
+
 
     var levelPlan = [
         // "X B            X            XXXXXXX         X",

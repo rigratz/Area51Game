@@ -7,6 +7,7 @@ function Dragon(game, x, y, spritesheet) {
     this.yvel = 0;
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = false;
+    this.collided = false;
     this.animation = new Animation("dragon", spritesheet, 96, 96, 0.14, 3, true, false, "idle");
     // this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 200, 0.14, 8, true, false, "right");
     //this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "left");
@@ -20,6 +21,7 @@ Dragon.prototype.constructor = Dragon;
 
 
 Dragon.prototype.draw = function () {
+        if (!this.game.running) return;
     //console.log("draw dragon");
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;

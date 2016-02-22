@@ -23,8 +23,15 @@ function GameEngine() {
     this.down = null;
     this.jump = null;
     this.fire = null;
+    this.mouse = null;
+    this.click = null;
+    this.running = false;
+    this.lives = 3;
     this.deadBirds = 0;
     this.shotsFired = 0;
+    this.maxHealth = 100;
+    this.health = 100;
+    this.percent = this.health / this.maxHealth;
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -46,7 +53,31 @@ GameEngine.prototype.start = function () {
 }
 GameEngine.prototype.startInput = function () {
     console.log('Starting input');
+    var getXandY = function (e) {
+    var x = e.clientX - that.ctx.canvas.getBoundingClientRect().left;
+    var y = e.clientY - that.ctx.canvas.getBoundingClientRect().top;
+
+    if (x < 1024) {
+         x = Math.floor(x / 32);
+        y = Math.floor(y / 32);
+    }
+
+    return { x: x, y: y };
+    }
+
     var that = this;
+
+    this.ctx.canvas.addEventListener("click", function (e) {
+        that.click = getXandY(e);
+    }, false);
+
+    this.ctx.canvas.addEventListener("mousemove", function (e) {
+        that.mouse = getXandY(e);
+    }, false);
+
+    this.ctx.canvas.addEventListener("mouseleave", function (e) {
+        that.mouse = null;
+    }, false);
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 37) that.left = true;
@@ -156,7 +187,25 @@ GameEngine.prototype.draw = function () {
       this.ctx.font = "bold 32px Arial";
       this.ctx.fillText("You killed all 9 birds!", this.camera.xView + 100, this.camera.yView + 100);
     }
-    this.ctx.restore();
+    if(this.camera != null && this.running) {
+       this.ctx.fillStyle = "Red";
+        this.ctx.font = "bold 18px sans-serif";
+        this.ctx.fillText("Life " + this.health+"/"+this.maxHealth, this.camera.xView + 15, this.camera.yView + 15); 
+        this.ctx.fillStyle = "black";
+        this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 100, 15);
+        if (this.health > 66) {
+            this.ctx.fillStyle = "green";
+        } else if (this.health > 33 && this.health <= 66) {
+            this.ctx.fillStyle = "yellow";
+        } else {
+            this.ctx.fillStyle = "red";
+        }
+        this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 100 * this.percent, 15);
+        this.ctx.fillStyle = "Red";
+        this.ctx.font = "bold 18px sans-serif";
+        this.ctx.fillText("Lives " + this.lives, this.camera.xView + 700, this.camera.yView + 15);
+        this.ctx.restore();
+    }
 }
 
 GameEngine.prototype.update = function () {
@@ -178,10 +227,17 @@ GameEngine.prototype.update = function () {
 
 }
 
+GameEngine.prototype.reset = function () {
+    for (var i = 0; i < this.entities.length; i++) {
+        this.entities[i].reset();
+    }
+}
+
 GameEngine.prototype.loop = function () {
     this.clockTick = this.timer.tick();
     this.update();
     this.draw();
+    this.click = null;
 }
 
 

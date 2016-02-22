@@ -2,10 +2,14 @@ function Entity(game, x, y) {
     this.game = game;
     this.x = x;
     this.y = y;
+    this.colliding = false;
     this.removeFromWorld = false;
 }
 
 Entity.prototype.update = function () {
+}
+
+Entity.prototype.reset = function () {
 }
 
 Entity.prototype.draw = function (ctx) {

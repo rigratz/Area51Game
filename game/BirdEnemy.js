@@ -5,6 +5,7 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.y = y;
     this.xvel = xvel;
     this.yvel = 0;
+    this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = false;
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "idle");
@@ -21,6 +22,7 @@ BirdEnemy.prototype.constructor = BirdEnemy;
 
 
 BirdEnemy.prototype.draw = function () {
+    if (!this.game.running) return;
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
     if (this.debug) {

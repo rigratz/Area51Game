@@ -16,6 +16,13 @@ Platform.prototype = new Entity();
 Platform.prototype.constructor = Platform;
 
 Platform.prototype.update = function() {
+    if (!this.game.running) return;
+
+}
+
+Platform.prototype.reset = function () {
+    this.startX = this.x;
+    this.startY = this.y;
 }
 
 
