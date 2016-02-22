@@ -10,9 +10,14 @@ function PlayerOne(game, x, y, spritesheet) {
     this.platform = game.platforms[0];
     this.bullets = [];
     this.health = 100;
+
     this.powerups = [];
     this.currentPowerup = null;
     this.removeFromWorld = false;
+    if (this.game.powerups[0] != " ")
+    this.game.powerups.push(" ");
+    this.currentPowerUp = " ";
+
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = false;
@@ -28,10 +33,15 @@ function PlayerOne(game, x, y, spritesheet) {
     this.canShoot = true;
     this.shotCooldown = 0;
 
+    if (this.game.currentPowerup === "S") {
+        this.speed = 100;
+        this.maxSpeed = 250;
+    } else {
     this.speed = 10;
     this.maxSpeed = 250;
+    }
 
-    this.damage = 20;
+    this.damage = 10;
 
     this.collideTime = 65;
     this.collideCounter = 0;
@@ -66,6 +76,7 @@ PlayerOne.prototype.reset = function () {
     this.yvel = 0;
     this.removeFromWorld = false;
     this.platform = this.game.platforms[0];
+    this.currentPowerUp = " ";
     this.bullets = [];
     this.health = 100;
     this.powerups = [];
@@ -82,6 +93,9 @@ PlayerOne.prototype.reset = function () {
     this.jumpHeight = 300;
     this.jumpTime = 0;
     this.totalJump = 2;
+
+    this.speed = 10;
+    this.maxSpeed = 250;
 
     this.canShoot = true;
     this.shotCooldown = 0;
@@ -132,7 +146,13 @@ PlayerOne.prototype.update = function() {
       }
     }
 
-
+    if (this.game.currentPowerUp === "S") {
+        this.speed = 100;
+        this.maxSpeed = 550;
+    } else {
+        this.speed = 10;
+        this.maxSpeed = 250;
+    }
 
     if (this.game.running) {
         if (this.dead && this.game.lives > 0) {
@@ -161,6 +181,22 @@ PlayerOne.prototype.update = function() {
     if (this.game.down === true) {
         this.animation = this.crouchAnimation;
         this.xvel = 0;
+    }
+    if (this.game.toggle === true) {
+        if (this.game.powerups.length < 1) {
+            this.game.currentPowerUp = " ";
+        } else {
+        for (var i = 0; i < this.game.powerups.length; i++) {
+            if (this.game.currentPowerUp === this.game.powerups[this.game.powerups.length - 1]) {
+                this.game.currentPowerUp = this.game.powerups[0];
+                break;
+            }
+            if (this.game.currentPowerUp === this.game.powerups[i]) {
+                this.game.currentPowerUp = this.game.powerups[i + 1];
+                break;
+            }
+        }
+    }
     }
     if (this.game.jump === true) {
       this.animation = this.jumpAnimation;
@@ -389,9 +425,18 @@ PlayerOne.prototype.update = function() {
         if (entity instanceof PowerUp) {
             if (entity.collide(this)) {
                 if (entity.boostType === "S") {
+                   entity.collided = true;
                    this.maxSpeed = 550;
                    this.speed = 100;
-                   //this.powerups.add(enitity);
+                   var flag = true;
+                   for (var i = 0; i < this.game.powerups.length; i++) {
+                      if (this.game.powerups[i] === entity.boostType) {
+                         flag = false;
+                       }
+                   }
+                   if (flag) 
+                   this.game.powerups.push(entity.boostType);
+                   this.game.currentPowerUp = "S";
                    entity.removeFromWorld = true;
                 }
             }

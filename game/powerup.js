@@ -9,6 +9,7 @@ function PowerUp(boostSheet, game, x, y, w, h, type) {
     this.boostType = type;
     this.boundingRect = new BoundingRect(x, y, w, h);
     this.game = game;
+    this.collided = true;
     Entity.call(this, game, this.x, this.y);
 }
 

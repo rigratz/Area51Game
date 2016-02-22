@@ -12,9 +12,11 @@ window.requestAnimFrame = (function () {
 function GameEngine() {
     this.entities = [];
     this.platforms = [];
+    this.powerups = [];
     this.exits = [];
     this.worlds = [];
     this.currentWorld = null;
+    this.currentPowerUp = " ";
     this.ctx = null;
     this.camera = null;
     this.backgroundImage = null;    //This is kinda hacky.
@@ -26,11 +28,16 @@ function GameEngine() {
     this.down = null;
     this.jump = null;
     this.fire = null;
+    this.toggle = null;
 
     this.mouse = null;
     this.click = null;
     this.running = false;
     this.lives = 3;
+
+    this.speed = 10;
+    this.maxspeed = 250;
+
     this.deadBirds = 0;
     this.shotsFired = 0;
     this.maxHealth = 100;
@@ -57,6 +64,7 @@ GameEngine.prototype.clearLevel = function() {
     this.entities[i].removeFromWorld = true;
     console.log("this should do something");
     console.log(this.entities[i].removeFromWorld);
+
   }
   for (var i = 0; i < this.platforms.length; i++) {
     this.platforms[i].removeFromWorld = true;
@@ -179,6 +187,7 @@ GameEngine.prototype.startInput = function () {
     }, false);
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
+        if (e.keyCode === 32) that.toggle = true; 
         if (e.keyCode === 37) that.left = true;
         if (e.keyCode === 39) that.right = true;
         if (e.keyCode === 38) that.up = true;
@@ -190,6 +199,7 @@ GameEngine.prototype.startInput = function () {
     }, false);
 
     this.ctx.canvas.addEventListener("keyup", function (e) {
+        if (e.keyCode === 32) that.toggle = false; 
         if (e.keyCode === 88) that.fire = false;
         if (e.keyCode === 90) that.jump = false;
         if (e.keyCode === 37) that.left = false;
@@ -245,8 +255,19 @@ GameEngine.prototype.draw = function () {
         this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 100 * this.percent, 15);
         this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
-        this.ctx.fillText("Lives " + this.lives, this.camera.xView + 700, this.camera.yView + 15);
-
+        this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
+        this.ctx.fillText("Current Powerup", this.camera.xView + 500, this.camera.yView + 15);
+        console.log(this.currentPowerUp);
+        console.log(this.powerups.length);
+        if (this.currentPowerUp === null || this.currentPowerUp === " ") {
+            this.ctx.strokeStyle = "black";
+            this.ctx.strokeRect(this.camera.xView + 660, this.camera.yView + 5, 50, 50);
+        }
+         else if (this.currentPowerUp === "S") {
+           var img = AM.getAsset("./img/speed_upgrade_icon.png");
+           this.ctx.drawImage(img,
+           0, 0,  50, 50, this.camera.xView + 660, this.camera.yView + 5, 50, 50);
+       }
     }
     this.ctx.restore();
 }
