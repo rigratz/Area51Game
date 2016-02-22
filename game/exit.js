@@ -5,6 +5,7 @@ function Exit(textureSheet, game, x, y, w, h, type, exitDir) {
     this.y = y;
     this.width = w;
     this.height = h;
+    this.removeFromWorld = false;
     this.debug = true;
     this.type = type;
     this.exitDir = exitDir;

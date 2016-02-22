@@ -12,6 +12,7 @@ function PlayerOne(game, x, y, spritesheet) {
     this.health = 100;
     this.powerups = [];
     this.currentPowerup = null;
+    this.removeFromWorld = false;
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = false;
@@ -118,10 +119,10 @@ PlayerOne.prototype.draw = function () {
 PlayerOne.prototype.update = function() {
 
   this.game.camera.follow(this, 100, 100);
-    var collideExit = false;
+    //var collideExit = false;
     for (var i = 0; i < this.game.exits.length; i++) {
       if (this.collide(this.game.exits[i])) {
-        collideExit = true;
+        //collideExit = true;
         this.game.switchLevel(this.game.exits[i].exitDir, this.game.currentWorld.currentRoom.iIndex, this.game.currentWorld.currentRoom.jIndex);
         break;
       }
@@ -359,7 +360,7 @@ PlayerOne.prototype.update = function() {
          if (entity instanceof BirdEnemy || entity instanceof Dragon) {
     //         //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
              if (entity.collide(this)) {
-                console.log(entity.collided);
+                //console.log(entity.collided);
                 if (this.collideCounter === 0 || entity.collided === false) {
                     this.game.health -= this.damage;
                     entity.collided = true;

@@ -55,6 +55,8 @@ GameEngine.prototype.generateWorlds = function() {
 GameEngine.prototype.clearLevel = function() {
   for (var i = 0; i < this.entities.length; i++) {
     this.entities[i].removeFromWorld = true;
+    console.log("this should do something");
+    console.log(this.entities[i].removeFromWorld);
   }
   for (var i = 0; i < this.platforms.length; i++) {
     this.platforms[i].removeFromWorld = true;
@@ -65,6 +67,8 @@ GameEngine.prototype.clearLevel = function() {
 }
 
 GameEngine.prototype.setLevel = function() {
+
+  var newIndex = this.entities.length;
 
   var currLevel = this.currentWorld.currentRoom;
 
@@ -111,9 +115,10 @@ GameEngine.prototype.setLevel = function() {
       }
     }
   }
-  for (var i = 0; i < this.entities.length; i++) {
-    this.entities[i].removeFromWorld = false;
-  }
+  // for (var i = newIndex; i < this.entities.length; i++) {
+  //   this.entities[i].removeFromWorld = false;
+  // }
+  console.log(this.entities);
 }
 
 GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
@@ -259,6 +264,7 @@ GameEngine.prototype.update = function () {
     for (var i = this.entities.length - 1; i >= 0; --i) {
         if (this.entities[i].removeFromWorld) {
             this.entities.splice(i, 1);
+            console.log("be gone!");
         }
     }
     for (var i = this.platforms.length - 1; i >= 0; --i) {

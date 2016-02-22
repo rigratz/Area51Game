@@ -6,6 +6,7 @@ function Platform(textureSheet, game, x, y, w, h, type) {
     this.width = w;
     this.height = h;
     this.debug = true;
+    this.removeFromWorld = false;
     this.platType = type;
     this.boundingRect = new BoundingRect(x, y, w, h);
     this.game = game;
