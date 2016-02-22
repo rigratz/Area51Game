@@ -257,8 +257,8 @@ GameEngine.prototype.draw = function () {
         this.ctx.font = "bold 18px sans-serif";
         this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
         this.ctx.fillText("Current Powerup", this.camera.xView + 500, this.camera.yView + 15);
-        console.log(this.currentPowerUp);
-        console.log(this.powerups.length);
+        //console.log(this.currentPowerUp);
+        //console.log(this.powerups.length);
         if (this.currentPowerUp === null || this.currentPowerUp === " ") {
             this.ctx.strokeStyle = "black";
             this.ctx.strokeRect(this.camera.xView + 660, this.camera.yView + 5, 50, 50);

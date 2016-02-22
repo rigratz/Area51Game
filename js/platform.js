@@ -37,26 +37,24 @@ Platform.prototype.draw = function (ctx) {
           this.width,
           this.height);
     } else if (this.platType === "X"){
-
-
-      var mult = this.height / 50;
-      var i = 0;
-      var y = this.y;
-      for (i = 1; i <= mult; i++) {
-        ctx.drawImage(this.textureSheet,
-          102, 4,  // source from sheet
-          50, 50,
-          this.x, this.y,
-          50,
-          50);
-          this.y += 50;
-      }
-      this.y = y;
-      ctx.drawImage(this.textureSheet,
-          0, 0,  // source from sheet
-          50, 50,
-          this.x, this.y ,
-          50,
-          50);
-    }
+          var mult = this.height / 50;
+          var i = 0;
+          var y = this.y;
+          for (i = 1; i <= mult; i++) {
+            ctx.drawImage(this.textureSheet,
+              100, 0,  // source from sheet
+              50, 50,
+              this.x, this.y,
+              50,
+              50);
+              this.y += 50;
+          }
+          this.y = y;
+          ctx.drawImage(this.textureSheet,
+              0, 0,  // source from sheet
+              50, 50,
+              this.x, this.y ,
+              50,
+              50);
+        }
 }
