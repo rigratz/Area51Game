@@ -264,7 +264,7 @@ GameEngine.prototype.draw = function () {
             this.ctx.strokeRect(this.camera.xView + 660, this.camera.yView + 5, 50, 50);
         }
          else if (this.currentPowerUp === "S") {
-           var img = AM.getAsset("./img/speed_upgrade_icon.png");
+           var img = AM.getAsset("./js/img/speed_upgrade_icon.png");
            this.ctx.drawImage(img,
            0, 0,  50, 50, this.camera.xView + 660, this.camera.yView + 5, 50, 50);
        }
