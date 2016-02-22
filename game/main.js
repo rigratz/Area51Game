@@ -20,6 +20,7 @@ AM.queueDownload("./img/cement_background.jpg");
 AM.queueDownload("./img/textures.png");
 AM.queueDownload("./img/dragon.png");
 AM.queueDownload("./img/grumpy_cat.png");
+AM.queueDownload("./img/speed_upgrade_icon.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");

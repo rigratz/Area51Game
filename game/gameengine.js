@@ -94,6 +94,8 @@ GameEngine.prototype.setLevel = function() {
         this.platforms.push((new Platform(AM.getAsset("./img/textures.png"), this, i*50, j*50, 50, 50, "T")));
       } else if (ch === "dragon") {
           this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./img/dragon.png")));
+      } else if (ch == "speedboost") {
+          this.addEntity(new PowerUp(AM.getAsset("./img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
       } else if (ch === "exit") {
         var exitDir = null;
         if (i === 0) {

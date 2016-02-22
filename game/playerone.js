@@ -27,6 +27,9 @@ function PlayerOne(game, x, y, spritesheet) {
     this.canShoot = true;
     this.shotCooldown = 0;
 
+    this.speed = 10;
+    this.maxSpeed = 250;
+
     this.damage = 20;
 
     this.collideTime = 65;
@@ -69,6 +72,7 @@ PlayerOne.prototype.reset = function () {
 
     this.boundingRect = new BoundingRect(this.x, this.y, 90, 124);
     this.debug = false;
+
 
     this.falling = false;
     this.fallTime = 0;
@@ -139,15 +143,15 @@ PlayerOne.prototype.update = function() {
         this.animation = this.leftAnimation;
         this.facing = "left";
         if (this.xvel > 0) this.xvel = 0;
-        this.xvel -=10;
-        if (this.xvel <= -250) this.xvel = -250;
+        this.xvel -=this.speed;
+        if (this.xvel <= -this.maxSpeed) this.xvel = -this.maxSpeed;
     }
     if (this.game.right === true) {
         this.animation = this.rightAnimation;
         this.facing = "right";
         if (this.xvel < 0) this.xvel = 0;
-        this.xvel += 10;
-        if (this.xvel >= 250) this.xvel = 250;
+        this.xvel += this.speed;
+        if (this.xvel >= this.maxSpeed) this.xvel = this.maxSpeed;
     }
     if (this.game.up === true) {
         this.animation = this.upAnimation;
@@ -380,6 +384,16 @@ PlayerOne.prototype.update = function() {
               //   entity.removeFromWorld = true;
                  }
              }
+         }
+        if (entity instanceof PowerUp) {
+            if (entity.collide(this)) {
+                if (entity.boostType === "S") {
+                   this.maxSpeed = 550;
+                   this.speed = 100;
+                   //this.powerups.add(enitity);
+                   entity.removeFromWorld = true;
+                }
+            }
          }
      }
 
