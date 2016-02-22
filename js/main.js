@@ -12,27 +12,21 @@ function BoundingRect(x, y, w, h) {
     this.right = this.x + this.width;
 }
 
-
-
-AM.queueDownload("./img/area51main.png");
-AM.queueDownload("./img/bird_enemy_spritesheet.png");
-AM.queueDownload("./img/cement_background.jpg");
-AM.queueDownload("./img/textures.png");
-AM.queueDownload("./img/dragon.png");
-AM.queueDownload("./img/grumpy_cat.png");
-AM.queueDownload("./img/speed_upgrade_icon.png");
+AM.queueDownload("./js/img/area51main.png");
+AM.queueDownload("./js/img/bird_enemy_spritesheet.png");
+AM.queueDownload("./js/img/cement_background.jpg");
+AM.queueDownload("./js/img/textures.png");
+AM.queueDownload("./js/img/dragon.png");
+AM.queueDownload("./js/img/grumpy_cat.png");
+AM.queueDownload("./js/img/speed_upgrade_icon.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
-
-
     var gameEngine = new GameEngine();
 
-
-
     /*This is probably not the best way to do this*/
-    gameEngine.backgroundImage = new Background(AM.getAsset("./img/cement_background.jpg"),
+    gameEngine.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
         gameEngine, 736, 736);
     /**********************************************/
     gameEngine.init(ctx);
