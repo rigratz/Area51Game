@@ -10,7 +10,7 @@ function World(name, gameEngine) {
     }
   }
   this.currentRoom = null;
-  this.generateWorld(this.makeRoomPlans(name));
+  this.makeRoomPlans(name);
 };
 
 World.prototype.makeRoomPlans = function (name) {
@@ -28,7 +28,7 @@ World.prototype.makeRoomPlans = function (name) {
       "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "O             B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "O                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      "O         @        X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+      "O  @               X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -69,29 +69,29 @@ World.prototype.makeRoomPlans = function (name) {
     builder = [
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "X                  X                                          O",
+      "X                  X        B                                 O",
       "X                  X                                          O",
-      "X                  X                                          O",
-      "XTTTTTTTTTTTTT     X                                          O",
-      "XXXXXXXXXXXXXX     X                               @          O",
-      "XXXXXXXXXXXXXX     X                  TTTTTTTTTTTTTTTTTTTTTTTTT",
+      "XXXXXXXXXXXXXX     X                                          O",
+      "XXXXXXXXXXXXXX     X                                      @   O",
+      "XXXXXXXXXXXXXX     X             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXX     XXXXXXXX           XXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXXXXXXXXXXXXX     X                XXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXX     X             TTTTTTTTTTTTTTTTTTTTT       XX",
+      "XXXXXXXXXXXXXX     X             XXXXXXXXXXXXXXXXXXXXX       XX",
       "X                                XXXXXXXXXXXXXXXXXXXXX       XX",
       "X B                              XXXXXXXXXXXXXXXXXXXXX       XX",
-      "X                          TTTTTTXXXXXXXXXXXXXXXXXXXXX       XX",
-      "X                    TTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+      "X                          XXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      "O                TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+      "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "O                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "O                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+      "O                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
@@ -104,9 +104,9 @@ World.prototype.makeRoomPlans = function (name) {
   }
 };
 
-World.prototype.generateWorld = function(plans) {
-  // for (var i = 0; i < plans.length; i++) {
-  //   var tempLevel = new Level(plans[i], this.game);
-  //
-  // }
-}
+// World.prototype.generateWorld = function(plans) {
+//   // for (var i = 0; i < plans.length; i++) {
+//   //   var tempLevel = new Level(plans[i], this.game);
+//   //
+//   // }
+// }

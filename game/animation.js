@@ -85,6 +85,9 @@ Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {
     if (this.isDone()) {
         if (this.loop) this.elapsedTime = 0;
     }
+    var width_mult = 2.5;
+    var height_mult = 2.5;
+
     var frame = this.currentFrame();
     var xindex = frame % 8;
     var yindex = 0;
@@ -92,13 +95,20 @@ Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {
     var yframe = 0;
     if (this.type === "idle") {
         xframe = xindex * this.frameWidth;
-        yframe = 2;
+        yframe = 2;     //shuld be 0?
     } else if (this.type === "left") {
         xframe = xindex * this.frameWidth;
-        yframe = 90;
+        yframe = 100;
+    } else if (this.type === "right") {
+        xframe = xindex * this.frameWidth;
+        yframe = 200;
+    } else if (this.type === "cat") {
+        xframe = xindex * this.frameWidth;
+        yframe = 2;
+        width_mult = 4;
+        height_mult = 4;
     }
-    var width_mult = 2.5;
-    var height_mult = 2.5;
+
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,

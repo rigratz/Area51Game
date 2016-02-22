@@ -27,8 +27,7 @@ Bullet.prototype.update = function() {
   this.x += this.xvel * this.game.clockTick;
   this.y += this.yvel * this.game.clockTick;
 
-
-
+    // trying to add something here to remove the bullet from the world when it collides with platforms.
 }
 
 Bullet.prototype.draw = function () {
@@ -41,7 +40,7 @@ Bullet.prototype.draw = function () {
 
 
 // for some reason can't get this to work using the bullet bounding box, so I used x and y
-Bullet.prototype.collide = function(other) {
+Bullet.prototype.collideEnemy = function(other) {
     return (this.x <= (other.boundingRect.right - (other.boundingRect.width / 2))) &&
         (this.x > other.boundingRect.left) &&
         (this.y > (other.boundingRect.top) && (this.y < other.boundingRect.bottom));

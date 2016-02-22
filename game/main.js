@@ -1,4 +1,3 @@
-
 var AM = new AssetManager();
 
 function BoundingRect(x, y, w, h) {
@@ -14,11 +13,13 @@ function BoundingRect(x, y, w, h) {
 }
 
 
+
 AM.queueDownload("./img/area51main.png");
 AM.queueDownload("./img/bird_enemy_spritesheet.png");
 AM.queueDownload("./img/cement_background.jpg");
 AM.queueDownload("./img/textures.png");
 AM.queueDownload("./img/dragon.png");
+AM.queueDownload("./img/grumpy_cat.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -27,121 +28,225 @@ AM.downloadAll(function () {
 
     var gameEngine = new GameEngine();
 
+
+
     /*This is probably not the best way to do this*/
     gameEngine.backgroundImage = new Background(AM.getAsset("./img/cement_background.jpg"),
-                                                gameEngine, 736, 736);
+        gameEngine, 736, 736);
     /**********************************************/
     gameEngine.init(ctx);
     gameEngine.start();
 
-    var levelPlan = [
-    // "X B            X            XXXXXXX         X",
-    // "X              X                            X",
-    // "X              X                            X",
-    // "X              X                            X",
-    // "X         XXXXXX                            X",
-    // "X                         XXXXXXXXXXX       X",
-    // "X                         X                 X",
-    // "XXXXXX                    X                 X",
-    // "X              XXXXXXXXXXXXXXXXX       XXXXXX",
-    // "X        XXXXXXX                            X",
-    // "X              X                            X",
-    // "X @   XXXXXXXXXX                            X",
-    // "XXXXXXXXXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXX",
-    // "X              X                            X",
-    // "X              X                            X",
-    // "X              X                            X",
-    // "X              X                            X",
-    // "X              X                            X",
-    // "X                                           X",
-    // "X                                           X",
-    // "X                                           X",
-    // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-    // ];
-    "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "X             B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "X                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "X @                X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "XTTTTTTTTTTTTT     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "XXXXXXXXXXXXXX  D  X     B            XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "XXXXXXXXXXXXXX     X                                         XX",
-    "XXXXXXXXXXXXXX     X                                         XX",
-    "XXXXXXXXXXXXXX     X                                         XX",
-    "XXXXXXXXXXXXXX     X                                         XX",
-    "XXXXXXXXXXXXXX     X       T     TTTTTTTTTTTTTTTTTTTTT       XX",
-    "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
-    "X B           B            X     XXXXXXXXXXXXXXXXXXXXX       XX",
-    "X                          XTTTTTXXXXXXXXXXXXXXXXXXXXX       XX",
-    "X                    TTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "X       D        TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   D   XX",
-    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-    "XX                                                           XX",
-    "XX              B                                            XX",
-    "XX                                                           XX",
-    "XX B         TT      D    TT B          TT    B              XX",
-    "XX           XX           XX            XX                   XX",
-    "XX           XX           XX            XX                   XX",
-    "XX           XX           XX            XX                   XX",
-    "XXTTTTTTTTTTTXXTTTTTTTTTTTXXTTTTTTTTTTTTXXTTTTTTTTTTTTTTTTTTTXX",
-    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-  ];
-    //gameEngine.worlds["Area 51"] = new World("Area 51", gameEngine);
-    // var currLevel = new Level(levelPlan, gameEngine);
-    // var levelWidth = currLevel.grid[0].length;
-    // var levelHeight = currLevel.grid.length;
-    // gameEngine.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
-    //
-    // var ch;
-    // for (var i = 0; i < currLevel.grid[0].length; i++) {
-    //   for (var j = 0; j < currLevel.grid.length; j++) {
-    //     ch = currLevel.grid[j][i];
-    //     if (ch === "player") {
-    //       console.log("adding player!!!!!!!!!");
-    //       var player = new PlayerOne(gameEngine, i * 50, j * 50 - 125, AM.getAsset("./img/area51main.png"));
-    //       gameEngine.addEntity(player);
-    //       gameEngine.camera.follow(player, 100, 100);
-    //     } else if (ch === "bird") {
-    //       gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png")));
-    //     } else if (ch === "platform") {
-    //       var mult = 1;
-    //       while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
-    //         currLevel.grid[j+mult][i] = "used_platform";
-    //         mult += 1;
-    //       }
-    //
-    //       gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i * 50, j * 50, 50, 50 * mult, "X")));
-    //     } else if (ch === "platformtop") {
-    //       gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i*50, j*50, 50, 50, "T")));
-    //     } else if (ch === "dragon") {
-    //         gameEngine.addEntity(new Dragon(gameEngine, i * 50, j * 50, AM.getAsset("./img/dragon.png")));
-    //     } else if (ch === "exit") {
-    //       var exitDir = null;
-    //       if (i === 0) {
-    //         exitDir = "north";
-    //       } else if (i === currLevel.grid[0].length - 1) {
-    //         exitDir = "south";
-    //       } else if (j === 0) {
-    //         exitDir = "east";
-    //       } else if (j === currLevel.grid.length - 1) {
-    //         exitDir = "west";
-    //       }
-    //       gameEngine.exits.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i*50, j*50, 50, 50, "exit", exitDir)));
-    //     }
-    //   }
-    // }
+    gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
+
+//
+//     var levelPlan = [
+// <<<<<<< HEAD
+//     // "X B            X            XXXXXXX         X",
+//     // "X              X                            X",
+//     // "X              X                            X",
+//     // "X              X                            X",
+//     // "X         XXXXXX                            X",
+//     // "X                         XXXXXXXXXXX       X",
+//     // "X                         X                 X",
+//     // "XXXXXX                    X                 X",
+//     // "X              XXXXXXXXXXXXXXXXX       XXXXXX",
+//     // "X        XXXXXXX                            X",
+//     // "X              X                            X",
+//     // "X @   XXXXXXXXXX                            X",
+//     // "XXXXXXXXXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXX",
+//     // "X              X                            X",
+//     // "X              X                            X",
+//     // "X              X                            X",
+//     // "X              X                            X",
+//     // "X              X                            X",
+//     // "X                                           X",
+//     // "X                                           X",
+//     // "X                                           X",
+//     // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+//     // ];
+//     "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//     "X             B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//     "X                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//     "X @                X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//     "XTTTTTTTTTTTTT     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//     "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
+//     "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//     "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//     "XXXXXXXXXXXXXX  D  X     B            XXXXXXXXXXXXXXXXXXXXXXXXX",
+//     "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//     "XXXXXXXXXXXXXX     X                                         XX",
+//     "XXXXXXXXXXXXXX     X                                         XX",
+//     "XXXXXXXXXXXXXX     X                                         XX",
+//     "XXXXXXXXXXXXXX     X                                         XX",
+//     "XXXXXXXXXXXXXX     X       T     TTTTTTTTTTTTTTTTTTTTT       XX",
+//     "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
+//     "X B           B            X     XXXXXXXXXXXXXXXXXXXXX       XX",
+//     "X                          XTTTTTXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "X                    TTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "X       D        TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   D   XX",
+//     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//     "XX                                                           XX",
+//     "XX              B                                            XX",
+//     "XX                                                           XX",
+//     "XX B         TT      D    TT B          TT    B              XX",
+//     "XX           XX           XX            XX                   XX",
+//     "XX           XX           XX            XX                   XX",
+//     "XX           XX           XX            XX                   XX",
+//     "XXTTTTTTTTTTTXXTTTTTTTTTTTXXTTTTTTTTTTTTXXTTTTTTTTTTTTTTTTTTTXX",
+//     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+//   ];
+//     //gameEngine.worlds["Area 51"] = new World("Area 51", gameEngine);
+//     // var currLevel = new Level(levelPlan, gameEngine);
+//     // var levelWidth = currLevel.grid[0].length;
+//     // var levelHeight = currLevel.grid.length;
+//     // gameEngine.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
+//     //
+//     // var ch;
+//     // for (var i = 0; i < currLevel.grid[0].length; i++) {
+//     //   for (var j = 0; j < currLevel.grid.length; j++) {
+//     //     ch = currLevel.grid[j][i];
+//     //     if (ch === "player") {
+//     //       console.log("adding player!!!!!!!!!");
+//     //       var player = new PlayerOne(gameEngine, i * 50, j * 50 - 125, AM.getAsset("./img/area51main.png"));
+//     //       gameEngine.addEntity(player);
+//     //       gameEngine.camera.follow(player, 100, 100);
+//     //     } else if (ch === "bird") {
+//     //       gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png")));
+//     //     } else if (ch === "platform") {
+//     //       var mult = 1;
+//     //       while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
+//     //         currLevel.grid[j+mult][i] = "used_platform";
+//     //         mult += 1;
+//     //       }
+//     //
+//     //       gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i * 50, j * 50, 50, 50 * mult, "X")));
+//     //     } else if (ch === "platformtop") {
+//     //       gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i*50, j*50, 50, 50, "T")));
+//     //     } else if (ch === "dragon") {
+//     //         gameEngine.addEntity(new Dragon(gameEngine, i * 50, j * 50, AM.getAsset("./img/dragon.png")));
+//     //     } else if (ch === "exit") {
+//     //       var exitDir = null;
+//     //       if (i === 0) {
+//     //         exitDir = "north";
+//     //       } else if (i === currLevel.grid[0].length - 1) {
+//     //         exitDir = "south";
+//     //       } else if (j === 0) {
+//     //         exitDir = "east";
+//     //       } else if (j === currLevel.grid.length - 1) {
+//     //         exitDir = "west";
+//     //       }
+//     //       gameEngine.exits.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i*50, j*50, 50, 50, "exit", exitDir)));
+//     //     }
+//     //   }
+//     // }
+// =======
+//         // "X B            X            XXXXXXX         X",
+//         // "X              X                            X",
+//         // "X              X                            X",
+//         // "X              X                            X",
+//         // "X         XXXXXX                            X",
+//         // "X                         XXXXXXXXXXX       X",
+//         // "X                         X                 X",
+//         // "XXXXXX                    X                 X",
+//         // "X              XXXXXXXXXXXXXXXXX       XXXXXX",
+//         // "X        XXXXXXX                            X",
+//         // "X              X                            X",
+//         // "X @   XXXXXXXXXX                            X",
+//         // "XXXXXXXXXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXX",
+//         // "X              X                            X",
+//         // "X              X                            X",
+//         // "X              X                            X",
+//         // "X              X                            X",
+//         // "X              X                            X",
+//         // "X                                           X",
+//         // "X                                           X",
+//         // "X                                           X",
+//         // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+//         // ];
+//         "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//         "X             b    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//         "X                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//         "X @                X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//         "XTTTTTTTTTTTTT     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//         "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
+//         "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//         "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//         "XXXXXXXXXXXXXX  D  X     B            XXXXXXXXXXXXXXXXXXXXXXXXX",
+//         "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//         "XXXXXXXXXXXXXX     X                                         XX",
+//         "XXXXXXXXXXXXXX     X                                         XX",
+//         "XXXXXXXXXXXXXX     X                                         XX",
+//         "XXXXXXXXXXXXXX     X                                         XX",
+//         "XXXXXXXXXXXXXX     X       T     TTTTTTTTTTTTTTTTTTTTT       XX",
+//         "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
+//         "X B           B            X     XXXXXXXXXXXXXXXXXXXXX       XX",
+//         "X       C                  XTTTTTXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "X                    TTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "X                TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   D   XX",
+//         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//         "XX                                                           XX",
+//         "XX              B                                            XX",
+//         "XX                                                           XX",
+//         "XX   b       TT      D    TT   b        TT     b             XX",
+//         "XX           XX           XX            XX                   XX",
+//         "XX           XX           XX            XX                   XX",
+//         "XX           XX           XX            XX                   XX",
+//         "XXTTTTTTTTTTTXXTTTTTTTTTTTXXTTTTTTTTTTTTXXTTTTTTTTTTTTTTTTTTTXX",
+//         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+//     ];
+//     var currLevel = new Level(levelPlan, gameEngine);
+//     var levelWidth = currLevel.grid[0].length;
+//     var levelHeight = currLevel.grid.length;
+//     gameEngine.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
+//
+//     var ch;
+//     for (var i = 0; i < currLevel.grid[0].length; i++) {
+//         for (var j = 0; j < currLevel.grid.length; j++) {
+//             ch = currLevel.grid[j][i];
+//             if (ch === "player") {
+//                 var player = new PlayerOne(gameEngine, i * 50, j * 50 - 125, AM.getAsset("./img/area51main.png"));
+//                 gameEngine.addEntity(player);
+//                 gameEngine.camera.follow(player, 100, 100);
+//             } else if (ch === "bird") {
+//                 gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png"), 150));
+//             } else if (ch === "idle_bird") {
+//                 gameEngine.addEntity(new BirdEnemy(gameEngine, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png"), 0));
+//             } else if (ch === "platform") {
+//                 var mult = 1;
+//                 while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
+//                     currLevel.grid[j+mult][i] = "used_platform";
+//                     mult += 1;
+//                 }
+//                 gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i * 50, j * 50, 50, 50 * mult, "X")));
+//             } else if (ch === "platformtop") {
+//                 gameEngine.platforms.push((new Platform(AM.getAsset("./img/textures.png"), gameEngine, i*50, j*50, 50, 50, "T")));
+//             } else if (ch === "dragon") {
+//                 gameEngine.addEntity(new Dragon(gameEngine, i * 50, j * 50, AM.getAsset("./img/dragon.png")));
+//             } else if (ch === "cat") {
+//                 gameEngine.addEntity(new BirdEnemy(gameEngine, i*50, j*50, AM.getAsset("./img/grumpy_cat.png"), 2));
+//             }
+//         }
+//     }
+// >>>>>>> 9df6b7793fc8e97cd463ca17f4c53e86d74c06db
 
     console.log("All Done!");
     console.log("Controls:");

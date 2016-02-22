@@ -1,12 +1,17 @@
 function PlayerOne(game, x, y, spritesheet) {
     this.game = game;
     this.ctx = game.ctx;
+    this.startX = x;
+    this.startY = y;
     this.x = x;
     this.y = y;
     this.xvel = 0;
     this.yvel = 0;
     this.platform = game.platforms[0];
     this.bullets = [];
+    this.health = 100;
+    this.powerups = [];
+    this.currentPowerup = null;
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = false;
@@ -21,6 +26,15 @@ function PlayerOne(game, x, y, spritesheet) {
 
     this.canShoot = true;
     this.shotCooldown = 0;
+
+    this.damage = 20;
+
+    this.collideTime = 65;
+    this.collideCounter = 0;
+
+    this.dead = false;
+
+
 
     this.facing = "right";
 
@@ -41,7 +55,56 @@ function PlayerOne(game, x, y, spritesheet) {
 PlayerOne.prototype = new Entity();
 PlayerOne.prototype.constructor = PlayerOne;
 
+PlayerOne.prototype.reset = function () {
+    this.x = this.startX;
+    this.y = this.startY;
+    this.xvel = 0;
+    this.yvel = 0;
+    this.removeFromWorld = false;
+    this.platform = this.game.platforms[0];
+    this.bullets = [];
+    this.health = 100;
+    this.powerups = [];
+    this.currentPowerup = null;
+
+    this.boundingRect = new BoundingRect(this.x, this.y, 90, 124);
+    this.debug = false;
+
+    this.falling = false;
+    this.fallTime = 0;
+
+    this.jumping = false;
+    this.jumpHeight = 300;
+    this.jumpTime = 0;
+    this.totalJump = 2;
+
+    this.canShoot = true;
+    this.shotCooldown = 0;
+
+    this.collideTime = 65;
+    this.collideCounter = 0;
+    this.game.health = 100;
+    this.game.percent = this.game.health / this.game.maxHealth;
+    this.game.lives--;
+
+    this.dead = false;
+
+
+
+    this.facing = "right";
+
+    this.moveState = 0;
+    this.animation = this.idleAnimation;
+
+    this.game.camera.follow(this, 400, 175);
+    this.game.camera.update();
+
+}
+
+
+
 PlayerOne.prototype.draw = function () {
+    if (this.dead || !this.game.running) return;
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
 
@@ -53,6 +116,7 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
+
   this.game.camera.follow(this, 100, 100);
     var collideExit = false;
     //console.log(this.game.exits.length);
@@ -65,6 +129,13 @@ PlayerOne.prototype.update = function() {
       }
     }
 
+
+
+    if (this.game.running) {
+        if (this.dead && this.game.lives > 0) {
+            this.game.reset();
+            return;
+        }
 
     if (this.game.left === true) {
         this.animation = this.leftAnimation;
@@ -284,9 +355,46 @@ PlayerOne.prototype.update = function() {
         this.shotCooldown = 0;
       }
     }
+
+     for (var i = 0; i < this.game.entities.length; i++) {
+         var entity = this.game.entities[i];
+         if (entity instanceof BirdEnemy || entity instanceof Dragon) {
+    //         //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
+             if (entity.collide(this)) {
+                console.log(entity.collided);
+                if (this.collideCounter === 0 || entity.collided === false) {
+                    this.game.health -= this.damage;
+                    entity.collided = true;
+                }
+                this.collideCounter++;
+                if (this.collideCounter === this.collideTime) {
+                    this.collideCounter = 0;
+                }
+             //   console.log(this.collideCounter);
+                this.game.percent = this.game.health / this.game.maxHealth;
+
+               //  this.health -= 1;
+              //   console.log(this.health);
+                 if (this.game.health <= 0) {
+                 this.removeFromWorld = true;
+                 this.dead = true;
+                 this.reset();
+              //   entity.removeFromWorld = true;
+                 }
+             }
+         }
+     }
+
+
+
+
+
+
+
     Entity.prototype.update.call(this);
     this.game.camera.follow(this, 400, 175);
     this.game.camera.update();
+}
 
 }
 PlayerOne.prototype.collide = function(other) {

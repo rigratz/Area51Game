@@ -1,81 +1,4 @@
-// // var levelPlan = [
-// // "X B            X",
-// // "X              X",
-// // "X         XXXXXX",
-// // "X              X",
-// // "X              X",
-// // "XXXXXX         X",
-// // "X              X",
-// // "X        XXXXXXX",
-// // "X              X",
-// // "X @   XXXXXXXXXX",
-// // "XXXXXXXXXXXXXXXX"
-// // ];
-//
-// var levelPlan = [
-// // "X B            X            XXXXXXX         X",
-// // "X              X                            X",
-// // "X              X                            X",
-// // "X              X                            X",
-// // "X         XXXXXX                            X",
-// // "X                         XXXXXXXXXXX       X",
-// // "X                         X                 X",
-// // "XXXXXX                    X                 X",
-// // "X              XXXXXXXXXXXXXXXXX       XXXXXX",
-// // "X        XXXXXXX                            X",
-// // "X              X                            X",
-// // "X @   XXXXXXXXXX                            X",
-// // "XXXXXXXXXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXX",
-// // "X              X                            X",
-// // "X              X                            X",
-// // "X              X                            X",
-// // "X              X                            X",
-// // "X              X                            X",
-// // "X                                           X",
-// // "X                                           X",
-// // "X                                           X",
-// // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-// // ];
-// "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-// "X           O B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-// "X           O      X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-// "X @         O      X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-// "XTTTTTTTTTTTTT     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-// "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
-// "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-// "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-// "XXXXXXXXXXXXXX     X     B            XXXXXXXXXXXXXXXXXXXXXXXXX",
-// "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-// "XXXXXXXXXXXXXX     X                                         XX",
-// "XXXXXXXXXXXXXX     X                                         XX",
-// "XXXXXXXXXXXXXX     X                                         XX",
-// "XXXXXXXXXXXXXX     X                                         XX",
-// "XXXXXXXXXXXXXX     X       T     TTTTTTTTTTTTTTTTTTTTT       XX",
-// "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
-// "X B           B            X     XXXXXXXXXXXXXXXXXXXXX       XX",
-// "X                          XTTTTTXXXXXXXXXXXXXXXXXXXXX       XX",
-// "X                    TTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "X                TTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "XTTTTTTTTTTTTTTTTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-// "XX                                                           XX",
-// "XX              B                                            XX",
-// "XX                                                           XX",
-// "XX B         TT           TT B          TT    B              XX",
-// "XX           XX           XX            XX                   XX",
-// "XX           XX           XX            XX                   XX",
-// "XX           XX           XX            XX                   XX",
-// "XXTTTTTTTTTTTXXTTTTTTTTTTTXXTTTTTTTTTTTTXXTTTTTTTTTTTTTTTTTTTXX",
-// "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-// ];
+
 
 
 
@@ -101,11 +24,15 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "platformtop";
       else if (ch === "B")
         fieldType = "bird";
+      else if (ch === "b")
+        fieldType = "idle_bird";
         //this.entities.push(new BirdEnemy(gameEngine, AM.getAsset("./img/bird_enemy_spritesheet.png")));
       else if (ch === "D")
         fieldType = "dragon";
       else if (ch === "O")
         fieldType = "exit";
+      else if (ch === "C")
+        fieldType = "cat";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);

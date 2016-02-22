@@ -8,6 +8,7 @@ function Platform(textureSheet, game, x, y, w, h, type) {
     this.debug = true;
     this.platType = type;
     this.boundingRect = new BoundingRect(x, y, w, h);
+    this.game = game;
     Entity.call(this, game, this.x, this.y);
 }
 
@@ -15,6 +16,13 @@ Platform.prototype = new Entity();
 Platform.prototype.constructor = Platform;
 
 Platform.prototype.update = function() {
+    if (!this.game.running) return;
+
+}
+
+Platform.prototype.reset = function () {
+    this.startX = this.x;
+    this.startY = this.y;
 }
 
 

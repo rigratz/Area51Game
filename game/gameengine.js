@@ -26,6 +26,17 @@ function GameEngine() {
     this.down = null;
     this.jump = null;
     this.fire = null;
+
+    this.mouse = null;
+    this.click = null;
+    this.running = false;
+    this.lives = 3;
+    this.deadBirds = 0;
+    this.shotsFired = 0;
+    this.maxHealth = 100;
+    this.health = 100;
+    this.percent = this.health / this.maxHealth;
+
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -53,16 +64,16 @@ GameEngine.prototype.clearLevel = function() {
   //console.log(this.currentWorld.currentRoom);
 }
 GameEngine.prototype.setLevel = function() {
-  console.log("setting Level");
+  //console.log("setting Level");
   // this.entities = [];
   // this.platforms = [];
   // this.exits = [];
-  console.log(this.platforms.length);
-  //this.clearLevel();
-  console.log(this.platforms.length);
+  // console.log(this.platforms.length);
+  // //this.clearLevel();
+  // console.log(this.platforms.length);
   var currLevel = this.currentWorld.currentRoom;
-  console.log(currLevel);
-  console.log(this.currentWorld);
+  // console.log(currLevel);
+  // console.log(this.currentWorld);
   var levelWidth = currLevel.grid[0].length;
   var levelHeight = currLevel.grid.length;
   this.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
@@ -77,6 +88,7 @@ GameEngine.prototype.setLevel = function() {
         this.addEntity(player);
         this.camera.follow(player, 100, 100);
       } else if (ch === "bird") {
+        console.log("adding bird!");
         this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./img/bird_enemy_spritesheet.png")));
       } else if (ch === "platform") {
         var mult = 1;
@@ -144,7 +156,31 @@ GameEngine.prototype.start = function () {
 }
 GameEngine.prototype.startInput = function () {
     console.log('Starting input');
+    var getXandY = function (e) {
+    var x = e.clientX - that.ctx.canvas.getBoundingClientRect().left;
+    var y = e.clientY - that.ctx.canvas.getBoundingClientRect().top;
+
+    if (x < 1024) {
+         x = Math.floor(x / 32);
+        y = Math.floor(y / 32);
+    }
+
+    return { x: x, y: y };
+    }
+
     var that = this;
+
+    this.ctx.canvas.addEventListener("click", function (e) {
+        that.click = getXandY(e);
+    }, false);
+
+    this.ctx.canvas.addEventListener("mousemove", function (e) {
+        that.mouse = getXandY(e);
+    }, false);
+
+    this.ctx.canvas.addEventListener("mouseleave", function (e) {
+        that.mouse = null;
+    }, false);
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.keyCode === 37) that.left = true;
@@ -249,7 +285,31 @@ GameEngine.prototype.draw = function () {
     for (var i = 0; i < this.platforms.length; i++) {//SHOULDNT NEED THIS ONCE ENTITIES IS FIXED
         this.platforms[i].draw(this.ctx);
     }
-    this.ctx.restore();
+
+    if (this.deadBirds >= 9) {
+      this.ctx.fillStyle = "blue";
+      this.ctx.font = "bold 32px Arial";
+      this.ctx.fillText("You killed all 9 birds!", this.camera.xView + 100, this.camera.yView + 100);
+    }
+    if(this.camera != null && this.running) {
+       this.ctx.fillStyle = "Red";
+        this.ctx.font = "bold 18px sans-serif";
+        this.ctx.fillText("Life " + this.health+"/"+this.maxHealth, this.camera.xView + 15, this.camera.yView + 15);
+        this.ctx.fillStyle = "black";
+        this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 100, 15);
+        if (this.health > 66) {
+            this.ctx.fillStyle = "green";
+        } else if (this.health > 33 && this.health <= 66) {
+            this.ctx.fillStyle = "yellow";
+        } else {
+            this.ctx.fillStyle = "red";
+        }
+        this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 100 * this.percent, 15);
+        this.ctx.fillStyle = "Red";
+        this.ctx.font = "bold 18px sans-serif";
+        this.ctx.fillText("Lives " + this.lives, this.camera.xView + 700, this.camera.yView + 15);
+        this.ctx.restore();
+    }
 }
 
 GameEngine.prototype.update = function () {
@@ -289,10 +349,17 @@ GameEngine.prototype.update = function () {
 
 }
 
+GameEngine.prototype.reset = function () {
+    for (var i = 0; i < this.entities.length; i++) {
+        this.entities[i].reset();
+    }
+}
+
 GameEngine.prototype.loop = function () {
-    this.clockTick = this.timer.tick();
-    this.update();
-    this.draw();
+      this.clockTick = this.timer.tick();
+      this.update();
+      this.draw();
+      this.click = null;
 }
 
 
