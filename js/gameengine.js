@@ -12,6 +12,7 @@ window.requestAnimFrame = (function () {
 function GameEngine() {
   this.player = null;
   this.hasSpeed = false;
+  this.currentSong = null;
     this.entities = [];
     this.platforms = [];
     this.powerups = [];
@@ -167,6 +168,13 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
 }
 GameEngine.prototype.start = function () {
     console.log("starting game");
+    this.currentSong = AM.getAudioAsset("./js/sound/maintheme.mp3");
+    this.currentSong.addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+    }, false);
+    this.currentSong.play();
+
     this.generateWorlds();
     this.currentWorld = this.worlds["Area 51"];
     this.setLevel();

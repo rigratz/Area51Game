@@ -24,6 +24,7 @@ AM.queueDownload("./js/img/speed_upgrade_icon.png");
 AM.queueAudioDownload("./js/sound/laser.wav");
 AM.queueAudioDownload("./js/sound/jump.wav");
 AM.queueAudioDownload("./js/sound/damage.wav");
+AM.queueAudioDownload("./js/sound/maintheme.mp3");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
