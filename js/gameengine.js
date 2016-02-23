@@ -10,6 +10,8 @@ window.requestAnimFrame = (function () {
 })();
 
 function GameEngine() {
+  this.player = null;
+  this.hasSpeed = false;
     this.entities = [];
     this.platforms = [];
     this.powerups = [];
@@ -97,6 +99,7 @@ GameEngine.prototype.setLevel = function() {
         var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
 
         this.addEntity(player);
+        this.player = player;
         this.camera.follow(player, 100, 100);
       } else if (ch === "bird") {
         this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"), 10));
@@ -113,7 +116,17 @@ GameEngine.prototype.setLevel = function() {
       } else if (ch === "dragon") {
           this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
       } else if (ch == "speedboost") {
-          this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
+          // var exists = false;
+          // //console.log(this.powerups[0]);
+          // for (var i = 1; i < this.powerups.length; i++) {
+          //   console.log("IN HERE");
+          //   if (this.powerups[i] === "S") {
+          //     exists = true;
+          //     //break;
+          //   }
+          // }
+          console.log("after loop");
+          if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
        //   console.log("speed boost added!");
       } else if (ch === "exit") {
         var exitDir = null;
