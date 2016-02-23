@@ -30,7 +30,7 @@ AM.downloadAll(function () {
         gameEngine, 736, 736);
     /**********************************************/
     gameEngine.init(ctx);
-    gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
+   // gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
     gameEngine.start();
 
     console.log("All Done!");

@@ -113,6 +113,13 @@ PlayerOne.prototype.reset = function () {
     this.game.health = 100;
     this.game.percent = this.game.health / this.game.maxHealth;
     this.game.lives--;
+    if (this.game.lives <= 0) {
+        this.game.running = false;
+        this.dead = true;
+        this.game.playGame.reset();
+        //this.game.playGame.update();
+        //this.game.playGame.draw();
+    }
 
     this.dead = false;
 
@@ -143,7 +150,7 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
-
+ // console.log(this.game.lives);
   this.game.camera.follow(this, 100, 100);
     //var collideExit = false;
     for (var i = 0; i < this.game.exits.length; i++) {
@@ -454,28 +461,9 @@ PlayerOne.prototype.update = function() {
                         }
                         console.log(this.game.powerups);
                          entity.removeFromWorld = true;
-                //    entity.collided = true;
-               //     this.maxSpeed = 550;
-                //    this.speed = 100;
-                   // var flag = true;
-              //  console.log(this.game.powerups.length);
-                 //    for (var i = 0; i < this.game.powerups.length; i++) {
-                 //       if (this.game.powerups[i] === entity.boostType) {
-                    //     console.log("")
-                    //  //     flag = false;
                   }
             }
-//                    console.log(flag);
-                //    if (flag) 
-                // if (this.game.powerups[entity.boostType]) {
-                //    this.game.powerups[entity.boostType] = entity.boostType;
-                // }
-               // console.log(this.game.powerups);
-                //    this.game.currentPowerUp = "S";
-                //    entity.removeFromWorld = true;
-                 }
-          //  }
-        // }
+        }
      }
 
 

@@ -20,9 +20,10 @@ PlayGame.prototype.update = function () {
          console.log("Thanks for clicking! game is running = " + this.game.running);
         //console.log(this.game.lives);
     } else if (this.game.lives <= 0) {
-        console.log("game over!");
+     //   console.log("game over!");
       this.game.running = false;
     }
+    Entity.prototype.update.call(this);
 }
 
 PlayGame.prototype.draw = function (ctx) {
@@ -34,7 +35,9 @@ PlayGame.prototype.draw = function (ctx) {
             this.ctx.fillText("Welcome to Area 51! Click to play the game!", this.game.camera.xView + 100, this.game.camera.yView + 200);
         }
         else {
+          //  console.log("am i here");
             this.ctx.fillText("Oh no! The Aliens have won! Better luck next time!", this.game.camera.xView + 100, this.game.camera.yView + 200);
         }
     }
+    Entity.prototype.draw.call(this);
 }
