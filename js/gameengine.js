@@ -106,7 +106,7 @@ GameEngine.prototype.setLevel = function() {
           currLevel.grid[j+mult][i] = "used_platform";
           mult += 1;
         }
-        
+
         this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
       } else if (ch === "platformtop") {
         this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "T")));

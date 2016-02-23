@@ -1,5 +1,8 @@
 function PlayerOne(game, x, y, spritesheet) {
     this.laserSound = AM.getAudioAsset("./js/sound/laser.wav");
+    this.jumpSound = AM.getAudioAsset("./js/sound/jump.wav");
+    this.jumpSound2 = AM.getAudioAsset("./js/sound/jump.wav");
+    this.damageSound = AM.getAudioAsset("./js/sound/damage.wav");
     this.game = game;
     this.ctx = game.ctx;
     this.startX = x;
@@ -218,16 +221,16 @@ PlayerOne.prototype.update = function() {
     }
     //console.log(this.changePowerUp);
 
-
-
     if (this.game.jump === true) {
       this.animation = this.jumpAnimation;
       if (!this.jumping && !this.falling) {
+          this.jumpSound.play();
           this.jumping = true;
           this.yvel = -600;
       }
     } else {
       if (this.game.jumping && this.yvel < 0) {
+        //Is this code even reachable??
         this.yvel = 0;
         this.jumping = false;
         this.falling = true;
@@ -424,6 +427,7 @@ PlayerOne.prototype.update = function() {
              if (entity.collide(this)) {
                 //console.log(entity.collided);
                 if (this.collideCounter === 0 || entity.collided === false) {
+                    this.damageSound.play();
                     this.game.health -= this.damage;
                     this.game.percent = this.game.health / this.game.maxHealth;
                     entity.collided = true;

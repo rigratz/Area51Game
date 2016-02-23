@@ -21,6 +21,8 @@ AM.queueDownload("./js/img/grumpy_cat.png");
 AM.queueDownload("./js/img/speed_upgrade_icon.png");
 
 AM.queueAudioDownload("./js/sound/laser.wav");
+AM.queueAudioDownload("./js/sound/jump.wav");
+AM.queueAudioDownload("./js/sound/damage.wav");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
