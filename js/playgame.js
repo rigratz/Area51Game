@@ -15,9 +15,12 @@ PlayGame.prototype.reset = function () {
 }
 PlayGame.prototype.update = function () {
     if (this.game.click && this.game.lives > 0) {
+       // console.log("Thanks for clicking! game is running = " + this.game.running);
         this.game.running = true;
+         console.log("Thanks for clicking! game is running = " + this.game.running);
         //console.log(this.game.lives);
     } else if (this.game.lives <= 0) {
+        console.log("game over!");
       this.game.running = false;
     }
 }
