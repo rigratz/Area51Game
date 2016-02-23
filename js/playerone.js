@@ -1,4 +1,8 @@
 function PlayerOne(game, x, y, spritesheet) {
+    this.laserSound = AM.getAudioAsset("./js/sound/laser.wav");
+    console.log(this.laserSound);
+
+
     this.game = game;
     this.ctx = game.ctx;
     this.startX = x;
@@ -173,7 +177,7 @@ PlayerOne.prototype.update = function() {
         if (this.dead && this.game.lives > 0) {
             this.game.reset();
             return;
-        
+
     }
 
     if (this.game.left === true) {
@@ -218,7 +222,7 @@ PlayerOne.prototype.update = function() {
     //console.log(this.changePowerUp);
 
 
-    
+
     if (this.game.jump === true) {
       this.animation = this.jumpAnimation;
       if (!this.jumping && !this.falling) {
@@ -243,6 +247,8 @@ PlayerOne.prototype.update = function() {
       this.game.addEntity(bullet);
       this.game.shotsFired += 1;
       this.canShoot = false;
+      //console.log(this.laserSound);
+      this.laserSound.play();
     }
     if (!(this.game.jump || this.game.left || this.game.right || this.game.up || this.game.down)) {
         if (this.facing === "left") {
@@ -457,7 +463,7 @@ PlayerOne.prototype.update = function() {
                                 }
                             }
                             if (flag)
-                            this.game.powerups.push(entity.boostType);    
+                            this.game.powerups.push(entity.boostType);
                         }
                         console.log(this.game.powerups);
                          entity.removeFromWorld = true;

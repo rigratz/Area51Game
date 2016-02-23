@@ -20,6 +20,8 @@ AM.queueDownload("./js/img/dragon.png");
 AM.queueDownload("./js/img/grumpy_cat.png");
 AM.queueDownload("./js/img/speed_upgrade_icon.png");
 
+AM.queueAudioDownload("./js/sound/laser.wav");
+
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
