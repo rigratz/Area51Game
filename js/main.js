@@ -13,6 +13,7 @@ function BoundingRect(x, y, w, h) {
 }
 
 AM.queueDownload("./js/img/area51main.png");
+AM.queueDownload("./js/img/sand_dune_background.jpg");
 AM.queueDownload("./js/img/bird_enemy_spritesheet.png");
 AM.queueDownload("./js/img/cement_background.jpg");
 AM.queueDownload("./js/img/textures.png");
@@ -26,8 +27,10 @@ AM.downloadAll(function () {
     var gameEngine = new GameEngine();
 
     /*This is probably not the best way to do this*/
-    gameEngine.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
-        gameEngine, 736, 736);
+    // gameEngine.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
+    //     gameEngine, 736, 736);
+    gameEngine.backgroundImage = new Background(AM.getAsset("./js/img/sand_dune_background.jpg"),
+        gameEngine, 1200, 600);
     /**********************************************/
     gameEngine.init(ctx);
     gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
