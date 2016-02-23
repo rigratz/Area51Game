@@ -226,6 +226,10 @@ GameEngine.prototype.addBackgroundImage = function(image) {
 }
 
 GameEngine.prototype.draw = function () {
+    if (this.entities[0].is === "PlayGame") {
+      this.entities[0].draw(this.ctx);
+      return;
+    }
     this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
     this.ctx.save();
     if (this.camera != null) {
@@ -259,8 +263,8 @@ GameEngine.prototype.draw = function () {
         this.ctx.font = "bold 18px sans-serif";
         this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
         this.ctx.fillText("Current Powerup", this.camera.xView + 500, this.camera.yView + 15);
-        console.log(this.currentPowerUp);
-        console.log(this.powerups.length);
+        //console.log(this.currentPowerUp);
+        //console.log(this.powerups.length);
         if (this.currentPowerUp === null || this.currentPowerUp === " ") {
             this.ctx.strokeStyle = "black";
             this.ctx.strokeRect(this.camera.xView + 660, this.camera.yView + 5, 50, 50);
@@ -289,7 +293,7 @@ GameEngine.prototype.update = function () {
     for (var i = this.entities.length - 1; i >= 0; --i) {
         if (this.entities[i].removeFromWorld) {
             this.entities.splice(i, 1);
-            console.log("be gone!");
+            //console.log("be gone!");
         }
     }
     for (var i = this.platforms.length - 1; i >= 0; --i) {

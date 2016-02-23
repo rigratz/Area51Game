@@ -12,6 +12,7 @@ function BoundingRect(x, y, w, h) {
     this.right = this.x + this.width;
 }
 
+AM.queueDownload("./js/img/mainscreen.png");
 AM.queueDownload("./js/img/area51main.png");
 AM.queueDownload("./js/img/bird_enemy_spritesheet.png");
 AM.queueDownload("./js/img/cement_background.jpg");
@@ -19,6 +20,7 @@ AM.queueDownload("./js/img/textures.png");
 AM.queueDownload("./js/img/dragon.png");
 AM.queueDownload("./js/img/grumpy_cat.png");
 AM.queueDownload("./js/img/speed_upgrade_icon.png");
+
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -30,7 +32,11 @@ AM.downloadAll(function () {
         gameEngine, 736, 736);
     /**********************************************/
     gameEngine.init(ctx);
+    //var startScreen = new PlayGame(gameEngine, 300, 300);
     gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
+    // while (!gameEngine.running) {
+    //   startScreen.draw(ctx);
+    // }
     gameEngine.start();
 
     console.log("All Done!");
