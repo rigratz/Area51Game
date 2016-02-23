@@ -17,11 +17,14 @@ PlayGame.prototype.reset = function () {
 }
 PlayGame.prototype.update = function () {
     if (this.game.click && this.game.lives > 0) {
+       // console.log("Thanks for clicking! game is running = " + this.game.running);
         this.game.running = true;
         this.removeFromWorld = true;
     } else if (this.game.lives <= 0) {
+     //   console.log("game over!");
       this.game.running = false;
     }
+    Entity.prototype.update.call(this);
 }
 
 PlayGame.prototype.draw = function (ctx) {
@@ -37,8 +40,10 @@ PlayGame.prototype.draw = function (ctx) {
             this.ctx.fillText("Click to play the game!", 250, 600);
         }
         else {
+
             this.ctx.fillText("Oh no! The Aliens have won! Better luck next time!", 100, 200);
         }
     }
     this.ctx.restore();
+
 }

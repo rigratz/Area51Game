@@ -33,6 +33,10 @@ function PlayerOne(game, x, y, spritesheet) {
     this.canShoot = true;
     this.shotCooldown = 0;
 
+    this.changePowerUp = true;
+    this.powerUpindex = 0;
+    this.powerUpCooldown = 0;
+
     if (this.game.currentPowerup === "S") {
         this.speed = 100;
         this.maxSpeed = 250;
@@ -41,7 +45,7 @@ function PlayerOne(game, x, y, spritesheet) {
     this.maxSpeed = 250;
     }
 
-    this.damage = 10;
+    this.damage = 30;
 
     this.collideTime = 65;
     this.collideCounter = 0;
@@ -100,11 +104,22 @@ PlayerOne.prototype.reset = function () {
     this.canShoot = true;
     this.shotCooldown = 0;
 
+        this.changePowerUp = true;
+    this.powerUpindex = 0;
+    this.powerUpCooldown = 0;
+
     this.collideTime = 65;
     this.collideCounter = 0;
     this.game.health = 100;
     this.game.percent = this.game.health / this.game.maxHealth;
     this.game.lives--;
+    if (this.game.lives <= 0) {
+        this.game.running = false;
+        this.dead = true;
+        this.game.playGame.reset();
+        //this.game.playGame.update();
+        //this.game.playGame.draw();
+    }
 
     this.dead = false;
 
@@ -135,7 +150,7 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
-
+ // console.log(this.game.lives);
   this.game.camera.follow(this, 100, 100);
     //var collideExit = false;
     for (var i = 0; i < this.game.exits.length; i++) {
@@ -158,7 +173,8 @@ PlayerOne.prototype.update = function() {
         if (this.dead && this.game.lives > 0) {
             this.game.reset();
             return;
-        }
+        
+    }
 
     if (this.game.left === true) {
         this.animation = this.leftAnimation;
@@ -182,22 +198,27 @@ PlayerOne.prototype.update = function() {
         this.animation = this.crouchAnimation;
         this.xvel = 0;
     }
-    if (this.game.toggle === true) {
-        if (this.game.powerups.length < 1) {
+    if (this.game.toggle && this.changePowerUp) {
+        this.powerUpindex = this.game.powerups.indexOf(this.game.currentPowerUp);
+        if (this.game.powerups.length < 1 || this.game.currentPowerUp === this.game.powerups[this.game.powerups.length - 1]) {
             this.game.currentPowerUp = " ";
         } else {
-        for (var i = 0; i < this.game.powerups.length; i++) {
-            if (this.game.currentPowerUp === this.game.powerups[this.game.powerups.length - 1]) {
-                this.game.currentPowerUp = this.game.powerups[0];
-                break;
-            }
-            if (this.game.currentPowerUp === this.game.powerups[i]) {
-                this.game.currentPowerUp = this.game.powerups[i + 1];
-                break;
-            }
+            this.game.currentPowerUp = this.game.powerups[this.powerUpindex + 1];
         }
+        this.changePowerUp = false;
     }
+    if (!this.changePowerUp) {
+      this.powerUpCooldown += this.game.clockTick;
+      console.log(this.powerUpCooldown);
+      if (this.powerUpCooldown > 0.25) {
+        this.changePowerUp = true;
+        this.powerUpCooldown = 0;
+      }
     }
+    //console.log(this.changePowerUp);
+
+
+    
     if (this.game.jump === true) {
       this.animation = this.jumpAnimation;
       if (!this.jumping && !this.falling) {
@@ -394,7 +415,6 @@ PlayerOne.prototype.update = function() {
         this.shotCooldown = 0;
       }
     }
-
      for (var i = 0; i < this.game.entities.length; i++) {
          var entity = this.game.entities[i];
          if (entity instanceof BirdEnemy || entity instanceof Dragon) {
@@ -403,6 +423,7 @@ PlayerOne.prototype.update = function() {
                 //console.log(entity.collided);
                 if (this.collideCounter === 0 || entity.collided === false) {
                     this.game.health -= this.damage;
+                    this.game.percent = this.game.health / this.game.maxHealth;
                     entity.collided = true;
                 }
                 this.collideCounter++;
@@ -410,37 +431,39 @@ PlayerOne.prototype.update = function() {
                     this.collideCounter = 0;
                 }
              //   console.log(this.collideCounter);
-                this.game.percent = this.game.health / this.game.maxHealth;
 
                //  this.health -= 1;
               //   console.log(this.health);
                  if (this.game.health <= 0) {
-                 this.removeFromWorld = true;
-                 this.dead = true;
-                 this.reset();
+                    this.removeFromWorld = true;
+                    this.dead = true;
+                    this.reset();
               //   entity.removeFromWorld = true;
                  }
              }
          }
-        if (entity instanceof PowerUp) {
+        else if (entity instanceof PowerUp) {
             if (entity.collide(this)) {
-                if (entity.boostType === "S") {
-                   entity.collided = true;
-                   this.maxSpeed = 550;
-                   this.speed = 100;
-                   var flag = true;
-                   for (var i = 0; i < this.game.powerups.length; i++) {
-                      if (this.game.powerups[i] === entity.boostType) {
-                         flag = false;
-                       }
-                   }
-                   if (flag) 
-                   this.game.powerups.push(entity.boostType);
-                   this.game.currentPowerUp = "S";
-                   entity.removeFromWorld = true;
-                }
+                 if (entity.boostType === "S") {
+                        console.log(this.game.powerups);
+                        if (this.game.powerups.length === 1) {
+                            this.game.powerups.push("S");
+                            this.game.currentPowerUp = "S";
+                        } else {
+                            var flag = true;
+                            for (var i = 0; i < this.game.powerups.length; i++) {
+                                if (this.game.powerups[i] === entity.boostType) {
+                                    flag = false;
+                                }
+                            }
+                            if (flag)
+                            this.game.powerups.push(entity.boostType);    
+                        }
+                        console.log(this.game.powerups);
+                         entity.removeFromWorld = true;
+                  }
             }
-         }
+        }
      }
 
 

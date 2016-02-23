@@ -15,6 +15,7 @@ function GameEngine() {
     this.powerups = [];
     this.exits = [];
     this.worlds = [];
+    this.playGame = null;
     this.currentWorld = null;
     this.currentPowerUp = " ";
     this.ctx = null;
@@ -53,6 +54,8 @@ GameEngine.prototype.init = function (ctx) {
     this.startInput();
     this.timer = new Timer();
     console.log('game initialized');
+  //  this.playGame = new PlayGame(this, 300, 300);
+ //   this.addEntity(this.playGame);
 }
 
 GameEngine.prototype.generateWorlds = function() {
@@ -75,7 +78,6 @@ GameEngine.prototype.clearLevel = function() {
 }
 
 GameEngine.prototype.setLevel = function() {
-
   var newIndex = this.entities.length;
 
   var currLevel = this.currentWorld.currentRoom;
@@ -83,6 +85,8 @@ GameEngine.prototype.setLevel = function() {
   var levelWidth = currLevel.grid[0].length;
   var levelHeight = currLevel.grid.length;
   this.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
+  this.playGame = new PlayGame(this, 300, 300);
+  this.addEntity(this.playGame);
 
   var ch;
   for (var i = 0; i < currLevel.grid[0].length; i++) {
@@ -110,6 +114,7 @@ GameEngine.prototype.setLevel = function() {
           this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
       } else if (ch == "speedboost") {
           this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
+       //   console.log("speed boost added!");
       } else if (ch === "exit") {
         var exitDir = null;
         if (i === 0) {
@@ -144,13 +149,13 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
   } else if (exitedFrom === "west") {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
   }
+  console.log("switching");
   this.setLevel();
 }
 GameEngine.prototype.start = function () {
     console.log("starting game");
     this.generateWorlds();
     this.currentWorld = this.worlds["Area 51"];
-
     this.setLevel();
 
     var that = this;
@@ -226,7 +231,7 @@ GameEngine.prototype.addBackgroundImage = function(image) {
 }
 
 GameEngine.prototype.draw = function () {
-    if (this.entities[0].is === "PlayGame") {
+    if (this.running === false && this.entities[0].is === "PlayGame") {
       this.entities[0].draw(this.ctx);
       return;
     }
@@ -248,9 +253,9 @@ GameEngine.prototype.draw = function () {
     if(this.camera != null && this.running) {
        this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
-        this.ctx.fillText("Life " + this.health+"/"+this.maxHealth, this.camera.xView + 15, this.camera.yView + 15);
+        this.ctx.fillText("HP " + this.health + "    Lives " + this.lives, this.camera.xView + 15, this.camera.yView + 15);
         this.ctx.fillStyle = "black";
-        this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 100, 15);
+        this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 150, 15);
         if (this.health > 66) {
             this.ctx.fillStyle = "green";
         } else if (this.health > 33 && this.health <= 66) {
@@ -258,27 +263,35 @@ GameEngine.prototype.draw = function () {
         } else {
             this.ctx.fillStyle = "red";
         }
-        this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 100 * this.percent, 15);
+        this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 150 * this.percent, 15);
         this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
-        this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
-        this.ctx.fillText("Current Powerup", this.camera.xView + 500, this.camera.yView + 15);
-        //console.log(this.currentPowerUp);
-        //console.log(this.powerups.length);
+// <<<<<<< HEAD
+//         this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
+//         this.ctx.fillText("Current Powerup", this.camera.xView + 500, this.camera.yView + 15);
+//         //console.log(this.currentPowerUp);
+//         //console.log(this.powerups.length);
+// =======
+       // this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
+        this.ctx.fillText("Current Powerup", this.camera.xView + 600, this.camera.yView + 15);
+       // console.log(this.currentPowerUp);
+       // console.log(this.powerups.length);
+//>>>>>>> 55354a41f0791bab100849861bf47409812967d2
         if (this.currentPowerUp === null || this.currentPowerUp === " ") {
             this.ctx.strokeStyle = "black";
-            this.ctx.strokeRect(this.camera.xView + 660, this.camera.yView + 5, 50, 50);
+            this.ctx.strokeRect(this.camera.xView + 750, this.camera.yView + 5, 50, 50);
         }
          else if (this.currentPowerUp === "S") {
            var img = AM.getAsset("./js/img/speed_upgrade_icon.png");
            this.ctx.drawImage(img,
-           0, 0,  50, 50, this.camera.xView + 660, this.camera.yView + 5, 50, 50);
+           0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
        }
     }
     this.ctx.restore();
 }
 
 GameEngine.prototype.update = function () {
+  //console.log(this.entities);
     var entitiesCount = this.entities.length;
 
     for (var i = 0; i < entitiesCount; i++) {
@@ -289,7 +302,7 @@ GameEngine.prototype.update = function () {
         }
     }
 
-
+ //   console.log(this.entities.length);
     for (var i = this.entities.length - 1; i >= 0; --i) {
         if (this.entities[i].removeFromWorld) {
             this.entities.splice(i, 1);

@@ -32,11 +32,9 @@ AM.downloadAll(function () {
         gameEngine, 736, 736);
     /**********************************************/
     gameEngine.init(ctx);
-    //var startScreen = new PlayGame(gameEngine, 300, 300);
+
     gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
-    // while (!gameEngine.running) {
-    //   startScreen.draw(ctx);
-    // }
+
     gameEngine.start();
 
     console.log("All Done!");
@@ -47,4 +45,5 @@ AM.downloadAll(function () {
     console.log("Crouch: Down Arrow");
     console.log("Jump: Z");
     console.log("Shoot: X");
+    console.log("Toggle Powerups: Space");
 });
