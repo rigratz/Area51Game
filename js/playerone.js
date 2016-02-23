@@ -221,6 +221,7 @@ PlayerOne.prototype.update = function() {
     }
     //console.log(this.changePowerUp);
 
+///////////////////////////
     if (this.game.jump === true) {
       this.animation = this.jumpAnimation;
       if (!this.jumping && !this.falling) {
@@ -467,6 +468,7 @@ PlayerOne.prototype.update = function() {
                         }
                         console.log(this.game.powerups);
                          entity.removeFromWorld = true;
+                         this.game.hasSpeed = true;
                   }
             }
         }

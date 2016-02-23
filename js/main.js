@@ -12,6 +12,7 @@ function BoundingRect(x, y, w, h) {
     this.right = this.x + this.width;
 }
 
+AM.queueDownload("./js/img/mainscreen.png");
 AM.queueDownload("./js/img/area51main.png");
 AM.queueDownload("./js/img/bird_enemy_spritesheet.png");
 AM.queueDownload("./js/img/cement_background.jpg");
@@ -34,7 +35,9 @@ AM.downloadAll(function () {
         gameEngine, 736, 736);
     /**********************************************/
     gameEngine.init(ctx);
-   // gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
+
+    gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
+
     gameEngine.start();
 
     console.log("All Done!");
@@ -45,4 +48,5 @@ AM.downloadAll(function () {
     console.log("Crouch: Down Arrow");
     console.log("Jump: Z");
     console.log("Shoot: X");
+    console.log("Toggle Powerups: Space");
 });

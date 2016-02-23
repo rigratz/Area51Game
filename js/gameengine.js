@@ -10,6 +10,8 @@ window.requestAnimFrame = (function () {
 })();
 
 function GameEngine() {
+  this.player = null;
+  this.hasSpeed = false;
     this.entities = [];
     this.platforms = [];
     this.powerups = [];
@@ -97,6 +99,7 @@ GameEngine.prototype.setLevel = function() {
         var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
 
         this.addEntity(player);
+        this.player = player;
         this.camera.follow(player, 100, 100);
       } else if (ch === "bird") {
         this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"), 10));
@@ -113,7 +116,17 @@ GameEngine.prototype.setLevel = function() {
       } else if (ch === "dragon") {
           this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
       } else if (ch == "speedboost") {
-          this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
+          // var exists = false;
+          // //console.log(this.powerups[0]);
+          // for (var i = 1; i < this.powerups.length; i++) {
+          //   console.log("IN HERE");
+          //   if (this.powerups[i] === "S") {
+          //     exists = true;
+          //     //break;
+          //   }
+          // }
+          console.log("after loop");
+          if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
        //   console.log("speed boost added!");
       } else if (ch === "exit") {
         var exitDir = null;
@@ -149,6 +162,7 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
   } else if (exitedFrom === "west") {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
   }
+  console.log("switching");
   this.setLevel();
 }
 GameEngine.prototype.start = function () {
@@ -230,6 +244,10 @@ GameEngine.prototype.addBackgroundImage = function(image) {
 }
 
 GameEngine.prototype.draw = function () {
+    if (this.running === false && this.entities[0].is === "PlayGame") {
+      this.entities[0].draw(this.ctx);
+      return;
+    }
     this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
     this.ctx.save();
     if (this.camera != null) {
@@ -261,10 +279,17 @@ GameEngine.prototype.draw = function () {
         this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 150 * this.percent, 15);
         this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
+// <<<<<<< HEAD
+//         this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
+//         this.ctx.fillText("Current Powerup", this.camera.xView + 500, this.camera.yView + 15);
+//         //console.log(this.currentPowerUp);
+//         //console.log(this.powerups.length);
+// =======
        // this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
         this.ctx.fillText("Current Powerup", this.camera.xView + 600, this.camera.yView + 15);
        // console.log(this.currentPowerUp);
        // console.log(this.powerups.length);
+//>>>>>>> 55354a41f0791bab100849861bf47409812967d2
         if (this.currentPowerUp === null || this.currentPowerUp === " ") {
             this.ctx.strokeStyle = "black";
             this.ctx.strokeRect(this.camera.xView + 750, this.camera.yView + 5, 50, 50);
@@ -279,6 +304,7 @@ GameEngine.prototype.draw = function () {
 }
 
 GameEngine.prototype.update = function () {
+  //console.log(this.entities);
     var entitiesCount = this.entities.length;
 
     for (var i = 0; i < entitiesCount; i++) {
@@ -293,7 +319,7 @@ GameEngine.prototype.update = function () {
     for (var i = this.entities.length - 1; i >= 0; --i) {
         if (this.entities[i].removeFromWorld) {
             this.entities.splice(i, 1);
-            console.log("be gone!");
+            //console.log("be gone!");
         }
     }
     for (var i = this.platforms.length - 1; i >= 0; --i) {
