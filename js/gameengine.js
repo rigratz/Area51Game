@@ -54,6 +54,8 @@ GameEngine.prototype.init = function (ctx) {
     this.ctx = ctx;
     this.surfaceWidth = this.ctx.canvas.width;
     this.surfaceHeight = this.ctx.canvas.height;
+    this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
+        this, 736, 736);
     this.startInput();
     this.timer = new Timer();
     console.log('game initialized');
@@ -111,9 +113,9 @@ GameEngine.prototype.setLevel = function() {
           mult += 1;
         }
 
-        this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
-      } else if (ch === "platformtop") {
-        this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "T")));
+        this.platforms.push((new Platform(AM.getAsset("./js/img/textures2.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
+      // } else if (ch === "platformtop") {
+      //   this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "T")));
       } else if (ch === "dragon") {
           this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
       } else if (ch == "speedboost") {
@@ -162,6 +164,15 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j+1];
   } else if (exitedFrom === "west") {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
+  }
+  if (this.currentWorld.name === "Area 51") {
+      this.currentWorld.name = "World 1";
+      this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
+      this, 736, 736); // Replace 736 with actual height and width
+  } else if (this.currentWorld.name === "World 1") {
+    this.currentWorld.name = "Area 51";
+    this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
+    this, 736, 736);
   }
   console.log("switching");
   this.setLevel();

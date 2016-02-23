@@ -28,35 +28,42 @@ Platform.prototype.reset = function () {
 
 
 Platform.prototype.draw = function (ctx) {
-
-    if (this.platType === "T") {
+    var topx = 0;
+    var topy = 0;
+    var bottomx = 0;
+    var bottomy = 0;
+    if (this.game.currentWorld.name === "Area 51") {
+      topx = 0; topy = 0;
+      bottomx = 100; bottomy = 0;
+    } else if (this.game.currentWorld.name === "World 1") {
+      topx = 0; topy = 100;
+      bottomx = 200; bottomy = 100;
+    }
+    // if (this.platType === "T") {
+    //   ctx.drawImage(this.textureSheet,
+    //       0, 0,  // source from sheet
+    //       50, 50,
+    //       this.x, this.y ,
+    //       this.width,
+    //       this.height);
+    // } else if (this.platType === "X"){
+    var mult = this.height / 50;
+    var i = 0;
+    var y = this.y;
+    for (i = 1; i <= mult; i++) {
       ctx.drawImage(this.textureSheet,
-          0, 0,  // source from sheet
-          50, 50,
-          this.x, this.y ,
-          this.width,
-          this.height);
-    } else if (this.platType === "X"){
-
-
-      var mult = this.height / 50;
-      var i = 0;
-      var y = this.y;
-      for (i = 1; i <= mult; i++) {
-        ctx.drawImage(this.textureSheet,
-          102, 4,  // source from sheet
+          bottomx, bottomy,  // source from sheet
           50, 50,
           this.x, this.y,
           50,
           50);
           this.y += 50;
-      }
-      this.y = y;
-      ctx.drawImage(this.textureSheet,
-          0, 0,  // source from sheet
+    }
+    this.y = y;
+    ctx.drawImage(this.textureSheet,
+          topx, topy,  // source from sheet
           50, 50,
           this.x, this.y ,
           50,
           50);
-    }
 }
