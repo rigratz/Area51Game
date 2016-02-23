@@ -1,8 +1,5 @@
 function PlayerOne(game, x, y, spritesheet) {
     this.laserSound = AM.getAudioAsset("./js/sound/laser.wav");
-    console.log(this.laserSound);
-
-
     this.game = game;
     this.ctx = game.ctx;
     this.startX = x;
@@ -245,10 +242,9 @@ PlayerOne.prototype.update = function() {
       }
       var bullet = new Bullet(this.game, this.x +40, this.y + 40, dir);
       this.game.addEntity(bullet);
+      this.laserSound.play();
       this.game.shotsFired += 1;
       this.canShoot = false;
-      //console.log(this.laserSound);
-      this.laserSound.play();
     }
     if (!(this.game.jump || this.game.left || this.game.right || this.game.up || this.game.down)) {
         if (this.facing === "left") {
@@ -416,7 +412,7 @@ PlayerOne.prototype.update = function() {
     this.y += this.yvel * this.game.clockTick;
     if (!this.canShoot) {
       this.shotCooldown += this.game.clockTick;
-      if (this.shotCooldown > 0.25) {
+      if (this.shotCooldown > 0.75) {
         this.canShoot = true;
         this.shotCooldown = 0;
       }
