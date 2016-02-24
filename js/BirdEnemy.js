@@ -9,6 +9,8 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = false;
+    this.health = 30;
+    this.damage = 15;
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "idle");
     this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "right");
     this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "left");
@@ -52,7 +54,11 @@ BirdEnemy.prototype.update = function() {
         if (entity instanceof Bullet && entity.x > 0) {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
             if (entity.collideEnemy(this)) {
-                this.removeFromWorld = true;
+                console.log(this.health);
+                this.health -= this.damage;
+                if (this.health <= 0) {
+                    this.removeFromWorld = true;
+                } 
                 entity.removeFromWorld = true;
             }
         }

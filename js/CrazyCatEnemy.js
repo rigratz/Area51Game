@@ -6,8 +6,6 @@ function CrazyCatEnemy(game, x, y, spritesheet) {
     this.ctx = game.ctx;
     this.x = x;
     this.y = y;
-    //console.log("hereeeeee", this.y);
-    //console.log(this.x);
     this.yvel = 0;
     this.removeFromWorld = false;
     this.collided = false;
@@ -15,7 +13,6 @@ function CrazyCatEnemy(game, x, y, spritesheet) {
     this.debug = false;
     this.spritesheet = spritesheet;
     this.animation = new Animation("crazycat", spritesheet, 150, 150, 0.10, 7, true, false, "idle");
-    //console.log("HEREEE ", spritesheet);
     Entity.call(this, game, this.x, this.y);
 }
 
@@ -26,12 +23,7 @@ CrazyCatEnemy.prototype.constructor = CrazyCatEnemy;
 
 CrazyCatEnemy.prototype.draw = function () {
     if (!this.game.running) return;
-
-    //console.log("HERE!! ", this.spritesheet);
-
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-    //console.log("hereeeeee", this.y);
-    //console.log(this.x);
     var bb = this.boundingRect;
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
