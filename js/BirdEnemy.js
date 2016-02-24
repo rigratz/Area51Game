@@ -10,7 +10,7 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.boundingRect = new BoundingRect(x, y, 90, 124);
     this.debug = false;
     this.health = 30;
-    this.damage = 15;
+    this.damage = 10;
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "idle");
     this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "right");
     this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "left");

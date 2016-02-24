@@ -13,6 +13,7 @@ function CrazyCatEnemy(game, x, y, spritesheet) {
     this.debug = false;
     this.spritesheet = spritesheet;
     this.animation = new Animation("crazycat", spritesheet, 150, 150, 0.10, 7, true, false, "idle");
+    this.health = 30;
     Entity.call(this, game, this.x, this.y);
 }
 
@@ -46,7 +47,10 @@ CrazyCatEnemy.prototype.update = function() {
         if (entity instanceof Bullet && entity.x > 0) {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
             if (entity.collideEnemy(this)) {
-                this.removeFromWorld = true;
+                this.health -= 10;
+                if(this.health === 0) {
+                    this.removeFromWorld = true;
+                }
                 entity.removeFromWorld = true;
             }
         }
