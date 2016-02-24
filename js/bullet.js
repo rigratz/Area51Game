@@ -12,11 +12,11 @@ function Bullet(game, x, y, dir) {//, spritesheet) {
 
     this.distanceTraveled = 0;
     if (dir === "up") {
-      this.yvel = -500;
+      this.yvel = -650;
     } else if (dir === "left") {
-      this.xvel = -500;
+      this.xvel = -650;
     } else if (dir === "right") {
-      this.xvel = 500;
+      this.xvel = 650;
     }
     this.boundingRect = new BoundingRect(x, y, 5, 5);
     //this.debug = true;
