@@ -28,6 +28,14 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "cat";
       else if (ch === "S")
         fieldType = "speedboost";
+      else if (ch === "0")
+        fieldType = "portal0";
+      else if (ch === "1")
+        fieldType = "portal1";
+      else if (ch === "2")
+        fieldType = "portal2";
+      else if (ch === "3")
+        fieldType = "portal3";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);

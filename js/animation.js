@@ -63,7 +63,11 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
       xframe = 9;
       yframe = 233;
         y = y + 21;
-    } else if (this.type === "up") {
+    } else if (this.type === "crouchleft") {
+      xframe = 61;
+      yframe = 233;
+        y = y + 21;
+    }else if (this.type === "up") {
       xframe = 9;
       yframe = 275;
         y = y - 37;

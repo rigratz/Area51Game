@@ -67,6 +67,7 @@ function PlayerOne(game, x, y, spritesheet) {
     this.leftAnimation = new Animation("player", spritesheet, 37, 42, 0.25, 4, true, false, "left");
     this.upAnimation = new Animation("player", spritesheet, 38, 55, 0.40, 1, true, false, "up");
     this.crouchAnimation = new Animation("player", spritesheet, 38, 32, 0.40, 1, true, false, "crouch");
+    this.crouchLeftAnimation = new Animation("player", spritesheet, 38, 32, 0.40, 1, true, false, "crouchleft");
     this.jumpAnimation = new Animation("player", spritesheet, 28, 26, 0.15, 4, true, false, "jump");
     this.jumpLeftAnimation = new Animation("player", spritesheet, 28, 26, 0.15, 4, true, false, "jumpleft");
 
@@ -160,7 +161,12 @@ PlayerOne.prototype.update = function() {
     for (var i = 0; i < this.game.exits.length; i++) {
       if (this.collide(this.game.exits[i])) {
         //collideExit = true;
-        this.game.switchLevel(this.game.exits[i].exitDir, this.game.currentWorld.currentRoom.iIndex, this.game.currentWorld.currentRoom.jIndex);
+        if (this.game.exits[i].type === "exit") {
+          this.game.switchLevel(this.game.exits[i].exitDir, this.game.currentWorld.currentRoom.iIndex, this.game.currentWorld.currentRoom.jIndex);
+        } else if (this.game.exits[i].type = "portal") {
+          console.log("TELEPORT");
+          this.game.switchWorlds(this.game.currentWorld.name, this.game.exits[i].portalTo);
+        }
         break;
       }
     }
@@ -199,7 +205,8 @@ PlayerOne.prototype.update = function() {
         this.xvel = 0;
     }
     if (this.game.down === true) {
-        this.animation = this.crouchAnimation;
+        if (this.facing === "right") this.animation = this.crouchAnimation;
+        if (this.facing === "left") this.animation = this.crouchLeftAnimation;
         this.xvel = 0;
     }
     if (this.game.toggle && this.changePowerUp) {
@@ -452,7 +459,7 @@ PlayerOne.prototype.update = function() {
         else if (entity instanceof PowerUp) {
             if (entity.collide(this)) {
                  if (entity.boostType === "S") {
-                        console.log(this.game.powerups);
+                        //console.log(this.game.powerups);
                         if (this.game.powerups.length === 1) {
                             this.game.powerups.push("S");
                             this.game.currentPowerUp = "S";
@@ -466,7 +473,7 @@ PlayerOne.prototype.update = function() {
                             if (flag)
                             this.game.powerups.push(entity.boostType);
                         }
-                        console.log(this.game.powerups);
+                        //console.log(this.game.powerups);
                          entity.removeFromWorld = true;
                          this.game.hasSpeed = true;
                   }

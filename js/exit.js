@@ -33,7 +33,6 @@ function Portal(textureSheet, game, x, y, w, h, type, portalTo) {
     this.removeFromWorld = false;
     this.debug = true;
     this.type = type;
-    this.exitDir = exitDir;
     this.boundingRect = new BoundingRect(x, y, w, h);
     Entity.call(this, game, this.x, this.y);
 }
@@ -44,5 +43,9 @@ Portal.prototype.constructor = Exit;
 Portal.prototype.update = function() {
 
 }
-Exit.prototype.draw = function (ctx) {
+Portal.prototype.draw = function (ctx) {
+  this.ctx.save();
+  this.ctx.fillStyle = "yellow";
+  this.ctx.fillRect(this.x, this.y, 50, 50);
+  this.ctx.restore();
 }

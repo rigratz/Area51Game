@@ -23,7 +23,7 @@ function GameEngine() {
     this.currentPowerUp = " ";
     this.ctx = null;
     this.camera = null;
-    this.backgroundImage = null;    //This is kinda hacky.
+    this.backgroundImage = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
     this.left = null;
@@ -65,13 +65,38 @@ GameEngine.prototype.init = function (ctx) {
 
 GameEngine.prototype.generateWorlds = function() {
   this.worlds["Area 51"] = new World("Area 51", this);
+  this.worlds["World 1"] = new World("World 1", this);
+}
+GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
+  console.log("PORTAL");
+  console.log(comingFrom);
+  console.log(goingTo);
+  this.clearLevel();
+  if (comingFrom === "Area 51") {
+    if (goingTo === "World 1") {
+      console.log("PORTAL TO 1");
+      this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
+           this, 736, 736); // Replace 736 with actual height and width
+      this.currentWorld = this.worlds["World 1"];
+      this.currentWorld.currentRoom = this.currentWorld.rooms[0][7];
+      //this.setLevel();
+    }
+
+  } else if (comingFrom === "World 1") {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
+         this, 736, 736);
+    this.currentWorld = this.worlds["Area 51"];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[0][7];
+
+  }
+  this.setLevel();
 }
 
 GameEngine.prototype.clearLevel = function() {
   for (var i = 0; i < this.entities.length; i++) {
     this.entities[i].removeFromWorld = true;
-    console.log("this should do something");
-    console.log(this.entities[i].removeFromWorld);
+    //console.log("this should do something");
+    //console.log(this.entities[i].removeFromWorld);
 
   }
   for (var i = 0; i < this.platforms.length; i++) {
@@ -85,6 +110,7 @@ GameEngine.prototype.clearLevel = function() {
 GameEngine.prototype.setLevel = function() {
   var newIndex = this.entities.length;
 
+  console.log(this.currentWorld);
   var currLevel = this.currentWorld.currentRoom;
 
   var levelWidth = currLevel.grid[0].length;
@@ -119,18 +145,7 @@ GameEngine.prototype.setLevel = function() {
       } else if (ch === "dragon") {
           this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
       } else if (ch == "speedboost") {
-          // var exists = false;
-          // //console.log(this.powerups[0]);
-          // for (var i = 1; i < this.powerups.length; i++) {
-          //   console.log("IN HERE");
-          //   if (this.powerups[i] === "S") {
-          //     exists = true;
-          //     //break;
-          //   }
-          // }
-          console.log("after loop");
           if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
-       //   console.log("speed boost added!");
       } else if (ch === "exit") {
         var exitDir = null;
         if (i === 0) {
@@ -145,13 +160,17 @@ GameEngine.prototype.setLevel = function() {
         this.exits.push((new Exit(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "exit", exitDir)));
       } else if (ch === "used_platform") {
         currLevel.grid[j][i] = "platform";
+      } else if (ch === "portal0") {
+        this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "Area 51"));
+      } else if (ch === "portal1") {
+        this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 1"));
+      } else if (ch === "portal2") {
+        this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 2"));
+      } else if (ch === "portal3") {
+        this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 3"));
       }
     }
   }
-  // for (var i = newIndex; i < this.entities.length; i++) {
-  //   this.entities[i].removeFromWorld = false;
-  // }
-  console.log(this.entities);
 }
 
 GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
@@ -165,16 +184,16 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
   } else if (exitedFrom === "west") {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
   }
-  if (this.currentWorld.name === "Area 51") {
-      this.currentWorld.name = "World 1";
-      this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
-      this, 736, 736); // Replace 736 with actual height and width
-  } else if (this.currentWorld.name === "World 1") {
-    this.currentWorld.name = "Area 51";
-    this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
-    this, 736, 736);
-  }
-  console.log("switching");
+  // if (this.currentWorld.name === "Area 51") {
+  //     this.currentWorld.name = "World 1";
+  //     this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
+  //     this, 736, 736); // Replace 736 with actual height and width
+  // } else if (this.currentWorld.name === "World 1") {
+  //   this.currentWorld.name = "Area 51";
+  //   this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
+  //   this, 736, 736);
+  // }
+  //console.log("switching");
   this.setLevel();
 }
 GameEngine.prototype.start = function () {
@@ -280,6 +299,9 @@ GameEngine.prototype.draw = function () {
     }
     for (var i = 0; i < this.platforms.length; i++) {
         this.platforms[i].draw(this.ctx);
+    }
+    for (var i = 0; i < this.exits.length; i++) {
+        this.exits[i].draw(this.ctx);
     }
 
     if(this.camera != null && this.running) {

@@ -34,11 +34,7 @@ AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
     var gameEngine = new GameEngine();
-
-    /*This is probably not the best way to do this*/
-    // gameEngine.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
-    //     gameEngine, 736, 736);
-    /**********************************************/
+    
     gameEngine.init(ctx);
 
     gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
