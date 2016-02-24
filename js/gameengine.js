@@ -46,6 +46,8 @@ function GameEngine() {
     this.shotsFired = 0;
     this.maxHealth = 100;
     this.health = 100;
+
+    this.birdDamage = 10; //probably should move this to entitiy.
     this.percent = this.health / this.maxHealth;
 
 }
