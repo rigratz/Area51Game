@@ -441,7 +441,7 @@ PlayerOne.prototype.update = function() {
     }
      for (var i = 0; i < this.game.entities.length; i++) {
          var entity = this.game.entities[i];
-         if (entity instanceof BirdEnemy || entity instanceof Dragon) {
+         if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy) {
     //         //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
              if (entity.collide(this)) {
                 //console.log(entity.collided);
