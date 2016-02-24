@@ -1,4 +1,4 @@
-function Bullet(game, x, y, dir) {//, spritesheet) {
+function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.game = game;
     this.ctx = game.ctx;
     this.x = x;
@@ -9,14 +9,17 @@ function Bullet(game, x, y, dir) {//, spritesheet) {
     this.yvel = 0;
     this.startX = x;
     this.startY = y;
+    this.spritesheet = spritesheet;
+    this.animation = new Animation("bullet", spritesheet, 258, 108, 0.40, 1, true, false);
 
+    var speed = 500;
     this.distanceTraveled = 0;
     if (dir === "up") {
-      this.yvel = -650;
+      this.yvel = -speed;
     } else if (dir === "left") {
-      this.xvel = -650;
+      this.xvel = -speed;
     } else if (dir === "right") {
-      this.xvel = 650;
+      this.xvel = speed;
     }
     this.boundingRect = new BoundingRect(x, y, 5, 5);
     //this.debug = true;
@@ -39,7 +42,6 @@ Bullet.prototype.update = function() {
       break;
     }
   }
-    // trying to add something here to remove the bullet from the world when it collides with platforms.
 }
 
 Bullet.prototype.draw = function () {
@@ -47,7 +49,10 @@ Bullet.prototype.draw = function () {
   this.ctx.strokeRect(this.x, this.y, this.width, this.height);
   this.ctx.fillStyle = "orange";
   this.ctx.fillRect(this.x, this.y, this.width, this.height);
-  //Entity.prototype.draw.call(this);
+
+    // this stuff is used for drawing the image of the bullet
+    //this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    //Entity.prototype.draw.call(this);
 }
 
 
