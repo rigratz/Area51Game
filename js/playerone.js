@@ -251,7 +251,17 @@ PlayerOne.prototype.update = function() {
       } else {
         dir = this.facing;
       }
-      var bullet = new Bullet(this.game, this.x +40, this.y + 40, dir);
+      var bullet = new Bullet(this.game, this.x + 74, this.y + 35, dir);
+        // adjusting the bullet based on position
+        if(this.game.down === true) {
+            bullet.y += 20;
+        } else if(this.game.up === true) {
+            bullet.x = this.x + 38;
+            bullet.y = this.y - 45;
+        }
+        if(this.facing === "left") {
+            bullet.x -= 70;
+        }
       this.game.addEntity(bullet);
       this.laserSound.play();
       this.game.shotsFired += 1;
