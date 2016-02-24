@@ -9,9 +9,14 @@ function Level(plan, i, j, gameEngine) {
     var line = plan[y], gridLine = [];
     for (var x = 0; x < this.width; x++) {
       var ch = line[x], fieldType = null;
-      if (ch === "@")
-
-        fieldType = "player";
+      if (ch === "N")
+        fieldType = "playernorth";
+      if (ch === "S")
+        fieldType = "playersouth";
+      if (ch === "E")
+        fieldType = "playereast";
+      if (ch === "W")
+        fieldType = "playerwest";
       else if (ch === "X")
         fieldType = "platform";
       else if (ch === "T")
@@ -26,7 +31,7 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "exit";
       else if (ch === "C")
         fieldType = "cat";
-      else if (ch === "S")
+      else if (ch === "s")
         fieldType = "speedboost";
       else if (ch === "0")
         fieldType = "portal0";
