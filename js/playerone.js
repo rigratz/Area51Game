@@ -259,7 +259,7 @@ PlayerOne.prototype.update = function() {
             bullet.x = this.x + 38;
             bullet.y = this.y - 45;
         }
-        if(this.facing === "left") {
+        if(this.facing === "left" && !this.game.up) {
             bullet.x -= 70;
         }
       this.game.addEntity(bullet);
