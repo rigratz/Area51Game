@@ -132,6 +132,13 @@ GameEngine.prototype.setLevel = function() {
         this.camera.follow(player, 100, 100);
       } else if (ch === "bird") {
         this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"), 10));
+      } else if (ch === "cat") {
+          //this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png")));
+          this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/grumpy_cat.png"), 2));
+      } else if (ch === "crazycat") {
+        this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png")));
+          //console.log("cat added!");
+          //console.log(AM.getAsset("./js/img/alien.png"));
       } else if (ch === "platform") {
         var mult = 1;
         while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {

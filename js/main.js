@@ -24,6 +24,10 @@ AM.queueDownload("./js/img/textures2.png");
 AM.queueDownload("./js/img/dragon.png");
 AM.queueDownload("./js/img/grumpy_cat.png");
 AM.queueDownload("./js/img/speed_upgrade_icon.png");
+AM.queueDownload("./js/img/bullet.png");
+AM.queueDownload("./js/img/alien.png");
+
+
 
 AM.queueAudioDownload("./js/sound/laser.wav");
 AM.queueAudioDownload("./js/sound/jump.wav");
@@ -50,4 +54,5 @@ AM.downloadAll(function () {
     console.log("Jump: Z");
     console.log("Shoot: X");
     console.log("Toggle Powerups: Space");
+    //console.log(AM.getAsset("./js/img/alien.png"));
 });
