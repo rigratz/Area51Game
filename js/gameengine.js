@@ -139,7 +139,7 @@ GameEngine.prototype.setLevel = function() {
           mult += 1;
         }
 
-        this.platforms.push((new Platform(AM.getAsset("./js/img/textures2.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
+        this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
       // } else if (ch === "platformtop") {
       //   this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "T")));
       } else if (ch === "dragon") {
