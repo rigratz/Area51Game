@@ -10,6 +10,7 @@ function BoundingRect(x, y, w, h) {
     this.left = this.x;
     this.bottom = this.y + this.height;
     this.right = this.x + this.width;
+    //console.log(this);
 }
 
 AM.queueDownload("./js/img/mainscreen.png");
@@ -38,7 +39,7 @@ AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
     var gameEngine = new GameEngine();
-    
+
     gameEngine.init(ctx);
 
     gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));

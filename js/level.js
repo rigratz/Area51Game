@@ -30,11 +30,15 @@ function Level(plan, i, j, gameEngine) {
       else if (ch === "O")
         fieldType = "exit";
       else if (ch === "C")
-        fieldType = "cat";
+        fieldType = "catbird";
       else if (ch === "s")
         fieldType = "speedboost";
-      else if (ch === "c")
-        fieldType = "crazycat";
+
+      else if (ch === "q")
+        fieldType = "smallcrazycat";
+      else if (ch === "Q")
+        fieldType = "bigcrazycat";
+
       else if (ch === "0")
         fieldType = "portal0";
       else if (ch === "1")
