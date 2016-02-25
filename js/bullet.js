@@ -3,6 +3,8 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.ctx = game.ctx;
     this.x = x;
     this.y = y;
+    this.radius = 5;
+
     this.width = 5;
     this.height = 5;
     this.xvel = 0;
@@ -21,7 +23,7 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     } else if (dir === "right") {
       this.xvel = speed;
     }
-    this.boundingRect = new BoundingRect(x, y, 5, 5);
+    this.boundingRect = new BoundingRect(x, y, 10, 10);
     //this.debug = true;
     //this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "idle");
 
@@ -45,11 +47,19 @@ Bullet.prototype.update = function() {
 }
 
 Bullet.prototype.draw = function () {
-  this.ctx.strokeStyle = "yellow";
-  this.ctx.strokeRect(this.x, this.y, this.width, this.height);
-  this.ctx.fillStyle = "orange";
-  this.ctx.fillRect(this.x, this.y, this.width, this.height);
-
+  // this.ctx.strokeStyle = "yellow";
+  // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+  // this.ctx.fillStyle = "orange";
+  // this.ctx.fillRect(this.x, this.y, this.width, this.height);
+  this.ctx.save();
+      this.ctx.beginPath();
+      this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+      this.ctx.fillStyle = "orange";
+      this.ctx.fill();
+      this.ctx.lineWidth = 1;
+      this.ctx.strokeStyle = "red";
+      this.ctx.stroke();
+  this.ctx.restore();
     // this stuff is used for drawing the image of the bullet
     //this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     //Entity.prototype.draw.call(this);
