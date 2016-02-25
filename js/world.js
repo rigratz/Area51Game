@@ -25,7 +25,7 @@ World.prototype.makeRoomPlans = function (name) {
   if (name === "Area 51") {
     builder = [
       "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      "O             B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+      "O             Q    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "O                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "O  @               X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -146,9 +146,9 @@ World.prototype.makeRoomPlans = function (name) {
     "X                                              X",
     "X                                              X",
     "X                                              X",
-    "X                 X      X                     X",
-    "X      c   c      X      X    c    c  c        O",
+    "X           Q     X      X                     X",
     "X                 X      X                     O",
+    "X     q q         X      X    q      q         O",
     "X                 X      X               @     O",
     "XXXXXXXXXXXXXXXXXXX000000XXXXXXXXXXXXXXXXXXXXXXX"
   ];

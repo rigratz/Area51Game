@@ -12,12 +12,6 @@ function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDurati
     this.type = type;
     this.timesLooped = 0;
     this.time = 0;
-
-    //console.log("SPRITES : ", this.spriteSheet);
-    if(entityType === 'crazycat') {
-        //console.log("HERE ", this.spriteSheet);
-
-    }
 }
 
 Animation.prototype.drawFrame = function (tick, ctx, x, y) {
@@ -200,8 +194,8 @@ Animation.prototype.drawFrameCrazyCat = function(tick, ctx, x, y) {
     var xframe = 0;
     var yframe = 0;
 
-    var width_mult = 1;
-    var height_mult = 1;
+    var width_mult = this.type;
+    var height_mult = this.type;
     xframe = xindex * this.frameWidth;
     //console.log(this.spriteSheet);
     ctx.drawImage(this.spriteSheet,
