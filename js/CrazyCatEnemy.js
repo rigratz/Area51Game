@@ -1,6 +1,12 @@
 /**
  * Created by shmurphy on 2/23/16.
  */
+function distance(a, b) {
+    var dx = a.x - b.x;
+    var dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
 function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.game = game;
     this.ctx = game.ctx;
@@ -16,6 +22,11 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.health = 30;
     this.damage = 5;
     this.size = size;
+
+    this.speed = 2;
+    //this.visualRadius = 200;
+    //this.velocity = { x: Math.random() * 1000, y: Math.random() * 1000 };
+
     Entity.call(this, game, this.x, this.y);
 }
 
@@ -57,10 +68,20 @@ CrazyCatEnemy.prototype.update = function() {
                 entity.removeFromWorld = true;
             }
         }
+
+        // chasing
+        if (entity instanceof PlayerOne) {
+                var dist = distance(this, entity);
+            //console.log("DISTANCE: ", dist);
+            if (dist < 400) {   // the "visual radius", when the enemies will start following you
+                var difX = (entity.x - this.x) / dist;
+                var difY = (entity.y - this.y) / dist;
+                this.x += difX * this.speed;
+            }
+        }
+
     }
 
-    //this.x += this.xvel * this.game.clockTick;
-    //this.y += this.yvel * this.game.clockTick;
 }
 CrazyCatEnemy.prototype.collide = function(other) {
     return (this.boundingRect.bottom > other.boundingRect.top) &&
