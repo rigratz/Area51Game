@@ -32,6 +32,7 @@ AM.queueDownload("./js/img/boss.png");
 AM.queueAudioDownload("./js/sound/laser.wav");
 AM.queueAudioDownload("./js/sound/jump.wav");
 AM.queueAudioDownload("./js/sound/damage.wav");
+AM.queueAudioDownload("./js/sound/monster_scream.wav");
 AM.queueAudioDownload("./js/sound/maintheme.mp3");
 
 AM.downloadAll(function () {

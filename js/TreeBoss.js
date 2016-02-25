@@ -1,4 +1,7 @@
 function TreeBoss(game, x, y, spritesheet, xvel) {
+    this.screamSound = AM.getAudioAsset("./js/sound/monster_scream.wav");
+    console.log("YOOOOOOO");
+    console.log(this.screamSound);
     this.game = game;
     this.ctx = game.ctx;
     this.x = x;
@@ -11,7 +14,9 @@ function TreeBoss(game, x, y, spritesheet, xvel) {
     this.debug = true;
     this.health = 200;
     this.damage = 50;
-    this.idleAnimation = new Animation("tree_boss", spritesheet, 218, 314, 0.2, 12, true, false, "idle");
+    this.animationTimer = 0;
+    this.idleAnimation = new Animation("tree_boss", spritesheet, 218, 314, 0.2, 1, true, false, "idle");
+    this.screamAnimation = new Animation("tree_boss", spritesheet, 218, 314, 0.2, 12, true, false, "screaming");
     this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
     this.attack = new TreeBossAttack(game, this.x - 200, this.y + this.animation.frameHeight, spritesheet, 2);
@@ -41,6 +46,17 @@ TreeBossAttack.prototype.constructor = new Entity();
 
 TreeBoss.prototype.draw = function () {
     if (!this.game.running) return;
+    this.animationTimer++;
+    if (this.animationTimer < 300) {
+        this.animation = this.idleAnimation;
+    }
+    else {
+        this.screamSound.play();
+        this.animation = this.screamAnimation;
+    }
+    if (this.animationTimer > 432) {
+        this.animationTimer = 0;
+    }
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
     var bb = this.boundingRect;
