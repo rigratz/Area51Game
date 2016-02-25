@@ -459,7 +459,7 @@ World.prototype.makeRoomPlans = function (name) {
     ];
     this.rooms[4][9] = new Level(builder, 4, 9, this.game);
 
-    this.currentRoom = this.rooms[5][8];
+    this.currentRoom = this.rooms[0][6];
   } else if (name === "World 1") {
     var builder = [];
 
