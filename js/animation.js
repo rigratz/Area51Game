@@ -19,8 +19,6 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
         this.drawFramePlayerOne(tick, ctx, x, y);
     }
     else if (this.entityType === 'bird_enemy') {
-        //console.log(y);
-        //console.log(x);
         this.drawFrameBirdEnemy(tick, ctx, x, y);
     }
     else if (this.entityType === 'dragon') {
@@ -32,13 +30,11 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     else if (this.entityType === 'tree_boss') {
         this.drawFrameTreeBoss(tick, ctx, x, y);
     }
+    else if (this.entityType === 'tree_boss_attack') {
+        this.drawFrameTreeBossAttack(tick, ctx, x, y);
+    }
     else if (this.entityType === 'crazycat') {
-        //console.log("HERE!! ", this.spriteSheet);
-
         this.drawFrameCrazyCat(tick, ctx, x, y);
-        //console.log(ctx);
-        //console.log(x);
-        //console.log(y);
     }
 }
 
@@ -157,7 +153,6 @@ Animation.prototype.drawFrameDragon = function(tick, ctx, x, y) {
         x, y,
         this.frameWidth * width_mult,
         this.frameHeight * height_mult);
-
 }
 
 // for use with the bullet animation sprite sheet, regular bullet doesn't need this
@@ -174,8 +169,8 @@ Animation.prototype.drawFrameBullet = function(tick, ctx, x, y) {
     var xframe = 0;
     var yframe = 0;
 
-    var width_mult = .5;
-    var height_mult = .5;
+    var width_mult = 0.5;
+    var height_mult = 0.5;
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,
@@ -215,8 +210,8 @@ Animation.prototype.drawFrameTreeBoss = function(tick, ctx, x, y) {
     if (this.isDone()) {
         if (this.loop) this.elapsedTime = 0;
     }
-    var width_mult = 1;
-    var height_mult = 1;
+    var width_mult = 1.5;
+    var height_mult = 1.5;
 
     var frame = this.currentFrame();
     var xindex = frame % 12;
@@ -225,18 +220,34 @@ Animation.prototype.drawFrameTreeBoss = function(tick, ctx, x, y) {
     var yframe = 0;
     if (this.type === "idle") {
         xframe = xindex * this.frameWidth;
-        yframe = 2;     //shuld be 0?
+        yframe = 0;     //shuld be 0?
     }
-    // else if (this.type === "left") {
-    //     xframe = xindex * this.frameWidth;
-    //     yframe = 100;
-    // } else if (this.type === "right") {
-    //     xframe = xindex * this.frameWidth;
-    //     yframe = 200;
-    // } else if(this.type === "cat") {
-    //     xframe = xindex * this.frameWidth;
-    //     yframe = 2;
-    // }
+    ctx.drawImage(this.spriteSheet,
+        xframe, yframe,  // source from sheet
+        this.frameWidth, this.frameHeight,
+        x, y,
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
+}
+Animation.prototype.drawFrameTreeBossAttack = function(tick, ctx, x, y) {
+    this.elapsedTime += tick;
+    this.time += tick;
+    if (this.isDone()) {
+        if (this.loop) this.elapsedTime = 0;
+    }
+    var width_mult = 1.5;
+    var height_mult = 1.5;
+
+    var frame = this.currentFrame();
+    var xindex = frame % 8;
+    var yindex = 0;
+    var xframe = 0;
+    var yframe = 0;
+    if (this.type === "attacking") {
+        xframe = xindex * this.frameWidth;
+        yframe = 432;     //shuld be 0?
+    }
+    
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,

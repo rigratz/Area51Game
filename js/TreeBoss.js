@@ -8,25 +8,41 @@ function TreeBoss(game, x, y, spritesheet, xvel) {
     this.removeFromWorld = false;
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = false;
-    this.health = 30;
-    this.damage = 10;
-    this.idleAnimation = new Animation("tree_boss", spritesheet, 220, 315, 0.10, 12, true, false, "idle");
-    // this.rightAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "right");
-    // this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "left");
-    // this.catAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "cat");
+    this.debug = true;
+    this.health = 200;
+    this.damage = 50;
+    this.idleAnimation = new Animation("tree_boss", spritesheet, 218, 315, 0.2, 12, true, false, "idle");
     this.animation = this.idleAnimation;
+    Entity.call(this, game, this.x, this.y);
+    this.attack = new TreeBossAttack(game, this.x - 100, this.y + this.animation.frameHeight, spritesheet, 2);
+    game.addEntity(this.attack);
+}
+
+function TreeBossAttack(game, x, y, spritesheet, xvel) {
+    this.game = game;
+    this.ctx = game.ctx;
+    this.x = x;
+    this.y = y;
+    this.xvel = xvel;
+    this.yvel = 0;
+    this.removeFromWorld = false;
+    this.collided = false;
+    this.boundingRect = new BoundingRect(x, y, 0, 0);
+    this.debug = true;
+    this.animation = new Animation("tree_boss_attack", spritesheet, 218, 100, 0.2, 8, true, false, "attacking");
     Entity.call(this, game, this.x, this.y);
 }
 
 TreeBoss.prototype = new Entity();
 TreeBoss.prototype.constructor = TreeBoss;
 
+TreeBossAttack.prototype = new Entity();
+TreeBossAttack.prototype.constructor = new Entity();
 
 TreeBoss.prototype.draw = function () {
     if (!this.game.running) return;
-
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
     var bb = this.boundingRect;
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
@@ -35,17 +51,14 @@ TreeBoss.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 }
 TreeBoss.prototype.update = function() {
-    this.boundingRect = new BoundingRect(this.x+45, this.y+50, this.animation.frameWidth+45, this.animation.frameHeight+45);
+    this.boundingRect = new BoundingRect(this.x+100, this.y+0, this.animation.frameWidth*1.5, this.animation.frameHeight*1.5);
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {
-        this.xvel = this.xvel * -1;
+        this.y = this.game.platforms[i].y - this.animation.frameHeight * 1.5 + 1;   //Tweak to change where his bottom touches the ground
         break;
       }
     }
     if (this.xvel === 0) this.animation = this.idleAnimation;
-    // else if(this.xvel === 2) this.animation = this.catAnimation;
-    // else if (this.xvel > 0) this.animation = this.rightAnimation;
-    // else if (this.xvel < 0) this.animation = this.leftAnimation;
 
     for (var i = 0; i < this.game.entities.length; i++) {
         var entity = this.game.entities[i];

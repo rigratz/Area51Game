@@ -399,15 +399,15 @@ World.prototype.makeRoomPlans = function (name) {
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "X                                X",
       "X                                X",
+      "X                  H             X",
       "X                                X",
       "X                                X",
       "X                                X",
-      "X          D                     X",
-      "X   C              B             X",
       "X                                X",
-      "X         q    Q                 O",
-      "X                                O",
-      "X                             E  O",
+      "X                                X",
+      "O                                X",
+      "O                                X",
+      "O  E                             X",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     ];
     this.rooms[2][5] = new Level(builder, 2, 5, this.game);
