@@ -19,8 +19,10 @@ function TreeBoss(game, x, y, spritesheet, xvel) {
     this.screamAnimation = new Animation("tree_boss", spritesheet, 218, 314, 0.2, 12, true, false, "screaming");
     this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
-    this.attack = new TreeBossAttack(game, this.x - 200, this.y + this.animation.frameHeight, spritesheet, 2);
+    this.attack = new TreeBossAttack(game, this.x - 300, this.y + this.animation.frameHeight, spritesheet, 2);
+    this.attack2 = new TreeBossAttack(game, this.x - 500, this.y + this.animation.frameHeight, spritesheet, 2);
     game.addEntity(this.attack);
+    game.addEntity(this.attack2);
 }
 
 function TreeBossAttack(game, x, y, spritesheet, xvel) {
@@ -59,6 +61,7 @@ TreeBoss.prototype.draw = function () {
     }
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
+    this.attack2.animation.drawFrame(this.attack2.game.clockTick, this.attack2.ctx, this.attack2.x, this.attack2.y);
     var bb = this.boundingRect;
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
