@@ -232,7 +232,7 @@ PlayerOne.prototype.update = function() {
     if (this.game.jump === true) {
       this.animation = this.jumpAnimation;
       if (!this.jumping && !this.falling) {
-          this.jumpSound.play();
+          AM.getAudioAsset("./js/sound/jump.wav").play();
           this.jumping = true;
           this.yvel = -600;
       }

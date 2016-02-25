@@ -16,7 +16,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.removeFromWorld = false;
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = true;
+    this.debug = false;
     this.spritesheet = spritesheet;
     this.animation = new Animation("crazycat", spritesheet, 150, 150, 0.10, 7, true, false, size);
     this.health = 30;
