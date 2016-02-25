@@ -24,6 +24,7 @@ World.prototype.makeRoomPlans = function (name) {
 
   if (name === "Area 51") {
     builder = [
+// <<<<<<< HEAD
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -76,6 +77,47 @@ World.prototype.makeRoomPlans = function (name) {
       // "O            XX           XX            XX                    O",
       // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+// =======
+//       "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "O             B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "O                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "O  @               X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "XXXXXXXXXXXXXX     X     B            XXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "XXXXXXXXXXXXXX     X                                         XX",
+//       "XXXXXXXXXXXXXX     X                                         XX",
+//       "XXXXXXXXXXXXXX     X                                         XX",
+//       "XXXXXXXXXXXXXX     X                                         XX",
+//       "XXXXXXXXXXXXXX     X       X     XXXXXXXXXXXXXXXXXXXXX       XX",
+//       "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
+//       "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
+//       "X                          XXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "X  S             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+//       "XX                                                           XX",
+//       "XX              B            B                   B           XX",
+//       "O                                                            XX",
+//       "O            XX           XX            XX                   XX",
+//       "O            XX           XX            XX                    O",
+//       "O            XX           XX            XX                    O",
+//       "O            XX           XX            XX                    O",
+//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+// >>>>>>> e51f659301a05e5f357669d66a0a49476eb160dd
     ];
     this.rooms[0][6] = new Level(builder, 0, 6, this.game);
     builder = [
@@ -311,6 +353,24 @@ World.prototype.makeRoomPlans = function (name) {
     this.rooms[2][6] = new Level(builder, 2, 6, this.game);
 
     builder = [
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "X                                X",
+      "X                                X",
+      "X                                X",
+      "X                                X",
+      "X                                X",
+      "X          D                     X",
+      "X   C              B      B      X",
+      "X                                X",
+      "X         c                      O",
+      "X                                O",
+      "X                             E  O",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    ];
+    this.rooms[2][5] = new Level(builder, 2, 5, this.game);
+
+
+    builder = [
       "XXXXXXXX111111XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "X      X      X                                X",
       "X      X      X                                X",
@@ -327,7 +387,7 @@ World.prototype.makeRoomPlans = function (name) {
     ];
     this.rooms[5][8] = new Level(builder, 5, 8, this.game);
 
-    this.currentRoom = this.rooms[0][6];
+    this.currentRoom = this.rooms[2][6];
   } else if (name === "World 1") {
     var builder = [];
 
@@ -339,6 +399,7 @@ World.prototype.makeRoomPlans = function (name) {
       "X      X      X                                X",
       "X                                              X",
       "X                                              X",
+      "X        C                            C        X",
       "X                                              X",
       "X                 X      X                     X",
       "O                 X      X                     X",
@@ -358,7 +419,7 @@ World.prototype.makeRoomPlans = function (name) {
     "X                                              X",
     "X                                              X",
     "X                 X      X                     X",
-    "X                 X      X                     O",
+    "X      c   c      X      X    c    c  c        O",
     "X                 X      X                     O",
     "X                 X      X                 E   O",
     "XXXXXXXXXXXXXXXXXXX000000XXXXXXXXXXXXXXXXXXXXXXX"

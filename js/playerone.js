@@ -251,8 +251,9 @@ PlayerOne.prototype.update = function() {
       } else {
         dir = this.facing;
       }
-      var bullet = new Bullet(this.game, this.x + 74, this.y + 35, dir);
+      var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset("./js/img/bullet.png"), dir);
         // adjusting the bullet based on position
+        this.game.addEntity(bullet);
         if(this.game.down === true) {
             bullet.y += 20;
         } else if(this.game.up === true) {
@@ -440,7 +441,7 @@ PlayerOne.prototype.update = function() {
     }
      for (var i = 0; i < this.game.entities.length; i++) {
          var entity = this.game.entities[i];
-         if (entity instanceof BirdEnemy || entity instanceof Dragon) {
+         if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy) {
     //         //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
              if (entity.collide(this)) {
                 //console.log(entity.collided);

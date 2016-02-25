@@ -11,8 +11,13 @@ function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDurati
     this.reverse = reverse;
     this.type = type;
     this.timesLooped = 0;
-
     this.time = 0;
+
+    //console.log("SPRITES : ", this.spriteSheet);
+    if(entityType === 'crazycat') {
+        //console.log("HERE ", this.spriteSheet);
+
+    }
 }
 
 Animation.prototype.drawFrame = function (tick, ctx, x, y) {
@@ -20,10 +25,23 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
         this.drawFramePlayerOne(tick, ctx, x, y);
     }
     else if (this.entityType === 'bird_enemy') {
+        //console.log(y);
+        //console.log(x);
         this.drawFrameBirdEnemy(tick, ctx, x, y);
     }
     else if (this.entityType === 'dragon') {
         this.drawFrameDragon(tick, ctx, x, y);
+    }
+    else if (this.entityType === 'bullet') {
+        this.drawFrameBullet(tick, ctx, x, y);
+    }
+    else if (this.entityType === 'crazycat') {
+        //console.log("HERE!! ", this.spriteSheet);
+
+        this.drawFrameCrazyCat(tick, ctx, x, y);
+        //console.log(ctx);
+        //console.log(x);
+        //console.log(y);
     }
 }
 
@@ -105,11 +123,9 @@ Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {
     } else if (this.type === "right") {
         xframe = xindex * this.frameWidth;
         yframe = 200;
-    } else if (this.type === "cat") {
+    } else if(this.type === "cat") {
         xframe = xindex * this.frameWidth;
         yframe = 2;
-        width_mult = 4;
-        height_mult = 4;
     }
 
     ctx.drawImage(this.spriteSheet,
@@ -145,6 +161,55 @@ Animation.prototype.drawFrameDragon = function(tick, ctx, x, y) {
         this.frameWidth * width_mult,
         this.frameHeight * height_mult);
 
+}
+
+// for use with the bullet animation sprite sheet, regular bullet doesn't need this
+Animation.prototype.drawFrameBullet = function(tick, ctx, x, y) {
+    this.elapsedTime += tick;
+    this.time += tick
+    if(this.isDone()) {
+        if (this.loop) this.elapsedTime = 0;
+    }
+
+    var frame = this.currentFrame();
+    var xindex = frame % 1;
+    var yindex = 0;
+    var xframe = 0;
+    var yframe = 0;
+
+    var width_mult = .5;
+    var height_mult = .5;
+    ctx.drawImage(this.spriteSheet,
+        xframe, yframe,  // source from sheet
+        this.frameWidth, this.frameHeight,
+        x, y,
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
+}
+
+Animation.prototype.drawFrameCrazyCat = function(tick, ctx, x, y) {
+    this.elapsedTime += tick;
+    this.time += tick
+    if(this.isDone()) {
+        if (this.loop) this.elapsedTime = 0;
+    }
+    //console.log("DRAWING CAT....");
+    var frame = this.currentFrame();
+    var xindex = frame % 7;
+    var yindex = 0;
+    var xframe = 0;
+    var yframe = 0;
+
+    var width_mult = 1;
+    var height_mult = 1;
+    xframe = xindex * this.frameWidth;
+    //console.log(this.spriteSheet);
+    ctx.drawImage(this.spriteSheet,
+        xframe, yframe,  // source from sheet
+        this.frameWidth, this.frameHeight,
+        x, y,
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
 }
 
 Animation.prototype.currentFrame = function () {
