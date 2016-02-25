@@ -88,7 +88,7 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
     this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
          this, 736, 736);
     this.currentWorld = this.worlds["Area 51"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[0][7];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[5][8];
 
   }
   this.setLevel("south");
