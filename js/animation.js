@@ -5,6 +5,7 @@ function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDurati
     this.frameDuration = frameDuration;
     this.frameHeight = frameHeight;
     this.frames = frames;
+    this.frameFreezer = 0;
     this.totalTime = frameDuration * frames;
     this.elapsedTime = 0;
     this.loop = loop;
@@ -214,6 +215,14 @@ Animation.prototype.drawFrameTreeBoss = function(tick, ctx, x, y) {
     var height_mult = 1.5;
 
     var frame = this.currentFrame();
+
+    this.frameFreezer++;
+    if (this.frameFreezer < 300) {
+        frame = 0;
+    }
+    else if (this.frameFreezer > 432) {
+        this.frameFreezer = 0;
+    }
     var xindex = frame % 12;
     var yindex = 0;
     var xframe = 0;
@@ -247,7 +256,7 @@ Animation.prototype.drawFrameTreeBossAttack = function(tick, ctx, x, y) {
         xframe = xindex * this.frameWidth;
         yframe = 432;     //shuld be 0?
     }
-    
+
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,

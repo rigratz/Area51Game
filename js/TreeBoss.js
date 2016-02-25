@@ -11,10 +11,10 @@ function TreeBoss(game, x, y, spritesheet, xvel) {
     this.debug = true;
     this.health = 200;
     this.damage = 50;
-    this.idleAnimation = new Animation("tree_boss", spritesheet, 218, 315, 0.2, 12, true, false, "idle");
+    this.idleAnimation = new Animation("tree_boss", spritesheet, 218, 314, 0.2, 12, true, false, "idle");
     this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
-    this.attack = new TreeBossAttack(game, this.x - 100, this.y + this.animation.frameHeight, spritesheet, 2);
+    this.attack = new TreeBossAttack(game, this.x - 200, this.y + this.animation.frameHeight, spritesheet, 2);
     game.addEntity(this.attack);
 }
 
@@ -29,7 +29,7 @@ function TreeBossAttack(game, x, y, spritesheet, xvel) {
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
     this.debug = true;
-    this.animation = new Animation("tree_boss_attack", spritesheet, 218, 100, 0.2, 8, true, false, "attacking");
+    this.animation = new Animation("tree_boss_attack", spritesheet, 218, 100, 0.1, 8, true, false, "attacking");
     Entity.call(this, game, this.x, this.y);
 }
 
