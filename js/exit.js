@@ -35,8 +35,6 @@ function Portal(textureSheet, game, x, y, w, h, type, portalTo) {
     this.type = type;
     this.boundingRect = new BoundingRect(x, y, w, h);
     Entity.call(this, game, this.x, this.y);
-    console.log("portal");
-    console.log(this.textureSheet);
 }
 
 Portal.prototype = new Entity();

@@ -29,6 +29,9 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     else if (this.entityType === 'bullet') {
         this.drawFrameBullet(tick, ctx, x, y);
     }
+    else if (this.entityType === 'tree_boss') {
+        this.drawFrameTreeBoss(tick, ctx, x, y);
+    }
     else if (this.entityType === 'crazycat') {
         //console.log("HERE!! ", this.spriteSheet);
 
@@ -198,6 +201,42 @@ Animation.prototype.drawFrameCrazyCat = function(tick, ctx, x, y) {
     var height_mult = this.type;
     xframe = xindex * this.frameWidth;
     //console.log(this.spriteSheet);
+    ctx.drawImage(this.spriteSheet,
+        xframe, yframe,  // source from sheet
+        this.frameWidth, this.frameHeight,
+        x, y,
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
+}
+
+Animation.prototype.drawFrameTreeBoss = function(tick, ctx, x, y) {
+    this.elapsedTime += tick;
+    this.time += tick;
+    if (this.isDone()) {
+        if (this.loop) this.elapsedTime = 0;
+    }
+    var width_mult = 1;
+    var height_mult = 1;
+
+    var frame = this.currentFrame();
+    var xindex = frame % 12;
+    var yindex = 0;
+    var xframe = 0;
+    var yframe = 0;
+    if (this.type === "idle") {
+        xframe = xindex * this.frameWidth;
+        yframe = 2;     //shuld be 0?
+    }
+    // else if (this.type === "left") {
+    //     xframe = xindex * this.frameWidth;
+    //     yframe = 100;
+    // } else if (this.type === "right") {
+    //     xframe = xindex * this.frameWidth;
+    //     yframe = 200;
+    // } else if(this.type === "cat") {
+    //     xframe = xindex * this.frameWidth;
+    //     yframe = 2;
+    // }
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,
