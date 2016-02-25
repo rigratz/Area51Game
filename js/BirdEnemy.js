@@ -83,3 +83,9 @@ BirdEnemy.prototype.collide = function(other) {
         (this.boundingRect.right > other.boundingRect.left) &&
         (this.boundingRect.top < other.boundingRect.bottom);
 }
+
+function distance(a, b) {
+    var dx = a.x - b.x;
+    var dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}

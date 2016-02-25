@@ -36,6 +36,7 @@ function TreeBossAttack(game, x, y, spritesheet, xvel) {
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
     this.debug = true;
+    this.speed = 2;
     this.animation = new Animation("tree_boss_attack", spritesheet, 218, 100, 0.1, 8, true, false, "attacking");
     Entity.call(this, game, this.x, this.y);
 }
@@ -61,7 +62,7 @@ TreeBoss.prototype.draw = function () {
     }
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
-    this.attack2.animation.drawFrame(this.attack2.game.clockTick, this.attack2.ctx, this.attack2.x, this.attack2.y);
+    //this.attack2.animation.drawFrame(this.attack2.game.clockTick, this.attack2.ctx, this.attack2.x, this.attack2.y);
     var bb = this.boundingRect;
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
@@ -91,9 +92,23 @@ TreeBoss.prototype.update = function() {
                 entity.removeFromWorld = true;
             }
         }
+        if (entity instanceof PlayerOne) {
+            //console.log(distance());
+            var dist = distance(this.attack, entity);
+            var difX = (entity.x - this.attack.x) / dist;
+            var difY = (entity.y - this.attack.y) / dist;
+            this.attack.x += difX * this.attack.speed;
+
+        }
     }
     this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
+}
+
+function distance(a, b) {
+    var dx = a.x - b.x;
+    var dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
 }
 TreeBoss.prototype.collide = function(other) {
     return (this.boundingRect.bottom > other.boundingRect.top) &&
