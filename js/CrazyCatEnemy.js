@@ -15,7 +15,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.animation = new Animation("crazycat", spritesheet, 150, 150, 0.10, 7, true, false, size);
     this.health = 30;
     this.damage = 5;
-    //this.size = size;
+    this.size = size;
     Entity.call(this, game, this.x, this.y);
 }
 
@@ -37,7 +37,7 @@ CrazyCatEnemy.prototype.draw = function () {
 }
 CrazyCatEnemy.prototype.update = function() {
 
-    this.boundingRect = new BoundingRect(this.x+10, this.y, this.animation.frameWidth + 50, this.animation.frameHeight+72);
+    this.boundingRect = new BoundingRect(this.x+10, this.y, (this.animation.frameWidth -10) * this.size, this.animation.frameHeight * this.size);
     for (var i = 0; i < this.game.platforms.length; i++) {
         if (this.collide(this.game.platforms[i])) {
             this.xvel = this.xvel * -1;
