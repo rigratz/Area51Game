@@ -16,6 +16,7 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "left");
     this.catAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "cat");
     this.animation = this.idleAnimation;
+    this.speed = 2;
     Entity.call(this, game, this.x, this.y);
 }
 
@@ -59,6 +60,19 @@ BirdEnemy.prototype.update = function() {
                     this.removeFromWorld = true;
                 }
                 entity.removeFromWorld = true;
+            }
+        }
+
+        if (entity instanceof PlayerOne) {
+            var dist = distance(this, entity);
+            //console.log("DISTANCE: ", dist);
+            if (dist < 400) {   // the "visual radius", when the enemies will start following you
+                var difX = (entity.x - this.x) / dist;
+                var difY = (entity.y - this.y) / dist;
+                this.x += difX * this.speed;
+            }
+            if(this.x > entity.x) {
+                this.animation = this.leftAnimation;
             }
         }
     }
