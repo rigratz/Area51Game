@@ -24,144 +24,22 @@ World.prototype.makeRoomPlans = function (name) {
 
   if (name === "Area 51") {
     builder = [
-
-// <<<<<<< HEAD
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      "X                                              O",
-      "X                                              O",
-      "X                                              O",
-      "XW                    s                    E   O",
+      "O                                              O",
+      "O                                              O",
+      "O                                              O",
+      "O    W                s                    E   O",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-      // "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "O             B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "O                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "O  @               X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X     B            XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X                                         XX",
-      // "XXXXXXXXXXXXXX     X                                         XX",
-      // "XXXXXXXXXXXXXX     X                                         XX",
-      // "XXXXXXXXXXXXXX     X                                         XX",
-      // "XXXXXXXXXXXXXX     X       X     XXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X B           B            X     XXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                          XXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X  S             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XX                                                           XX",
-      // "XX              B            B                   B           XX",
-      // "O                                                            XX",
-      // "O            XX           XX            XX                   XX",
-      // "O            XX           XX            XX                    O",
-      // "O            XX           XX            XX                    O",
-      // "O            XX           XX            XX                    O",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-// =======
-//       "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "O             B    X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "O                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "O  @               X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X     B            XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X                                         XX",
-//       "XXXXXXXXXXXXXX     X                                         XX",
-//       "XXXXXXXXXXXXXX     X                                         XX",
-//       "XXXXXXXXXXXXXX     X                                         XX",
-//       "XXXXXXXXXXXXXX     X       X     XXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                          XXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X  S             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XX                                                           XX",
-//       "XX              B            B                   B           XX",
-//       "O                                                            XX",
-//       "O            XX           XX            XX                   XX",
-//       "O            XX           XX            XX                    O",
-//       "O            XX           XX            XX                    O",
-//       "O            XX           XX            XX                    O",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-// >>>>>>> e51f659301a05e5f357669d66a0a49476eb160dd
-// =======
-//       "XXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "O                  X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "O              B   X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "O  @               X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X B                XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X     B            XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXX     X                                         XX",
-//       "XXXXXXXXXXXXXX     X                                         XX",
-//       "XXXXXXXXXXXXXX     X                                         XX",
-//       "XXXXXXXXXXXXXX     X                                         XX",
-//       "XXXXXXXXXXXXXX     X       X     XXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                          X     XXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                          XXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "X  S             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-//       "XX                                                           XX",
-//       "XX              B            B                   B           XX",
-//       "O                                                            XX",
-//       "O            XX           XX            XX                   XX",
-//       "O            XX           XX            XX                    O",
-//       "O            XX           XX            XX                    O",
-//       "O            XX           XX            XX                    O",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-//       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-// >>>>>>> aa0bc3c70da0158fe609af8a946b070680e343f2
     ];
     this.rooms[0][6] = new Level(builder, 0, 6, this.game);
+    this.rooms[9][1] = new Level(builder, 9, 1, this.game);
     builder = [
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -176,37 +54,6 @@ World.prototype.makeRoomPlans = function (name) {
       "XXXXXXXXXXXX      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXX      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXOOOOOOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "X                  X                                          O",
-      // "X                  X        B                                 O",
-      // "X                  X                                          O",
-      // "XXXXXXXXXXXXXX     X                                          O",
-      // "XXXXXXXXXXXXXX     X                                      @   O",
-      // "XXXXXXXXXXXXXX     X             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X  S               XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     XXXXXXXX           XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X                XXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X                  XXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "XXXXXXXXXXXXXX     X             XXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                                XXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X B                              XXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                          XXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX"
-
     ];
     this.rooms[0][7] = new Level(builder, 0, 7, this.game);
     builder = [
@@ -240,21 +87,7 @@ World.prototype.makeRoomPlans = function (name) {
       "XXXXX  S   XXXXX",
       "XXXXX      XXXXX",
       "XXXXX      XXXXX",
-      "XXXXXOOOOOOXXXXX",
-
-      // "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      // "X                                              X",
-      // "X                                              X",
-      // "X                                              X",
-      // "X                                              X",
-      // "X                                              X",
-      // "X                                              X",
-      // "X                                              X",
-      // "X                 X      X                     X",
-      // "O                 X      X                     X",
-      // "O                 X      X                     X",
-      // "O  @              X      X                     X",
-      // "XXXXXXXXXXXXXXXXXXX111111XXXXXXXXXXXXXXXXXXXXXXX"
+      "XXXXXOOOOOOXXXXX"
     ];
     this.rooms[1][7] = new Level(builder, 1, 7, this.game);
     builder = [
@@ -410,6 +243,7 @@ World.prototype.makeRoomPlans = function (name) {
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     ];
     this.rooms[2][5] = new Level(builder, 2, 5, this.game);
+    this.rooms[9][0] = new Level(builder, 9, 0, this.game);
 
 
     builder = [
@@ -428,8 +262,9 @@ World.prototype.makeRoomPlans = function (name) {
       "XXXXXXXXXXXXXXXXXXX111111XXXXXXXXXXXXXXXXXXXXXXX"
     ];
     this.rooms[5][8] = new Level(builder, 5, 8, this.game);
+    this.rooms[9][2] = new Level(builder, 9, 2, this.game);
 
-    this.currentRoom = this.rooms[2][6];
+    this.currentRoom = this.rooms[9][1];
   } else if (name === "World 1") {
     var builder = [];
 
@@ -462,12 +297,8 @@ World.prototype.makeRoomPlans = function (name) {
     "X                                              X",
     "X           Q     X      X                     X",
     "X                 X      X                     O",
-
+    "X                 X      X                     O",
     "X                 X      X                 E   O",
-// =======
-//     "X     q q         X      X    q      q         O",
-//     "X                 X      X               @     O",
-// >>>>>>> aa0bc3c70da0158fe609af8a946b070680e343f2
     "XXXXXXXXXXXXXXXXXXX000000XXXXXXXXXXXXXXXXXXXXXXX"
   ];
   this.rooms[0][6] = new Level(builder, 0, 6, this.game);
