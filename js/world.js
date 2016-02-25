@@ -405,8 +405,8 @@ World.prototype.makeRoomPlans = function (name) {
       "X          D                     X",
       "X   C              B             X",
       "X                                X",
-      "X         q    Q                 O",
-      "X                                O",
+      "X              Q                 O",
+      "X         q                      O",
       "X                             E  O",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     ];
