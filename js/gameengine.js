@@ -88,10 +88,10 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
     this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
          this, 736, 736);
     this.currentWorld = this.worlds["Area 51"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[0][7];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[5][8];
 
   }
-  this.setLevel();
+  this.setLevel("south");
 }
 
 GameEngine.prototype.clearLevel = function() {
@@ -109,10 +109,11 @@ GameEngine.prototype.clearLevel = function() {
   }
 }
 
-GameEngine.prototype.setLevel = function() {
+GameEngine.prototype.setLevel = function(exitedFrom) {
   var newIndex = this.entities.length;
 
   console.log(this.currentWorld);
+  console.log(exitedFrom);
   var currLevel = this.currentWorld.currentRoom;
 
   var levelWidth = currLevel.grid[0].length;
@@ -125,8 +126,29 @@ GameEngine.prototype.setLevel = function() {
   for (var i = 0; i < currLevel.grid[0].length; i++) {
     for (var j = 0; j < currLevel.grid.length; j++) {
       ch = currLevel.grid[j][i];
-      if (ch === "player") {
+      if (ch === "playernorth" && exitedFrom === "south") {
+        console.log("starting north");
+        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
 
+        this.addEntity(player);
+        this.player = player;
+        this.camera.follow(player, 100, 100);
+      } else if (ch === "playersouth" && exitedFrom === "north") {
+        console.log("starting south");
+        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
+
+        this.addEntity(player);
+        this.player = player;
+        this.camera.follow(player, 100, 100);
+      } else if (ch === "playereast" && exitedFrom === "west") {
+        console.log("starting east");
+        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
+
+        this.addEntity(player);
+        this.player = player;
+        this.camera.follow(player, 100, 100);
+      } else if (ch === "playerwest" && exitedFrom === "east") {
+        console.log("starting west");
         var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
 
         this.addEntity(player);
@@ -207,7 +229,7 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
   //   this, 736, 736);
   // }
   //console.log("switching");
-  this.setLevel();
+  this.setLevel(exitedFrom);
 }
 GameEngine.prototype.start = function () {
     console.log("starting game");
@@ -218,9 +240,10 @@ GameEngine.prototype.start = function () {
     }, false);
     this.currentSong.play();
 
+    this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();
     this.currentWorld = this.worlds["Area 51"];
-    this.setLevel();
+    this.setLevel("east");
 
     var that = this;
     (function gameLoop() {
