@@ -44,7 +44,7 @@ World.prototype.makeRoomPlans = function (name) {
       "X                          XXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
-      "X                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
+      "X       Q            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "X                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
       "X  S             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XX",
