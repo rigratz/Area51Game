@@ -10,6 +10,7 @@ function BoundingRect(x, y, w, h) {
     this.left = this.x;
     this.bottom = this.y + this.height;
     this.right = this.x + this.width;
+    //console.log(this);
 }
 
 AM.queueDownload("./js/img/mainscreen.png");

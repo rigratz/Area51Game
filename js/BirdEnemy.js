@@ -29,6 +29,7 @@ BirdEnemy.prototype.draw = function () {
 
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
+    //console.log(bb);
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
         this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
@@ -36,7 +37,6 @@ BirdEnemy.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 }
 BirdEnemy.prototype.update = function() {
-
     this.boundingRect = new BoundingRect(this.x+45, this.y+50, this.animation.frameWidth+45, this.animation.frameHeight+45);
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {
