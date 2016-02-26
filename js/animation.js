@@ -197,6 +197,9 @@ Animation.prototype.drawFrameCrazyCat = function(tick, ctx, x, y) {
     var height_mult = this.type;
     xframe = xindex * this.frameWidth;
     //console.log(this.spriteSheet);
+    if(this.type < 1) {
+        y += 10;
+    }
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,

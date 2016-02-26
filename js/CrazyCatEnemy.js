@@ -24,6 +24,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.size = size;
     this.following = false;
     this.speed = 1;
+    this.yvel = 0;
     //this.visualRadius = 200;
     //this.velocity = { x: Math.random() * 1000, y: Math.random() * 1000 };
 
@@ -86,7 +87,6 @@ CrazyCatEnemy.prototype.update = function() {
                 }
             }
         }
-
 
     }
 
