@@ -53,31 +53,34 @@ TreeBossAttack.prototype.constructor = new Entity();
 TreeBoss.prototype.draw = function () {
     if (!this.game.running) return;
 
+    /*
+    Try to do timer things so they sync up with the frams being drawn in animation.
+    The syncage is causing the issues. Mayeb access the game clock? Or hard reset the frames somehow in the animaton
+    class when drawing.
+    */
     this.animationTimer++;
     if (this.animationTimer < 300) {
         this.animation = this.idleAnimation;
     }
     else {
         this.animation = this.screamAnimation;
-        // this.attackTimer++;
-        // if (this.attackTimer < 45) {
-        //     this.screamSound.play();
-        //     this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
-        // }
-        // if (this.attackTimer > 45 && this.attackTimer < 90) {
-        //     this.attack2.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x - 200, this.attack.y);
-        // }
-        // if (this.attackTimer > 90 && this.attackTimer < 135) {
-        //     this.attack3.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x - 400, this.attack.y);
-        // }
+        this.attackTimer++;
+        if (this.attackTimer < 45) {
+            this.screamSound.play();
+            this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
+        }
+        if (this.attackTimer > 45 && this.attackTimer < 90) {
+            this.attack2.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x - 200, this.attack.y);
+        }
+        if (this.attackTimer > 90 && this.attackTimer < 135) {
+            this.attack3.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x - 400, this.attack.y);
+        }
     }
     if (this.animationTimer > 440) {
         this.attackTimer = 0;
         this.animationTimer = 0;
     }
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-    // this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
-    //this.attack2.animation.drawFrame(this.attack2.game.clockTick, this.attack2.ctx, this.attack2.x, this.attack2.y);
     var bb = this.boundingRect;
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
