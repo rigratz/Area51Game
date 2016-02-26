@@ -481,38 +481,241 @@ World.prototype.makeRoomPlans = function (name) {
     var builder = [];
 
     builder = [
-      "XXXXXXXX000000XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      "X      X      X                                X",
-      "X      X      X                                X",
-      "X      X  N   X                                X",
-      "X      X      X                                X",
-      "X                                              X",
-      "X                                              X",
-      "X        C                            C        X",
-      "X                                              X",
-      "X                 X      X                     X",
-      "O                 X      X                     X",
-      "O                 X      X                     X",
-      "O W               X      X                     X",
-      "XXXXXXXXXXXXXXXXXXX000000XXXXXXXXXXXXXXXXXXXXXXX"
+      "X000000000000000000000000000X",
+      "XXXXXXXX      XXXXXXXXXXXXXX0",
+      "X      X      X          XXX0",
+      "X      X  N   X          XXX0",
+      "X      X      X          XXX0",
+      "X                        XXX0",
+      "X                        XXX0",
+      "X                        XXX0",
+      "O                 X      XXX0",
+      "O                 X      XXX0",
+      "O W               X      XXX0",
+      "XXXXXXXXXXXXXXXXXXX      XXX0",
+      "X000000000000000000000000000X"
     ];
-    this.rooms[0][7] = new Level(builder, 0, 7, this.game);
+    this.rooms[5][5] = new Level(builder, 5, 5, this.game);
 
     builder = [
-    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    "X                                              X",
-    "X                                              X",
-    "X                                              X",
-    "X                                              X",
-    "X                                              X",
-    "X                                              X",
-    "X                                              X",
-    "X           Q     X      X                     X",
-    "X                 X      X                     O",
-    "X                 X      X                     O",
-    "X                 X      X                 E   O",
-    "XXXXXXXXXXXXXXXXXXX000000XXXXXXXXXXXXXXXXXXXXXXX"
-  ];
-  this.rooms[0][6] = new Level(builder, 0, 6, this.game);
+      "X11111111111111X",
+      "1XXXXXXXXXXXXXXX",
+      "1X             X",
+      "1X             X",
+      "1X             X",
+      "1X             X",
+      "1X             X",
+      "1X             X",
+      "1X             O",
+      "1X             O",
+      "1X S      s E  O",
+      "1XXXXX    XXXXXX",
+      "X1111XOOOOX1111X"
+    ];
+    this.rooms[5][4] = new Level(builder, 5, 4, this.game);
+
+    builder = [
+      "XXXXXXOOOOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "X                                            X",
+      "X                                            X",
+      "X      N                                     X",
+      "XXXXXXXXX                                    X",
+      "XXXXXXXXX                                    X",
+      "XXXXXXXXX                                    X",
+      "XXXXXXXXXXXXXXXX                             X",
+      "XXXXXXXXXXXXXXXX                             O",
+      "XXXXXXXXXXXXXXXX                             O",
+      "X     XXXXXXXXXXXXXXXXX                   E  O",
+      "X     XXXXXXXXXXXXXXXXX                  XXXXX",
+      "O     XXXXXXXXXXXXXXXXX                  XXXXX",
+      "O     XXXXXXXXXXXXXXXXX                  XXXXX",
+      "O W                                      XXXXX",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    ];
+    this.rooms[6][4] = new Level(builder, 6, 4, this.game);
+    builder = [
+      "XXXXXXXXXXXXXXXXXXXXXXXX",
+      "X                      X",
+      "X                      X",
+      "X                      X",
+      "X         XXXXX        X",
+      "X                      X",
+      "X                      X",
+      "X         q   q        X",
+      "X    XXXXXX   XXXXXX   X",
+      "O                      O",
+      "O                      O",
+      "O W         Q       E  O",
+      "XXXXXXXXXXXXXXXXXXXXXXXX",
+
+    ];
+    this.rooms[6][5] = new Level(builder, 6, 5, this.game);
+    builder = [
+      "XXXXXXXXXOOOOXXXXXXXXXXX",
+      "X   Q                  X",
+      "X                      X",
+      "X          N           X",
+      "XXXXXXXXXXXXXXXXX      X",
+      "X                      O",
+      "X  C                   O",
+      "X                   E  O",
+      "X                 XXXXXX",
+      "X                      X",
+      "X                      X",
+      "X                      X",
+      "X       XXXXXXXXX      X",
+      "O       XXX            X",
+      "O    XXXXXX            X",
+      "O W  XXXXXX     S      X",
+      "XXXXXXXXXXXOOOOXXXXXXXXX",
+
+    ];
+    this.rooms[6][6] = new Level(builder, 6, 6, this.game);
+
+    builder = [
+      "XXXXXXXOOOOXXXXX",
+      "X              X",
+      "X              X",
+      "X       N      X",
+      "X     XXXXXXXXXX",
+      "X          D   X",
+      "X              X",
+      "X              X",
+      "XXXXXXXX       X",
+      "X  D           X",
+      "X              X",
+      "X              X",
+      "X              X",
+      "X      XXXXXXXXX",
+      "X              X",
+      "X              X",
+      "X              X",
+      "XXXXXXXXXXXX   X",
+      "X              X",
+      "X              X",
+      "X              X",
+      "X              X",
+      "O         XXXXXX",
+      "O         XXXXXX",
+      "O W       XXXXXX",
+      "XXXXXXXXXXXXXXXX",
+
+    ];
+    this.rooms[6][7] = new Level(builder, 6, 7, this.game);
+
+    builder = [
+      "XXXOOOOXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "X                                O",
+      "X                                O",
+      "X   N                         E  O",
+      "XXXXXXXX              XXXXXXXXXXXX",
+      "X                                X",
+      "X                                X",
+      "X                                X",
+      "X         XXXX                   X",
+      "X         XXXX                   X",
+      "X   S     XXXX                   X",
+      "XXXXXX    XXXX                   X",
+      "XXXXXXOOOOXXXXXXXXXXXXXXXXXXXXXXXX",
+    ];
+    this.rooms[5][7] = new Level(builder, 5, 7, this.game);
+    builder = [
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "O                                X",
+      "O                                X",
+      "O W                              X",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXX    XXXXXXXX    XXXXXXXX    XXX",
+      "XXX    XXXXXXXX    XXXXXXXX    XXX",
+      "XXX    XXXXXXXX    XXXXXXXX    XXX",
+      "XXX    XXXXXXXX    XXXXXXXX    XXX",
+      "XXX    XXXXXXXX    XXXXXXXX    XXX",
+      "XXX    XXXXXXXX    XXXXXXXX    XXX",
+      "XXX    XXXXXXXX    XXXXXXXX    XXX",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+
+    ];
+    this.rooms[5][8] = new Level(builder, 5, 8, this.game);
+
+    builder = [
+      "XXXXXXXOOOOXXXXX",
+      "X              X",
+      "X              X",
+      "X       N      X",
+      "X     XXXXXXXXXX",
+      "X              X",
+      "X              X",
+      "X      q       X",
+      "XXXXXXXXXXX    X",
+      "X              X",
+      "X              X",
+      "X              X",
+      "X        q     X",
+      "X   XXXXXXXXXXXX",
+      "X       Q      X",
+      "X              X",
+      "X              X",
+      "XXXXXXXXXXXX   X",
+      "X              X",
+      "X              X",
+      "X              X",
+      "X              X",
+      "X         XXXXXX",
+      "X         XXXXXX",
+      "X  S      XXXXXX",
+      "XXXXXXOOOOXXXXXX",
+
+    ];
+    this.rooms[7][6] = new Level(builder, 7, 6, this.game);
+
+    builder = [
+      "XXXXXXOOOOXXXXXX",
+      "XXXXXX    XXXXXX",
+      "XX        XXXXXX",
+      "XX     N  XXXXXX",
+      "XX        XXXXXX",
+      "XX     XXXXXXXXX",
+      "XX     X  D    X",
+      "XX     X       X",
+      "O    XXX       X",
+      "O    XXX       X",
+      "O W  XXX       X",
+      "XXXXXXXXXXXXXXXX",
+      "XXXXXXXXXXXXXXXX"
+    ];
+    this.rooms[8][6] = new Level(builder, 8, 6, this.game);
+    builder = [
+      "XXXXXXXXXXXXXXXX",
+      "X              X",
+      "X              X",
+      "X              X",
+      "X         XXXXXX",
+      "XXXXXX         X",
+      "X              X",
+      "X              X",
+      "X              O",
+      "XXXXXXXXX      O",
+      "XXXXXXXXXXX E  O",
+      "XXXXXXXXXXXXXXXX",
+      "XXXXXXXXXXXXXXXX"
+    ];
+    this.rooms[8][5] = new Level(builder, 8, 5, this.game);
+  //   builder = [
+  //   "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  //   "X                                              X",
+  //   "X                                              X",
+  //   "X                                              X",
+  //   "X                                              X",
+  //   "X                                              X",
+  //   "X                                              X",
+  //   "X                                              X",
+  //   "X           Q     X      X                     X",
+  //   "X                 X      X                     O",
+  //   "X                 X      X                     O",
+  //   "X                 X      X                 E   O",
+  //   "XXXXXXXXXXXXXXXXXXX000000XXXXXXXXXXXXXXXXXXXXXXX"
+  // ];
+  // this.rooms[0][6] = new Level(builder, 0, 6, this.game);
   }
 };

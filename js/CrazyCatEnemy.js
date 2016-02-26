@@ -22,7 +22,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.health = 30;
     this.damage = 5;
     this.size = size;
-
+    this.following = false;
     this.speed = 2;
     //this.visualRadius = 200;
     //this.velocity = { x: Math.random() * 1000, y: Math.random() * 1000 };
@@ -49,19 +49,14 @@ CrazyCatEnemy.prototype.draw = function () {
 CrazyCatEnemy.prototype.update = function() {
 
     this.boundingRect = new BoundingRect(this.x+10, this.y, (this.animation.frameWidth -10) * this.size, this.animation.frameHeight * this.size);
-    for (var i = 0; i < this.game.platforms.length; i++) {
-        if (this.collide(this.game.platforms[i])) {
-            this.xvel = this.xvel * -1;
-            break;
-        }
-    }
 
-    for (var i = 0; i < this.game.entities.length; i++) {
-        var entity = this.game.entities[i];
+    for (var j = 0; j < this.game.entities.length; j++) {
+        var entity = this.game.entities[j];
+        //console.log(entity);
         if (entity instanceof Bullet && entity.x > 0) {
-            //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
             if (entity.collideEnemy(this)) {
                 this.health -= this.damage;
+                console.log("health", this.health);
                 if(this.health === 0) {
                     this.removeFromWorld = true;
                 }
@@ -69,18 +64,34 @@ CrazyCatEnemy.prototype.update = function() {
             }
         }
 
-        // chasing
-        if (entity instanceof PlayerOne) {
+        /** checks to see if the player is close enough to follow,
+         * if he runs into a wall, he is bumped back the slightest bit */
+        for (var i = 0; i < this.game.entities.length; i++) {
+            var entity = this.game.entities[i];
+            if (entity instanceof PlayerOne) {
                 var dist = distance(this, entity);
-            //console.log("DISTANCE: ", dist);
-            if (dist < 400) {   // the "visual radius", when the enemies will start following you
-                var difX = (entity.x - this.x) / dist;
-                var difY = (entity.y - this.y) / dist;
-                this.x += difX * this.speed;
+                for (var i = 0; i < this.game.platforms.length; i++) {
+                    if (this.collide(this.game.platforms[i])) {
+                        this.collidePlatform = true;
+                        if(this.collideLeft(this.game.platforms[i])) {
+                            this.x += 2;
+                        } else if(this.collideRight(this.game.platforms[i])) {
+                            this.x -= 2;
+                        }
+                    }
+                }
+
+                if (dist < 400) {   // "visual radius" the bird will start attacking the player at
+                    var difX = (entity.x - this.x) / dist;
+                    this.x += difX * this.speed;
+                }
             }
         }
 
+
     }
+
+
 
 }
 CrazyCatEnemy.prototype.collide = function(other) {
@@ -88,4 +99,31 @@ CrazyCatEnemy.prototype.collide = function(other) {
         (this.boundingRect.left < other.boundingRect.right) &&
         (this.boundingRect.right > other.boundingRect.left) &&
         (this.boundingRect.top < other.boundingRect.bottom);
+}
+
+CrazyCatEnemy.prototype.collideTop = function(other) {
+
+    return this.boundingRect.top <= other.boundingRect.bottom &&
+        this.boundingRect.bottom >= other.boundingRect.bottom;
+}
+CrazyCatEnemy.prototype.collideLeft = function(other) {
+
+
+    return this.boundingRect.left <= other.boundingRect.right &&
+        this.boundingRect.right >= other.boundingRect.right;
+}
+CrazyCatEnemy.prototype.collideRight = function(other) {
+
+
+    return this.boundingRect.right >= other.boundingRect.left &&
+        this.boundingRect.left <= other.boundingRect.left;
+}
+CrazyCatEnemy.prototype.collideBottom = function(other) {
+
+
+    return this.boundingRect.bottom >= other.boundingRect.top &&
+        this.boundingRect.top <= other.boundingRect.top &&
+        this.boundingRect.bottom <= other.boundingRect.bottom;  // added this line because if the character's bottom
+    // is less than the platform bottom then we know he is standing on the platform. otherwise collisions are still detected
+    // even when he is just standing next to the platform
 }

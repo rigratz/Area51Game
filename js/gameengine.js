@@ -10,6 +10,7 @@ window.requestAnimFrame = (function () {
 })();
 
 function GameEngine() {
+  console.log("here");
   this.player = null;
   this.hasSpeed = false;
   this.currentSong = null;
@@ -42,8 +43,8 @@ function GameEngine() {
     this.speed = 10;
     this.maxspeed = 250;
 
-    this.deadBirds = 0;
-    this.shotsFired = 0;
+    // this.deadBirds = 0;
+    // this.shotsFired = 0;
     this.maxHealth = 100;
     this.health = 100;
 
@@ -80,7 +81,7 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
       this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
            this, 736, 736); // Replace 736 with actual height and width
       this.currentWorld = this.worlds["World 1"];
-      this.currentWorld.currentRoom = this.currentWorld.rooms[0][7];
+      this.currentWorld.currentRoom = this.currentWorld.rooms[5][5];
       //this.setLevel();
     }
 
@@ -163,6 +164,8 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
         this.addEntity(new CrazyCatEnemy(this, i * 50, (j * 50), AM.getAsset("./js/img/alien.png"), 0.5));
           //console.log("cat added!");
           //console.log(AM.getAsset("./js/img/alien.png"));
+      } else if (ch === "idle_bird") {
+          this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"),0));
       } else if (ch === "bigcrazycat") {
           this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png"), 1));
           //console.log("cat added!");
@@ -250,7 +253,7 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
 }
 GameEngine.prototype.start = function () {
     console.log("starting game");
-    this.currentSong = AM.getAudioAsset("./js/sound/maintheme.mp3");
+    this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
     this.currentSong.addEventListener('ended', function() {
       this.currentTime = 0;
       this.play();
@@ -258,7 +261,11 @@ GameEngine.prototype.start = function () {
     //this.currentSong.play();
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();
-    this.currentWorld = this.worlds["Area 51"];
+    //this.currentWorld = this.worlds["Area 51"];
+    this.currentWorld = this.worlds["World 1"];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[5][5];
+    this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
+            this, 736, 736);
     this.setLevel("east");
 
     var that = this;
