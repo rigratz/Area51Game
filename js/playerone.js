@@ -232,7 +232,7 @@ PlayerOne.prototype.update = function() {
     if (this.game.jump === true) {
       this.animation = this.jumpAnimation;
       if (!this.jumping && !this.falling) {
-          this.jumpSound.play();
+          AM.getAudioAsset("./js/sound/jump.wav").play();
           this.jumping = true;
           this.yvel = -600;
       }
@@ -310,7 +310,8 @@ PlayerOne.prototype.update = function() {
                 } else if (this.collideTop(plat)) {
                     //console.log("TOP");
                     this.yvel = 0;
-                    this.y += 1;
+                   // this.y += 1;
+                    this.y = plat.boundingRect.bottom + 1;
                 } else if (this.collideLeft(plat)) {
 
                     this.xvel = 0;
