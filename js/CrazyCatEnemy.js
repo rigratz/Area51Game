@@ -23,7 +23,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.damage = 5;
     this.size = size;
     this.following = false;
-    this.speed = 2;
+    this.speed = 1;
     //this.visualRadius = 200;
     //this.velocity = { x: Math.random() * 1000, y: Math.random() * 1000 };
 
@@ -74,16 +74,16 @@ CrazyCatEnemy.prototype.update = function() {
                     if (this.collide(this.game.platforms[i])) {
                         this.collidePlatform = true;
                         if(this.collideLeft(this.game.platforms[i])) {
-                            this.x += 2;
+                            this.x += (2 * this.size);
                         } else if(this.collideRight(this.game.platforms[i])) {
-                            this.x -= 2;
-                        }
+                            this.x -= (2 * this.size);
+                        } 
                     }
                 }
 
                 if (dist < 400) {   // "visual radius" the bird will start attacking the player at
                     var difX = (entity.x - this.x) / dist;
-                    this.x += difX * this.speed;
+                    this.x += (difX * this.speed) * this.size;
                 }
             }
         }
