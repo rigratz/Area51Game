@@ -13,6 +13,7 @@ function GameEngine() {
   console.log("here");
   this.player = null;
   this.hasSpeed = false;
+  this.hasBulletUpgrade = false;
   this.currentSong = null;
     this.entities = [];
     this.platforms = [];
@@ -186,7 +187,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
           if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
       }
       else if (ch == "bullet_upgrade") {
-           this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
+           if (!this.hasBulletUpgrade) this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
       }
       else if (ch === "exit") {
         var exitDir = null;
