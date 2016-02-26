@@ -44,9 +44,17 @@ BirdEnemy.prototype.update = function() {
     for (var i = 0; i < this.game.platforms.length; i++) {
         if (this.collide(this.game.platforms[i])) {
             if(!this.following) {
+                console.log("colliding with platform, not following");
                 this.xvel = this.xvel * -1;
+            } else {
+                console.log("colliding with the platform, yes following");
             }
-            break;
+            this.collidePlatform = true;
+            //break;
+
+        } else {
+            //console.log("not colliding with platform!");
+            this.collidePlatform = false;
         }
     }
     if (this.xvel === 0) this.animation = this.idleAnimation;
@@ -67,23 +75,30 @@ BirdEnemy.prototype.update = function() {
             }
         }
 
+        /** right now works only for x coordinate chasing */
         if (entity instanceof PlayerOne) {
             var dist = distance(this, entity);
             //console.log("DISTANCE: ", dist);
-            if (dist < 400) {   // the "visual radius", when the enemies will start following you
-                var difX = (entity.x - this.x) / dist;
-                var difY = (entity.y - this.y) / dist;
-                this.x += difX * this.speed;
-                this.following = true;
-            } else {
-                this.following = false;
+            if(!this.collidePlatform) {
+                if (dist < 400) {   // the "visual radius", when the enemies will start following you
+                    console.log("NOT colliding but YES following");
+
+                    var difX = (entity.x - this.x) / dist;
+                    //var difY = (entity.y - this.y) / dist;
+                    this.x += difX * this.speed;
+                    //this.y += difY * this.speed;
+                    this.following = true;
+                } else {
+                    this.following = false;
+                }
+                //if(this.x > entity.x) {
+                //    this.animation = this.leftAnimation;
+                //}
             }
-            //if(this.x > entity.x) {
-            //    this.animation = this.leftAnimation;
-            //}
         }
     }
-    if(!this.following) {
+    if(!this.following && !this.collidePlatform) {
+        console.log("doing the normal AI");
         this.x += this.xvel * this.game.clockTick;
         this.y += this.yvel * this.game.clockTick;
     }
