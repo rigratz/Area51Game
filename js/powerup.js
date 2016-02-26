@@ -18,7 +18,6 @@ PowerUp.prototype.constructor = PowerUp;
 
 PowerUp.prototype.update = function() {
     if (!this.game.running) return;
-
 }
 
 PowerUp.prototype.reset = function () {
@@ -33,14 +32,14 @@ PowerUp.prototype.draw = function (ctx) {
     // ctx.fillStyle = "green";
     // ctx.fillRect(this.x, this.y, this.width, this.height);
     if (!this.game.running) return;
-    if (this.boostType === "S") {
+    //if (this.boostType === "S") {
       this.ctx.drawImage(this.boostSheet,
           0, 0,  // source from sheet
           50, 50,
           this.x, this.y ,
           this.width,
           this.height);
-    } 
+    //}
 }
 
 PowerUp.prototype.collide = function(other) {
