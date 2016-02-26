@@ -9,6 +9,8 @@ function Dragon(game, x, y, spritesheet) {
     this.debug = true;
     this.collided = false;
     this.animation = new Animation("dragon", spritesheet, 96, 96, 0.14, 3, true, false, "idle");
+    this.health = 60;
+    this.damage = 10;
     Entity.call(this, game, this.x, this.y);
     console.log("this.x = ");
     console.log(this.x);

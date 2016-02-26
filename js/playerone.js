@@ -13,18 +13,18 @@ function PlayerOne(game, x, y, spritesheet) {
     this.yvel = 0;
     this.platform = game.platforms[0];
     this.bullets = [];
-    this.health = 100;
+
 
     this.powerups = [];
     this.currentPowerup = null;
     this.removeFromWorld = false;
     if (this.game.powerups[0] != " ")
-    this.game.powerups.push(" ");
+        this.game.powerups.push(" ");
     this.currentPowerUp = " ";
 
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
-    this.debug = false;
+    this.debug = true;
 
     this.falling = false;
     this.fallTime = 0;
@@ -33,6 +33,9 @@ function PlayerOne(game, x, y, spritesheet) {
     this.jumpHeight = 300;
     this.jumpTime = 0;
     this.totalJump = 2;
+
+    this.game.health = 100;
+    this.game.maxHealth = 100;
 
     this.canShoot = true;
     this.shotCooldown = 0;
@@ -116,7 +119,7 @@ PlayerOne.prototype.reset = function () {
     this.canShoot = true;
     this.shotCooldown = 0;
 
-        this.changePowerUp = true;
+    this.changePowerUp = true;
     this.powerUpindex = 0;
     this.powerUpCooldown = 0;
 
@@ -163,102 +166,103 @@ PlayerOne.prototype.draw = function () {
 
 PlayerOne.prototype.update = function() {
  // console.log(this.game.lives);
-  this.game.camera.follow(this, 100, 100);
+ this.game.camera.follow(this, 100, 100);
     //var collideExit = false;
     for (var i = 0; i < this.game.exits.length; i++) {
       if (this.collide(this.game.exits[i])) {
         //collideExit = true;
         if (this.game.exits[i].type === "exit") {
           this.game.switchLevel(this.game.exits[i].exitDir, this.game.currentWorld.currentRoom.iIndex, this.game.currentWorld.currentRoom.jIndex);
-        } else if (this.game.exits[i].type = "portal") {
+      } else if (this.game.exits[i].type = "portal") {
           console.log("TELEPORT");
           this.game.switchWorlds(this.game.currentWorld.name, this.game.exits[i].portalTo);
-        }
-        break;
       }
+      break;
+  }
+}
+
+if (this.game.currentPowerUp === "S") {
+    this.speed = 100;
+    this.maxSpeed = 550;
+} else {
+    this.speed = 10;
+    this.maxSpeed = 250;
+}
+
+if (this.game.running) {
+    if (this.dead && this.game.lives > 0) {
+        this.game.reset();
+        return;
+
     }
 
-    if (this.game.currentPowerUp === "S") {
-        this.speed = 100;
-        this.maxSpeed = 550;
-    } else {
-        this.speed = 10;
-        this.maxSpeed = 250;
+    if (this.game.left === true) {
+        this.animation = this.leftAnimation;
+        this.facing = "left";
+        if (this.xvel > 0) this.xvel = 0;
+        this.xvel -=this.speed;
+        if (this.xvel <= -this.maxSpeed) this.xvel = -this.maxSpeed;
     }
+    if (this.game.right === true) {
+        this.animation = this.rightAnimation;
+        this.facing = "right";
+        if (this.xvel < 0) this.xvel = 0;
+        this.xvel += this.speed;
+        if (this.xvel >= this.maxSpeed) this.xvel = this.maxSpeed;
+    }
+    if (this.game.up === true) {
+        this.animation = this.upAnimation;
+        this.xvel = 0;
+    }
+    if (this.game.down === true) {
+        if (this.facing === "right") this.animation = this.crouchAnimation;
+        if (this.facing === "left") this.animation = this.crouchLeftAnimation;
+        this.xvel = 0;
+    }
+    if (this.game.toggle && this.changePowerUp) {
+        this.powerUpindex = this.game.powerups.indexOf(this.game.currentPowerUp);
+        if (this.game.powerups.length < 1 || this.game.currentPowerUp === this.game.powerups[this.game.powerups.length - 1]) {
+            this.game.currentPowerUp = " ";
+        } else {
+            this.game.currentPowerUp = this.game.powerups[this.powerUpindex + 1];
+        }
+        this.changePowerUp = false;
+    }
+    if (!this.changePowerUp) {
+      this.powerUpCooldown += this.game.clockTick;
+      console.log(this.powerUpCooldown);
+      if (this.powerUpCooldown > 0.25) {
+        this.changePowerUp = true;
+        this.powerUpCooldown = 0;
+    }
+}  
 
-    if (this.game.running) {
-        if (this.dead && this.game.lives > 0) {
-            this.game.reset();
-            return;
-
-        }
-
-        if (this.game.left === true) {
-            this.animation = this.leftAnimation;
-            this.facing = "left";
-            if (this.xvel > 0) this.xvel = 0;
-            this.xvel -=this.speed;
-            if (this.xvel <= -this.maxSpeed) this.xvel = -this.maxSpeed;
-        }
-        if (this.game.right === true) {
-            this.animation = this.rightAnimation;
-            this.facing = "right";
-            if (this.xvel < 0) this.xvel = 0;
-            this.xvel += this.speed;
-            if (this.xvel >= this.maxSpeed) this.xvel = this.maxSpeed;
-        }
-        if (this.game.up === true) {
-            this.animation = this.upAnimation;
-            this.xvel = 0;
-        }
-        if (this.game.down === true) {
-            if (this.facing === "right") this.animation = this.crouchAnimation;
-            if (this.facing === "left") this.animation = this.crouchLeftAnimation;
-            this.xvel = 0;
-        }
-        if (this.game.toggle && this.changePowerUp) {
-            this.powerUpindex = this.game.powerups.indexOf(this.game.currentPowerUp);
-            if (this.game.powerups.length < 1 || this.game.currentPowerUp === this.game.powerups[this.game.powerups.length - 1]) {
-                this.game.currentPowerUp = " ";
-            } else {
-                this.game.currentPowerUp = this.game.powerups[this.powerUpindex + 1];
-            }
-            this.changePowerUp = false;
-        }
-        if (!this.changePowerUp) {
-          this.powerUpCooldown += this.game.clockTick;
-          console.log(this.powerUpCooldown);
-          if (this.powerUpCooldown > 0.25) {
-            this.changePowerUp = true;
-            this.powerUpCooldown = 0;
-          }
-        }
         //console.log(this.changePowerUp);
 
     ///////////////////////////
-        if (this.game.jump === true) {
-          this.animation = this.jumpAnimation;
-          if (!this.jumping && !this.falling) {
-              AM.getAudioAsset("./js/sound/jump.wav").play();
-              this.jumping = true;
-              this.yvel = -600;
-          }
-        } else {
-          if (this.game.jumping && this.yvel < 0) {
+    if (this.game.jump === true) {
+      this.animation = this.jumpAnimation;
+      if (!this.jumping && !this.falling) {
+          AM.getAudioAsset("./js/sound/jump.wav").play();
+          this.jumping = true;
+          this.yvel = -600;
+      }
+  } else {
+      if (this.game.jumping && this.yvel < 0) {
             //Is this code even reachable??
             this.yvel = 0;
             this.jumping = false;
             this.falling = true;
-          }
         }
-        if (this.game.fire && this.canShoot) {
-          var dir = null;
-          if (this.game.up) {
-            dir = "up";
-          } else {
-            dir = this.facing;
-          }
-          var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset("./js/img/bullet.png"), dir);
+    }
+    if (this.game.fire && this.canShoot) {
+      var dir = null;
+      if (this.game.up) {
+        dir = "up";
+    } else {
+        dir = this.facing;
+    }
+    var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset("./js/img/bullet.png"), dir);
             // adjusting the bullet based on position
             this.game.addEntity(bullet);
             if(this.game.down === true) {
@@ -270,38 +274,38 @@ PlayerOne.prototype.update = function() {
             if(this.facing === "left" && !this.game.up) {
                 bullet.x -= 70;
             }
-          this.game.addEntity(bullet);
-          this.laserSound.play();
-          this.game.shotsFired += 1;
-          this.canShoot = false;
+            this.game.addEntity(bullet);
+            this.laserSound.play();
+            this.game.shotsFired += 1;
+            this.canShoot = false;
         }
         if (!(this.game.jump || this.game.left || this.game.right || this.game.up || this.game.down)) {
             if (this.facing === "left") {
               this.animation = this.idleLeftAnimation;
-            } else {
+          } else {
               this.animation = this.idleAnimation;
-            }
-            this.xvel = 0;
-        }
-        this.boundingRect = new BoundingRect(this.x, this.y, 80, 102);
-        if (this.game.jump) {
-            this.boundingRect.height = 60;
-            this.boundingRect.bottom = this.boundingRect.y + 60;
-        }
+          }
+          this.xvel = 0;
+      }
+      this.boundingRect = new BoundingRect(this.x, this.y, 80, 102);
+      if (this.game.jump) {
+        this.boundingRect.height = 60;
+        this.boundingRect.bottom = this.boundingRect.y + 60;
+    }
 
 
 
 
-        if (this.jumping) {
-            this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
-            if (this.facing === "left") {
-              this.animation = this.jumpLeftAnimation;
-            } else {
-              this.animation = this.jumpAnimation;
-            }
-            this.jumpTime += this.game.clockTick;
-            this.yvel += this.jumpTime * 60;
-            if (this.yvel > 700) this.yvel = 700;
+    if (this.jumping) {
+        this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
+        if (this.facing === "left") {
+          this.animation = this.jumpLeftAnimation;
+      } else {
+          this.animation = this.jumpAnimation;
+      }
+      this.jumpTime += this.game.clockTick;
+      this.yvel += this.jumpTime * 60;
+      if (this.yvel > 700) this.yvel = 700;
             //if (!this.game.jump && this.yvel > 0) this.yvel = 0;
 
             for (var i = 0; i < this.game.platforms.length; i++) {
@@ -336,34 +340,34 @@ PlayerOne.prototype.update = function() {
                     //     this.yvel = 0;
                     //    this.y += 1;
                     //    this.yvel = -1;
-                    } else if (this.collideLeft(plat)) {
-                        this.xvel = 0;
-                        this.x += 1;
+                } else if (this.collideLeft(plat)) {
+                    this.xvel = 0;
+                    this.x += 1;
                       //   this.yvel = 0;
                      //    this.y += 5;
-                    }
+                 }
 
-                }
+             }
 
-            }
-        } else if (this.falling) {
+         }
+     } else if (this.falling) {
             //console.log("FALLING");
             if (this.facing === "left") {
               this.animation = this.jumpLeftAnimation;
-            } else {
+          } else {
               this.animation = this.jumpAnimation;
-            }
-            this.fallTime += this.game.clockTick;
-            this.yvel += this.fallTime * 60;
-            if (this.yvel > 700) this.yvel = 700;
-            for (var i = 0; i < this.game.platforms.length; i++) {
-                var plat = this.game.platforms[i];
-                if (this.collide(plat)) {
-                    if (this.collideBottom(plat)) {
-                        this.falling = false;
-                        this.yvel = 0;
-                        this.fallTime = 0;
-                        this.y = plat.boundingRect.top - 101;
+          }
+          this.fallTime += this.game.clockTick;
+          this.yvel += this.fallTime * 60;
+          if (this.yvel > 700) this.yvel = 700;
+          for (var i = 0; i < this.game.platforms.length; i++) {
+            var plat = this.game.platforms[i];
+            if (this.collide(plat)) {
+                if (this.collideBottom(plat)) {
+                    this.falling = false;
+                    this.yvel = 0;
+                    this.fallTime = 0;
+                    this.y = plat.boundingRect.top - 101;
                         //console.log("BOO");
                     } else if (this.collideLeft(plat)) {
                         this.xvel = 0;
@@ -404,18 +408,18 @@ PlayerOne.prototype.update = function() {
                     //console.log("COLLIDE");
                     if (this.collideBottom(plat)) {   // if the current platform is being walked on, it can't be collided to the right/left at the same time
                         land = true;
-                        if (plat.y < this.y + 100 && this.collideLeft(plat)) {
+                    if (plat.y < this.y + 100 && this.collideLeft(plat)) {
                           //console.log("stop");
                           this.xvel = 0;
                           this.x += 1;
-                        } else if (plat.y < this.y + 100 && this.collideRight(plat)) {
+                      } else if (plat.y < this.y + 100 && this.collideRight(plat)) {
                           this.xvel = 0;
                           this.x -= 1;
                           //console.log("collaborate and listen");
-                        }
+                      }
                         //console.log("BOTTOM COLLISION");
                     } else {      // otherwise we're walking on a different platform, and colliding right/left with this one
-                        if (this.collideLeft(plat) && plat.boundingRect.top < this.boundingRect.bottom) {
+                    if (this.collideLeft(plat) && plat.boundingRect.top < this.boundingRect.bottom) {
                             //console.log("LEFT");
 
                             //leftWall = true;
@@ -467,108 +471,155 @@ PlayerOne.prototype.update = function() {
           if (this.shotCooldown > 0.75) {
             this.canShoot = true;
             this.shotCooldown = 0;
-          }
         }
-         for (var i = 0; i < this.game.entities.length; i++) {
-             var entity = this.game.entities[i];
-             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy) {
-        //         //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
-                 if (entity.collide(this)) {
-                    //console.log(entity.collided);
-                    if (this.collideCounter === 0 || entity.collided === false) {
-                        this.damageSound.play();
-                        this.game.health -= this.damage;
-                        this.game.percent = this.game.health / this.game.maxHealth;
-                        entity.collided = true;
-                    }
-                    this.collideCounter++;
-                    if (this.collideCounter === this.collideTime) {
-                        this.collideCounter = 0;
-                    }
-                 //   console.log(this.collideCounter);
+    }
 
-                   //  this.health -= 1;
-                  //   console.log(this.health);
-                     if (this.game.health <= 0) {
-                        this.removeFromWorld = true;
-                        this.dead = true;
-                        this.reset();
-                  //   entity.removeFromWorld = true;
-                     }
-                 }
-             }
-             else if (entity instanceof PowerUp) {
-                if (entity.collide(this)) {
-                     if (entity.boostType === "S") {
-                            //console.log(this.game.powerups);
-                            if (this.game.powerups.length === 1) {
-                                this.game.powerups.push("S");
-                                this.game.currentPowerUp = "S";
-                            } else {
-                                var flag = true;
-                                for (var i = 0; i < this.game.powerups.length; i++) {
-                                    if (this.game.powerups[i] === entity.boostType) {
-                                        flag = false;
-                                    }
+    for (var i = 0; i < this.game.entities.length; i++) {
+     var entity = this.game.entities[i];
+     if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy) {
+        //         //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
+    if (entity.collide(this)) {
+        if (this.collideLeft(entity) && !this.jumping) {
+            this.hitEffect(entity);
+            this.xvel = 0;
+            if (this.game.left)
+                this.x += 125;
+            if (!this.game.left)
+                this.x += 75;
+        } else if (this.collideRight(entity) && !this.jumping) {
+                this.hitEffect(entity);
+                console.log("collide right walking");
+                this.xvel = 0;
+                if (this.game.right)
+                    this.x -= 125;
+                if (!this.game.right)
+                    this.x -= 75;
+        } else if (this.collideRight(entity) && this.jumping) {
+                        this.hitEffect(entity);
+                        console.log("collide right jumping");
+                        for (var k = 0; k < 120; k++) {
+                         this.x -= 1;
+                   }
+         } else if (this.collideLeft(entity) && this.jumping) {
+                this.hitEffect(entity);
+                console.log("collide left jumping");
+                     //this.ableToRight = false;
+                     for (var k = 0; k < 120; k++) {
+                         this.x += 1;
+                    }
+                   //      this.y += 1;
+               } else if (this.collideBottom(entity)) {
+                this.y -= 50;
+                this.yvel = 0;
+                entity.removeFromWorld = true;
+                console.log("collide bottom");
+
+            }  else if (this.collideTop(entity)) {
+                this.hitEffect(entity);
+                this.yvel = 0;
+                      //  if(!this.platformCollision(this.y)
+                        this.y += 10;
+                        console.log("colliding top");
+              //      this.y += 10;
+          }
+          if (this.game.health <= 0) {
+            this.removeFromWorld = true;
+            this.dead = true;
+            this.reset();
+        }
+    }
+}
+else if (entity instanceof PowerUp) {
+    if (entity.collide(this)) {
+        if (entity.boostType === "S") {
+                        //console.log(this.game.powerups);
+                        if (this.game.powerups.length === 1) {
+                            this.game.powerups.push("S");
+                            this.game.currentPowerUp = "S";
+                        } else {
+                            var flag = true;
+                            for (var i = 0; i < this.game.powerups.length; i++) {
+                                if (this.game.powerups[i] === entity.boostType) {
+                                    flag = false;
                                 }
-                                if (flag)
-                                this.game.powerups.push(entity.boostType);
                             }
+                            if (flag)
+                                this.game.powerups.push(entity.boostType);
+                        }
                             //console.log(this.game.powerups);
-                             entity.removeFromWorld = true;
-                             this.game.hasSpeed = true;
-                      }
-                      else if (entity.boostType === "B") {
-                         var flag = true;
-                         for (var i = 0; i < this.game.powerups.length; i++) {
-                             if (this.game.powerups[i] === entity.boostType) {
-                                 flag = false;
-                             }
-                         }
-                         if (flag) {
+                            entity.removeFromWorld = true;
+                            this.game.hasSpeed = true;
+                        //}
+                    } else if (entity.boostType === "B") {
+                        var flag = true;
+                        for (var i = 0; i < this.game.powerups.length; i++) {
+                            if (this.game.powerups[i] === entity.boostType) {
+                                flag = false;
+                            }
+                        }
+                        if (flag) {
                             this.game.powerups.push(entity.boostType);
                             entity.removeFromWorld = true;
-                         }
+                        }
                         this.game.hasBulletUpgrade = true;
-                       }
+                    }
+
                 }
             }
-         }
+        }
+
         Entity.prototype.update.call(this);
         this.game.camera.follow(this, 400, 175);
         this.game.camera.update();
     }
 
+
 }
 PlayerOne.prototype.collide = function(other) {
     return (this.boundingRect.bottom >= other.boundingRect.top) &&
-        (this.boundingRect.left <= other.boundingRect.right) &&
-        (this.boundingRect.right >= other.boundingRect.left) &&
-        (this.boundingRect.top <= other.boundingRect.bottom);
+    (this.boundingRect.left <= other.boundingRect.right) &&
+    (this.boundingRect.right >= other.boundingRect.left) &&
+    (this.boundingRect.top <= other.boundingRect.bottom);
 }
 PlayerOne.prototype.collideTop = function(other) {
 
     return this.boundingRect.top <= other.boundingRect.bottom &&
-        this.boundingRect.bottom >= other.boundingRect.bottom;
+    this.boundingRect.bottom >= other.boundingRect.bottom;
 }
 PlayerOne.prototype.collideLeft = function(other) {
 
 
     return this.boundingRect.left <= other.boundingRect.right &&
-        this.boundingRect.right >= other.boundingRect.right;
+    this.boundingRect.right >= other.boundingRect.right;
 }
 PlayerOne.prototype.collideRight = function(other) {
 
 
     return this.boundingRect.right >= other.boundingRect.left &&
-        this.boundingRect.left <= other.boundingRect.left;
+    this.boundingRect.left <= other.boundingRect.left;
 }
 PlayerOne.prototype.collideBottom = function(other) {
 
 
     return this.boundingRect.bottom >= other.boundingRect.top &&
-        this.boundingRect.top <= other.boundingRect.top &&
+    this.boundingRect.top <= other.boundingRect.top &&
         this.boundingRect.bottom <= other.boundingRect.bottom;  // added this line because if the character's bottom
     // is less than the platform bottom then we know he is standing on the platform. otherwise collisions are still detected
     // even when he is just standing next to the platform
 }
+
+PlayerOne.prototype.hitEffect = function(entity) {
+    var entity = entity;
+    this.damageSound.play();
+    this.game.health -= entity.damage;
+    this.game.percent = this.game.health / this.game.maxHealth;
+}
+
+// PlayerOne.prototype.platformCollision = function() {
+//     for (var i = 0; i < this.game.platforms.length; i++) {
+//         var plat = this.game.platforms[i];
+//         if (this.collide(plat))
+//             return true;
+//         else return false;
+//     }
+// }

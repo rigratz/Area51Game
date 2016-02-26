@@ -13,7 +13,7 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.startY = y;
     this.spritesheet = spritesheet;
     this.animation = new Animation("bullet", spritesheet, 258, 108, 0.40, 1, true, false);
-
+    this.damage = 10;
     var speed = 500;
     this.distanceTraveled = 0;
     if (dir === "up") {
