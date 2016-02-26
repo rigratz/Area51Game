@@ -80,7 +80,7 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
       this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
            this, 736, 736); // Replace 736 with actual height and width
       this.currentWorld = this.worlds["World 1"];
-      this.currentWorld.currentRoom = this.currentWorld.rooms[0][7];
+      this.currentWorld.currentRoom = this.currentWorld.rooms[5][5];
       //this.setLevel();
     }
 
@@ -243,7 +243,7 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
 }
 GameEngine.prototype.start = function () {
     console.log("starting game");
-    this.currentSong = AM.getAudioAsset("./js/sound/maintheme.mp3");
+    this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
     this.currentSong.addEventListener('ended', function() {
       this.currentTime = 0;
       this.play();
@@ -252,7 +252,11 @@ GameEngine.prototype.start = function () {
 
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();
-    this.currentWorld = this.worlds["Area 51"];
+    //this.currentWorld = this.worlds["Area 51"];
+    this.currentWorld = this.worlds["World 1"];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[5][5];
+    this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
+            this, 736, 736);
     this.setLevel("east");
 
     var that = this;
