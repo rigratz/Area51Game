@@ -51,7 +51,7 @@ CrazyCatEnemy.prototype.update = function() {
     this.boundingRect = new BoundingRect(this.x+10, this.y, (this.animation.frameWidth -10) * this.size, this.animation.frameHeight * this.size);
     for (var i = 0; i < this.game.platforms.length; i++) {
         if (this.collide(this.game.platforms[i])) {
-            console.log("colliding");
+            //console.log("colliding");
             this.xvel = this.xvel * -1;
             if(this.following === true) {
                 this.following = false;
