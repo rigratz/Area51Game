@@ -219,6 +219,16 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
   } else if (exitedFrom === "west") {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
   }
+  if (this.currentWorld.currentRoom === this.currentWorld.rooms[0][7]) {
+    this.currentSong.pause();
+    this.currentSong.currentTime = 0;
+    this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
+    this.currentSong.addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+    }, false);
+    this.currentSong.play();
+  }
   // if (this.currentWorld.name === "Area 51") {
   //     this.currentWorld.name = "World 1";
   //     this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
