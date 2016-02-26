@@ -34,6 +34,7 @@ AM.queueAudioDownload("./js/sound/jump.wav");
 AM.queueAudioDownload("./js/sound/damage.wav");
 AM.queueAudioDownload("./js/sound/monster_scream.wav");
 AM.queueAudioDownload("./js/sound/maintheme.mp3");
+AM.queueAudioDownload("./js/sound/bossmusic.mp3");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");

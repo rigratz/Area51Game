@@ -459,6 +459,23 @@ World.prototype.makeRoomPlans = function (name) {
     ];
     this.rooms[4][9] = new Level(builder, 4, 9, this.game);
 
+    builder = [
+      "XXXXXXXXXXXXXXXX",
+      "XXXXX          X",
+      "X              X",
+      "X              X",
+      "X              X",
+      "XXXXXXXXX      X",
+      "X              X",
+      "X    ENSW  XXXXX",
+      "X          XXXXX",
+      "X              X",
+      "X       XXXXXXXX",
+      "X   X   XXXXXXXX",
+      "XXXXXXXXXXXXXXXX"
+    ];
+    this.rooms[0][0] = new Level(builder, 0, 0, this.game);
+
     this.currentRoom = this.rooms[0][6];
   } else if (name === "World 1") {
     var builder = [];

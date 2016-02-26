@@ -5,11 +5,15 @@ function Dragon(game, x, y, spritesheet) {
     this.y = y;
     this.xvel = 100;
     this.yvel = 0;
-    this.boundingRect = new BoundingRect(x, y, 90, 124);
-    this.debug = false;
+    this.boundingRect = new BoundingRect(x, y, 40, 50);
+    this.debug = true;
     this.collided = false;
     this.animation = new Animation("dragon", spritesheet, 96, 96, 0.14, 3, true, false, "idle");
     Entity.call(this, game, this.x, this.y);
+    console.log("this.x = ");
+    console.log(this.x);
+    console.log("bbox.x = ");
+    console.log(this.boundingRect.x);
 }
 
 
@@ -29,7 +33,7 @@ Dragon.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 }
 Dragon.prototype.update = function() {
-     this.boundingRect = new BoundingRect(this.x + 40, this.y + 50, 2 * 95, 2 * 100);
+     this.boundingRect = new BoundingRect(this.x +40, this.y + 35, 70, 100);
 
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {

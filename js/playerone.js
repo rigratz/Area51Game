@@ -310,7 +310,8 @@ PlayerOne.prototype.update = function() {
                 } else if (this.collideTop(plat)) {
                     //console.log("TOP");
                     this.yvel = 0;
-                    this.y += 1;
+                   // this.y += 1;
+                    this.y = plat.boundingRect.bottom + 1;
                 } else if (this.collideLeft(plat)) {
 
                     this.xvel = 0;
@@ -383,6 +384,15 @@ PlayerOne.prototype.update = function() {
                 //console.log("COLLIDE");
                 if (this.collideBottom(plat)) {   // if the current platform is being walked on, it can't be collided to the right/left at the same time
                     land = true;
+                    if (plat.y < this.y + 100 && this.collideLeft(plat)) {
+                      //console.log("stop");
+                      this.xvel = 0;
+                      this.x += 1;
+                    } else if (plat.y < this.y + 100 && this.collideRight(plat)) {
+                      this.xvel = 0;
+                      this.x -= 1;
+                      //console.log("collaborate and listen");
+                    }
                     //console.log("BOTTOM COLLISION");
                 } else {      // otherwise we're walking on a different platform, and colliding right/left with this one
                     if (this.collideLeft(plat) && plat.boundingRect.top < this.boundingRect.bottom) {
