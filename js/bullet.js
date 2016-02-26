@@ -5,8 +5,8 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.y = y;
     this.radius = 5;
 
-    this.width = 5;
-    this.height = 5;
+    this.width = 10;
+    this.height = 10;
     this.xvel = 0;
     this.yvel = 0;
     this.startX = x;
@@ -68,7 +68,12 @@ Bullet.prototype.draw = function () {
 
 // for some reason can't get this to work using the bullet bounding box, so I used x and y
 Bullet.prototype.collideEnemy = function(other) {
-    return (this.x <= (other.boundingRect.right - (other.boundingRect.width / 2))) &&
-        (this.x > other.boundingRect.left) &&
-        (this.y > (other.boundingRect.top) && (this.y < other.boundingRect.bottom));
+  // return (this.boundingRect.bottom >= other.boundingRect.top) &&
+  //     (this.boundingRect.left <= other.boundingRect.right) &&
+  //     (this.boundingRect.right >= other.boundingRect.left) &&
+  //     (this.boundingRect.top <= other.boundingRect.bottom);
+    //  return (this.x <= (other.boundingRect.right - (other.boundingRect.width / 2))) &&
+         return (this.x <= other.boundingRect.right) &&
+         (this.x > other.boundingRect.left) &&
+         (this.y > (other.boundingRect.top) && (this.y < other.boundingRect.bottom));
 }
