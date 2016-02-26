@@ -25,10 +25,10 @@ World.prototype.makeRoomPlans = function (name) {
   if (name === "Area 51") {
     builder = [
       "                                                ",
-      "                            H                   ",
+      "                                                ",
       "X                                               ",
       "X                                               ",
-      "X                                               ",
+      "X                   1                           ",
       "X                                               ",
       "X                                              O",
       "X                                              O",
