@@ -10,6 +10,7 @@ window.requestAnimFrame = (function () {
 })();
 
 function GameEngine() {
+  console.log("here");
   this.player = null;
   this.hasSpeed = false;
   this.currentSong = null;
@@ -42,8 +43,8 @@ function GameEngine() {
     this.speed = 10;
     this.maxspeed = 250;
 
-    this.deadBirds = 0;
-    this.shotsFired = 0;
+    // this.deadBirds = 0;
+    // this.shotsFired = 0;
     this.maxHealth = 100;
     this.health = 100;
 
