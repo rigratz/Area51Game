@@ -41,21 +41,16 @@ BirdEnemy.prototype.draw = function () {
 }
 BirdEnemy.prototype.update = function() {
     this.boundingRect = new BoundingRect(this.x+45, this.y+50, this.animation.frameWidth+45, this.animation.frameHeight+45);
+    this.collidePlatform = false;
     for (var i = 0; i < this.game.platforms.length; i++) {
         if (this.collide(this.game.platforms[i])) {
-            if(!this.following) {
-                console.log("colliding with platform, not following");
-                this.xvel = this.xvel * -1;
-            } else {
-                console.log("colliding with the platform, yes following");
-            }
-            this.collidePlatform = true;
-            //break;
 
-        } else {
-            //console.log("not colliding with platform!");
-            this.collidePlatform = false;
+            this.xvel *= -1;
+
+            console.log("collided");
+            this.collidePlatform = true;
         }
+
     }
     if (this.xvel === 0) this.animation = this.idleAnimation;
     else if(this.xvel === 2) this.animation = this.catAnimation;
@@ -78,30 +73,46 @@ BirdEnemy.prototype.update = function() {
         /** right now works only for x coordinate chasing */
         if (entity instanceof PlayerOne) {
             var dist = distance(this, entity);
-            //console.log("DISTANCE: ", dist);
-            if(!this.collidePlatform) {
-                if (dist < 400) {   // the "visual radius", when the enemies will start following you
-                    console.log("NOT colliding but YES following");
+            if (dist < 400) {   // the "visual radius", when the enemies will start following you
+                //console.log("NOT colliding but YES following");
 
-                    var difX = (entity.x - this.x) / dist;
-                    //var difY = (entity.y - this.y) / dist;
-                    this.x += difX * this.speed;
-                    //this.y += difY * this.speed;
-                    this.following = true;
+                if(this.collidePlatform) {
+                    console.log("colliding with platform, don't follow player");
+                    this.xvel = this.xvel * -1;
+                    //this.following = false;
                 } else {
-                    this.following = false;
+                    console.log("not colliding with platform, follow player");
+                    var difX = (entity.x - this.x) / dist;
+                    this.x += difX * this.speed;
+
+                    //var difX = (entity.x - this.x) / dist;
+                    //this.x += difX * this.speed;
+                    this.following = true;
                 }
-                //if(this.x > entity.x) {
-                //    this.animation = this.leftAnimation;
-                //}
+                //this.following = true;
+
+                //var difY = (entity.y - this.y) / dist;
+                //this.y += difY * this.speed;
+            } else {
+                this.following = false;
+                console.log("too far away");
+                if(this.collidePlatform) {
+                    this.xvel = this.xvel * -1;
+                    console.log("too far away and collided");
+
+                }
             }
         }
     }
-    if(!this.following && !this.collidePlatform) {
-        console.log("doing the normal AI");
-        this.x += this.xvel * this.game.clockTick;
-        this.y += this.yvel * this.game.clockTick;
-    }
+    //if(!this.following) {
+    //    console.log("doing the normal AI");
+    //    if(this.collidePlatform) {
+    //        //this.xvel = this.xvel * -1;
+    //    }
+    //    this.x += this.xvel * this.game.clockTick;
+    //    this.y += this.yvel * this.game.clockTick;
+    //
+    //}
 
 }
 
@@ -110,4 +121,31 @@ BirdEnemy.prototype.collide = function(other) {
         (this.boundingRect.left < other.boundingRect.right) &&
         (this.boundingRect.right > other.boundingRect.left) &&
         (this.boundingRect.top < other.boundingRect.bottom);
+}
+
+BirdEnemy.prototype.collideTop = function(other) {
+
+    return this.boundingRect.top <= other.boundingRect.bottom &&
+        this.boundingRect.bottom >= other.boundingRect.bottom;
+}
+BirdEnemy.prototype.collideLeft = function(other) {
+
+
+    return this.boundingRect.left <= other.boundingRect.right &&
+        this.boundingRect.right >= other.boundingRect.right;
+}
+BirdEnemy.prototype.collideRight = function(other) {
+
+
+    return this.boundingRect.right >= other.boundingRect.left &&
+        this.boundingRect.left <= other.boundingRect.left;
+}
+BirdEnemy.prototype.collideBottom = function(other) {
+
+
+    return this.boundingRect.bottom >= other.boundingRect.top &&
+        this.boundingRect.top <= other.boundingRect.top &&
+        this.boundingRect.bottom <= other.boundingRect.bottom;  // added this line because if the character's bottom
+    // is less than the platform bottom then we know he is standing on the platform. otherwise collisions are still detected
+    // even when he is just standing next to the platform
 }
