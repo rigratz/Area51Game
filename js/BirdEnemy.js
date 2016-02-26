@@ -44,7 +44,7 @@ BirdEnemy.prototype.update = function() {
       if (this.collide(this.game.platforms[i])) {
           this.xvel = this.xvel * -1;
           this.yvel = this.yvel * -1;
-          console.log("colliding with platform!");
+          //console.log("colliding with platform!");
         break;
       }
 

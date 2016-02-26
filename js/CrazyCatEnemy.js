@@ -22,7 +22,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.health = 30;
     this.damage = 5;
     this.size = size;
-
+    this.following = false;
     this.speed = 2;
     //this.visualRadius = 200;
     //this.velocity = { x: Math.random() * 1000, y: Math.random() * 1000 };
@@ -51,8 +51,17 @@ CrazyCatEnemy.prototype.update = function() {
     this.boundingRect = new BoundingRect(this.x+10, this.y, (this.animation.frameWidth -10) * this.size, this.animation.frameHeight * this.size);
     for (var i = 0; i < this.game.platforms.length; i++) {
         if (this.collide(this.game.platforms[i])) {
+            console.log("colliding");
             this.xvel = this.xvel * -1;
+            if(this.following === true) {
+                this.following = false;
+            }  else if(this.following === false) {
+                this.following = true;
+            }
+            // he's colliding, so don't follow
             break;
+        } else {
+            //this.following = true;      // not colliding, so follow
         }
     }
 
@@ -73,10 +82,15 @@ CrazyCatEnemy.prototype.update = function() {
         if (entity instanceof PlayerOne) {
                 var dist = distance(this, entity);
             //console.log("DISTANCE: ", dist);
-            if (dist < 400) {   // the "visual radius", when the enemies will start following you
+            if (dist < 400 && this.following) {   // the "visual radius", when the enemies will start following you
                 var difX = (entity.x - this.x) / dist;
                 var difY = (entity.y - this.y) / dist;
                 this.x += difX * this.speed;
+                //this.following = true;
+            } else if(dist > 400 && this.following) {
+                this.following = false;
+            } else if (dist < 400 && !this.following) {
+                this.following = true;
             }
         }
 
