@@ -89,7 +89,7 @@ BirdEnemy.prototype.update = function() {
                 this.x += difX * this.speed;
                 var difY = (entity.y - this.y) / dist;
                 this.y += difY * this.speed;
-                if(this.boundingRect.left >= entity.boundingRect.right) {
+                if(this.boundingRect.left >= entity.boundingRect.right && !this.catAnimation) {
                     this.animation = this.leftAnimation;
                 }
             }
