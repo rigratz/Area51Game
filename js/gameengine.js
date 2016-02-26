@@ -256,7 +256,6 @@ GameEngine.prototype.start = function () {
       this.play();
     }, false);
     //this.currentSong.play();
-
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();
     this.currentWorld = this.worlds["Area 51"];
