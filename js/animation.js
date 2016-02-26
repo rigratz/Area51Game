@@ -109,6 +109,7 @@ Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {
     var xframe = 0;
     var yframe = 0;
     if (this.type === "idle") {
+        //console.log("IDLE BIRD");
         xframe = xindex * this.frameWidth;
         yframe = 2;     //shuld be 0?
     } else if (this.type === "left") {

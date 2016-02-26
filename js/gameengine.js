@@ -163,6 +163,8 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
         this.addEntity(new CrazyCatEnemy(this, i * 50, (j * 50), AM.getAsset("./js/img/alien.png"), .5));
           //console.log("cat added!");
           //console.log(AM.getAsset("./js/img/alien.png"));
+      } else if (ch === "idle_bird") {
+          this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"),0));
       } else if (ch === "bigcrazycat") {
           this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png"), 1));
           //console.log("cat added!");

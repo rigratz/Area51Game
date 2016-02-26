@@ -8,7 +8,7 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.removeFromWorld = false;
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = false;
+    this.debug = true;
     this.health = 30;
     this.damage = 10;
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "idle");
@@ -16,8 +16,9 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.leftAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "left");
     this.catAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "cat");
     this.animation = this.idleAnimation;
-    this.speed = 2;
+    this.speed = 1.5;
     Entity.call(this, game, this.x, this.y);
+    this.collidePlatform = false;
 }
 
 
@@ -41,9 +42,13 @@ BirdEnemy.prototype.update = function() {
     this.boundingRect = new BoundingRect(this.x+45, this.y+50, this.animation.frameWidth+45, this.animation.frameHeight+45);
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {
-        this.xvel = this.xvel * -1;
+          this.xvel = this.xvel * -1;
+          this.yvel = this.yvel * -1;
+          console.log("colliding with platform!");
         break;
       }
+
+
     }
     if (this.xvel === 0) this.animation = this.idleAnimation;
     else if(this.xvel === 2) this.animation = this.catAnimation;
@@ -62,19 +67,27 @@ BirdEnemy.prototype.update = function() {
                 entity.removeFromWorld = true;
             }
         }
-
         if (entity instanceof PlayerOne) {
-            var dist = distance(this, entity);
-            //console.log("DISTANCE: ", dist);
-            if (dist < 400) {   // the "visual radius", when the enemies will start following you
-                var difX = (entity.x - this.x) / dist;
-                var difY = (entity.y - this.y) / dist;
-                this.x += difX * this.speed;
-            }
-            if(this.x > entity.x) {
-                this.animation = this.leftAnimation;
+            //if(!this.collidePlatform && platformDist) {
+                var dist = distance(this, entity);
+                //console.log("DISTANCE: ", dist);
+                if (dist < 400) {   // the "visual radius", when the enemies will start following you
+                    var difX = (entity.x - this.x) / dist;
+                    var difY = (entity.y - this.y) / dist;
+                    this.x += difX * this.speed;
+                    this.y += difY * this.speed;
+                    //this.follow = true;
+                }
+            if(!(this.animation === this.catAnimation)) {
+                if (this.x > entity.x && this.animation) {
+                    this.animation = this.leftAnimation;
+                } else {
+                    this.animation = this.rightAnimation;
+                }
             }
         }
+
+
     }
     this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
