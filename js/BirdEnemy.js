@@ -17,9 +17,6 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.catAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "cat");
     this.animation = this.idleAnimation;
     this.speed = 2.5;
-    this.following = false;
-    this.bottomCollision = false;
-    this.sideCollision = false;
     Entity.call(this, game, this.x, this.y);
     this.collidePlatform = false;
 }
@@ -43,21 +40,12 @@ BirdEnemy.prototype.draw = function () {
 }
 BirdEnemy.prototype.update = function() {
     this.boundingRect = new BoundingRect(this.x+45, this.y+50, this.animation.frameWidth+45, this.animation.frameHeight+45);
-
-
-    //this.bottomCollision = false;
-    //this.sideCollision = false;
-
     if (this.xvel === 0) this.animation = this.idleAnimation;
     else if(this.xvel === 2) this.animation = this.catAnimation;
     else if (this.xvel > 0) this.animation = this.rightAnimation;
     else if (this.xvel < 0) this.animation = this.leftAnimation;
 
     for (var i = 0; i < this.game.entities.length; i++) {
-        this.collidePlatform = false;
-
-
-
         var entity = this.game.entities[i];
         if (entity instanceof Bullet && entity.x > 0) {
             if (entity.collideEnemy(this)) {
@@ -70,57 +58,36 @@ BirdEnemy.prototype.update = function() {
             }
         }
     }
-    //if(!this.following) {
-    //    console.log("doing the normal AI");
-    //    if(this.collidePlatform) {
-    //        //this.xvel = this.xvel * -1;
-    //    }
-    //    this.x += this.xvel * this.game.clockTick;
-    //    this.y += this.yvel * this.game.clockTick;
-    //
 
+    /** checks to see if the player is close enough to follow,
+     * if the bird runs into a wall, he is bumped back the slightest bit */
     for (var i = 0; i < this.game.entities.length; i++) {
         var entity = this.game.entities[i];
         if (entity instanceof PlayerOne) {
             var dist = distance(this, entity);
-
-            //if (dist < 400) {   // the "visual radius", when the enemies will start following you
-            //console.log("NOT colliding but YES following");
-            //console.log("following");
-
             for (var i = 0; i < this.game.platforms.length; i++) {
-
                 if (this.collide(this.game.platforms[i])) {
                     this.collidePlatform = true;
-
                     if(this.collideBottom(this.game.platforms[i])) {
                         this.y -= 1;
-                        console.log("collide bottom!");
-                        this.bottomCollision = true;
                     } else if(this.collideTop(this.game.platforms[i])) {
                         this.y += 0.75;
                     } else if(this.collideLeft(this.game.platforms[i])) {
-                        this.sideCollision = true;
-                        this.x -= 2;
+                        this.x += 2;
                     } else if(this.collideRight(this.game.platforms[i])) {
-                        this.sideCollision = true;
-                        console.log("collide right");
                         this.x -= 2;
                     }
-                    //break;
                 }
             }
 
-            if (dist < 400) {
+            if (dist < 400) {   // "visual radius" the bird will start attacking the player at
                 var difX = (entity.x - this.x) / dist;
                 this.x += difX * this.speed;
-
-                //if(!this.bottomCollision) {
-                    var difY = (entity.y - this.y) / dist;
-                    this.y += difY * this.speed;
-                //}
-
-
+                var difY = (entity.y - this.y) / dist;
+                this.y += difY * this.speed;
+                if(this.boundingRect.left >= entity.boundingRect.right) {
+                    this.animation = this.leftAnimation;
+                }
             }
         }
     }
