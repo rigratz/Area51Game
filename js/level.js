@@ -33,7 +33,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "catbird";
       else if (ch === "s")
         fieldType = "speedboost";
-
+      else if (ch === "u")
+        fieldType = "bullet_upgrade";
       else if (ch === "q")
         fieldType = "smallcrazycat";
       else if (ch === "Q")

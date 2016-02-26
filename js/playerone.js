@@ -498,6 +498,25 @@ PlayerOne.prototype.update = function() {
                          entity.removeFromWorld = true;
                          this.game.hasSpeed = true;
                   }
+                  else if (entity.boostType === "B") {
+                         //console.log(this.game.powerups);
+                         if (this.game.powerups.length === 1) {
+                             this.game.powerups.push("B");
+                             this.game.currentPowerUp = "B";
+                         } else {
+                             var flag = true;
+                             for (var i = 0; i < this.game.powerups.length; i++) {
+                                 if (this.game.powerups[i] === entity.boostType) {
+                                     flag = false;
+                                 }
+                             }
+                             if (flag)
+                             this.game.powerups.push(entity.boostType);
+                         }
+                         //console.log(this.game.powerups);
+                          entity.removeFromWorld = true;
+                          this.game.hasSpeed = true;
+                   }
             }
         }
      }

@@ -181,7 +181,11 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
           this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
       } else if (ch == "speedboost") {
           if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
-      } else if (ch === "exit") {
+      }
+      else if (ch == "bullet_upgrade") {
+           this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
+      }
+      else if (ch === "exit") {
         var exitDir = null;
         if (i === 0) {
           exitDir = "west";
@@ -230,7 +234,7 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
       this.currentTime = 0;
       this.play();
     }, false);
-    this.currentSong.play();
+    //this.currentSong.play();
   }
   // if (this.currentWorld.name === "Area 51") {
   //     this.currentWorld.name = "World 1";
@@ -251,7 +255,7 @@ GameEngine.prototype.start = function () {
       this.currentTime = 0;
       this.play();
     }, false);
-    (this.currentSong.play();
+    //this.currentSong.play();
 
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();
@@ -389,6 +393,11 @@ GameEngine.prototype.draw = function () {
            this.ctx.drawImage(img,
            0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
        }
+       else if (this.currentPowerUp === "B") {
+         var img = AM.getAsset("./js/img/bullet_upgrade_icon.png");
+         this.ctx.drawImage(img,
+         0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
+     }
     }
     this.ctx.restore();
 }
