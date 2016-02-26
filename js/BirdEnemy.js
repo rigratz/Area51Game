@@ -18,6 +18,8 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.animation = this.idleAnimation;
     this.speed = 2.5;
     this.following = false;
+    this.bottomCollision = false;
+    this.sideCollision = false;
     Entity.call(this, game, this.x, this.y);
     this.collidePlatform = false;
 }
@@ -41,23 +43,21 @@ BirdEnemy.prototype.draw = function () {
 }
 BirdEnemy.prototype.update = function() {
     this.boundingRect = new BoundingRect(this.x+45, this.y+50, this.animation.frameWidth+45, this.animation.frameHeight+45);
-    this.collidePlatform = false;
-    for (var i = 0; i < this.game.platforms.length; i++) {
-        if (this.collide(this.game.platforms[i])) {
 
-            this.xvel *= -1;
 
-            console.log("collided");
-            this.collidePlatform = true;
-        }
+    //this.bottomCollision = false;
+    //this.sideCollision = false;
 
-    }
     if (this.xvel === 0) this.animation = this.idleAnimation;
     else if(this.xvel === 2) this.animation = this.catAnimation;
     else if (this.xvel > 0) this.animation = this.rightAnimation;
     else if (this.xvel < 0) this.animation = this.leftAnimation;
 
     for (var i = 0; i < this.game.entities.length; i++) {
+        this.collidePlatform = false;
+
+
+
         var entity = this.game.entities[i];
         if (entity instanceof Bullet && entity.x > 0) {
             if (entity.collideEnemy(this)) {
@@ -69,40 +69,6 @@ BirdEnemy.prototype.update = function() {
                 entity.removeFromWorld = true;
             }
         }
-
-        /** right now works only for x coordinate chasing */
-        if (entity instanceof PlayerOne) {
-            var dist = distance(this, entity);
-            if (dist < 400) {   // the "visual radius", when the enemies will start following you
-                //console.log("NOT colliding but YES following");
-
-                if(this.collidePlatform) {
-                    console.log("colliding with platform, don't follow player");
-                    this.xvel = this.xvel * -1;
-                    //this.following = false;
-                } else {
-                    console.log("not colliding with platform, follow player");
-                    var difX = (entity.x - this.x) / dist;
-                    this.x += difX * this.speed;
-
-                    //var difX = (entity.x - this.x) / dist;
-                    //this.x += difX * this.speed;
-                    this.following = true;
-                }
-                //this.following = true;
-
-                //var difY = (entity.y - this.y) / dist;
-                //this.y += difY * this.speed;
-            } else {
-                this.following = false;
-                console.log("too far away");
-                if(this.collidePlatform) {
-                    this.xvel = this.xvel * -1;
-                    console.log("too far away and collided");
-
-                }
-            }
-        }
     }
     //if(!this.following) {
     //    console.log("doing the normal AI");
@@ -112,8 +78,52 @@ BirdEnemy.prototype.update = function() {
     //    this.x += this.xvel * this.game.clockTick;
     //    this.y += this.yvel * this.game.clockTick;
     //
-    //}
 
+    for (var i = 0; i < this.game.entities.length; i++) {
+        var entity = this.game.entities[i];
+        if (entity instanceof PlayerOne) {
+            var dist = distance(this, entity);
+
+            //if (dist < 400) {   // the "visual radius", when the enemies will start following you
+            //console.log("NOT colliding but YES following");
+            //console.log("following");
+
+            for (var i = 0; i < this.game.platforms.length; i++) {
+
+                if (this.collide(this.game.platforms[i])) {
+                    this.collidePlatform = true;
+
+                    if(this.collideBottom(this.game.platforms[i])) {
+                        this.y -= 1;
+                        console.log("collide bottom!");
+                        this.bottomCollision = true;
+                    } else if(this.collideTop(this.game.platforms[i])) {
+                        this.y += 0.75;
+                    } else if(this.collideLeft(this.game.platforms[i])) {
+                        this.sideCollision = true;
+                        this.x -= 2;
+                    } else if(this.collideRight(this.game.platforms[i])) {
+                        this.sideCollision = true;
+                        console.log("collide right");
+                        this.x -= 2;
+                    }
+                    //break;
+                }
+            }
+
+            if (dist < 400) {
+                var difX = (entity.x - this.x) / dist;
+                this.x += difX * this.speed;
+
+                //if(!this.bottomCollision) {
+                    var difY = (entity.y - this.y) / dist;
+                    this.y += difY * this.speed;
+                //}
+
+
+            }
+        }
+    }
 }
 
 BirdEnemy.prototype.collide = function(other) {
