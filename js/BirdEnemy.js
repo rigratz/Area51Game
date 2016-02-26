@@ -75,7 +75,7 @@ BirdEnemy.prototype.update = function() {
                     } else if(this.collideLeft(this.game.platforms[i])) {
                         this.x += 2;
                     } else if(this.collideRight(this.game.platforms[i])) {
-                        this.x -= 2;
+                        this.x -= 3;
                     }
                 }
             }
