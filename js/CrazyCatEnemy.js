@@ -72,18 +72,17 @@ CrazyCatEnemy.prototype.update = function() {
                 var dist = distance(this, entity);
                 for (var i = 0; i < this.game.platforms.length; i++) {
                     if (this.collide(this.game.platforms[i])) {
-                        this.collidePlatform = true;
                         if(this.collideLeft(this.game.platforms[i])) {
                             this.x += (2 * this.size);
                         } else if(this.collideRight(this.game.platforms[i])) {
                             this.x -= (2 * this.size);
-                        } 
+                        }
                     }
                 }
 
-                if (dist < 400) {   // "visual radius" the bird will start attacking the player at
-                    var difX = (entity.x - this.x) / dist;
-                    this.x += (difX * this.speed) * this.size;
+                if (dist < 250) {   // "visual radius" the bird will start attacking the player at
+                    var difX = ((entity.x - this.x) / dist) * this.size;
+                    this.x += (difX * this.speed);
                 }
             }
         }
