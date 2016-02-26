@@ -15,14 +15,17 @@ function TreeBoss(game, x, y, spritesheet, xvel) {
     this.health = 200;
     this.damage = 50;
     this.animationTimer = 0;
+    this.attackTimer = 0;
     this.idleAnimation = new Animation("tree_boss", spritesheet, 218, 314, 0.2, 1, true, false, "idle");
     this.screamAnimation = new Animation("tree_boss", spritesheet, 218, 314, 0.2, 12, true, false, "screaming");
     this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
-    this.attack = new TreeBossAttack(game, this.x - 300, this.y + this.animation.frameHeight, spritesheet, 2);
-    this.attack2 = new TreeBossAttack(game, this.x - 500, this.y + this.animation.frameHeight, spritesheet, 2);
+    this.attack = new TreeBossAttack(game, this.x, this.y + this.animation.frameHeight, spritesheet, 2);
+    this.attack2 = new TreeBossAttack(game, this.x, this.y + this.animation.frameHeight, spritesheet, 2);
+    this.attack3 = new TreeBossAttack(game, this.x, this.y + this.animation.frameHeight, spritesheet, 2);
     game.addEntity(this.attack);
     game.addEntity(this.attack2);
+    game.addEntity(this.attack3);
 }
 
 function TreeBossAttack(game, x, y, spritesheet, xvel) {
@@ -37,7 +40,7 @@ function TreeBossAttack(game, x, y, spritesheet, xvel) {
     this.boundingRect = new BoundingRect(x, y, 0, 0);
     this.debug = true;
     this.speed = 2;
-    this.animation = new Animation("tree_boss_attack", spritesheet, 218, 100, 0.1, 8, true, false, "attacking");
+    this.animation = new Animation("tree_boss_attack", spritesheet, 218, 100, 0.15, 8, true, false, "attacking");
     Entity.call(this, game, this.x, this.y);
 }
 
@@ -54,14 +57,26 @@ TreeBoss.prototype.draw = function () {
         this.animation = this.idleAnimation;
     }
     else {
+        this.attackTimer++;
+        if (this.attackTimer < 45) {
+            this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
+        }
+        if (this.attackTimer > 45 && this.attackTimer < 90) {
+            this.attack2.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x - 200, this.attack.y);
+        }
+        if (this.attackTimer > 90 && this.attackTimer < 135) {
+            console.log(this.attackTimer);
+            this.attack3.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x - 400, this.attack.y);
+        }
         this.screamSound.play();
         this.animation = this.screamAnimation;
     }
-    if (this.animationTimer > 432) {
+    if (this.animationTimer > 435) {
+        this.attackTimer = 0;
         this.animationTimer = 0;
     }
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-    this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
+    // this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
     //this.attack2.animation.drawFrame(this.attack2.game.clockTick, this.attack2.ctx, this.attack2.x, this.attack2.y);
     var bb = this.boundingRect;
     if (this.debug) {
@@ -93,12 +108,11 @@ TreeBoss.prototype.update = function() {
             }
         }
         if (entity instanceof PlayerOne) {
-            //console.log(distance());
-            var dist = distance(this.attack, entity);
-            var difX = (entity.x - this.attack.x) / dist;
-            var difY = (entity.y - this.attack.y) / dist;
-            this.attack.x += difX * this.attack.speed;
-
+            this.attack.x =  entity.x - this.attack.animation.frameWidth / 2;   //Attacks where the player is
+            // var dist = distance(this.attack, entity);
+            // var difX = (entity.x - this.attack.x) / dist;
+            // var difY = (entity.y - this.attack.y) / dist;
+            // this.attack.x += difX * this.attack.speed;
         }
     }
     this.x += this.xvel * this.game.clockTick;
