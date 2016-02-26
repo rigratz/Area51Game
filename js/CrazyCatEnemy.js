@@ -50,12 +50,13 @@ CrazyCatEnemy.prototype.update = function() {
 
     this.boundingRect = new BoundingRect(this.x+10, this.y, (this.animation.frameWidth -10) * this.size, this.animation.frameHeight * this.size);
 
-    for (var i = 0; i < this.game.entities.length; i++) {
-        var entity = this.game.entities[i];
+    for (var j = 0; j < this.game.entities.length; j++) {
+        var entity = this.game.entities[j];
+        //console.log(entity);
         if (entity instanceof Bullet && entity.x > 0) {
-            //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
             if (entity.collideEnemy(this)) {
                 this.health -= this.damage;
+                console.log("health", this.health);
                 if(this.health === 0) {
                     this.removeFromWorld = true;
                 }
@@ -72,11 +73,7 @@ CrazyCatEnemy.prototype.update = function() {
                 for (var i = 0; i < this.game.platforms.length; i++) {
                     if (this.collide(this.game.platforms[i])) {
                         this.collidePlatform = true;
-                        if(this.collideBottom(this.game.platforms[i])) {
-                            this.y -= 1;
-                        } else if(this.collideTop(this.game.platforms[i])) {
-                            this.y += 1;
-                        } else if(this.collideLeft(this.game.platforms[i])) {
+                        if(this.collideLeft(this.game.platforms[i])) {
                             this.x += 2;
                         } else if(this.collideRight(this.game.platforms[i])) {
                             this.x -= 2;

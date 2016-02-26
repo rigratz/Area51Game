@@ -299,32 +299,45 @@ PlayerOne.prototype.update = function() {
 
         for (var i = 0; i < this.game.platforms.length; i++) {
             var plat = this.game.platforms[i];
-
             if (this.collide(plat)) {
                 if (this.collideBottom(plat)) {
                     //console.log("Bottom");
+                    //this.game.currentPowerUp = temp;
                     this.jumping = false;
                     this.yvel = 0;
                     this.jumpTime = 0;
                     this.y = plat.boundingRect.top - 101;
-                } else if (this.collideTop(plat)) {
+                    if (this.game.currentPowerUp === "S" && this.facing === "right") {
+                        this.x -= 3;
+                    } else if (this.game.currentPowerUp === "S" && this.facing === "left") {
+                        this.x += 3;
+                    }
+                }  else if (this.collideTop(plat) && this.facing === "right") {
                     //console.log("TOP");
                     this.yvel = 0;
-                   // this.y += 1;
+                    this.x -= 2;               
                     this.y = plat.boundingRect.bottom + 1;
-                } else if (this.collideLeft(plat)) {
-
-                    this.xvel = 0;
-                    this.x += 1;
+                    this.yvel = 0;
+                    
+                } else if (this.collideTop(plat) && this.facing === "left") {
+                    this.yvel = 0;
+                    this.x += 2;
+                    this.y = plat.boundingRect.bottom + 1;
                 } else if (this.collideRight(plat)) {
-
-                    //console.log("THIS RIGHT!");
-
                     this.xvel = 0;
                     this.x -= 1;
-                }
+                //     this.yvel = 0;
+                //    this.y += 1;
+                //    this.yvel = -1;
+                } else if (this.collideLeft(plat)) {
+                    this.xvel = 0;
+                    this.x += 1; 
+                  //   this.yvel = 0;
+                 //    this.y += 5;
+                } 
 
             }
+        
         }
     } else if (this.falling) {
         //console.log("FALLING");

@@ -47,6 +47,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "portal2";
       else if (ch === "3")
         fieldType = "portal3";
+      else if (ch === "H")
+        fieldType = "tree_boss";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);

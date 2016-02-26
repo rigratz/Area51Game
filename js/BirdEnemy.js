@@ -1,3 +1,9 @@
+function distance(a, b) {
+    var dx = a.x - b.x;
+    var dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
 function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.game = game;
     this.ctx = game.ctx;
@@ -21,7 +27,6 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.collidePlatform = false;
 }
 
-
 BirdEnemy.prototype = new Entity();
 BirdEnemy.prototype.constructor = BirdEnemy;
 
@@ -31,7 +36,6 @@ BirdEnemy.prototype.draw = function () {
 
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
-    //console.log(bb);
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
         this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
@@ -126,3 +130,6 @@ BirdEnemy.prototype.collideBottom = function(other) {
     // is less than the platform bottom then we know he is standing on the platform. otherwise collisions are still detected
     // even when he is just standing next to the platform
 }
+
+
+
