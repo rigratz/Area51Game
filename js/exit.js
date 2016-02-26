@@ -29,14 +29,13 @@ function Portal(textureSheet, game, x, y, w, h, type, portalTo) {
     this.y = y;
     this.width = w;
     this.height = h;
+    this.animationCounter = 0;
     this.portalTo = portalTo;
     this.removeFromWorld = false;
     this.debug = true;
     this.type = type;
     this.boundingRect = new BoundingRect(x, y, w, h);
     Entity.call(this, game, this.x, this.y);
-    console.log("portal");
-    console.log(this.textureSheet);
 }
 
 Portal.prototype = new Entity();
@@ -46,9 +45,29 @@ Portal.prototype.update = function() {
 
 }
 Portal.prototype.draw = function (ctx) {
-    ctx.drawImage(this.textureSheet,
-        0, 200,
-        this.width, this.height,
-        this.x, this.y,
-        50, 50);
+    this.animationCounter++;
+    if (this.animationCounter < 10) {
+        ctx.drawImage(this.textureSheet,
+            0, 200,
+            this.width, this.height,
+            this.x, this.y,
+            50, 50);
+    }
+    else if (this.animationCounter < 20) {
+        ctx.drawImage(this.textureSheet,
+            100, 200,
+            this.width, this.height,
+            this.x, this.y,
+            50, 50);
+    }
+    else if (this.animationCounter < 25) {
+        ctx.drawImage(this.textureSheet,
+            200, 200,
+            this.width, this.height,
+            this.x, this.y,
+            50, 50);
+    }
+    else {
+        this.animationCounter = 0;
+    }
 }

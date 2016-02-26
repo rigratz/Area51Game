@@ -24,15 +24,16 @@ World.prototype.makeRoomPlans = function (name) {
 
   if (name === "Area 51") {
     builder = [
-      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "                                                ",
+      "                                                ",
+      "X                                               ",
+      "X                                               ",
+      "X                   1                           ",
+      "X                                               ",
       "X                                              O",
       "X                                              O",
       "X                                              O",
-      "X  W                  s                    E   O",
+      "X  W      s                                    O",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -232,15 +233,14 @@ World.prototype.makeRoomPlans = function (name) {
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "X                                X",
       "X                                X",
+      "X                  H             X",
       "X                                X",
       "X                                X",
       "X                                X",
-      "X          D                     X",
-      "X   C              B             X",
       "X                                X",
       "X              Q                 O",
       "X         q                      O",
-      "X                             E  O",
+      "X                                O",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     ];
     this.rooms[2][5] = new Level(builder, 2, 5, this.game);

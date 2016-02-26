@@ -21,18 +21,18 @@ AM.queueDownload("./js/img/marble_background.jpg");
 AM.queueDownload("./js/img/sand_background.jpg");
 AM.queueDownload("./js/img/sand2_background.jpg");
 AM.queueDownload("./js/img/textures.png");
-AM.queueDownload("./js/img/textures2.png");
 AM.queueDownload("./js/img/dragon.png");
 AM.queueDownload("./js/img/grumpy_cat.png");
 AM.queueDownload("./js/img/speed_upgrade_icon.png");
 AM.queueDownload("./js/img/bullet.png");
 AM.queueDownload("./js/img/alien.png");
-
+AM.queueDownload("./js/img/boss.png");
 
 
 AM.queueAudioDownload("./js/sound/laser.wav");
 AM.queueAudioDownload("./js/sound/jump.wav");
 AM.queueAudioDownload("./js/sound/damage.wav");
+AM.queueAudioDownload("./js/sound/monster_scream.wav");
 AM.queueAudioDownload("./js/sound/maintheme.mp3");
 AM.queueAudioDownload("./js/sound/bossmusic.mp3");
 

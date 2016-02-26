@@ -26,7 +26,6 @@ Platform.prototype.reset = function () {
     this.startY = this.y;
 }
 
-
 Platform.prototype.draw = function (ctx) {
     var topx = 0;
     var topy = 0;

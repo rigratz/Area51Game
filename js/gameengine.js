@@ -160,7 +160,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
           //this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png")));
           this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/grumpy_cat.png"), 2));
       } else if (ch === "smallcrazycat") {
-        this.addEntity(new CrazyCatEnemy(this, i * 50, (j * 50), AM.getAsset("./js/img/alien.png"), .5));
+        this.addEntity(new CrazyCatEnemy(this, i * 50, (j * 50), AM.getAsset("./js/img/alien.png"), 0.5));
           //console.log("cat added!");
           //console.log(AM.getAsset("./js/img/alien.png"));
       } else if (ch === "bigcrazycat") {
@@ -203,6 +203,9 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
         this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 2"));
       } else if (ch === "portal3") {
         this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 3"));
+      }
+      else if (ch === "tree_boss") {
+          this.addEntity(new TreeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/boss.png"), 0));
       }
     }
   }
@@ -248,7 +251,7 @@ GameEngine.prototype.start = function () {
       this.currentTime = 0;
       this.play();
     }, false);
-    this.currentSong.play();
+    (this.currentSong.play();
 
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();

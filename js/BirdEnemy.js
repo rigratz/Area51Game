@@ -20,7 +20,6 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     Entity.call(this, game, this.x, this.y);
 }
 
-
 BirdEnemy.prototype = new Entity();
 BirdEnemy.prototype.constructor = BirdEnemy;
 
@@ -30,7 +29,6 @@ BirdEnemy.prototype.draw = function () {
 
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
-    //console.log(bb);
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
         this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
@@ -84,4 +82,10 @@ BirdEnemy.prototype.collide = function(other) {
         (this.boundingRect.left < other.boundingRect.right) &&
         (this.boundingRect.right > other.boundingRect.left) &&
         (this.boundingRect.top < other.boundingRect.bottom);
+}
+
+function distance(a, b) {
+    var dx = a.x - b.x;
+    var dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
 }
