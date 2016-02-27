@@ -288,13 +288,6 @@ PlayerOne.prototype.update = function() {
           this.jumping = true;
           this.yvel = -600;
         }
-      } else {
-        if (this.game.jumping && this.yvel < 0) {
-            //Is this code even reachable??
-            this.yvel = 0;
-            this.jumping = false;
-            this.falling = true;
-        }
       }
       if (this.game.fire && this.canShoot) {
         var dir = null;
