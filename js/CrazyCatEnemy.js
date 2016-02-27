@@ -12,6 +12,9 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.ctx = game.ctx;
     this.x = x;
     this.y = y;
+
+    this.falling = true;
+    
     this.yvel = 0;
     this.removeFromWorld = false;
     this.collided = false;
