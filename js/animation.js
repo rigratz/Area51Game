@@ -236,6 +236,7 @@ Animation.prototype.drawFrameTreeBossAttack = function(tick, ctx, x, y) {
     var width_mult = 1.5;
     var height_mult = 1.5;
 
+    console.log(y);
     var frame = this.currentFrame();
     var xindex = frame % 8;
     var yindex = 0;
