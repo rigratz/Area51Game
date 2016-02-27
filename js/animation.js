@@ -170,6 +170,8 @@ Animation.prototype.drawFrameBullet = function(tick, ctx, x, y) {
     var xframe = 0;
     var yframe = 0;
 
+    //console.log(this.type);
+
     var width_mult = .5;
     var height_mult = .5;
     ctx.drawImage(this.spriteSheet,

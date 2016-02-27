@@ -22,6 +22,7 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     } else {
         var speed = 500;
     }
+
     this.distanceTraveled = 0;
     if (dir === "up") {
       this.yvel = -speed;
@@ -54,6 +55,9 @@ Bullet.prototype.update = function() {
         console.log("aiming right!");
         //this.animation = this.rightAnimation;
     }
+
+
+    //console.log(this.animation.type);
   for (var i = 0; i < this.game.platforms.length; i++) {
     if (this.collideEnemy(this.game.platforms[i])) {
       this.removeFromWorld = true;
