@@ -50,6 +50,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "portal3";
       else if (ch === "H")
         fieldType = "tree_boss";
+      else if (ch === "h")
+        fieldType = "healthPack";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
