@@ -283,9 +283,9 @@ PlayerOne.prototype.update = function() {
         //console.log(this.changePowerUp);
 
     ///////////////////////////
-      if (this.game.jump === true) {
+      if (this.game.jump) {
         this.animation = this.jumpAnimation;
-        if (!this.jumping && !this.falling && !this.recoiling) {
+        if (!this.jumping && !this.falling) {
           AM.getAudioAsset("./js/sound/jump.wav").play();
           this.jumping = true;
           this.yvel = -600;
@@ -731,11 +731,11 @@ PlayerOne.prototype.update = function() {
     }
     // This is to fix a recoil bug.
     // Its not ideal, but its better than what was.
-    console.log("here");
-    if (this.game.jump && this.recoiling) {
-      this.yvel = 15;
-      this.xvel = 0;
-    }
+    //console.log("here");
+    // if (this.game.jump && this.recoiling) {
+    //   this.yvel = 15;
+    //   this.xvel = 0;
+    // }
     this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
 }
