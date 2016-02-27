@@ -19,7 +19,7 @@ function GameEngine() {
 
   this.hasBulletUpgrade = false;
 
-
+  this.finished = false;
 
   this.bulletDamage = 10;
 
@@ -374,6 +374,14 @@ GameEngine.prototype.addBackgroundImage = function(image) {
 }
 
 GameEngine.prototype.draw = function () {
+  if (this.currentWorld.currentRoom === this.currentWorld.rooms[2][4] && this.treeBossDead) {
+    this.finished = true;
+  }
+    if (this.running === false && this.treeBossDead) {
+      //var endscreen = new PlayGame(gameEngine, 300, 300);
+      //endscreen.draw(this.ctx);
+      return;
+    }
     if (this.running === false && this.entities[0].is === "PlayGame") {
       this.entities[0].draw(this.ctx);
       return;
@@ -438,6 +446,15 @@ GameEngine.prototype.draw = function () {
          0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
      }
     }
+    if (this.finished) {
+      //this.ctx.drawImage(this.bg, 0, 0, 800, 650, 0, 0, 800, 650);
+      this.ctx.font = "  24pt Impact";
+      this.ctx.fillStyle = "red";
+
+      this.ctx.fillText("You survived the Tree Boss and earned a speed boost!", this.camera.xView + 75, this.camera.yView + 100);
+      this.ctx.fillText("Use new powers to explore new areas in the full game!", this.camera.xView + 75, this.camera.yView + 300);
+      this.ctx.fillText("Coming Soon!", this.camera.xView + 340, this.camera.yView + 400);
+    }
     this.ctx.restore();
 }
 
@@ -470,6 +487,7 @@ GameEngine.prototype.update = function () {
             this.exits.splice(i, 1);
         }
     }
+
 
 }
 
