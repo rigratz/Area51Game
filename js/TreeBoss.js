@@ -66,12 +66,14 @@ TreeBoss.prototype.draw = function () {
     this.animationTimer++;
     if (this.animationTimer < 300) {
         this.animation = this.idleAnimation;
+        if (this.animationTimer > 270) {
+            this.screamSound.play();
+        }
     }
     else {
         this.animation = this.screamAnimation;
         this.attackTimer++;
         if (this.attackTimer < 45) {
-            this.screamSound.play();
             this.attack.canDamage = true;
             this.attack.animation.drawFrame(this.attack.game.clockTick, this.attack.ctx, this.attack.x, this.attack.y);
         }
@@ -108,14 +110,7 @@ TreeBoss.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 }
 TreeBoss.prototype.update = function() {
-
-    /*
-    Bounding boxes just follow the player. Generate them when the frame are being drawn
-    */
     this.boundingRect = new BoundingRect(this.x+100, this.y+0, this.animation.frameWidth*1.5, this.animation.frameHeight*1.5);
-    this.attack.boundingRect = new BoundingRect(this.attack.x, this.attack.y, this.attack.animation.frameWidth*1.5, this.attack.animation.frameHeight*1.5);
-    this.attack2.boundingRect = new BoundingRect(this.attack2.x, this.attack2.y, this.attack2.animation.frameWidth*1.5, this.attack2.animation.frameHeight*1.5);
-    this.attack3.boundingRect = new BoundingRect(this.attack3.x, this.attack3.y, this.attack3.animation.frameWidth*1.5, this.attack3.animation.frameHeight*1.5);
 
 
     for (var i = 0; i < this.game.platforms.length; i++) {
@@ -142,6 +137,9 @@ TreeBoss.prototype.update = function() {
                 this.attack.x =  entity.x - this.attack.animation.frameWidth / 2;
                 this.attack2.x = this.attack.x - 200;
                 this.attack3.x = this.attack.x - 400;
+                this.attack.boundingRect = new BoundingRect(this.attack.x+100, this.attack.y, this.attack.animation.frameWidth*0.5, this.attack.animation.frameHeight*1.5);
+                this.attack2.boundingRect = new BoundingRect(this.attack2.x+100, this.attack2.y, this.attack2.animation.frameWidth*0.5, this.attack2.animation.frameHeight*1.5);
+                this.attack3.boundingRect = new BoundingRect(this.attack3.x+100, this.attack3.y, this.attack3.animation.frameWidth*0.5, this.attack3.animation.frameHeight*1.5);
             }
         }
     }
