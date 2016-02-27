@@ -456,7 +456,6 @@ GameEngine.prototype.draw = function () {
       //this.ctx.fillText("Z = Jump", 100, 100);
     }
     if (this.finished) {
-    if (this.finished) {
       //this.ctx.drawImage(this.bg, 0, 0, 800, 650, 0, 0, 800, 650);
       this.ctx.font = "  24pt Impact";
       this.ctx.fillStyle = "red";
