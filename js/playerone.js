@@ -32,7 +32,7 @@ function PlayerOne(game, x, y, spritesheet) {
 
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
-    this.debug = true;
+    this.debug = false;
 
     this.falling = false;
     this.fallTime = 0;
@@ -704,7 +704,7 @@ else if (entity instanceof PowerUp) {
             }
         }
 
-     
+
         Entity.prototype.update.call(this);
         this.game.camera.follow(this, 400, 175);
         this.game.camera.update();
