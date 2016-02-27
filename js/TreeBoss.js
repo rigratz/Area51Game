@@ -127,6 +127,7 @@ TreeBoss.prototype.update = function() {
             if (entity.collideEnemy(this)) {
                 this.health -= this.damage;
                 if (this.health <= 0) {
+                    this.game.treeBossDead = true;
                     this.removeFromWorld = true;
                 }
                 entity.removeFromWorld = true;

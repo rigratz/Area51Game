@@ -9,6 +9,8 @@ function Dragon(game, x, y, spritesheet) {
     this.debug = true;
     this.collided = false;
     this.animation = new Animation("dragon", spritesheet, 96, 96, 0.14, 3, true, false, "idle");
+    this.health = 60;
+    this.damage = 10;
     Entity.call(this, game, this.x, this.y);
     console.log("this.x = ");
     console.log(this.x);
@@ -35,6 +37,11 @@ Dragon.prototype.draw = function () {
 Dragon.prototype.update = function() {
      this.boundingRect = new BoundingRect(this.x +40, this.y + 35, 70, 100);
 
+
+    // if(this.game.hasBulletUpgrade) {
+    //     this.damage = 20;
+    // }
+
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {
         this.xvel = this.xvel * -1;
@@ -49,6 +56,8 @@ Dragon.prototype.update = function() {
         if (entity instanceof Bullet && entity.x > 0) {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
             if (entity.collideEnemy(this)) {
+                this.health -= this.game.bulletDamage;
+                if (this.health <= 0)
                 this.removeFromWorld = true;
                 entity.removeFromWorld = true;
             }

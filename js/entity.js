@@ -3,6 +3,8 @@ function Entity(game, x, y) {
     this.x = x;
     this.y = y;
     this.colliding = false;
+    this.health = 0;
+    this.damage = 0;
     this.removeFromWorld = false;
 }
 

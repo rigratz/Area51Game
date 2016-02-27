@@ -12,8 +12,19 @@ window.requestAnimFrame = (function () {
 function GameEngine() {
   console.log("here");
   this.player = null;
+
   this.hasSpeed = false;
+
+  this.treeBossDead = false;
+
   this.hasBulletUpgrade = false;
+
+
+
+  this.bulletDamage = 10;
+
+  
+
   this.currentSong = null;
     this.entities = [];
     this.platforms = [];
@@ -36,10 +47,12 @@ function GameEngine() {
     this.fire = null;
     this.toggle = null;
 
+
     this.mouse = null;
     this.click = null;
     this.running = false;
     this.lives = 3;
+
 
     this.speed = 10;
     this.maxspeed = 250;
@@ -230,15 +243,28 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
   } else if (exitedFrom === "west") {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
   }
-  if (this.currentWorld.currentRoom === this.currentWorld.rooms[0][7]) {
-    this.currentSong.pause();
-    this.currentSong.currentTime = 0;
-    this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
-    this.currentSong.addEventListener('ended', function() {
-      this.currentTime = 0;
-      this.play();
-    }, false);
-    //this.currentSong.play();
+
+  if (this.currentWorld.name === "World 1" && this.currentWorld.currentRoom === this.currentWorld.rooms[2][4]) {
+    if (!this.treeBossDead) {
+      this.currentSong.pause();
+      this.currentSong.currentTime = 0;
+      this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
+      this.currentSong.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+      }, false);
+      this.currentSong.play();
+    } else if (this.treeBossDead && this.currentSong != AM.getAudioAsset("./js/sound/maintheme.mp3")){
+      this.currentSong.pause();
+      this.currentSong.currentTime = 0;
+      this.currentSong = AM.getAudioAsset("./js/sound/maintheme.mp3");
+      this.currentSong.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+      }, false);
+      this.currentSong.play();
+    }
+
   }
   // if (this.currentWorld.name === "Area 51") {
   //     this.currentWorld.name = "World 1";
@@ -254,12 +280,12 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
 }
 GameEngine.prototype.start = function () {
     console.log("starting game");
-    this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
+    this.currentSong = AM.getAudioAsset("./js/sound/maintheme.mp3");
     this.currentSong.addEventListener('ended', function() {
       this.currentTime = 0;
       this.play();
     }, false);
-    //this.currentSong.play();
+    this.currentSong.play();
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();
     //this.currentWorld = this.worlds["Area 51"];
