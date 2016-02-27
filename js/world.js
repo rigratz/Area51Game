@@ -24,12 +24,12 @@ World.prototype.makeRoomPlans = function (name) {
 
   if (name === "Area 51") {
     builder = [
-      "                                                ",
-      "                                                ",
-      "X                                               ",
-      "X                                               ",
-      "X                                               ",
-      "X                                               ",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "X                                              O",
       "X                                              O",
       "X                                              O",
@@ -922,12 +922,12 @@ World.prototype.makeRoomPlans = function (name) {
 
     builder = [
       "XXXXXXXXXXXXXXXX",
+      "X      D       X",
       "X              X",
-      "X              X",
-      "X D   D        O",
+      "X              O",
       "X              O",
       "X           E  O",
-      "X Q        XXXXX",
+      "XQ         XXXXX",
       "X              X",
       "X              X",
       "XXXXXXXXX      X",
@@ -944,18 +944,18 @@ World.prototype.makeRoomPlans = function (name) {
     //Pre-Boss Chamber
     builder = [
       "XXXXXXOOOOXXXXXX",
-      "XXX  X    X  XXX",
+      "XxX  X    X  XxX",
       "XX            XX",
       "O      N       O",
       "O              O",
       "O W  XXXXXX E  O",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX"
+      "XXXXXXxxxxXXXXXX",
+      "XxxxxxxxxxxxxxxX",
+      "XxxxxxxxxxxxxxxX",
+      "XxxxxxxxxxxxxxxX",
+      "XxxxxxxxxxxxxxxX",
+      "XxxxxxxxxxxxxxxX",
+      "XxxxxxxxxxxxxxxX"
 
     ];
     this.rooms[2][4] = new Level(builder, 2, 4, this.game);

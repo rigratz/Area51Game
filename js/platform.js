@@ -27,6 +27,17 @@ Platform.prototype.reset = function () {
 }
 
 Platform.prototype.draw = function (ctx) {
+    if (this.platType === "B") {
+      ctx.drawImage(this.textureSheet,
+          0, 300,  // source from sheet
+          50, 50,
+          this.x, this.y,
+          50,
+          50);
+
+
+      return;
+    }
     var topx = 0;
     var topy = 0;
     var bottomx = 0;

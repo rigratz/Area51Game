@@ -21,6 +21,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "platform";
       else if (ch === "T")
         fieldType = "platformtop";
+      else if (ch === "x")
+        fieldType = "bosstile";
       else if (ch === "B")
         fieldType = "bird";
       else if (ch === "b")

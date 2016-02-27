@@ -23,7 +23,7 @@ function GameEngine() {
 
   this.bulletDamage = 10;
 
-  
+
 
   this.currentSong = null;
     this.entities = [];
@@ -227,6 +227,8 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
         this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 2"));
       } else if (ch === "portal3") {
         this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 3"));
+      } else if (ch === "bosstile") {
+        this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
       }
       else if (ch === "tree_boss") {
           this.addEntity(new TreeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/boss.png"), 0));
@@ -292,6 +294,7 @@ GameEngine.prototype.start = function () {
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();
     //this.currentWorld = this.worlds["Area 51"];
+    //this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
     this.currentWorld = this.worlds["World 1"];
     this.currentWorld.currentRoom = this.currentWorld.rooms[5][5];
     this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
