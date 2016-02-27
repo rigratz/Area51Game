@@ -509,9 +509,10 @@ if (this.game.running) {
                     }
                    //      this.y += 1;
                } else if (this.collideBottom(entity)) {
-                this.y -= 50;
+                 this.hitEffect(entity);
+                this.y -= 150;
                 this.yvel = 0;
-                entity.removeFromWorld = true;
+               // entity.removeFromWorld = true;
                 console.log("collide bottom");
 
             }  else if (this.collideTop(entity)) {
