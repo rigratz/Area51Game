@@ -13,7 +13,11 @@ function GameEngine() {
   console.log("here");
   this.player = null;
   this.hasSpeed = false;
+
   this.treeBossDead = false;
+
+  this.hasBulletUpgrade = false;
+
   this.currentSong = null;
     this.entities = [];
     this.platforms = [];
@@ -162,9 +166,11 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
           //this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png")));
           this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/grumpy_cat.png"), 2));
       } else if (ch === "smallcrazycat") {
-        this.addEntity(new CrazyCatEnemy(this, i * 50, (j * 50), AM.getAsset("./js/img/alien.png"), 0.5));
+        this.addEntity(new CrazyCatEnemy(this, i * 50, (j * 50), AM.getAsset("./js/img/alien.png"), 0.6));
           //console.log("cat added!");
           //console.log(AM.getAsset("./js/img/alien.png"));
+      } else if (ch === "idle_bird") {
+          this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"),0));
       } else if (ch === "bigcrazycat") {
           this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png"), 1));
           //console.log("cat added!");
@@ -183,7 +189,11 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
           this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
       } else if (ch == "speedboost") {
           if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
-      } else if (ch === "exit") {
+      }
+      else if (ch == "bullet_upgrade") {
+           if (!this.hasBulletUpgrade) this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
+      }
+      else if (ch === "exit") {
         var exitDir = null;
         if (i === 0) {
           exitDir = "west";
@@ -224,16 +234,7 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
   } else if (exitedFrom === "west") {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
   }
-  // if (this.currentWorld.currentRoom === this.currentWorld.rooms[0][7]) {
-  //   this.currentSong.pause();
-  //   this.currentSong.currentTime = 0;
-  //   this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
-  //   this.currentSong.addEventListener('ended', function() {
-  //     this.currentTime = 0;
-  //     this.play();
-  //   }, false);
-  //   this.currentSong.play();
-  // }
+
   if (this.currentWorld.name === "World 1" && this.currentWorld.currentRoom === this.currentWorld.rooms[2][4]) {
     if (!this.treeBossDead) {
       this.currentSong.pause();
@@ -254,6 +255,7 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
       }, false);
       this.currentSong.play();
     }
+
   }
   // if (this.currentWorld.name === "Area 51") {
   //     this.currentWorld.name = "World 1";
@@ -275,7 +277,6 @@ GameEngine.prototype.start = function () {
       this.play();
     }, false);
     this.currentSong.play();
-
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();
     //this.currentWorld = this.worlds["Area 51"];
@@ -416,6 +417,11 @@ GameEngine.prototype.draw = function () {
            this.ctx.drawImage(img,
            0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
        }
+       else if (this.currentPowerUp === "B") {
+         var img = AM.getAsset("./js/img/bullet_upgrade_icon.png");
+         this.ctx.drawImage(img,
+         0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
+     }
     }
     this.ctx.restore();
 }

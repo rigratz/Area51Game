@@ -13,8 +13,16 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.startY = y;
     this.spritesheet = spritesheet;
     this.animation = new Animation("bullet", spritesheet, 258, 108, 0.40, 1, true, false);
+    this.leftAnimation = new Animation("bullet", spritesheet, 258, 108, 0.40, 1, true, false);
+    this.upAnimation = new Animation("bullet", spritesheet, 108, 258, 0.40, 1, true, false, "up");
 
-    var speed = 500;
+    this.dir = dir;
+    if(this.game.hasBulletUpgrade) {
+        var speed = 300;
+    } else {
+        var speed = 500;
+    }
+
     this.distanceTraveled = 0;
     if (dir === "up") {
       this.yvel = -speed;
@@ -25,11 +33,9 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     }
     this.boundingRect = new BoundingRect(x, y, 10, 10);
     //this.debug = true;
-    //this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.14, 8, true, false, "idle");
 
     Entity.call(this, game, this.x, this.y);
 
-    //this.animation = this.idleAnimation;
 }
 
 Bullet.prototype.update = function() {
@@ -38,12 +44,28 @@ Bullet.prototype.update = function() {
   this.distanceTraveled = (this.x - this.startX) + (this.y - this.startY);
   if (Math.abs(this.distanceTraveled) > 650) this.removeFromWorld = true;
 
+
+    if(this.dir === "up") {
+        console.log("aiming up!");
+        this.animation = this.upAnimation;
+    } else if (this.dir === "left") {
+        console.log("aiming left!");
+        this.animation = this.leftAnimation;
+    } else if (this.dir === "right") {
+        console.log("aiming right!");
+        //this.animation = this.rightAnimation;
+    }
+
+
+    //console.log(this.animation.type);
   for (var i = 0; i < this.game.platforms.length; i++) {
     if (this.collideEnemy(this.game.platforms[i])) {
       this.removeFromWorld = true;
       break;
     }
   }
+
+
 }
 
 Bullet.prototype.draw = function () {
@@ -51,18 +73,22 @@ Bullet.prototype.draw = function () {
   // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
   // this.ctx.fillStyle = "orange";
   // this.ctx.fillRect(this.x, this.y, this.width, this.height);
-  this.ctx.save();
-      this.ctx.beginPath();
-      this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
-      this.ctx.fillStyle = "orange";
-      this.ctx.fill();
-      this.ctx.lineWidth = 1;
-      this.ctx.strokeStyle = "red";
-      this.ctx.stroke();
-  this.ctx.restore();
+
     // this stuff is used for drawing the image of the bullet
-    //this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-    //Entity.prototype.draw.call(this);
+    if(this.game.hasBulletUpgrade) {
+        this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+        Entity.prototype.draw.call(this);
+    } else {
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+        this.ctx.fillStyle = "orange";
+        this.ctx.fill();
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeStyle = "red";
+        this.ctx.stroke();
+        this.ctx.restore();
+    }
 }
 
 

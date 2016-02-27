@@ -24,7 +24,11 @@ AM.queueDownload("./js/img/textures.png");
 AM.queueDownload("./js/img/dragon.png");
 AM.queueDownload("./js/img/grumpy_cat.png");
 AM.queueDownload("./js/img/speed_upgrade_icon.png");
+AM.queueDownload("./js/img/bullet_upgrade_icon.png");
 AM.queueDownload("./js/img/bullet.png");
+AM.queueDownload("./js/img/bullet-left.png");
+AM.queueDownload("./js/img/bullet-up.png");
+
 AM.queueDownload("./js/img/alien.png");
 AM.queueDownload("./js/img/boss.png");
 
