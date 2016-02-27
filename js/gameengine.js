@@ -448,6 +448,14 @@ GameEngine.prototype.draw = function () {
          0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
      }
     }
+    if (this.running && this.currentWorld.name === "Area 51" && this.currentWorld.currentRoom === this.currentWorld.rooms[0][6]) {
+      this.ctx.font = "  24pt Impact";
+      this.ctx.fillStyle = "red";
+
+      this.ctx.fillText("Use Arrow Keys to move!                                                                      Z = Jump    X = Shoot      Space = Toggle Powers (when available)", 100, 100);
+      //this.ctx.fillText("Z = Jump", 100, 100);
+    }
+    if (this.finished) {
     if (this.finished) {
       //this.ctx.drawImage(this.bg, 0, 0, 800, 650, 0, 0, 800, 650);
       this.ctx.font = "  24pt Impact";
