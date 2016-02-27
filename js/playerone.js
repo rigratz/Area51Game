@@ -1,4 +1,5 @@
 function PlayerOne(game, x, y, spritesheet) {
+    console.log("creating");
     this.laserSound = AM.getAudioAsset("./js/sound/laser.wav");
     this.jumpSound = AM.getAudioAsset("./js/sound/jump.wav");
     this.jumpSound2 = AM.getAudioAsset("./js/sound/jump.wav");
@@ -92,6 +93,7 @@ function PlayerOne(game, x, y, spritesheet) {
 
     this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
+    console.log("created");
 }
 
 PlayerOne.prototype = new Entity();
@@ -287,6 +289,13 @@ PlayerOne.prototype.update = function() {
           AM.getAudioAsset("./js/sound/jump.wav").play();
           this.jumping = true;
           this.yvel = -600;
+        }
+      } else {
+        if (this.game.jumping && this.yvel < 0) {
+            //Is this code even reachable??
+            this.yvel = 0;
+            this.jumping = false;
+            this.falling = true;
         }
       }
       if (this.game.fire && this.canShoot) {
@@ -722,6 +731,7 @@ PlayerOne.prototype.update = function() {
     }
     // This is to fix a recoil bug.
     // Its not ideal, but its better than what was.
+    console.log("here");
     if (this.game.jump && this.recoiling) {
       this.yvel = 15;
       this.xvel = 0;
