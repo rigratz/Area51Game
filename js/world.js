@@ -33,7 +33,7 @@ World.prototype.makeRoomPlans = function (name) {
       "X                                              O",
       "X                                              O",
       "X                                              O",
-      "X  W      s                                    O",
+      "X  W                                           O",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -491,7 +491,7 @@ World.prototype.makeRoomPlans = function (name) {
       "X                        XXX0",
       "O           B     X      XXX0",
       "O                 X      XXX0",
-      "O W    u          X      XXX0",
+      "O W               X      XXX0",
       "XXXXXXXXXXXXXXXXXXX      XXX0",
       "X000000000000000000000000000X"
     ];
@@ -508,7 +508,7 @@ World.prototype.makeRoomPlans = function (name) {
       "1X             X",
       "1X             O",
       "1X             O",
-      "1X S      s E  O",
+      "1X S        E  O",
       "1XXXXX    XXXXXX",
       "X1111XOOOOX1111X"
     ];
@@ -680,8 +680,8 @@ World.prototype.makeRoomPlans = function (name) {
       "X              X",
       "X              X",
       "X         XXXXXX",
-      "X         XXXXXX",
-      "X  S      XXXXXX",
+      "X   S     XXXXXX",
+      "XXXXXX    XXXXXX",
       "XXXXXXOOOOXXXXXX",
 
     ];
@@ -707,7 +707,7 @@ World.prototype.makeRoomPlans = function (name) {
       "XXXXXXXXXXXXXXXX",
       "X              X",
       "X              X",
-      "X              X",
+      "X           u  X",
       "X         XXXXXX",
       "XXXXXX         X",
       "X              X",

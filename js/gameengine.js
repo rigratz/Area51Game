@@ -230,7 +230,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
       } else if (ch === "bosstile") {
         this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
       }
-      else if (ch === "tree_boss") {
+      else if (ch === "tree_boss" && !this.treeBossDead) {
           this.addEntity(new TreeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/boss.png"), 0));
       }
     }
@@ -293,11 +293,11 @@ GameEngine.prototype.start = function () {
     this.currentSong.play();
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();
-    //this.currentWorld = this.worlds["Area 51"];
-    //this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
-    this.currentWorld = this.worlds["World 1"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
-    this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
+    this.currentWorld = this.worlds["Area 51"];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
+    //this.currentWorld = this.worlds["World 1"];
+    //this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
+    this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
             this, 736, 736);
     this.setLevel("east");
 
