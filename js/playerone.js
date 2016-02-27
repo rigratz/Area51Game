@@ -165,6 +165,7 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
+    console.log(this.game.bulletDamage);
  // console.log(this.game.lives);
  this.game.camera.follow(this, 100, 100);
     //var collideExit = false;
@@ -188,6 +189,17 @@ if (this.game.currentPowerUp === "S") {
     this.speed = 10;
     this.maxSpeed = 250;
 }
+if (this.game.currentPowerUp === "B") {
+    this.game.bulletDamage = 20;
+} else {
+    this.game.bulletDamage = 10;
+}
+
+
+
+
+
+
 
 if (this.game.running) {
     if (this.dead && this.game.lives > 0) {
@@ -235,6 +247,7 @@ if (this.game.running) {
         this.changePowerUp = true;
         this.powerUpCooldown = 0;
     }
+
 }  
 
         //console.log(this.changePowerUp);
@@ -248,13 +261,13 @@ if (this.game.running) {
           this.yvel = -600;
       }
   } else {
-        if (this.game.jumping && this.yvel < 0) {
+      if (this.game.jumping && this.yvel < 0) {
             //Is this code even reachable??
             this.yvel = 0;
             this.jumping = false;
             this.falling = true;
         }
-        var animationString = "";
+                var animationString = "";
         if (this.game.fire && this.canShoot) {
             var dir = null;
             if (this.game.up) {
@@ -280,18 +293,17 @@ if (this.game.running) {
     } else {
         dir = this.facing;
     }
-            // adjusting the bullet based on position
-        var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
 
-        this.game.addEntity(bullet);
+
+
+    var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
+            // adjusting the bullet based on position
+            this.game.addEntity(bullet);
             if(this.game.down === true) {
                 bullet.y += 20;
             } else if(this.game.up === true) {
                 bullet.x = this.x + 38;
                 bullet.y = this.y - 45;
-                if(this.game.hasBulletUpgrade) {
-                    bullet.x = this.x + 70;
-                }
             }
             if(this.facing === "left" && !this.game.up) {
                 bullet.x -= 70;
@@ -573,8 +585,12 @@ else if (entity instanceof PowerUp) {
                             entity.removeFromWorld = true;
                             this.game.hasSpeed = true;
                         //}
-                    } else if (entity.boostType === "B") {
-                        var flag = true;
+        } else if (entity.boostType === "B") {
+                        if (this.game.powerups.length === 1) {
+                            this.game.powerups.push("B");
+                            this.game.currentPowerUp = "B";
+                        } else {
+                            var flag = true;
                         for (var i = 0; i < this.game.powerups.length; i++) {
                             if (this.game.powerups[i] === entity.boostType) {
                                 flag = false;
@@ -582,9 +598,10 @@ else if (entity instanceof PowerUp) {
                         }
                         if (flag) {
                             this.game.powerups.push(entity.boostType);
-                            entity.removeFromWorld = true;
                         }
-                        this.game.hasBulletUpgrade = true;
+                            entity.removeFromWorld = true;
+                            this.game.hasBulletUpgrade = true;
+                        }
                     }
 
                 }

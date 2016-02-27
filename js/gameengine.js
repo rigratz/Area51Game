@@ -12,11 +12,18 @@ window.requestAnimFrame = (function () {
 function GameEngine() {
   console.log("here");
   this.player = null;
+
   this.hasSpeed = false;
 
   this.treeBossDead = false;
 
   this.hasBulletUpgrade = false;
+
+
+
+  this.bulletDamage = 10;
+
+  
 
   this.currentSong = null;
     this.entities = [];
@@ -40,10 +47,12 @@ function GameEngine() {
     this.fire = null;
     this.toggle = null;
 
+
     this.mouse = null;
     this.click = null;
     this.running = false;
     this.lives = 3;
+
 
     this.speed = 10;
     this.maxspeed = 250;

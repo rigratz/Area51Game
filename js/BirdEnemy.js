@@ -49,16 +49,16 @@ BirdEnemy.prototype.update = function() {
     else if (this.xvel > 0) this.animation = this.rightAnimation;
     else if (this.xvel < 0) this.animation = this.leftAnimation;
 
-    if(this.game.hasBulletUpgrade) {
-        this.damage = 20;
-    }
+    // if(this.game.hasBulletUpgrade) {
+    //     this.damage = 20;
+    // }
 
     for (var i = 0; i < this.game.entities.length; i++) {
         var entity = this.game.entities[i];
         if (entity instanceof Bullet && entity.x > 0) {
             if (entity.collideEnemy(this)) {
                 console.log(this.health);
-                this.health -= this.damage;
+                this.health -= this.game.bulletDamage;
                 if (this.health <= 0) {
                     this.removeFromWorld = true;
                 }

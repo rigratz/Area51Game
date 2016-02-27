@@ -23,6 +23,12 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
         var speed = 500;
     }
 
+    if(this.game.hasBulletUpgrade) {
+        this.damage = 20;
+    } else {
+      this.damage = 10;
+    }
+
     this.distanceTraveled = 0;
     if (dir === "up") {
       this.yvel = -speed;
@@ -75,7 +81,7 @@ Bullet.prototype.draw = function () {
   // this.ctx.fillRect(this.x, this.y, this.width, this.height);
 
     // this stuff is used for drawing the image of the bullet
-    if(this.game.hasBulletUpgrade) {
+    if(this.game.currentPowerUp === "B") {
         this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
         Entity.prototype.draw.call(this);
     } else {
