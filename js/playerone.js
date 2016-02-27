@@ -166,7 +166,8 @@ PlayerOne.prototype.draw = function () {
 
 PlayerOne.prototype.update = function() {
     console.log(this.game.bulletDamage);
- // console.log(this.game.lives);
+    console.log(this.game.currentPowerUp);
+    console.log(this.facing);
  this.game.camera.follow(this, 100, 100);
     //var collideExit = false;
     for (var i = 0; i < this.game.exits.length; i++) {
@@ -253,7 +254,7 @@ if (this.game.running) {
         //console.log(this.changePowerUp);
 
     ///////////////////////////
-    if (this.game.jump === true) {
+ if (this.game.jump === true) {
       this.animation = this.jumpAnimation;
       if (!this.jumping && !this.falling) {
           AM.getAudioAsset("./js/sound/jump.wav").play();
@@ -267,7 +268,15 @@ if (this.game.running) {
             this.jumping = false;
             this.falling = true;
         }
-                var animationString = "";
+    }
+    if (this.game.fire && this.canShoot) {
+      var dir = null;
+      if (this.game.up) {
+        dir = "up";
+    } else {
+        dir = this.facing;
+    }
+            var animationString = "";
         if (this.game.fire && this.canShoot) {
             var dir = null;
             if (this.game.up) {
@@ -285,14 +294,6 @@ if (this.game.running) {
             //console.log("String", animationString);
 
         }
-    }
-    if (this.game.fire && this.canShoot) {
-      var dir = null;
-      if (this.game.up) {
-        dir = "up";
-    } else {
-        dir = this.facing;
-    }
 
 
 
