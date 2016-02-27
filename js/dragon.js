@@ -37,6 +37,11 @@ Dragon.prototype.draw = function () {
 Dragon.prototype.update = function() {
      this.boundingRect = new BoundingRect(this.x +40, this.y + 35, 70, 100);
 
+
+    if(this.game.hasBulletUpgrade) {
+        this.damage = 20;
+    }
+
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {
         this.xvel = this.xvel * -1;
