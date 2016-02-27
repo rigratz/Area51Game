@@ -42,8 +42,9 @@ function PlayerOne(game, x, y, spritesheet) {
     this.jumpTime = 0;
     this.totalJump = 2;
 
-    this.game.health = 100;
+  //  this.game.health = 100;
     this.game.maxHealth = 100;
+    this.game.percent = this.game.health / this.game.maxHealth;
 
     this.canShoot = true;
     this.shotCooldown = 0;
