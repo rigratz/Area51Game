@@ -179,7 +179,7 @@ PlayerOne.prototype.update = function() {
     //console.log(this.facing);
     if (this.recoiling) {
       this.recoilTime += this.game.clockTick;
-      console.log(this.recoilTime);
+      //console.log(this.recoilTime);
       if (this.recoilTime >= 0.20) {
         console.log ("STOP RECOILING");
         this.recoiling = false;
@@ -268,7 +268,7 @@ PlayerOne.prototype.update = function() {
       }
       if (!this.changePowerUp) {
         this.powerUpCooldown += this.game.clockTick;
-        console.log(this.powerUpCooldown);
+        //console.log(this.powerUpCooldown);
         if (this.powerUpCooldown > 0.25) {
           this.changePowerUp = true;
           this.powerUpCooldown = 0;
@@ -528,10 +528,18 @@ PlayerOne.prototype.update = function() {
         // this.y += this.yvel * this.game.clockTick;
         if (!this.canShoot) {
           this.shotCooldown += this.game.clockTick;
-          if (this.shotCooldown > 0.45) {
-            this.canShoot = true;
-            this.shotCooldown = 0;
-        }
+          if (this.game.currentPowerUp === 'B') {
+              if (this.shotCooldown > 0.85) {
+                this.canShoot = true;
+                this.shotCooldown = 0;
+              }
+          }
+          else {
+              if (this.shotCooldown > 0.45) {
+                this.canShoot = true;
+                this.shotCooldown = 0;
+              }
+          }
     }
     for (var i = 0; i < this.game.entities.length; i++) {
      var entity = this.game.entities[i];
@@ -659,7 +667,7 @@ else if (entity instanceof PowerUp) {
                             this.game.hasSpeed = true;
                         //}
         } else if (entity.boostType === "B") {
-                        if (this.game.powerups.length === 1) {
+                        if (this.game.powerups.length <= 1) {
                             this.game.powerups.push("B");
                             this.game.currentPowerUp = "B";
                         } else {

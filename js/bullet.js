@@ -52,13 +52,13 @@ Bullet.prototype.update = function() {
 
 
     if(this.dir === "up") {
-        console.log("aiming up!");
+        //console.log("aiming up!");
         this.animation = this.upAnimation;
     } else if (this.dir === "left") {
-        console.log("aiming left!");
+        //console.log("aiming left!");
         this.animation = this.leftAnimation;
     } else if (this.dir === "right") {
-        console.log("aiming right!");
+        //console.log("aiming right!");
         //this.animation = this.rightAnimation;
     }
 
