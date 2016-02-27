@@ -251,14 +251,20 @@ PlayerOne.prototype.update = function() {
             this.falling = true;
           }
         }
+        var animationString = "./js/img/bullet.png";
         if (this.game.fire && this.canShoot) {
           var dir = null;
           if (this.game.up) {
+              animationString = "./js/img/bullet-up.png";
             dir = "up";
           } else {
             dir = this.facing;
+              if(dir === "left") {
+                  animationString = "./js/img/bullet-left.png";
+              }
           }
-          var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset("./js/img/bullet.png"), dir);
+
+          var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
             // adjusting the bullet based on position
             this.game.addEntity(bullet);
             if(this.game.down === true) {
@@ -266,6 +272,9 @@ PlayerOne.prototype.update = function() {
             } else if(this.game.up === true) {
                 bullet.x = this.x + 38;
                 bullet.y = this.y - 45;
+                if(this.game.hasBulletUpgrade) {
+                    bullet.x = this.x + 70;
+                }
             }
             if(this.facing === "left" && !this.game.up) {
                 bullet.x -= 70;

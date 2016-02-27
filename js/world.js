@@ -489,9 +489,9 @@ World.prototype.makeRoomPlans = function (name) {
       "X                        XXX0",
       "X                        XXX0",
       "X                        XXX0",
+      "O           B     X      XXX0",
       "O                 X      XXX0",
-      "O                 X      XXX0",
-      "O W         u     X      XXX0",
+      "O W    u          X      XXX0",
       "XXXXXXXXXXXXXXXXXXX      XXX0",
       "X000000000000000000000000000X"
     ];

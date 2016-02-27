@@ -19,7 +19,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.debug = false;
     this.spritesheet = spritesheet;
     this.animation = new Animation("crazycat", spritesheet, 150, 150, 0.10, 7, true, false, size);
-    this.health = 30;
+    this.health = 40;
     this.damage = 5;
     this.size = size;
     this.following = false;
@@ -51,14 +51,21 @@ CrazyCatEnemy.prototype.update = function() {
 
     this.boundingRect = new BoundingRect(this.x+10, this.y, (this.animation.frameWidth -10) * this.size, this.animation.frameHeight * this.size);
 
+    if(this.game.hasBulletUpgrade) {
+        this.damage = 10;
+    }
+
+
     for (var j = 0; j < this.game.entities.length; j++) {
         var entity = this.game.entities[j];
         //console.log(entity);
         if (entity instanceof Bullet && entity.x > 0) {
             if (entity.collideEnemy(this)) {
+
                 this.health -= this.damage;
-                console.log("health", this.health);
-                if(this.health === 0) {
+                //console.log("health", this.health);
+
+                if(this.health <= 0) {
                     this.removeFromWorld = true;
                 }
                 entity.removeFromWorld = true;
