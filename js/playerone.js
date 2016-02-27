@@ -504,7 +504,7 @@ if (this.game.running) {
         this.y += this.yvel * this.game.clockTick;
         if (!this.canShoot) {
           this.shotCooldown += this.game.clockTick;
-          if (this.shotCooldown > 0.75) {
+          if (this.shotCooldown > 0.45) {
             this.canShoot = true;
             this.shotCooldown = 0;
         }
