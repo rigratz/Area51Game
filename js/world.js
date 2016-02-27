@@ -965,11 +965,11 @@ World.prototype.makeRoomPlans = function (name) {
     //Boss
     builder = [
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      "XX                                                      X",
-      "XX                                                      X",
-      "O                                                       X",
-      "O                       B   B   B    B    C             X",
-      "O W                                                   s X",
+      "XX                                                    XXX",
+      "XX                                                     XX",
+      "O                                                       O",
+      "O                       B   B   B    B    C             O",
+      "O W                                                  E  O",
       "XXXXX        XXXXXX        XXXXXX        XXXXXXX   XXXXXX",
       "X                                              X        X",
       "X                                              X        X",
@@ -1019,13 +1019,13 @@ World.prototype.makeRoomPlans = function (name) {
       "X     XX                    X",
       "X    XXXX                   X",
       "XXXXXXXXXXXXXXXXXXXX        X",
-      "X                           X",
-      "X                           X",
-      "X                       XXXXX",
-      "X           XX       Q  XXXXX",
-      "X        S  XX          XXXXX",
-      "XXXXX    XXXXX          XXXXX",
-      "XXXXXOOOOXXXXXXXXXXXXXXXXXXXX"
+      "XXXXXX                      X",
+      "XX  XX                      X",
+      "O    X                  XXXXX",
+      "O    X      XX       Q  XXXXX",
+      "O W sX   S  XX          XXXXX",
+      "XXXXXX   XXXXX          XXXXX",
+      "XXXXXXOOOXXXXXXXXXXXXXXXXXXXX"
 
     ];
     this.rooms[2][6] = new Level(builder, 2, 6, this.game);
