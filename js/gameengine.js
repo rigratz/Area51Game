@@ -23,7 +23,7 @@ function GameEngine() {
 
   this.bulletDamage = 10;
 
-  
+
 
   this.currentSong = null;
     this.entities = [];
@@ -286,14 +286,14 @@ GameEngine.prototype.start = function () {
     this.currentSong = AM.getAudioAsset("./js/sound/maintheme.mp3");
     this.currentSong.addEventListener('ended', function() {
       this.currentTime = 0;
-      this.play();
+      //this.play();
     }, false);
-    this.currentSong.play();
+    //this.currentSong.play();
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     this.generateWorlds();
     //this.currentWorld = this.worlds["Area 51"];
     this.currentWorld = this.worlds["World 1"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[5][5];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
     this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
             this, 736, 736);
     this.setLevel("east");
