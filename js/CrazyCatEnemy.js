@@ -54,9 +54,9 @@ CrazyCatEnemy.prototype.update = function() {
 
     this.boundingRect = new BoundingRect(this.x+10, this.y, (this.animation.frameWidth -10) * this.size, this.animation.frameHeight * this.size);
 
-    if(this.game.hasBulletUpgrade) {
-        this.damage = 10;
-    }
+    // if(this.game.hasBulletUpgrade) {
+    //     this.damage = 10;
+    // }
 
 
     for (var j = 0; j < this.game.entities.length; j++) {
@@ -65,7 +65,7 @@ CrazyCatEnemy.prototype.update = function() {
         if (entity instanceof Bullet && entity.x > 0) {
             if (entity.collideEnemy(this)) {
 
-                this.health -= this.damage;
+                this.health -= this.game.bulletDamage;
                 //console.log("health", this.health);
 
                 if(this.health <= 0) {

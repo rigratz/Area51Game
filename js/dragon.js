@@ -38,9 +38,9 @@ Dragon.prototype.update = function() {
      this.boundingRect = new BoundingRect(this.x +40, this.y + 35, 70, 100);
 
 
-    if(this.game.hasBulletUpgrade) {
-        this.damage = 20;
-    }
+    // if(this.game.hasBulletUpgrade) {
+    //     this.damage = 20;
+    // }
 
     for (var i = 0; i < this.game.platforms.length; i++) {
       if (this.collide(this.game.platforms[i])) {
@@ -56,6 +56,8 @@ Dragon.prototype.update = function() {
         if (entity instanceof Bullet && entity.x > 0) {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
             if (entity.collideEnemy(this)) {
+                this.health -= this.game.bulletDamage;
+                if (this.health <= 0)
                 this.removeFromWorld = true;
                 entity.removeFromWorld = true;
             }
