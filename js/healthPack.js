@@ -1,11 +1,11 @@
-function HealthPack(game, x, y, w, h) {
-   // this.boostSheet = boostSheet;
+function HealthPack(icon, game, x, y, w, h) {
+    this.icon = icon;
     this.ctx = game.ctx;
     this.x = x;
     this.y = y;
     this.width = w;
     this.height = h;
-    this.debug = false;
+    this.debug = true;
    // this.boostType = type;
     this.boundingRect = new BoundingRect(x, y, w, h);
     this.game = game;
@@ -18,6 +18,7 @@ HealthPack.prototype.constructor = HealthPack;
 
 HealthPack.prototype.update = function() {
     if (!this.game.running) return;
+
 }
 
 HealthPack.prototype.reset = function () {
@@ -28,19 +29,19 @@ HealthPack.prototype.reset = function () {
 
 HealthPack.prototype.draw = function (ctx) {
     if (!this.game.running) return;
-    this.ctx.strokeStyle = "pink";
-    this.ctx.strokeRect(this.x, this.y, this.width, this.height);
-    this.ctx.fillStyle = "red";
-    this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    this.ctx.restore();
-    //if (this.boostType === "S") {
-      // this.ctx.drawImage(this.boostSheet,
-      //     0, 0,  // source from sheet
-      //     50, 50,
-      //     this.x, this.y ,
-      //     this.width,
-      //     this.height);
-    //}
+      this.ctx.drawImage(this.icon,
+          0, 0,  // source from sheet
+          50, 50,
+          this.x, this.y ,
+          this.width,
+          this.height);
+     var bb = this.boundingRect;
+    if (this.debug) {
+        this.ctx.strokeStyle = "blue";
+        this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
+    }
+
+
 }
 
 HealthPack.prototype.collide = function(other) {
