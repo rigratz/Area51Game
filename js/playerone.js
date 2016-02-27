@@ -115,6 +115,13 @@ PlayerOne.prototype.reset = function () {
     this.boundingRect = new BoundingRect(this.x, this.y, 90, 124);
     this.debug = false;
 
+    this.recoiling = false;
+    this.recoilX = 0;
+    this.recoilY = 0;
+    this.recoilTime = 0;
+
+    this.invincible = false;
+    this.invincibilityTime = 0;
 
     this.falling = false;
     this.fallTime = 0;
@@ -236,6 +243,9 @@ PlayerOne.prototype.update = function() {
           this.game.reset();
           return;
 
+      } else if (this.dead && this.game.lives === 0) {
+          this.game.running = false;
+          return;
       }
 
       if (this.game.left === true) {
