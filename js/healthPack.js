@@ -5,7 +5,7 @@ function HealthPack(icon, game, x, y, w, h) {
     this.y = y;
     this.width = w;
     this.height = h;
-    this.debug = true;
+    this.debug = false;
    // this.boostType = type;
     this.boundingRect = new BoundingRect(x, y, w, h);
     this.game = game;

@@ -53,7 +53,7 @@ function GameEngine() {
     this.running = false;
     this.lives = 3;
 
-    this.usedHealth = false;  
+    this.usedHealth = false;
     this.speed = 10;
     this.maxspeed = 250;
 
@@ -295,8 +295,8 @@ GameEngine.prototype.start = function () {
     this.generateWorlds();
     this.currentWorld = this.worlds["Area 51"];
     this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
-    //this.currentWorld = this.worlds["World 1"];
-    //this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
+    // this.currentWorld = this.worlds["World 1"];
+    // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
     this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
             this, 736, 736);
     this.setLevel("east");
