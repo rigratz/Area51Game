@@ -543,7 +543,7 @@ World.prototype.makeRoomPlans = function (name) {
       "X         q    q       X",
       "X                      X",
       "X    XXXXXX   XXXXXX   X",
-      "O                      O",
+      "O          Q           O",
       "O                      O",
       "O W                 E  O",
       "XXXXXXXXXXXXXXXXXXXXXXXX",
@@ -680,8 +680,8 @@ World.prototype.makeRoomPlans = function (name) {
       "X              X",
       "X              X",
       "X         XXXXXX",
-      "X         XXXXXX",
-      "X  S      XXXXXX",
+      "X   S     XXXXXX",
+      "XXXXXX    XXXXXX",
       "XXXXXXOOOOXXXXXX",
 
     ];
@@ -944,18 +944,18 @@ World.prototype.makeRoomPlans = function (name) {
     //Pre-Boss Chamber
     builder = [
       "XXXXXXOOOOXXXXXX",
-      "XXX  X    X  XXX",
+      "XxX  X    X  XxX",
       "XX            XX",
       "O      N       O",
       "O         P    O",
       "O W  XXXXXX E  O",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX",
-      "XXXXXXXXXXXXXXXX"
+      "XXXXXXxxxxXXXXXX",
+      "XxxxxxxxxxxxxxxX",
+      "XxxxxxxxxxxxxxxX",
+      "XxxxxxxxxxxxxxxX",
+      "XxxxxxxxxxxxxxxX",
+      "XxxxxxxxxxxxxxxX",
+      "XxxxxxxxxxxxxxxX"
 
     ];
     this.rooms[2][4] = new Level(builder, 2, 4, this.game);
@@ -966,16 +966,16 @@ World.prototype.makeRoomPlans = function (name) {
       "XX                                                      X",
       "XX                                                      X",
       "O                                                       X",
-      "O                                                       X",
+      "O                       B   B   B    B    C             X",
       "O W                                                   s X",
       "XXXXX        XXXXXX        XXXXXX        XXXXXXX   XXXXXX",
       "X                                              X        X",
       "X                                              X        X",
-      "X                                              X        X",
+      "X                                            B X        X",
       "X                                              XXXXX    X",
       "X                                                       X",
-      "X                                                       X",
-      "X                                                     XXX",
+      "X                                           B           X",
+      "X                                            B        XXX",
       "X                                                     XXX",
       "X                                                     XXX",
       "X                                      H              XXX",

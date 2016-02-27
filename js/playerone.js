@@ -275,7 +275,7 @@ PlayerOne.prototype.update = function() {
           this.changePowerUp = true;
           this.powerUpCooldown = 0;
         }
-}
+      }
 
 
         //console.log(this.changePowerUp);
@@ -349,7 +349,7 @@ PlayerOne.prototype.update = function() {
       if (this.game.jump) {
         this.boundingRect.height = 60;
         this.boundingRect.bottom = this.boundingRect.y + 60;
-    }
+      }
 
 
 
@@ -358,43 +358,43 @@ PlayerOne.prototype.update = function() {
         this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
         if (this.facing === "left") {
           this.animation = this.jumpLeftAnimation;
-      } else {
+        } else {
           this.animation = this.jumpAnimation;
-      }
-      this.jumpTime += this.game.clockTick;
-      this.yvel += this.jumpTime * 60;
-      if (this.yvel > 700) this.yvel = 700;
+        }
+        this.jumpTime += this.game.clockTick;
+        this.yvel += this.jumpTime * 60;
+        if (this.yvel > 700) this.yvel = 700;
             //if (!this.game.jump && this.yvel > 0) this.yvel = 0;
 
-            for (var i = 0; i < this.game.platforms.length; i++) {
-                var plat = this.game.platforms[i];
-                if (this.collide(plat)) {
-                    if (this.collideBottom(plat)) {
+        for (var i = 0; i < this.game.platforms.length; i++) {
+            var plat = this.game.platforms[i];
+            if (this.collide(plat)) {
+                if (this.collideBottom(plat)) {
                         //console.log("Bottom");
                         //this.game.currentPowerUp = temp;
-                        this.jumping = false;
-                        this.yvel = 0;
-                        this.jumpTime = 0;
-                        this.y = plat.boundingRect.top - 101;
-                        if (this.game.currentPowerUp === "S" && this.facing === "right") {
-                            this.x -= 3;
-                        } else if (this.game.currentPowerUp === "S" && this.facing === "left") {
-                            this.x += 3;
-                        }
-                    }  else if (this.collideTop(plat) && this.facing === "right") {
+                    this.jumping = false;
+                    this.yvel = 0;
+                    this.jumpTime = 0;
+                    this.y = plat.boundingRect.top - 101;
+                    if (this.game.currentPowerUp === "S" && this.facing === "right") {
+                        this.x -= 3;
+                    } else if (this.game.currentPowerUp === "S" && this.facing === "left") {
+                        this.x += 3;
+                    }
+                }  else if (this.collideTop(plat) && this.facing === "right") {
                         //console.log("TOP");
-                        this.yvel = 0;
-                        this.x -= 2;
-                        this.y = plat.boundingRect.bottom + 1;
-                        this.yvel = 0;
+                    this.yvel = 0;
+                    this.x -= 2;
+                    this.y = plat.boundingRect.bottom + 1;
+                    this.yvel = 0;
 
-                    } else if (this.collideTop(plat) && this.facing === "left") {
-                        this.yvel = 0;
-                        this.x += 2;
-                        this.y = plat.boundingRect.bottom + 1;
-                    } else if (this.collideRight(plat)) {
-                        this.xvel = 0;
-                        this.x -= 1;
+                } else if (this.collideTop(plat) && this.facing === "left") {
+                    this.yvel = 0;
+                    this.x += 2;
+                    this.y = plat.boundingRect.bottom + 1;
+                } else if (this.collideRight(plat)) {
+                    this.xvel = 0;
+                    this.x -= 1;
                     //     this.yvel = 0;
                     //    this.y += 1;
                     //    this.yvel = -1;
@@ -410,10 +410,10 @@ PlayerOne.prototype.update = function() {
          }
      } else if (this.falling) {
             //console.log("FALLING");
-            if (this.facing === "left") {
-              this.animation = this.jumpLeftAnimation;
+          if (this.facing === "left") {
+            this.animation = this.jumpLeftAnimation;
           } else {
-              this.animation = this.jumpAnimation;
+            this.animation = this.jumpAnimation;
           }
           this.fallTime += this.game.clockTick;
           this.yvel += this.fallTime * 60;
@@ -427,29 +427,26 @@ PlayerOne.prototype.update = function() {
                     this.fallTime = 0;
                     this.y = plat.boundingRect.top - 101;
                         //console.log("BOO");
-                    } else if (this.collideLeft(plat)) {
-                        this.xvel = 0;
-                        this.x += 1;
-                    } else if (this.collideRight(plat)) {
-                        this.xvel = 0;
-                        this.x -= 1;
-                    } else if (this.collideTop(plat)) {
+                } else if (this.collideLeft(plat)) {
+                    this.xvel = 0;
+                    this.x += 1;
+                } else if (this.collideRight(plat)) {
+                    this.xvel = 0;
+                    this.x -= 1;
+                } else if (this.collideTop(plat)) {
                         //console.log("TOP");
-                        this.yvel = 0;
-                        this.y += 1;
-                    }
+                    this.yvel = 0;
+                    this.y += 1;
                 }
             }
-        } else {
+          }
+      } else {
             //this.falling = true;
-
-
-
-            var land = false;
-            var leftWall = false;
-            var rightWall = false;
-            for (var i = 0; i < this.game.platforms.length; i++) {
-                var plat = this.game.platforms[i];
+          var land = false;
+          var leftWall = false;
+          var rightWall = false;
+          for (var i = 0; i < this.game.platforms.length; i++) {
+              var plat = this.game.platforms[i];
 
                 // if (!this.collide(plat)) {
                 //   this.falling = true;
@@ -536,8 +533,8 @@ PlayerOne.prototype.update = function() {
         }
     }
     for (var i = 0; i < this.game.entities.length; i++) {
-     var entity = this.game.entities[i];
-     if (entity instanceof TreeBoss) {
+      var entity = this.game.entities[i];
+      if (entity instanceof TreeBoss) {
          /*
          This kills the player instantly until we get knockback working!
          Doesnt show the end game screen!
@@ -639,73 +636,68 @@ PlayerOne.prototype.update = function() {
         }
     }
 }
-else if (entity instanceof PowerUp) {
-    if (entity.collide(this)) {
-        if (entity.boostType === "S") {
+        else if (entity instanceof PowerUp) {
+            if (entity.collide(this)) {
+                if (entity.boostType === "S") {
                         //console.log(this.game.powerups);
-                        if (this.game.powerups.length === 1) {
-                            this.game.powerups.push("S");
-                            this.game.currentPowerUp = "S";
-                        } else {
-                            var flag = true;
-                            for (var i = 0; i < this.game.powerups.length; i++) {
-                                if (this.game.powerups[i] === entity.boostType) {
-                                    flag = false;
-                                }
-                            }
-                            if (flag)
-                                this.game.powerups.push(entity.boostType);
-                        }
+                      if (this.game.powerups.length === 1) {
+                          this.game.powerups.push("S");
+                          this.game.currentPowerUp = "S";
+                      } else {
+                          var flag = true;
+                          for (var i = 0; i < this.game.powerups.length; i++) {
+                              if (this.game.powerups[i] === entity.boostType) {
+                                  flag = false;
+                              }
+                          }
+                          if (flag)
+                              this.game.powerups.push(entity.boostType);
+                      }
                             //console.log(this.game.powerups);
-                            entity.removeFromWorld = true;
-                            this.game.hasSpeed = true;
+                      entity.removeFromWorld = true;
+                      this.game.hasSpeed = true;
                         //}
         } else if (entity.boostType === "B") {
-                        if (this.game.powerups.length === 1) {
-                            this.game.powerups.push("B");
-                            this.game.currentPowerUp = "B";
-                        } else {
-                            var flag = true;
-                        for (var i = 0; i < this.game.powerups.length; i++) {
-                            if (this.game.powerups[i] === entity.boostType) {
-                                flag = false;
-                            }
-                        }
-                        if (flag) {
-                            this.game.powerups.push(entity.boostType);
-                        }
-                            entity.removeFromWorld = true;
-                            this.game.hasBulletUpgrade = true;
+                if (this.game.powerups.length === 1) {
+                    this.game.powerups.push("B");
+                    this.game.currentPowerUp = "B";
+                } else {
+                    var flag = true;
+                    for (var i = 0; i < this.game.powerups.length; i++) {
+                        if (this.game.powerups[i] === entity.boostType) {
+                            flag = false;
                         }
                     }
+                    if (flag) {
+                        this.game.powerups.push(entity.boostType);
+                    }
+                    entity.removeFromWorld = true;
+                    this.game.hasBulletUpgrade = true;
+                }
+          }
 
                 }
-} else if (entity instanceof HealthPack) {
-     if (entity.collide(this)) {
-        console.log("collide health pack");
-                    entity.removeFromWorld = true;
-                    this.game.usedHealth = true;
-                    if (this.game.health <= 60) {
-                        this.game.health += 40;
-                        this.game.percent = this.game.health / this.game.maxHealth;
-                    } else {
-                        this.game.health = 100;
-                         this.game.percent = this.game.health / this.game.maxHealth;
+              } else if (entity instanceof HealthPack) {
+                if (entity.collide(this)) {
+                  console.log("collide health pack");
+                  entity.removeFromWorld = true;
+                  this.game.usedHealth = true;
+                  if (this.game.health <= 60) {
+                      this.game.health += 40;
+                      this.game.percent = this.game.health / this.game.maxHealth;
+                  } else {
+                      this.game.health = 100;
+                       this.game.percent = this.game.health / this.game.maxHealth;
+                  }
                 }
-            }
             }
         }
-
-     
         Entity.prototype.update.call(this);
         this.game.camera.follow(this, 400, 175);
         this.game.camera.update();
     }
-
     this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
-
-
 }
 PlayerOne.prototype.collide = function(other) {
     return (this.boundingRect.bottom >= other.boundingRect.top) &&
