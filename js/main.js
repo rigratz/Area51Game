@@ -28,6 +28,7 @@ AM.queueDownload("./js/img/bullet_upgrade_icon.png");
 AM.queueDownload("./js/img/bullet.png");
 AM.queueDownload("./js/img/bullet-left.png");
 AM.queueDownload("./js/img/bullet-up.png");
+AM.queueDownload("./js/img/health_icon.png");
 
 AM.queueDownload("./js/img/alien.png");
 AM.queueDownload("./js/img/boss.png");

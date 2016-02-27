@@ -174,6 +174,7 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
+
     //console.log(this.game.bulletDamage);
     //console.log(this.game.currentPowerUp);
     //console.log(this.facing);
@@ -194,6 +195,7 @@ PlayerOne.prototype.update = function() {
       }
     }
     this.game.camera.follow(this, 100, 100);
+
     //var collideExit = false;
     for (var i = 0; i < this.game.exits.length; i++) {
       if (this.collide(this.game.exits[i])) {
@@ -678,9 +680,23 @@ else if (entity instanceof PowerUp) {
                     }
 
                 }
+} else if (entity instanceof HealthPack) {
+     if (entity.collide(this)) {
+        console.log("collide health pack");
+                    entity.removeFromWorld = true;
+                    this.game.usedHealth = true;
+                    if (this.game.health <= 60) {
+                        this.game.health += 40;
+                        this.game.percent = this.game.health / this.game.maxHealth;
+                    } else {
+                        this.game.health = 100;
+                         this.game.percent = this.game.health / this.game.maxHealth;
+                }
+            }
             }
         }
 
+     
         Entity.prototype.update.call(this);
         this.game.camera.follow(this, 400, 175);
         this.game.camera.update();

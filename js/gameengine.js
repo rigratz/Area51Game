@@ -53,7 +53,7 @@ function GameEngine() {
     this.running = false;
     this.lives = 3;
 
-
+    this.usedHealth = false;  
     this.speed = 10;
     this.maxspeed = 250;
 
@@ -203,7 +203,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
            if (!this.hasBulletUpgrade) this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
       }
       else if (ch === "healthpack") {
-        this.addEntity(new HealthPack(this, i *50, j *50));
+       if (!this.usedHealth) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50));
       }
       else if (ch === "exit") {
         var exitDir = null;
