@@ -202,6 +202,9 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
       else if (ch == "bullet_upgrade") {
            if (!this.hasBulletUpgrade) this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
       }
+      else if (ch === "healthpack") {
+        this.addEntity(new HealthPack(this, i *50, j *50));
+      }
       else if (ch === "exit") {
         var exitDir = null;
         if (i === 0) {
