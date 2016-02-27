@@ -10,8 +10,8 @@ function TreeBoss(game, x, y, spritesheet, xvel) {
     this.collided = false;
     this.awake = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = true;
-    this.health = 300;
+    this.debug = false;
+    this.health = 500;
     this.damage = 10;
     this.animationTimer = 0;
     this.attackTimer = 0;
@@ -68,7 +68,7 @@ TreeBoss.prototype.draw = function () {
         this.animationTimer++;
         if (this.animationTimer < 300) {
             this.animation = this.idleAnimation;
-            if (this.animationTimer > 270) {
+            if (this.animationTimer > 260) {
                 this.screamSound.play();
             }
         }
