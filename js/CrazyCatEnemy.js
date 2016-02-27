@@ -64,14 +64,14 @@ CrazyCatEnemy.prototype.update = function() {
     for (var i = 0; i < this.game.platforms.length; i ++) {
         if (this.collide(this.game.platforms[i])) {
           if (this.collideBottom(this.game.platforms[i])) {
-            console.log("this happened");
-            console.log(this.size);
+            //console.log("this happened");
+            //console.log(this.size);
             this.yvel = 0;
             // var additive = 0;
             // if (this.size === 1) additive = 151;
             // if (this.size === 0.6) additive = 91;
             this.y = this.game.platforms[i].y - (this.boundingRect.bottom - this.y + 1);
-            console.log (this.y);
+            //console.log (this.y);
             this.falling = false;
           } else {
             //this.falling = true;
