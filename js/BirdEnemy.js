@@ -134,6 +134,3 @@ BirdEnemy.prototype.collideBottom = function(other) {
     // is less than the platform bottom then we know he is standing on the platform. otherwise collisions are still detected
     // even when he is just standing next to the platform
 }
-
-
-
