@@ -720,11 +720,7 @@ PlayerOne.prototype.update = function() {
                 }
             }
         }
-<<<<<<< HEAD
 
-
-=======
->>>>>>> master
         Entity.prototype.update.call(this);
         this.game.camera.follow(this, 400, 175);
         this.game.camera.update();
