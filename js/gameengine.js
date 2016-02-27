@@ -296,7 +296,7 @@ GameEngine.prototype.start = function () {
     //this.currentWorld = this.worlds["Area 51"];
     //this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
     this.currentWorld = this.worlds["World 1"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[5][5];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
     this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
             this, 736, 736);
     this.setLevel("east");

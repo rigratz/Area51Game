@@ -224,11 +224,7 @@ Animation.prototype.drawFrameTreeBoss = function(tick, ctx, x, y) {
     var yindex = 0;
     var xframe = 0;
     var yframe = 0;
-
-    //if (this.type === "idle") {
-        xframe = xindex * this.frameWidth;
-        yframe = 0;     //shuld be 0?
-    //}
+    xframe = xindex * this.frameWidth;
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,

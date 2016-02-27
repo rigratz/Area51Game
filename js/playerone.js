@@ -273,8 +273,8 @@ PlayerOne.prototype.update = function() {
           this.changePowerUp = true;
           this.powerUpCooldown = 0;
         }
+}
 
-      }
 
         //console.log(this.changePowerUp);
 
@@ -528,21 +528,58 @@ PlayerOne.prototype.update = function() {
         // this.y += this.yvel * this.game.clockTick;
         if (!this.canShoot) {
           this.shotCooldown += this.game.clockTick;
-          if (this.shotCooldown > 0.75) {
+          if (this.shotCooldown > 0.45) {
             this.canShoot = true;
             this.shotCooldown = 0;
         }
     }
-
     for (var i = 0; i < this.game.entities.length; i++) {
      var entity = this.game.entities[i];
+     if (entity instanceof TreeBoss) {
+         /*
+         This kills the player instantly until we get knockback working!
+         Doesnt show the end game screen!
+         */
+         if (entity.collide(this)) {
+             this.damageSound.play();
+             this.game.health = 0;
+             this.game.percent = this.game.health / this.game.maxHealth;
+             entity.collided = true;
+         }
+         if (this.game.health <= 0) {
+            this.removeFromWorld = true;
+            this.dead = true;
+            this.reset();
+         }
+     }
+     if (entity instanceof TreeBossAttack) {
+         /*
+         This kills the player instantly until we get knockback working!
+         Doesnt show the end game screen!
+         */
+         if (entity.collide(this) && entity.canDamage) {
+             this.damageSound.play();
+             this.game.health -= 1;
+             this.game.percent = this.game.health / this.game.maxHealth;
+             entity.collided = true;
+         }
+         this.collideCounter++;
+         if (this.collideCounter === this.collideTime) {
+             this.collideCounter = 0;
+         }
+         if (this.game.health <= 0) {
+            this.removeFromWorld = true;
+            this.dead = true;
+            this.reset();
+         }
+     }
      if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy) {
         //         //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
+
     if (entity.collide(this) && !this.invincible) {
       this.recoiling = true;
       this.invincible = true;
         if (this.collideLeft(entity) && !this.jumping) {
-
             this.hitEffect(entity);
             //this.xvel = 0;
             this.recoilX = 50;
