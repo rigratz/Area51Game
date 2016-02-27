@@ -14,7 +14,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.y = y;
 
     this.falling = true;
-    
+
     this.yvel = 0;
     this.removeFromWorld = false;
     this.collided = false;
@@ -52,13 +52,34 @@ CrazyCatEnemy.prototype.draw = function () {
 }
 CrazyCatEnemy.prototype.update = function() {
 
-    this.boundingRect = new BoundingRect(this.x+10, this.y, (this.animation.frameWidth -10) * this.size, this.animation.frameHeight * this.size);
-
+    if (this.size === 0.6) this.boundingRect = new BoundingRect(this.x+25, this.y + 40, 150 * this.size - 45, 150 * this.size - 30);
+    if (this.size === 1) this.boundingRect = new BoundingRect(this.x+40, this.y + 40, 150 * this.size - 70, 150 * this.size - 40);
     // if(this.game.hasBulletUpgrade) {
     //     this.damage = 10;
     // }
 
-
+    if (this.falling) {
+      this.yvel += 10;
+    }
+    for (var i = 0; i < this.game.platforms.length; i ++) {
+        if (this.collide(this.game.platforms[i])) {
+          if (this.collideBottom(this.game.platforms[i])) {
+            console.log("this happened");
+            console.log(this.size);
+            this.yvel = 0;
+            // var additive = 0;
+            // if (this.size === 1) additive = 151;
+            // if (this.size === 0.6) additive = 91;
+            this.y = this.game.platforms[i].y - (this.boundingRect.bottom - this.y + 1);
+            console.log (this.y);
+            this.falling = false;
+          } else {
+            //this.falling = true;
+          }
+        } else {
+          this.falling = true;
+        }
+    }
     for (var j = 0; j < this.game.entities.length; j++) {
         var entity = this.game.entities[j];
         //console.log(entity);
@@ -81,15 +102,15 @@ CrazyCatEnemy.prototype.update = function() {
             var entity = this.game.entities[i];
             if (entity instanceof PlayerOne) {
                 var dist = distance(this, entity);
-                for (var i = 0; i < this.game.platforms.length; i++) {
-                    if (this.collide(this.game.platforms[i])) {
-                        if(this.collideLeft(this.game.platforms[i])) {
-                            this.x += (2 * this.size);
-                        } else if(this.collideRight(this.game.platforms[i])) {
-                            this.x -= (2 * this.size);
-                        }
-                    }
-                }
+                // for (var i = 0; i < this.game.platforms.length; i++) {
+                //     if (this.collide(this.game.platforms[i])) {
+                //         if(this.collideLeft(this.game.platforms[i])) {
+                //             this.x += (2 * this.size);
+                //         } else if(this.collideRight(this.game.platforms[i])) {
+                //             this.x -= (2 * this.size);
+                //         }
+                //     }
+                // }
 
                 if (dist < 250) {   // "visual radius" the bird will start attacking the player at
                     var difX = ((entity.x - this.x) / dist) * this.size;
@@ -97,8 +118,19 @@ CrazyCatEnemy.prototype.update = function() {
                 }
             }
         }
+        for (var i = 0; i < this.game.platforms.length; i++) {
+            if (this.collide(this.game.platforms[i])) {
+                if(this.collideLeft(this.game.platforms[i])) {
+                    this.x += (2 * this.size);
+                } else if(this.collideRight(this.game.platforms[i])) {
+                    this.x -= (2 * this.size);
+                }
+            }
+        }
 
     }
+    this.y += this.yvel * this.game.clockTick;
+
 
 
 
