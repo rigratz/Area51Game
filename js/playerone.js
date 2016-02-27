@@ -14,6 +14,14 @@ function PlayerOne(game, x, y, spritesheet) {
     this.platform = game.platforms[0];
     this.bullets = [];
 
+    this.recoiling = false;
+    this.recoilX = 0;
+    this.recoilY = 0;
+    this.recoilTime = 0;
+
+    this.invincible = false;
+    this.invincibilityTime = 0;
+
 
     this.powerups = [];
     this.currentPowerup = null;
@@ -166,74 +174,90 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
-    console.log(this.game.bulletDamage);
-    console.log(this.game.currentPowerUp);
-    console.log(this.facing);
- this.game.camera.follow(this, 100, 100);
+    //console.log(this.game.bulletDamage);
+    //console.log(this.game.currentPowerUp);
+    //console.log(this.facing);
+    if (this.recoiling) {
+      this.recoilTime += this.game.clockTick;
+      console.log(this.recoilTime);
+      if (this.recoilTime >= 0.20) {
+        console.log ("STOP RECOILING");
+        this.recoiling = false;
+        this.recoilTime = 0;
+      }
+    }
+    if (this.invincible) {
+      this.invincibilityTime += this.game.clockTick;
+      if (this.invincibilityTime >= 2) {
+        this.invincible = false;
+        this.invincibilityTime = 0;
+      }
+    }
+    this.game.camera.follow(this, 100, 100);
     //var collideExit = false;
     for (var i = 0; i < this.game.exits.length; i++) {
       if (this.collide(this.game.exits[i])) {
         //collideExit = true;
         if (this.game.exits[i].type === "exit") {
           this.game.switchLevel(this.game.exits[i].exitDir, this.game.currentWorld.currentRoom.iIndex, this.game.currentWorld.currentRoom.jIndex);
-      } else if (this.game.exits[i].type = "portal") {
+        } else if (this.game.exits[i].type = "portal") {
           console.log("TELEPORT");
           this.game.switchWorlds(this.game.currentWorld.name, this.game.exits[i].portalTo);
+        }
+        break;
       }
-      break;
-  }
-}
-
-if (this.game.currentPowerUp === "S") {
-    this.speed = 100;
-    this.maxSpeed = 550;
-} else {
-    this.speed = 10;
-    this.maxSpeed = 250;
-}
-if (this.game.currentPowerUp === "B") {
-    this.game.bulletDamage = 20;
-} else {
-    this.game.bulletDamage = 10;
-}
-
-
-
-
-
-
-
-if (this.game.running) {
-    if (this.dead && this.game.lives > 0) {
-        this.game.reset();
-        return;
-
     }
 
-    if (this.game.left === true) {
+    if (this.game.currentPowerUp === "S") {
+      this.speed = 100;
+      this.maxSpeed = 550;
+    } else {
+      this.speed = 10;
+      this.maxSpeed = 250;
+    }
+    if (this.game.currentPowerUp === "B") {
+      this.game.bulletDamage = 20;
+    } else {
+      this.game.bulletDamage = 10;
+    }
+
+
+
+
+
+
+
+    if (this.game.running) {
+      if (this.dead && this.game.lives > 0) {
+          this.game.reset();
+          return;
+
+      }
+
+      if (this.game.left === true) {
         this.animation = this.leftAnimation;
         this.facing = "left";
         if (this.xvel > 0) this.xvel = 0;
         this.xvel -=this.speed;
         if (this.xvel <= -this.maxSpeed) this.xvel = -this.maxSpeed;
-    }
-    if (this.game.right === true) {
+      }
+      if (this.game.right === true) {
         this.animation = this.rightAnimation;
         this.facing = "right";
         if (this.xvel < 0) this.xvel = 0;
         this.xvel += this.speed;
         if (this.xvel >= this.maxSpeed) this.xvel = this.maxSpeed;
-    }
-    if (this.game.up === true) {
+      }
+      if (this.game.up === true) {
         this.animation = this.upAnimation;
         this.xvel = 0;
-    }
-    if (this.game.down === true) {
+      }
+      if (this.game.down === true) {
         if (this.facing === "right") this.animation = this.crouchAnimation;
         if (this.facing === "left") this.animation = this.crouchLeftAnimation;
         this.xvel = 0;
-    }
-    if (this.game.toggle && this.changePowerUp) {
+      }
+      if (this.game.toggle && this.changePowerUp) {
         this.powerUpindex = this.game.powerups.indexOf(this.game.currentPowerUp);
         if (this.game.powerups.length < 1 || this.game.currentPowerUp === this.game.powerups[this.game.powerups.length - 1]) {
             this.game.currentPowerUp = " ";
@@ -241,43 +265,43 @@ if (this.game.running) {
             this.game.currentPowerUp = this.game.powerups[this.powerUpindex + 1];
         }
         this.changePowerUp = false;
-    }
-    if (!this.changePowerUp) {
-      this.powerUpCooldown += this.game.clockTick;
-      console.log(this.powerUpCooldown);
-      if (this.powerUpCooldown > 0.25) {
-        this.changePowerUp = true;
-        this.powerUpCooldown = 0;
-    }
-
+      }
+      if (!this.changePowerUp) {
+        this.powerUpCooldown += this.game.clockTick;
+        console.log(this.powerUpCooldown);
+        if (this.powerUpCooldown > 0.25) {
+          this.changePowerUp = true;
+          this.powerUpCooldown = 0;
+        }
 }
+
 
         //console.log(this.changePowerUp);
 
     ///////////////////////////
- if (this.game.jump === true) {
-      this.animation = this.jumpAnimation;
-      if (!this.jumping && !this.falling) {
+      if (this.game.jump === true) {
+        this.animation = this.jumpAnimation;
+        if (!this.jumping && !this.falling) {
           AM.getAudioAsset("./js/sound/jump.wav").play();
           this.jumping = true;
           this.yvel = -600;
-      }
-  } else {
-      if (this.game.jumping && this.yvel < 0) {
+        }
+      } else {
+        if (this.game.jumping && this.yvel < 0) {
             //Is this code even reachable??
             this.yvel = 0;
             this.jumping = false;
             this.falling = true;
         }
-    }
-    if (this.game.fire && this.canShoot) {
-      var dir = null;
-      if (this.game.up) {
-        dir = "up";
-    } else {
-        dir = this.facing;
-    }
-            var animationString = "";
+      }
+      if (this.game.fire && this.canShoot) {
+        var dir = null;
+        if (this.game.up) {
+          dir = "up";
+        } else {
+          dir = this.facing;
+        }
+        var animationString = "";
         if (this.game.fire && this.canShoot) {
             var dir = null;
             if (this.game.up) {
@@ -292,29 +316,25 @@ if (this.game.running) {
                     animationString = "./js/img/bullet.png";
                 }
             }
-            //console.log("String", animationString);
-
         }
 
-
-
-    var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
+        var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
             // adjusting the bullet based on position
-            this.game.addEntity(bullet);
-            if(this.game.down === true) {
-                bullet.y += 20;
-            } else if(this.game.up === true) {
-                bullet.x = this.x + 38;
-                bullet.y = this.y - 45;
-            }
-            if(this.facing === "left" && !this.game.up) {
-                bullet.x -= 70;
-            }
-            this.game.addEntity(bullet);
-            this.laserSound.play();
-            this.game.shotsFired += 1;
-            this.canShoot = false;
+        this.game.addEntity(bullet);
+        if(this.game.down === true) {
+          bullet.y += 20;
+        } else if(this.game.up === true) {
+          bullet.x = this.x + 38;
+          bullet.y = this.y - 45;
         }
+        if(this.facing === "left" && !this.game.up) {
+          bullet.x -= 70;
+        }
+        this.game.addEntity(bullet);
+        this.laserSound.play();
+        this.game.shotsFired += 1;
+        this.canShoot = false;
+      }
         if (!(this.game.jump || this.game.left || this.game.right || this.game.up || this.game.down)) {
             if (this.facing === "left") {
               this.animation = this.idleLeftAnimation;
@@ -500,8 +520,12 @@ if (this.game.running) {
         //         this.debug = false;
         //     }
         // }
-        this.x += this.xvel * this.game.clockTick;
-        this.y += this.yvel * this.game.clockTick;
+        if (this.recoiling) {
+          this.xvel += this.recoilX * 3;
+          this.yvel += this.recoilY * 3;
+        }
+        // this.x += this.xvel * this.game.clockTick;
+        // this.y += this.yvel * this.game.clockTick;
         if (!this.canShoot) {
           this.shotCooldown += this.game.clockTick;
           if (this.shotCooldown > 0.45) {
@@ -551,48 +575,58 @@ if (this.game.running) {
      }
      if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy) {
         //         //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
-     if (entity.collide(this)) {
-         if (this.collideLeft(entity) && !this.jumping) {
+
+    if (entity.collide(this) && !this.invincible) {
+      this.recoiling = true;
+      this.invincible = true;
+        if (this.collideLeft(entity) && !this.jumping) {
             this.hitEffect(entity);
-            this.xvel = 0;
-            if (this.game.left)
-                this.x += 125;
-            if (!this.game.left)
-                this.x += 75;
+            //this.xvel = 0;
+            this.recoilX = 50;
+            //if (this.game.left)
+                //this.x += 125;
+
+            //if (!this.game.left)
+                //this.x += 75;
         } else if (this.collideRight(entity) && !this.jumping) {
                 this.hitEffect(entity);
                 console.log("collide right walking");
-                this.xvel = 0;
-                if (this.game.right)
-                    this.x -= 125;
-                if (!this.game.right)
-                    this.x -= 75;
+                //this.xvel = 0;
+                this.recoilX = -50;
+                //if (this.game.right)
+                    //this.x -= 125;
+                //if (!this.game.right)
+                    //this.x -= 75;
         } else if (this.collideRight(entity) && this.jumping) {
                         this.hitEffect(entity);
                         console.log("collide right jumping");
-                        for (var k = 0; k < 120; k++) {
-                         this.x -= 1;
-                   }
+                        this.recoilX = -50;
+                  //       for (var k = 0; k < 120; k++) {
+                  //        this.x -= 1;
+                  //  }
          } else if (this.collideLeft(entity) && this.jumping) {
                 this.hitEffect(entity);
                 console.log("collide left jumping");
                      //this.ableToRight = false;
-                     for (var k = 0; k < 120; k++) {
-                         this.x += 1;
-                    }
+                     this.recoilX = 50;
+                    //  for (var k = 0; k < 120; k++) {
+                    //      this.x += 1;
+                    // }
                    //      this.y += 1;
                } else if (this.collideBottom(entity)) {
                  this.hitEffect(entity);
-                this.y -= 150;
-                this.yvel = 0;
+                //this.y -= 150;
+                //this.yvel = 0;
+                this.recoilY = -50;
                // entity.removeFromWorld = true;
                 console.log("collide bottom");
 
             }  else if (this.collideTop(entity)) {
                 this.hitEffect(entity);
-                this.yvel = 0;
+                //this.yvel = 0;
                       //  if(!this.platformCollision(this.y)
-                        this.y += 10;
+                        //this.y += 10;
+                        this.recoilY = 50;
                         console.log("colliding top");
               //      this.y += 10;
           }
@@ -651,6 +685,9 @@ else if (entity instanceof PowerUp) {
         this.game.camera.follow(this, 400, 175);
         this.game.camera.update();
     }
+
+    this.x += this.xvel * this.game.clockTick;
+    this.y += this.yvel * this.game.clockTick;
 
 
 }
