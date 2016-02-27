@@ -1,7 +1,5 @@
 function TreeBoss(game, x, y, spritesheet, xvel) {
     this.screamSound = AM.getAudioAsset("./js/sound/monster_scream.wav");
-    console.log("YOOOOOOO");
-    console.log(this.screamSound);
     this.game = game;
     this.ctx = game.ctx;
     this.x = x;
@@ -11,7 +9,7 @@ function TreeBoss(game, x, y, spritesheet, xvel) {
     this.removeFromWorld = false;
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = false;
+    this.debug = true;
     this.health = 300;
     this.damage = 10;
     this.animationTimer = 0;
@@ -100,11 +98,20 @@ TreeBoss.prototype.draw = function () {
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
         this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
+        bb = this.attack.boundingRect;
+        this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
+        bb = this.attack2.boundingRect;
+        this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
+        bb = this.attack3.boundingRect;
+        this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
     }
     Entity.prototype.draw.call(this);
 }
 TreeBoss.prototype.update = function() {
 
+    /*
+    Bounding boxes just follow the player. Generate them when the frame are being drawn
+    */
     this.boundingRect = new BoundingRect(this.x+100, this.y+0, this.animation.frameWidth*1.5, this.animation.frameHeight*1.5);
     this.attack.boundingRect = new BoundingRect(this.attack.x, this.attack.y, this.attack.animation.frameWidth*1.5, this.attack.animation.frameHeight*1.5);
     this.attack2.boundingRect = new BoundingRect(this.attack2.x, this.attack2.y, this.attack2.animation.frameWidth*1.5, this.attack2.animation.frameHeight*1.5);
