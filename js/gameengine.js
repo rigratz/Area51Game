@@ -379,11 +379,11 @@ GameEngine.prototype.draw = function () {
   if (this.currentWorld.currentRoom === this.currentWorld.rooms[2][4] && this.treeBossDead) {
     this.finished = true;
   }
-    if (this.running === false && this.treeBossDead) {
+    //if (this.running === false && this.treeBossDead) {
       //var endscreen = new PlayGame(gameEngine, 300, 300);
       //endscreen.draw(this.ctx);
-      return;
-    }
+      //return;
+    //}
     if (this.running === false && this.entities[0].is === "PlayGame") {
       this.entities[0].draw(this.ctx);
       return;
