@@ -106,6 +106,25 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
     this.currentWorld.currentRoom = this.currentWorld.rooms[5][8];
 
   }
+  if (this.currentWorld.name === "Area 51" && this.currentSong != AM.getAudioAsset("./js/sound/maintheme.mp3")) {
+    this.currentSong.pause();
+    this.currentSong.currentTime = 0;
+    this.currentSong = AM.getAudioAsset("./js/sound/maintheme.mp3");
+    this.currentSong.addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+    }, false);
+    this.currentSong.play();
+  } else if (this.currentWorld.name === "World 1" && this.currentSong != AM.getAudioAsset("./js/sound/world1.mp3")) {
+    this.currentSong.pause();
+    this.currentSong.currentTime = 0;
+    this.currentSong = AM.getAudioAsset("./js/sound/world1.mp3");
+    this.currentSong.addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+    }, false);
+    this.currentSong.play();
+  }
   this.setLevel("south");
 }
 
@@ -249,8 +268,9 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
   }
 
+
   if (this.currentWorld.name === "World 1" && this.currentWorld.currentRoom === this.currentWorld.rooms[2][4]) {
-    if (!this.treeBossDead) {
+    if (!this.treeBossDead && this.currentSong != AM.getAudioAsset("./js/sound/bossmusic.mp3")) {
       this.currentSong.pause();
       this.currentSong.currentTime = 0;
       this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
@@ -259,10 +279,10 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
         this.play();
       }, false);
       this.currentSong.play();
-    } else if (this.treeBossDead && this.currentSong != AM.getAudioAsset("./js/sound/maintheme.mp3")){
+    } else if (this.treeBossDead && this.currentSong != AM.getAudioAsset("./js/sound/world1.mp3")){
       this.currentSong.pause();
       this.currentSong.currentTime = 0;
-      this.currentSong = AM.getAudioAsset("./js/sound/maintheme.mp3");
+      this.currentSong = AM.getAudioAsset("./js/sound/world1.mp3");
       this.currentSong.addEventListener('ended', function() {
         this.currentTime = 0;
         this.play();
