@@ -213,7 +213,10 @@ PlayerOne.prototype.update = function() {
     else {
           this.game.bulletDamage = 10;
     }
-
+    
+    /***************************************
+    This if statement ends on line 656!!
+    ****************************************/
     if (this.game.running) {
           if (this.dead && this.game.lives > 0) {
                   this.game.reset();
