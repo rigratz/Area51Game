@@ -60,13 +60,6 @@ function PlayerOne(game, x, y, spritesheet) {
         this.speed = 10;
         this.maxSpeed = 250;
     }
-    if (this.game.currentPowerup === "B") {
-        this.speed = 100;
-        this.maxSpeed = 250;
-    } else {
-        this.speed = 10;
-        this.maxSpeed = 250;
-    }
 
     this.damage = 30;
 
@@ -213,7 +206,7 @@ PlayerOne.prototype.update = function() {
     else {
           this.game.bulletDamage = 10;
     }
-    
+
     /***************************************
     This if statement ends on line 656!!
     ****************************************/
@@ -481,7 +474,7 @@ PlayerOne.prototype.update = function() {
             if (!this.canShoot) {
                   this.shotCooldown += this.game.clockTick;
                   if (this.game.currentPowerUp === 'B') {
-                      if (this.shotCooldown > 0.85) {
+                      if (this.shotCooldown > 0.9) {
                           this.canShoot = true;
                           this.shotCooldown = 0;
                       }
