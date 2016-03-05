@@ -1,5 +1,5 @@
 function PlayerOne(game, x, y, spritesheet) {
-    console.log("creating");
+    //console.log("creating");
     this.laserSound = AM.getAudioAsset("./js/sound/laser.wav");
     this.jumpSound = AM.getAudioAsset("./js/sound/jump.wav");
     this.jumpSound2 = AM.getAudioAsset("./js/sound/jump.wav");
@@ -33,7 +33,7 @@ function PlayerOne(game, x, y, spritesheet) {
 
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
-    this.debug = false;
+    this.debug = true;
 
     this.falling = false;
     this.fallTime = 0;
@@ -81,15 +81,15 @@ function PlayerOne(game, x, y, spritesheet) {
     this.facing = "right";
 
     this.moveState = 0;
-    this.idleAnimation = new Animation("player", spritesheet, 37.5, 42, 0.40, 2, true, false, "idle");
-    this.idleLeftAnimation = new Animation("player", spritesheet, 37.5, 42, 0.40, 2, true, false, "idleleft");
-    this.rightAnimation = new Animation("player", spritesheet, 37, 42, 0.25, 4, true, false, "right");
-    this.leftAnimation = new Animation("player", spritesheet, 37, 42, 0.25, 4, true, false, "left");
-    this.upAnimation = new Animation("player", spritesheet, 38, 55, 0.40, 1, true, false, "up");
-    this.crouchAnimation = new Animation("player", spritesheet, 38, 32, 0.40, 1, true, false, "crouch");
-    this.crouchLeftAnimation = new Animation("player", spritesheet, 38, 32, 0.40, 1, true, false, "crouchleft");
-    this.jumpAnimation = new Animation("player", spritesheet, 28, 26, 0.15, 4, true, false, "jump");
-    this.jumpLeftAnimation = new Animation("player", spritesheet, 28, 26, 0.15, 4, true, false, "jumpleft");
+    this.idleAnimation = new Animation("player", spritesheet, 94, 105, 0.40, 2, true, false, "idle");
+    this.idleLeftAnimation = new Animation("player", spritesheet, 93, 105, 0.40, 2, true, false, "idleleft");
+    this.rightAnimation = new Animation("player", spritesheet, 90, 105, 0.25, 4, true, false, "right");
+    this.leftAnimation = new Animation("player", spritesheet, 90, 105, 0.25, 4, true, false, "left");
+    this.upAnimation = new Animation("player", spritesheet, 94, 139, 0.40, 1, true, false, "up");
+    this.crouchAnimation = new Animation("player", spritesheet, 94, 80, 0.40, 1, true, false, "crouch");
+    this.crouchLeftAnimation = new Animation("player", spritesheet, 94, 80, 0.40, 1, true, false, "crouchleft");
+    this.jumpAnimation = new Animation("player", spritesheet, 70, 65, 0.15, 4, true, false, "jump");
+    this.jumpLeftAnimation = new Animation("player", spritesheet, 70, 65, 0.15, 4, true, false, "jumpleft");
 
     this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);

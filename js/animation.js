@@ -54,33 +54,33 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
     var yframe = 0;
     if (this.type === "idle") {
         xframe = 3 + (xindex * this.frameWidth);
-        yframe = 2;
+        yframe = 4;
     } else if (this.type === "idleleft") {
-        xframe = 132 + (xindex * this.frameWidth);
-        yframe = 2;
+        xframe = 334 + (xindex * this.frameWidth);
+        yframe = 4;
     }else if (this.type === "right") {
-        xframe = 3 + (xindex * this.frameWidth);
-        yframe = 81;
+        xframe = 16 + (xindex * this.frameWidth);
+        yframe = 201;
     } else if (this.type === "left") {
-        xframe = 3+ (xindex * this.frameWidth);
-        yframe = 177;
+        xframe = 14+ (xindex * this.frameWidth);
+        yframe = 441;
     } else if (this.type === "jump") {
         xframe = 1 + (xindex * this.frameWidth);
-        yframe = 45;
+        yframe = 117;
     } else if (this.type === "jumpleft") {
-      xframe = 152 + (xindex * this.frameWidth);
-      yframe = 45;
+      xframe = 380 + (xindex * this.frameWidth);
+      yframe = 117;
     } else if (this.type === "crouch") {
       xframe = 9;
-      yframe = 233;
+      yframe = 581;
         y = y + 21;
     } else if (this.type === "crouchleft") {
-      xframe = 61;
-      yframe = 233;
+      xframe = 149;
+      yframe = 581;
         y = y + 21;
     }else if (this.type === "up") {
-      xframe = 9;
-      yframe = 275;
+      xframe = 19;
+      yframe = 687;
         y = y - 37;
     }
     var width_mult = 2.5;
@@ -89,8 +89,8 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,
         x, y,
-        this.frameWidth * width_mult,
-        this.frameHeight * height_mult);
+        this.frameWidth,
+        this.frameHeight);
 }
 
 Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {

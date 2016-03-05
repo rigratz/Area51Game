@@ -161,29 +161,29 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
     for (var j = 0; j < currLevel.grid.length; j++) {
       ch = currLevel.grid[j][i];
       if (ch === "playernorth" && exitedFrom === "south") {
-        console.log("starting north");
-        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
+        //console.log("starting north");
+        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
 
         this.addEntity(player);
         this.player = player;
         this.camera.follow(player, 100, 100);
       } else if (ch === "playersouth" && exitedFrom === "north") {
-        console.log("starting south");
-        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
+        //console.log("starting south");
+        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
 
         this.addEntity(player);
         this.player = player;
         this.camera.follow(player, 100, 100);
       } else if (ch === "playereast" && exitedFrom === "west") {
-        console.log("starting east");
-        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
+        //console.log("starting east");
+        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
 
         this.addEntity(player);
         this.player = player;
         this.camera.follow(player, 100, 100);
       } else if (ch === "playerwest" && exitedFrom === "east") {
-        console.log("starting west");
-        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/area51main.png"));
+        //console.log("starting west");
+        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
 
         this.addEntity(player);
         this.player = player;

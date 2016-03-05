@@ -15,6 +15,7 @@ function BoundingRect(x, y, w, h) {
 
 AM.queueDownload("./js/img/mainscreen.png");
 AM.queueDownload("./js/img/area51main.png");
+AM.queueDownload("./js/img/playerv2.png");
 AM.queueDownload("./js/img/bird_enemy_spritesheet.png");
 AM.queueDownload("./js/img/cement_background.jpg");
 AM.queueDownload("./js/img/marble_background.jpg");
