@@ -57,8 +57,15 @@ Dragon.prototype.update = function() {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
             if (entity.collideEnemy(this)) {
                 this.health -= this.game.bulletDamage;
-                if (this.health <= 0)
+                if (this.health <= 0) {
                 this.removeFromWorld = true;
+                var rand = Math.random();
+                console.log(rand);
+                if (rand < .25) {
+                    var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 40, this.y + 35, 30, 30);
+                    this.game.addEntity(health);
+                    }
+                }
                 entity.removeFromWorld = true;
             }
         }

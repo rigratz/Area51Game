@@ -61,6 +61,12 @@ BirdEnemy.prototype.update = function() {
                 this.health -= this.game.bulletDamage;
                 if (this.health <= 0) {
                     this.removeFromWorld = true;
+                    var rand = Math.random();
+                    console.log(rand);
+                    if (rand < .25) {
+                        var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 45, this.y + 50, 30, 30);
+                        this.game.addEntity(health);
+                    }
                 }
                 entity.removeFromWorld = true;
             }

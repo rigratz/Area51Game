@@ -51,7 +51,7 @@ function GameEngine() {
     this.mouse = null;
     this.click = null;
     this.running = false;
-    this.lives = 3;
+    this.lives = 1;
 
     this.usedHealth = false;
     this.speed = 10;
