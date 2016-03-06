@@ -18,10 +18,12 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
 
     this.dir = dir;
     if(this.game.currentPowerUp === 'B') {
-        console.log('speed is 300');
         var speed = 300;
-    } else {
-        console.log('speed is 500');
+    }
+    else if(this.game.currentPowerUp === 'R') {
+        var speed = 300;
+    }
+    else {
         var speed = 1000;
     }
 
