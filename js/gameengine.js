@@ -312,7 +312,7 @@ GameEngine.prototype.start = function () {
       this.currentTime = 0;
       this.play();
     }, false);
-    //this.currentSong.play();
+    this.currentSong.play();
     console.log("Make player");
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
 console.log("made player");
