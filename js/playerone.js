@@ -19,6 +19,8 @@ function PlayerOne(game, x, y, spritesheet) {
     this.recoilY = 0;
     this.recoilTime = 0;
 
+    this.jumpcount = 0;
+
     this.invincible = false;
     this.invincibilityTime = 0;
 
@@ -271,13 +273,16 @@ PlayerOne.prototype.update = function() {
                       this.jumping = true;
                       this.yvel = -600;
                 }
+
           }
           else {
                 if (this.game.jumping && this.yvel < 0) {
                     //Is this code even reachable??
                     this.yvel = 0;
+                    console.log("faliing");
                     this.jumping = false;
                     this.falling = true;
+
                 }
           }
           if (this.game.fire && this.canShoot) {
@@ -382,12 +387,22 @@ PlayerOne.prototype.update = function() {
                 }
                 this.jumpTime += this.game.clockTick;
                 this.yvel += this.jumpTime * 60;
-
+               // console.log(count);
+                if (this.yvel > 0 && this.game.jump) {
+                  if (this.jumpCount < 1 && this.game.currentPowerUp === "J") {
+                      this.jumpCount++;
+                    //  console.log(count);
+                      this.jumping = false;
+                      this.jumpTime = 0;
+                      this.yvel = 0;
+                  }
+                }
                 if (this.yvel > 700) this.yvel = 700;
                 for (var i = 0; i < this.game.platforms.length; i++) {
                     var plat = this.game.platforms[i];
                     if (this.collide(plat)) {
                         if (this.collideBottom(plat)) {
+                          this.jumpCount = 0;
                                 this.jumping = false;
                                 this.yvel = 0;
                                 this.jumpTime = 0;
@@ -680,6 +695,26 @@ PlayerOne.prototype.update = function() {
                        }
                     entity.removeFromWorld = true;
                     this.game.hasShotgun = true;
+                  
+
+               }
+
+            } else if (entity.boostType === "J") {
+                          if (this.game.powerups.length === 1) {
+                             this.game.powerups.push("J");
+                             this.game.currentPowerUp = "J";
+                           } else {
+                           var flag = true;
+                           for (var i = 0; i < this.game.powerups.length; i++) {
+                           if (this.game.powerups[i] === entity.boostType) {
+                              flag = false;
+                          }
+                        }
+                        if (flag) {
+                          this.game.powerups.push(entity.boostType);
+                       }
+                    entity.removeFromWorld = true;
+                    this.game.hasDoubleJump = true;
                   
 
                }
