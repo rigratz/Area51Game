@@ -23,8 +23,6 @@ function GameEngine() {
 
   this.bulletDamage = 10;
 
-
-
   this.currentSong = null;
     this.entities = [];
     this.platforms = [];
