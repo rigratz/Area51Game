@@ -23,6 +23,8 @@ function GameEngine() {
 
   this.finished = false;
 
+  this.hasDoublejump = false;
+
   this.bulletDamage = 10;
 
   this.currentSong = null;
@@ -222,6 +224,9 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
            if (!this.hasBulletUpgrade) this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
       }  else if (ch == "shotgun") {
           if (!this.hasShotgun) this.addEntity(new PowerUp(AM.getAsset("./js/img/multishot_icon.png"), this, i * 50, j * 50, 50, 50, "R"));
+      }
+      else if (ch == "doublejump") {
+          if (!this.hasDoublejump) this.addEntity(new PowerUp(AM.getAsset("./js/img/double_jump_icon.png"), this, i * 50, j * 50, 50, 50, "J"));
       }
       else if (ch === "healthpack") {
        if (!this.usedHealth) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50));
@@ -471,6 +476,11 @@ GameEngine.prototype.draw = function () {
        }
        else if (this.currentPowerUp === "B") {
          var img = AM.getAsset("./js/img/bullet_upgrade_icon.png");
+         this.ctx.drawImage(img,
+         0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
+     }
+            else if (this.currentPowerUp === "J") {
+         var img = AM.getAsset("./js/img/double_jump_icon.png");
          this.ctx.drawImage(img,
          0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
      }

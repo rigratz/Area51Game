@@ -37,6 +37,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "speedboost";
       else if (ch === "u")
         fieldType = "bullet_upgrade";
+      else if (ch === "j")
+        fieldType = "doublejump";
       else if (ch === "q")
         fieldType = "smallcrazycat";
       else if (ch === "Q")
