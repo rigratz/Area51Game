@@ -1,5 +1,5 @@
 function PlayGame(game, x, y) {
-    console.log("Lets play game");
+    //console.log("Lets play game");
     this.game = game;
     this.ctx = game.ctx;
     this.x = x;
@@ -44,7 +44,7 @@ PlayGame.prototype.draw = function (ctx) {
 
             this.ctx.fillText("Oh no! The Aliens have won! Better luck next time!", 100, 200);
         }
-    } 
+    }
     this.ctx.restore();
 
 }

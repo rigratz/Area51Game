@@ -85,7 +85,6 @@ function PlayerOne(game, x, y, spritesheet) {
 
     this.animation = this.idleAnimation;
     Entity.call(this, game, this.x, this.y);
-    console.log("created");
 }
 
 PlayerOne.prototype = new Entity();
@@ -176,7 +175,7 @@ PlayerOne.prototype.update = function() {
     if (this.recoiling) {
           this.recoilTime += this.game.clockTick;
           if (this.recoilTime >= 0.20) {
-                console.log ("STOP RECOILING");
+                //console.log ("STOP RECOILING");
                 this.recoiling = false;
                 this.recoilTime = 0;
           }
@@ -196,7 +195,7 @@ PlayerOne.prototype.update = function() {
                 if (this.game.exits[i].type === "exit") {
                       this.game.switchLevel(this.game.exits[i].exitDir, this.game.currentWorld.currentRoom.iIndex, this.game.currentWorld.currentRoom.jIndex);
                 } else if (this.game.exits[i].type = "portal") {
-                      console.log("TELEPORT");
+                      //console.log("TELEPORT");
                       this.game.switchWorlds(this.game.currentWorld.name, this.game.exits[i].portalTo);
                 }
                 break;
@@ -282,7 +281,7 @@ PlayerOne.prototype.update = function() {
                 if (this.game.jumping && this.yvel < 0) {
                     //Is this code even reachable??
                     this.yvel = 0;
-                    console.log("faliing");
+                    //console.log("faliing");
                     this.jumping = false;
                     this.falling = true;
 
@@ -306,7 +305,7 @@ PlayerOne.prototype.update = function() {
                         else {
                             dir = this.facing;
                             if (dir === "left") {
-                                console.log("facing left");
+                                //console.log("facing left");
                                 animationString = "./js/img/bullet-left.png";
                             }
                             else {
@@ -335,7 +334,6 @@ PlayerOne.prototype.update = function() {
                       }
               } else if (this.game.down === true) {
                     if (this.game.currentPowerUp === "R") {
-
                           bullet1.y += 20;
                           bullet2.y += 20;
                           bullet1.yvel = -120;
@@ -712,7 +710,7 @@ PlayerOne.prototype.update = function() {
        }
             else if (entity instanceof HealthPack) {
                 if (entity.collide(this)) {
-                    console.log("collide health pack");
+                    //console.log("collide health pack");
                     entity.removeFromWorld = true;
                     this.game.usedHealth = true;
                     if (this.game.health <= 60) {

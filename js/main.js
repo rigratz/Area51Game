@@ -24,6 +24,7 @@ AM.queueDownload("./js/img/sand2_background.jpg");
 AM.queueDownload("./js/img/textures.png");
 AM.queueDownload("./js/img/dragon.png");
 AM.queueDownload("./js/img/grumpy_cat.png");
+AM.queueDownload("./js/img/save_pedestal.png");
 AM.queueDownload("./js/img/speed_upgrade_icon.png");
 AM.queueDownload("./js/img/double_jump_icon.png");
 AM.queueDownload("./js/img/bullet_upgrade_icon.png");
@@ -68,5 +69,6 @@ AM.downloadAll(function () {
     console.log("Jump: Z");
     console.log("Shoot: X");
     console.log("Toggle Powerups: Space");
-    //console.log(AM.getAsset("./js/img/alien.png"));
+    console.log("View Map: M (Hold)");
+
 });

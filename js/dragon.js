@@ -13,10 +13,10 @@ function Dragon(game, x, y, spritesheet) {
     this.health = 60;
     this.damage = 10;
     Entity.call(this, game, this.x, this.y);
-    console.log("this.x = ");
-    console.log(this.x);
-    console.log("bbox.x = ");
-    console.log(this.boundingRect.x);
+    // console.log("this.x = ");
+    // console.log(this.x);
+    // console.log("bbox.x = ");
+    // console.log(this.boundingRect.x);
 }
 
 

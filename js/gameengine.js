@@ -146,9 +146,6 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
 GameEngine.prototype.clearLevel = function() {
   for (var i = 0; i < this.entities.length; i++) {
     this.entities[i].removeFromWorld = true;
-    //console.log("this should do something");
-    //console.log(this.entities[i].removeFromWorld);
-
   }
   for (var i = 0; i < this.platforms.length; i++) {
     this.platforms[i].removeFromWorld = true;
@@ -161,9 +158,10 @@ GameEngine.prototype.clearLevel = function() {
 GameEngine.prototype.setLevel = function(exitedFrom) {
   var newIndex = this.entities.length;
 
-  //console.log(this.currentWorld);
-  //console.log(exitedFrom);
   var currLevel = this.currentWorld.currentRoom;
+  var saveRoom = false;
+  var saveI = -1;
+  var saveJ = -1;
 
   var levelWidth = currLevel.grid[0].length;
   var levelHeight = currLevel.grid.length;
@@ -271,8 +269,16 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
       }
       else if (ch === "tree_boss" && !this.treeBossDead) {
           this.addEntity(new TreeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/boss.png"), 0));
+      } else if (ch === "password") {
+        saveRoom = true;
+        saveI = i;
+        saveJ = j
+
       }
     }
+  }
+  if (saveRoom) {
+    this.platforms.push((new Pedestal(AM.getAsset("./js/img/save_pedestal.png"), this, saveI * 50, saveJ * 50, 300, 200, "Save Pedestal")));
   }
   this.currentWorld.currentRoom.visited = true;
 }
