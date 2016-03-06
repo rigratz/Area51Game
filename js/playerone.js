@@ -208,8 +208,10 @@ PlayerOne.prototype.update = function() {
     if (this.game.currentPowerUp === "B") {
           this.game.bulletDamage = 20;
     }
-    else {
-          this.game.bulletDamage = 10;
+    else if (this.game.currentPowerUp === "R") {
+          this.game.bulletDamage = 5;
+    } else {
+      this.game.bulletDamage = 10;
     }
 
     /***************************************
