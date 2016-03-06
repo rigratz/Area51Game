@@ -25,6 +25,8 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
 
     if(this.game.hasBulletUpgrade) {
         this.damage = 20;
+    } else if (this.game.currentPowerUp === "R"{
+        this.damage. = 5;
     } else {
       this.damage = 10;
     }
