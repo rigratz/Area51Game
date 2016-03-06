@@ -1862,7 +1862,7 @@ World.prototype.makeRoomPlans = function (name) {
       "X                           X",
       "XX   X                      X",
       "O    X                      X",
-      "O    X                      X",
+      "O    X         e            X",
       "O W  X                      X",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     ];

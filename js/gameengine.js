@@ -171,111 +171,115 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
 
   var ch;
   for (var i = 0; i < currLevel.grid[0].length; i++) {
-    for (var j = 0; j < currLevel.grid.length; j++) {
-      ch = currLevel.grid[j][i];
-      if (ch === "playernorth" && exitedFrom === "south") {
-        //console.log("starting north");
-        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
+        for (var j = 0; j < currLevel.grid.length; j++) {
+              ch = currLevel.grid[j][i];
 
-        this.addEntity(player);
-        this.player = player;
-        this.camera.follow(player, 100, 100);
-      } else if (ch === "playersouth" && exitedFrom === "north") {
-        //console.log("starting south");
-        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
+          /************************
+           * Player related symbols
+           ************************/
+              if (ch === "playernorth" && exitedFrom === "south") {
+                    var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
+                    this.addEntity(player);
+                    this.player = player;
+                    this.camera.follow(player, 100, 100);
+              } else if (ch === "playersouth" && exitedFrom === "north") {
+                    var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
+                    this.addEntity(player);
+                    this.player = player;
+                    this.camera.follow(player, 100, 100);
+              } else if (ch === "playereast" && exitedFrom === "west") {
+                    var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
+                    this.addEntity(player);
+                    this.player = player;
+                    this.camera.follow(player, 100, 100);
+              } else if (ch === "playerwest" && exitedFrom === "east") {
+                    var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
+                    this.addEntity(player);
+                    this.player = player;
+                    this.camera.follow(player, 100, 100);
+              }
 
-        this.addEntity(player);
-        this.player = player;
-        this.camera.follow(player, 100, 100);
-      } else if (ch === "playereast" && exitedFrom === "west") {
-        //console.log("starting east");
-        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
+          /************************
+           * Enemy related symbols
+           ************************/
+              else if (ch === "bird") {
+                    this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"), 10));
+              } else if (ch === "catbird") {
+                    this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/grumpy_cat.png"), 2));
+              } else if (ch === "smallcrazycat") {
+                    this.addEntity(new CrazyCatEnemy(this, i * 50, (j * 50), AM.getAsset("./js/img/alien.png"), 0.6));
+              } else if (ch === "idle_bird") {
+                    this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"),0));
+              } else if (ch === "bigcrazycat") {
+                    this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png"), 1));
+              } else if (ch === "dragon") {
+                    this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
+              } else if (ch === "tree_boss" && !this.treeBossDead) {
+                    this.addEntity(new TreeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/boss.png"), 0));
+              } else if (ch === "shadow_enemy") {
+                    this.addEntity(new ShadowEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/shadow_enemy.png"), 2));
+              }
 
-        this.addEntity(player);
-        this.player = player;
-        this.camera.follow(player, 100, 100);
-      } else if (ch === "playerwest" && exitedFrom === "east") {
-        //console.log("starting west");
-        var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
+          /************************
+           * Upgrade related symbols
+           ************************/
+              else if (ch == "speedboost") {
+                    if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
+              }
+              else if (ch == "bullet_upgrade") {
+                    if (!this.hasBulletUpgrade) this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
+              }
+              else if (ch == "shotgun") {
+                    if (!this.hasShotgun) this.addEntity(new PowerUp(AM.getAsset("./js/img/multishot_icon.png"), this, i * 50, j * 50, 50, 50, "R"));
+              }
+              else if (ch == "doublejump") {
+                  if (!this.hasDoublejump) this.addEntity(new PowerUp(AM.getAsset("./js/img/double_jump_icon.png"), this, i * 50, j * 50, 50, 50, "J"));
+              }
+              else if (ch === "healthpack") {
+                  if (!this.usedHealth) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50));
+              }
 
-        this.addEntity(player);
-        this.player = player;
-        this.camera.follow(player, 100, 100);
-      } else if (ch === "bird") {
-        this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"), 10));
-      } else if (ch === "catbird") {
-          //this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png")));
-          this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/grumpy_cat.png"), 2));
-      } else if (ch === "smallcrazycat") {
-        this.addEntity(new CrazyCatEnemy(this, i * 50, (j * 50), AM.getAsset("./js/img/alien.png"), 0.6));
-          //console.log("cat added!");
-          //console.log(AM.getAsset("./js/img/alien.png"));
-      } else if (ch === "idle_bird") {
-          this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"),0));
-      } else if (ch === "bigcrazycat") {
-          this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png"), 1));
-          //console.log("cat added!");
-          //console.log(AM.getAsset("./js/img/alien.png"));
-      }else if (ch === "platform") {
-        var mult = 1;
-        while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
-          currLevel.grid[j+mult][i] = "used_platform";
-          mult += 1;
+          /************************
+           * Level related symbols
+           ************************/
+                else if (ch === "platform") {
+                     var mult = 1;
+                     while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
+                       currLevel.grid[j+mult][i] = "used_platform";
+                       mult += 1;
+                     }
+                     this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
+               } else if (ch === "exit") {
+                    var exitDir = null;
+                    if (i === 0) {
+                      exitDir = "west";
+                    } else if (i === currLevel.grid[0].length - 1) {
+                      exitDir = "east";
+                    } else if (j === 0) {
+                      exitDir = "north";
+                    } else if (j === currLevel.grid.length - 1) {
+                      exitDir = "south";
+                    }
+                    this.exits.push((new Exit(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "exit", exitDir)));
+              } else if (ch === "used_platform") {
+                  currLevel.grid[j][i] = "platform";
+              } else if (ch === "portal0") {
+                  this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "Area 51"));
+              } else if (ch === "portal1") {
+                  this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 1"));
+              } else if (ch === "portal2") {
+                  this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 2"));
+              } else if (ch === "portal3") {
+                  this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 3"));
+              } else if (ch === "bosstile") {
+                  this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
+              }
+              else if (ch === "password") {
+                    saveRoom = true;
+                    saveI = i;
+                    saveJ = j
+              }
         }
-
-        this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
-      // } else if (ch === "platformtop") {
-      //   this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "T")));
-      } else if (ch === "dragon") {
-          this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
-      } else if (ch == "speedboost") {
-          if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
-      }
-      else if (ch == "bullet_upgrade") {
-           if (!this.hasBulletUpgrade) this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
-      }  else if (ch == "shotgun") {
-          if (!this.hasShotgun) this.addEntity(new PowerUp(AM.getAsset("./js/img/multishot_icon.png"), this, i * 50, j * 50, 50, 50, "R"));
-      }
-      else if (ch == "doublejump") {
-          if (!this.hasDoublejump) this.addEntity(new PowerUp(AM.getAsset("./js/img/double_jump_icon.png"), this, i * 50, j * 50, 50, 50, "J"));
-      }
-      else if (ch === "healthpack") {
-       if (!this.usedHealth) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50));
-      }
-      else if (ch === "exit") {
-        var exitDir = null;
-        if (i === 0) {
-          exitDir = "west";
-        } else if (i === currLevel.grid[0].length - 1) {
-          exitDir = "east";
-        } else if (j === 0) {
-          exitDir = "north";
-        } else if (j === currLevel.grid.length - 1) {
-          exitDir = "south";
-        }
-        this.exits.push((new Exit(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "exit", exitDir)));
-      } else if (ch === "used_platform") {
-        currLevel.grid[j][i] = "platform";
-      } else if (ch === "portal0") {
-        this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "Area 51"));
-      } else if (ch === "portal1") {
-        this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 1"));
-      } else if (ch === "portal2") {
-        this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 2"));
-      } else if (ch === "portal3") {
-        this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 3"));
-      } else if (ch === "bosstile") {
-        this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
-      }
-      else if (ch === "tree_boss" && !this.treeBossDead) {
-          this.addEntity(new TreeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/boss.png"), 0));
-      } else if (ch === "password") {
-        saveRoom = true;
-        saveI = i;
-        saveJ = j
-
-      }
-    }
   }
   if (saveRoom) {
     this.platforms.push((new Pedestal(AM.getAsset("./js/img/save_pedestal.png"), this, saveI * 50, saveJ * 50, 300, 200, "Save Pedestal")));
@@ -339,15 +343,21 @@ GameEngine.prototype.start = function () {
       this.currentTime = 0;
       this.play();
     }, false);
-    this.currentSong.play();
+    //this.currentSong.play();
     //console.log("Make player");
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     //console.log("made player");
     this.generateWorlds();
-    this.currentWorld = this.worlds["Area 51"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
+
+    // this.currentWorld = this.worlds["Area 51"];
+    // this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
+
     // this.currentWorld = this.worlds["World 1"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
+
+    this.currentWorld = this.worlds["World 2"];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[6][3];
+
     this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
             this, 736, 736);
     this.setLevel("east");
