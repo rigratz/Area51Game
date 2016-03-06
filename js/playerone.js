@@ -152,7 +152,12 @@ PlayerOne.prototype.reset = function () {
 }
 PlayerOne.prototype.draw = function () {
     if (this.dead || !this.game.running) return;
+    var rand = Math.random();
+    if (this.invincible && rand < .5) {
+      return;
+    } else {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    }
     var bb = this.boundingRect;
 
     if (this.debug) {
@@ -232,13 +237,13 @@ PlayerOne.prototype.update = function() {
                 this.xvel += this.speed;
                 if (this.xvel >= this.maxSpeed) this.xvel = this.maxSpeed;
           }
-          if (this.game.up === true) {
-                this.animation = this.upAnimation;
-                this.xvel = 0;
-          }
           if (this.game.down === true) {
                 if (this.facing === "right") this.animation = this.crouchAnimation;
                 if (this.facing === "left") this.animation = this.crouchLeftAnimation;
+                this.xvel = 0;
+          }
+          if (this.game.up === true) {
+                this.animation = this.upAnimation;
                 this.xvel = 0;
           }
           if (this.game.toggle && this.changePowerUp) {
@@ -300,22 +305,54 @@ PlayerOne.prototype.update = function() {
                         }
                 }
                 var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
-                // adjusting the bullet based on position
-                this.game.addEntity(bullet);
-                if (this.game.down === true) {
-                      bullet.y += 20;
-                } else if(this.game.up === true) {
-                      bullet.x = this.x + 38;
-                      bullet.y = this.y - 45;
-                }
-                if(this.facing === "left" && !this.game.up) {
-                    bullet.x -= 70;
-                }
-                this.game.addEntity(bullet);
-                this.laserSound.play();
-                this.game.shotsFired += 1;
-                this.canShoot = false;
-          }
+                var bullet1 = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
+                var bullet2 =  new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
+                if(this.game.up === true) {
+                  if (this.game.currentPowerUp === "R") {
+  
+                     bullet1.x = this.x + 38;
+                     bullet1.y = this.y - 45;
+                     bullet2.x = this.x + 38;
+                     bullet2.y = this.y - 45;
+                     bullet1.xvel = -120;
+                     bullet2.xvel = 120;
+                  }
+                bullet.x = this.x + 38;
+                bullet.y = this.y - 45;
+              } else if (this.game.down === true) {
+                if (this.game.currentPowerUp === "R") {
+          
+                  bullet1.y += 20;
+                  bullet2.y += 20;
+                  bullet1.yvel = -120;
+                  bullet2.yvel = 120;
+               }
+             bullet.y += 20;
+            } 
+            if(this.facing === "left" && !this.game.up) {
+                if (this.game.currentPowerUp === "R") {
+                  bullet1.x -= 70;
+                  bullet2.x -= 70;
+                  bullet1.yvel = -120;
+                  bullet2.yvel = 120;
+               }
+             bullet.x -= 70;
+           }
+            if (this.facing === "right"  && !this.game.up) {
+                bullet1.yvel = -120;
+                bullet2.yvel = 120;
+            }
+           this.game.addEntity(bullet);
+
+            if (this.game.currentPowerUp === "R") {
+              this.game.addEntity(bullet1);
+              this.game.addEntity(bullet2);
+              }
+            this.laserSound.play();
+            this.game.shotsFired += 1;
+            this.canShoot = false;
+         }
+
           if (!(this.game.jump || this.game.left || this.game.right || this.game.up || this.game.down)) {
               if (this.facing === "left") {
                   this.animation = this.idleLeftAnimation;
@@ -621,8 +658,27 @@ PlayerOne.prototype.update = function() {
                                 entity.removeFromWorld = true;
                                 this.game.hasBulletUpgrade = true;
                             }
-                     }
-                }
+                     } else if (entity.boostType === "R") {
+                          if (this.game.powerups.length === 1) {
+                             this.game.powerups.push("R");
+                             this.game.currentPowerUp = "R";
+                    } else {
+                        var flag = true;
+                        for (var i = 0; i < this.game.powerups.length; i++) {
+                           if (this.game.powerups[i] === entity.boostType) {
+                              flag = false;
+                          }
+                        }
+                        if (flag) {
+                          this.game.powerups.push(entity.boostType);
+                       }
+                    entity.removeFromWorld = true;
+                    this.game.hasShotgun = true;
+                  }
+
+               }
+
+            }
             }
             else if (entity instanceof HealthPack) {
                 if (entity.collide(this)) {

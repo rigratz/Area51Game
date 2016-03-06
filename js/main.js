@@ -34,6 +34,7 @@ AM.queueDownload("./js/img/bullet-up.png");
 AM.queueDownload("./js/img/health_icon.png");
 AM.queueDownload("./js/img/health.png");
 
+
 AM.queueDownload("./js/img/alien.png");
 AM.queueDownload("./js/img/boss.png");
 

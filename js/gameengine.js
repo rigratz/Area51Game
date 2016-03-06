@@ -19,6 +19,8 @@ function GameEngine() {
 
   this.hasBulletUpgrade = false;
 
+  this.hasShotgun = false;
+
   this.finished = false;
 
   this.bulletDamage = 10;
@@ -218,6 +220,8 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
       }
       else if (ch == "bullet_upgrade") {
            if (!this.hasBulletUpgrade) this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
+      }  else if (ch == "shotgun") {
+          if (!this.hasShotgun) this.addEntity(new PowerUp(AM.getAsset("./js/img/multishot_icon.png"), this, i * 50, j * 50, 50, 50, "R"));
       }
       else if (ch === "healthpack") {
        if (!this.usedHealth) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50));
@@ -457,6 +461,11 @@ GameEngine.prototype.draw = function () {
         }
          else if (this.currentPowerUp === "S") {
            var img = AM.getAsset("./js/img/speed_upgrade_icon.png");
+           this.ctx.drawImage(img,
+           0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
+       }
+                else if (this.currentPowerUp === "R") {
+           var img = AM.getAsset("./js/img/multishot_icon.png");
            this.ctx.drawImage(img,
            0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
        }
