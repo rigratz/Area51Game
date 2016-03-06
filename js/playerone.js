@@ -133,8 +133,11 @@ PlayerOne.prototype.reset = function () {
     this.powerUpindex = 0;
     this.powerUpCooldown = 0;
 
-    this.collideTime = 65;
+    /*For use with TreeBossAttack*/
+    this.collideTime = 100;
     this.collideCounter = 0;
+    /*****************************/
+
     this.game.health = 100;
     this.game.percent = this.game.health / this.game.maxHealth;
     this.game.lives--;
@@ -548,94 +551,77 @@ PlayerOne.prototype.update = function() {
         }
         for (var i = 0; i < this.game.entities.length; i++) {
               var entity = this.game.entities[i];
-              if (entity instanceof TreeBoss) {
-                     /*
-                     This kills the player instantly until we get knockback working!
-                     Doesnt show the end game screen!
-                     */
-                     if (entity.collide(this)) {
-                         this.damageSound.play();
-                         this.game.health = 0;
-                         this.game.percent = this.game.health / this.game.maxHealth;
-                         entity.collided = true;
-                     }
-                     if (this.game.health <= 0) {
-                        this.removeFromWorld = true;
-                        this.dead = true;
-                        this.reset();
-                     }
-              }
-             if (entity instanceof TreeBossAttack) {
-                 if (entity.collide(this) && entity.canDamage) {
-                     this.damageSound.play();
-                     this.game.health -= 1;
-                     this.game.percent = this.game.health / this.game.maxHealth;
-                     entity.collided = true;
-                 }
-                 this.collideCounter++;
-                 if (this.collideCounter === this.collideTime) {
-                     this.collideCounter = 0;
-                 }
-                 if (this.game.health <= 0) {
-                    this.removeFromWorld = true;
-                    this.dead = true;
-                    this.reset();
-                 }
+            //   if (entity instanceof TreeBoss) {
+            //          /*
+            //          This kills the player instantly until we get knockback working!
+            //          Doesnt show the end game screen!
+            //          */
+            //          if (entity.collide(this)) {
+            //              this.damageSound.play();
+            //              this.game.health -= 1;
+            //              this.game.percent = this.game.health / this.game.maxHealth;
+            //              entity.collided = true;
+            //          }
+            //          if (this.game.health <= 0) {
+            //             this.removeFromWorld = true;
+            //             this.dead = true;
+            //             this.reset();
+            //          }
+            //   }
+              if (entity instanceof TreeBossAttack) {
+                  if (entity.collide(this) && entity.canDamage) {
+                      this.damageSound.play();
+                      this.game.health -= 0.5;
+                      this.game.percent = this.game.health / this.game.maxHealth;
+                      entity.collided = true;
+                  }
+                  this.collideCounter++;
+                  if (this.collideCounter === this.collideTime) {
+                      this.collideCounter = 0;
+                  }
+                  if (this.game.health <= 0) {
+                      this.removeFromWorld = true;
+                      this.dead = true;
+                      this.reset();
+                  }
              }
-             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy) {
+             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss) {
                     if (entity.collide(this) && !this.invincible) {
                           this.recoiling = true;
                           this.invincible = true;
                           if (this.collideLeft(entity) && !this.jumping) {
                                 this.hitEffect(entity);
-                                //this.xvel = 0;
                                 this.recoilX = 50;
-                                //if (this.game.left)
-                                    //this.x += 125;
-
-                                //if (!this.game.left)
-                                    //this.x += 75;
                           } else if (this.collideRight(entity) && !this.jumping) {
                                     this.hitEffect(entity);
                                     console.log("collide right walking");
-                                    //this.xvel = 0;
-                                    this.recoilX = -50;
-                                    //if (this.game.right)
-                                        //this.x -= 125;
-                                    //if (!this.game.right)
-                                        //this.x -= 75;
+                                    if (entity instanceof TreeBoss) {
+                                        this.recoilX = -1000;
+                                    }
+                                    else {
+                                        this.recoilX = -50;
+                                    }
                           } else if (this.collideRight(entity) && this.jumping) {
-                                            this.hitEffect(entity);
-                                            console.log("collide right jumping");
-                                            this.recoilX = -50;
-                                      //       for (var k = 0; k < 120; k++) {
-                                      //        this.x -= 1;
-                                      //  }
+                                    this.hitEffect(entity);
+                                    console.log("collide right jumping");
+                                    if (entity instanceof TreeBoss) {
+                                        this.recoilX = -1000;
+                                    }
+                                    else {
+                                        this.recoilX = -50;
+                                    }
                           } else if (this.collideLeft(entity) && this.jumping) {
                                     this.hitEffect(entity);
                                     console.log("collide left jumping");
-                                         //this.ableToRight = false;
-                                         this.recoilX = 50;
-                                        //  for (var k = 0; k < 120; k++) {
-                                        //      this.x += 1;
-                                        // }
-                                       //      this.y += 1;
+                                    this.recoilX = 50;
                           } else if (this.collideBottom(entity)) {
                                      this.hitEffect(entity);
-                                    //this.y -= 150;
-                                    //this.yvel = 0;
-                                    this.recoilY = -50;
-                                   // entity.removeFromWorld = true;
-                                    console.log("collide bottom");
-
+                                     this.recoilY = -50;
+                                     console.log("collide bottom");
                           }  else if (this.collideTop(entity)) {
-                                    this.hitEffect(entity);
-                                    //this.yvel = 0;
-                                          //  if(!this.platformCollision(this.y)
-                                            //this.y += 10;
-                                            this.recoilY = 50;
-                                            console.log("colliding top");
-                                  //      this.y += 10;
+                                     this.hitEffect(entity);
+                                     this.recoilY = 50;
+                                     console.log("colliding top");
                           }
                           if (this.game.health <= 0) {
                                 this.removeFromWorld = true;

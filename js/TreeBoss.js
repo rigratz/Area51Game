@@ -1,4 +1,5 @@
 function TreeBoss(game, x, y, spritesheet, xvel) {
+    this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.screamSound = AM.getAudioAsset("./js/sound/monster_scream.wav");
     this.game = game;
     this.ctx = game.ctx;
@@ -132,6 +133,7 @@ TreeBoss.prototype.update = function() {
             var entity = this.game.entities[i];
             if (entity instanceof Bullet && entity.x > 0) {
                 if (entity.collideEnemy(this)) {
+                    this.damageSound.play();
                     this.health -= this.damage;
                     if (this.health <= 0) {
                         this.game.treeBossDead = true;
