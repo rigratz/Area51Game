@@ -48,6 +48,9 @@ Platform.prototype.draw = function (ctx) {
     } else if (this.game.currentWorld.name === "World 1") {
       topx = 0; topy = 100;
       bottomx = 200; bottomy = 100;
+    } else if (this.game.currentWorld.name === "World 2") {
+      topx = 0; topy = 400;
+      bottomx = 100; bottomy = 400;
     }
     // if (this.platType === "T") {
     //   ctx.drawImage(this.textureSheet,

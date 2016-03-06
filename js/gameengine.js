@@ -10,7 +10,7 @@ window.requestAnimFrame = (function () {
 })();
 
 function GameEngine() {
-  console.log("here");
+  //console.log("here");
   this.player = null;
 
   this.hasSpeed = false;
@@ -46,7 +46,7 @@ function GameEngine() {
     this.jump = null;
     this.fire = null;
     this.toggle = null;
-
+    this.map = null;
 
     this.mouse = null;
     this.click = null;
@@ -83,20 +83,27 @@ GameEngine.prototype.init = function (ctx) {
 GameEngine.prototype.generateWorlds = function() {
   this.worlds["Area 51"] = new World("Area 51", this);
   this.worlds["World 1"] = new World("World 1", this);
+  this.worlds["World 2"] = new World("World 2", this);
 }
 GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
-  console.log("PORTAL");
-  console.log(comingFrom);
-  console.log(goingTo);
+  //console.log("PORTAL");
+  //console.log(comingFrom);
+  //console.log(goingTo);
   this.clearLevel();
   if (comingFrom === "Area 51") {
     if (goingTo === "World 1") {
-      console.log("PORTAL TO 1");
+      //console.log("PORTAL TO 1");
       this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
            this, 736, 736); // Replace 736 with actual height and width
       this.currentWorld = this.worlds["World 1"];
       this.currentWorld.currentRoom = this.currentWorld.rooms[5][5];
       //this.setLevel();
+    } else if (goingTo === "World 2") {
+      //console.log("PORTAL TO 2");
+      //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
+      //     this, 736, 736); // Replace 736 with actual height and width
+      this.currentWorld = this.worlds["World 2"];
+      this.currentWorld.currentRoom = this.currentWorld.rooms[2][7];
     }
 
   } else if (comingFrom === "World 1") {
@@ -104,6 +111,12 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
          this, 736, 736);
     this.currentWorld = this.worlds["Area 51"];
     this.currentWorld.currentRoom = this.currentWorld.rooms[5][8];
+
+  } else if (comingFrom === "World 2") {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
+         this, 736, 736);
+    this.currentWorld = this.worlds["Area 51"];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[5][1];
 
   }
   if (this.currentWorld.name === "Area 51" && this.currentSong != AM.getAudioAsset("./js/sound/maintheme.mp3")) {
@@ -146,8 +159,8 @@ GameEngine.prototype.clearLevel = function() {
 GameEngine.prototype.setLevel = function(exitedFrom) {
   var newIndex = this.entities.length;
 
-  console.log(this.currentWorld);
-  console.log(exitedFrom);
+  //console.log(this.currentWorld);
+  //console.log(exitedFrom);
   var currLevel = this.currentWorld.currentRoom;
 
   var levelWidth = currLevel.grid[0].length;
@@ -256,6 +269,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
       }
     }
   }
+  this.currentWorld.currentRoom.visited = true;
 }
 
 GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
@@ -269,6 +283,8 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
   } else if (exitedFrom === "west") {
     this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
   }
+
+  this.currentWorld.currentRoom.visited = true;
 
 
   if (this.currentWorld.name === "World 1" && this.currentWorld.currentRoom === this.currentWorld.rooms[2][4]) {
@@ -313,9 +329,9 @@ GameEngine.prototype.start = function () {
       this.play();
     }, false);
     this.currentSong.play();
-    console.log("Make player");
+    //console.log("Make player");
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
-console.log("made player");
+//console.log("made player");
     this.generateWorlds();
     this.currentWorld = this.worlds["Area 51"];
     this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
@@ -368,6 +384,7 @@ GameEngine.prototype.startInput = function () {
         if (e.keyCode === 40) that.down = true;
         if (e.keyCode === 90) that.jump = true;
         if (e.keyCode === 88) that.fire = true;
+        if (e.keyCode === 77) that.map = true;
 
         e.preventDefault();
     }, false);
@@ -380,6 +397,7 @@ GameEngine.prototype.startInput = function () {
         if (e.keyCode === 39) that.right = false;
         if (e.keyCode === 38) that.up = false;
         if (e.keyCode === 40) that.down = false;
+        if (e.keyCode === 77) that.map = false;
 
         e.preventDefault();
     }, false);
@@ -479,7 +497,7 @@ GameEngine.prototype.draw = function () {
       this.ctx.font = "  24pt Impact";
       this.ctx.fillStyle = "red";
 
-      this.ctx.fillText("Use Arrow Keys to move!                                                                      Z = Jump    X = Shoot      Space = Toggle Powers (when available)", 100, 100);
+      this.ctx.fillText("Use Arrow Keys to move!                                                                      Z = Jump    X = Shoot      Space = Toggle Powers (when available)       M = View Map" , 100, 100);
       //this.ctx.fillText("Z = Jump", 100, 100);
     }
     if (this.finished) {
@@ -490,6 +508,25 @@ GameEngine.prototype.draw = function () {
       this.ctx.fillText("You survived the Tree Boss and earned a speed boost!", this.camera.xView + 75, this.camera.yView + 100);
       this.ctx.fillText("Use new powers to explore new areas in the full game!", this.camera.xView + 75, this.camera.yView + 300);
       this.ctx.fillText("Coming Soon!", this.camera.xView + 340, this.camera.yView + 400);
+    }
+    if (this.map) {
+      this.ctx.fillStyle = "green";
+      for (var i = 0; i < 10; i++) {
+        for (var j = 0; j < 10; j++) {
+
+          if (this.currentWorld.rooms[j][i] === this.currentWorld.currentRoom) {
+            this.ctx.fillStyle = "yellow";
+          } else if (this.currentWorld.rooms[j][i].visited === true) {
+             this.ctx.fillStyle = "blue";
+           } else if (this.currentWorld.rooms[j][i].visited === false) {
+             this.ctx.fillStyle = "gray";
+           } else if (!(this.currentWorld.rooms[j][i] instanceof Level)) {
+             this.ctx.fillStyle = "black";
+          }
+
+          this.ctx.fillRect(this.camera.xView +275 + (i * 25) ,this.camera.yView + 200 + (j * 25) , 25, 25);
+        }
+      }
     }
     this.ctx.restore();
 }

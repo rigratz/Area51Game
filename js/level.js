@@ -4,6 +4,7 @@ function Level(plan, i, j, gameEngine) {
   this.grid = [];
   this.iIndex = i;
   this.jIndex = j;
+  this.visited = false;
 
   for (var y = 0; y < this.height; y++) {
     var line = plan[y], gridLine = [];
