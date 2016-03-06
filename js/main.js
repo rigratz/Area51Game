@@ -43,6 +43,7 @@ AM.queueAudioDownload("./js/sound/laser.wav");
 AM.queueAudioDownload("./js/sound/jump.wav");
 AM.queueAudioDownload("./js/sound/damage.wav");
 AM.queueAudioDownload("./js/sound/monster_scream.wav");
+AM.queueAudioDownload("./js/sound/enemy_damage_sound.wav");
 AM.queueAudioDownload("./js/sound/maintheme.mp3");
 AM.queueAudioDownload("./js/sound/bossmusic.mp3");
 AM.queueAudioDownload("./js/sound/world1.mp3");

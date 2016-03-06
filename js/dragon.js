@@ -8,6 +8,7 @@ function Dragon(game, x, y, spritesheet) {
     this.boundingRect = new BoundingRect(x, y, 40, 50);
     this.debug = false;
     this.collided = false;
+    this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.animation = new Animation("dragon", spritesheet, 96, 96, 0.14, 3, true, false, "idle");
     this.health = 60;
     this.damage = 10;
@@ -56,6 +57,7 @@ Dragon.prototype.update = function() {
         if (entity instanceof Bullet && entity.x > 0) {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
             if (entity.collideEnemy(this)) {
+                this.damageSound.play();
                 this.health -= this.game.bulletDamage;
                 if (this.health <= 0) {
                 this.removeFromWorld = true;

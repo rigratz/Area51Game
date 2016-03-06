@@ -21,6 +21,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.boundingRect = new BoundingRect(x, y, 0, 0);
     this.debug = false;
     this.spritesheet = spritesheet;
+    this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.animation = new Animation("crazycat", spritesheet, 150, 150, 0.10, 7, true, false, size);
     this.health = 40;
     this.damage = 5;
@@ -85,7 +86,7 @@ CrazyCatEnemy.prototype.update = function() {
         //console.log(entity);
         if (entity instanceof Bullet && entity.x > 0) {
             if (entity.collideEnemy(this)) {
-
+                this.damageSound.play();
                 this.health -= this.game.bulletDamage;
                 //console.log("health", this.health);
 
