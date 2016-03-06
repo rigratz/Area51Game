@@ -58,6 +58,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "tree_boss";
       else if (ch === "P")
         fieldType = "healthpack";
+      else if (ch === "p")
+        fieldType = "password";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);

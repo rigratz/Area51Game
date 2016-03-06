@@ -5,7 +5,7 @@ function Platform(textureSheet, game, x, y, w, h, type) {
     this.y = y;
     this.width = w;
     this.height = h;
-    this.debug = true;
+    this.debug = false;
     this.removeFromWorld = false;
     this.platType = type;
     this.boundingRect = new BoundingRect(x, y, w, h);
@@ -34,8 +34,6 @@ Platform.prototype.draw = function (ctx) {
           this.x, this.y,
           50,
           50);
-
-
       return;
     }
     var topx = 0;
@@ -52,14 +50,7 @@ Platform.prototype.draw = function (ctx) {
       topx = 0; topy = 400;
       bottomx = 100; bottomy = 400;
     }
-    // if (this.platType === "T") {
-    //   ctx.drawImage(this.textureSheet,
-    //       0, 0,  // source from sheet
-    //       50, 50,
-    //       this.x, this.y ,
-    //       this.width,
-    //       this.height);
-    // } else if (this.platType === "X"){
+
     var mult = this.height / 50;
     var i = 0;
     var y = this.y;
@@ -79,4 +70,41 @@ Platform.prototype.draw = function (ctx) {
           this.x, this.y ,
           50,
           50);
+}
+
+function Pedestal(textureSheet, game, x, y, w, h, type) {
+    this.textureSheet = textureSheet;
+    this.ctx = game.ctx;
+    this.x = x;
+    this.y = y;
+    this.width = w;
+    this.height = h;
+    this.debug = true;
+    this.removeFromWorld = false;
+    this.platType = type;
+    this.boundingRect = new BoundingRect(x+100, y, w-200, h);
+    this.game = game;
+    Entity.call(this, game, this.x, this.y);
+}
+
+Pedestal.prototype = new Entity();
+Pedestal.prototype.constructor = Platform;
+
+Pedestal.prototype.update = function() {
+    if (!this.game.running) return;
+
+}
+
+Pedestal.prototype.reset = function () {
+    this.startX = this.x;
+    this.startY = this.y;
+}
+
+Pedestal.prototype.draw = function (ctx) {
+      ctx.drawImage(this.textureSheet,
+          0, 0,  // source from sheet
+          300, 200,
+          this.x, this.y,
+          300,
+          200);
 }
