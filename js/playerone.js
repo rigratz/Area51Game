@@ -662,9 +662,9 @@ PlayerOne.prototype.update = function() {
                           if (this.game.powerups.length === 1) {
                              this.game.powerups.push("R");
                              this.game.currentPowerUp = "R";
-                    } else {
-                        var flag = true;
-                        for (var i = 0; i < this.game.powerups.length; i++) {
+                           } else {
+                           var flag = true;
+                           for (var i = 0; i < this.game.powerups.length; i++) {
                            if (this.game.powerups[i] === entity.boostType) {
                               flag = false;
                           }
@@ -674,12 +674,13 @@ PlayerOne.prototype.update = function() {
                        }
                     entity.removeFromWorld = true;
                     this.game.hasShotgun = true;
-                  }
+                  
 
                }
 
             }
-            }
+          }
+       }
             else if (entity instanceof HealthPack) {
                 if (entity.collide(this)) {
                     console.log("collide health pack");
