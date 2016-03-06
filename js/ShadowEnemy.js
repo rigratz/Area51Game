@@ -9,8 +9,8 @@ function ShadowEnemy(game, x, y, spritesheet, xvel) {
     this.ctx = game.ctx;
     this.x = x;
     this.y = y;
-    this.falling = true;
-    this.yvel = 0;
+    //this.falling = true;
+    //this.yvel = 0;
     this.removeFromWorld = false;
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
@@ -23,10 +23,8 @@ function ShadowEnemy(game, x, y, spritesheet, xvel) {
     this.health = 60;
     this.damage = 5;
     this.xvel = xvel;
-    this.following = false;
-    this.speed = 1;
-    //this.visualRadius = 200;
-    //this.velocity = { x: Math.random() * 1000, y: Math.random() * 1000 };
+    //this.following = false;
+    //this.speed = 1;
 
     Entity.call(this, game, this.x, this.y);
 }
@@ -82,7 +80,7 @@ ShadowEnemy.prototype.update = function() {
                     this.y = this.game.platforms[i].boundingRect.top - (2 * this.animation.frameHeight) + 15;
                 } else if(this.collideLeft(this.game.platforms[i])) {
                     this.animation = this.rightAnimation;
-                    this.x = this.game.platforms[i].boundingRect.left + (2 * this.animation.frameWidth) + 1;
+                    this.x = this.game.platforms[i].boundingRect.left +  15;
                     this.xvel *= -1;
                 } else if(this.collideRight(this.game.platforms[i])) {
                     this.animation = this.leftAnimation;

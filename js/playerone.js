@@ -317,9 +317,8 @@ PlayerOne.prototype.update = function() {
                 var bullet = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
                 var bullet1 = new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
                 var bullet2 =  new Bullet(this.game, this.x + 74, this.y + 35, AM.getAsset(animationString), dir);
-                if(this.game.up === true) {
+                if (this.game.up === true) {
                       if (this.game.currentPowerUp === "R") {
-
                              bullet1.x = this.x + 38;
                              bullet1.y = this.y - 45;
                              bullet2.x = this.x + 38;
@@ -346,13 +345,13 @@ PlayerOne.prototype.update = function() {
                 }
                 if(this.facing === "left" && !this.game.up) {
                     if (this.game.currentPowerUp === "R") {
-                      bullet1.x -= 70;
-                      bullet2.x -= 70;
-                      bullet1.yvel = -120;
-                      bullet2.yvel = 120;
-                   }
-                 bullet.x -= 70;
-               }
+                          bullet1.x -= 70;
+                          bullet2.x -= 70;
+                          bullet1.yvel = -120;
+                          bullet2.yvel = 120;
+                    }
+                    bullet.x -= 70;
+                }
                 if (this.facing === "right"  && !this.game.up) {
                     bullet1.yvel = -120;
                     bullet2.yvel = 120;
@@ -583,7 +582,7 @@ PlayerOne.prototype.update = function() {
                       this.reset();
                   }
              }
-             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss) {
+             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy) {
                     if (entity.collide(this) && !this.invincible) {
                           this.recoiling = true;
                           this.invincible = true;
