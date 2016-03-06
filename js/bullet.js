@@ -4,7 +4,7 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.x = x;
     this.y = y;
     this.radius = 5;
-
+    this.speed = 500;
     this.width = 10;
     this.height = 10;
     this.xvel = 0;
@@ -17,10 +17,12 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.upAnimation = new Animation("bullet", spritesheet, 108, 258, 0.40, 1, true, false, "up");
 
     this.dir = dir;
-    if(this.game.player.currentPowerUp === 'B') {
+    if(this.game.currentPowerUp === 'B') {
+        console.log('speed is 300');
         var speed = 300;
     } else {
-        var speed = 500;
+        console.log('speed is 500');
+        var speed = 1000;
     }
 
     if(this.game.hasBulletUpgrade) {
