@@ -321,6 +321,10 @@ PlayerOne.prototype.update = function() {
                   }
                 bullet.x = this.x + 38;
                 bullet.y = this.y - 45;
+                if (this.game.currentPowerUp === "B") {
+                  bullet.x = this.x + 70;
+
+                }
               } else if (this.game.down === true) {
                 if (this.game.currentPowerUp === "R") {
           
