@@ -39,6 +39,9 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     else if(this.entityType === 'shadow_enemy') {
         this.drawFrameShadowEnemy(tick, ctx, x, y);
     }
+    else if(this.entityType === 'eye_boss') {
+        this.drawFrameEyeBoss(tick, ctx, x, y);
+    }
     else if(this.entityType === 'eye_boss_weakspot') {
         this.drawFrameEyeBossWeakSpot(tick, ctx, x, y);
     }
@@ -295,6 +298,29 @@ Animation.prototype.drawFrameShadowEnemy = function(tick, ctx, x, y) {
         this.frameWidth * width_mult,
         this.frameHeight * height_mult);
 }
+Animation.prototype.drawFrameEyeBoss = function(tick, ctx, x, y) {
+    this.elapsedTime += tick;
+    this.time += tick
+    if(this.isDone()) {
+        if (this.loop) this.elapsedTime = 0;
+    }
+    var frame = this.currentFrame();
+    var xindex = frame % 6;
+    var yindex = 0;
+    var xframe = 0;
+    var yframe = 100;
+
+    var width_mult = 2;
+    var height_mult = 2;
+    xframe = xindex * this.frameWidth;
+
+    ctx.drawImage(this.spriteSheet,
+        xframe, yframe,  // source from sheet
+        this.frameWidth, this.frameHeight,
+        x, y,
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
+}
 
 Animation.prototype.drawFrameEyeBossWeakSpot = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
@@ -303,7 +329,7 @@ Animation.prototype.drawFrameEyeBossWeakSpot = function(tick, ctx, x, y) {
         if (this.loop) this.elapsedTime = 0;
     }
     var frame = this.currentFrame();
-    var xindex = frame % 5; //change later
+    var xindex = frame % 8; //change later
     var yindex = 0;
     var xframe = 0;
     var yframe = 0;

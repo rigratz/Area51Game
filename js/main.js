@@ -23,6 +23,7 @@ AM.queueDownload("./js/img/cement_background.jpg");
 AM.queueDownload("./js/img/marble_background.jpg");
 AM.queueDownload("./js/img/sand_background.jpg");
 AM.queueDownload("./js/img/sand2_background.jpg");
+AM.queueDownload("./js/img/black_background.jpg");
 AM.queueDownload("./js/img/textures.png");
 AM.queueDownload("./js/img/dragon.png");
 AM.queueDownload("./js/img/grumpy_cat.png");

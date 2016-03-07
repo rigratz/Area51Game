@@ -221,8 +221,8 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
               } else if (ch === "shadow_enemy_bound") {
                     this.addEntity(new ShadowEnemyBound(this, i * 50, j * 50));
               } else if (ch === "eye_boss") {
-                  console.log('eye boss');
-                    //this.addEntity(new ShadowEnemyBound(this, i * 50, j * 50));
+                    console.log('eye boss');
+                    this.addEntity(new EyeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
               } else if (ch === "eye_boss_weakspot") {
                   console.log('weakspot');
                     this.addEntity(new EyeBossWeakSpot(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
@@ -367,8 +367,10 @@ GameEngine.prototype.start = function () {
     // this.currentWorld = this.worlds["World 2"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
 
-    this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
-            this, 736, 736);
+    // this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
+    //         this, 736, 736);
+    this.backgroundImage = new Background(AM.getAsset("./js/img/black_background.jpg"),
+            this, 685, 391);
     this.setLevel("east");
 
     var that = this;
