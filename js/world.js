@@ -1681,8 +1681,8 @@ World.prototype.makeRoomPlans = function (name) {
     builder = [
       "XXXXXXXXXXXXXXXXXX",
       "X                X",
-      "X                X",
-      "X                X",
+      "X        e       X",
+      "X      i     i   X",
       "X       XXXXX    X",
       "X         XXX   XX",
       "X         XXX    X",
@@ -1862,7 +1862,7 @@ World.prototype.makeRoomPlans = function (name) {
       "X                           X",
       "XX   X                      X",
       "O    X                      X",
-      "O    X         e            X",
+      "O    X                      X",
       "O W  X                      X",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     ];

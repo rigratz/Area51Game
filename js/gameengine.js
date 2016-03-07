@@ -218,7 +218,10 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                     this.addEntity(new TreeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/boss.png"), 0));
               } else if (ch === "shadow_enemy") {
                     this.addEntity(new ShadowEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/shadow_enemy.png"), 2));
+              } else if (ch === "shadow_enemy_bound") {
+                    this.addEntity(new ShadowEnemyBound(this, i * 50, j * 50));
               }
+
 
           /************************
            * Upgrade related symbols
@@ -356,7 +359,7 @@ GameEngine.prototype.start = function () {
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
 
     this.currentWorld = this.worlds["World 2"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[6][3];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
 
     this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
             this, 736, 736);

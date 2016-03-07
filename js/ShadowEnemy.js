@@ -4,6 +4,17 @@ function distance(a, b) {
     return Math.sqrt(dx * dx + dy * dy);
 }
 
+function ShadowEnemyBound(game, x, y) {
+    this.game = game;
+    this.ctx = game.ctx;
+    this.x = x;
+    this.y = y;
+    this.boundingRect = new BoundingRect(x, y, 50, 50);
+}
+
+ShadowEnemyBound.prototype = new Entity();
+ShadowEnemyBound.prototype.constructor = ShadowEnemyBound;
+
 function ShadowEnemy(game, x, y, spritesheet, xvel) {
     this.game = game;
     this.ctx = game.ctx;
@@ -14,7 +25,7 @@ function ShadowEnemy(game, x, y, spritesheet, xvel) {
     this.removeFromWorld = false;
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = false;
+    this.debug = true;
     this.spritesheet = spritesheet;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.rightAnimation = new Animation("shadow_enemy", spritesheet, 64, 64, 0.09, 6, true, false, "right");
@@ -34,7 +45,6 @@ ShadowEnemy.prototype.constructor = ShadowEnemy;
 
 ShadowEnemy.prototype.draw = function () {
     if (!this.game.running) return;
-    console.log(this.x);
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
     //console.log(bb);
@@ -46,15 +56,27 @@ ShadowEnemy.prototype.draw = function () {
 }
 ShadowEnemy.prototype.update = function() {
     if (this.xvel > 0) {
-        this.boundingRect = new BoundingRect(this.x + 40, this.y+30, 64, 64+15);
+        this.boundingRect = new BoundingRect(this.x + 40, this.y+30, 64, 64+20);
     }
     if (this.xvel < 0) {
-        this.boundingRect = new BoundingRect(this.x + 20, this.y+30, 64, 64+15);
+        this.boundingRect = new BoundingRect(this.x + 20, this.y+30, 64, 64+20);
     }
 
     this.x += this.xvel;
     for (var j = 0; j < this.game.entities.length; j++) {
         var entity = this.game.entities[j];
+        if (entity instanceof ShadowEnemyBound) {
+            if (this.collideRight(entity)) {
+                this.animation = this.leftAnimation;
+                this.x = entity.boundingRect.left - (2 * this.animation.frameWidth) - 1;
+                this.xvel *= -1;
+            }
+            if (this.collideLeft(entity)) {
+                this.animation = this.rightAnimation;
+                this.x = entity.boundingRect.left +  15;
+                this.xvel *= -1;
+            }
+        }
         if (entity instanceof Bullet && entity.x > 0) {
             if (entity.collideEnemy(this)) {
                 this.damageSound.play();
@@ -73,10 +95,11 @@ ShadowEnemy.prototype.update = function() {
         }
         //console.log(this.x);
         for (var i = 0; i < this.game.platforms.length; i++) {
+
             if (this.collide(this.game.platforms[i])) {
                 this.collidePlatform = true;
                 if(this.collideBottom(this.game.platforms[i])) {
-                    //The 2 * is for the height multiplier
+                    //The 2 * is for the frameHeight multiplier
                     this.y = this.game.platforms[i].boundingRect.top - (2 * this.animation.frameHeight) + 15;
                 } else if(this.collideLeft(this.game.platforms[i])) {
                     this.animation = this.rightAnimation;

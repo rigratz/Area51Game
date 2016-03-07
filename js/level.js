@@ -46,6 +46,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "bigcrazycat";
       else if (ch === "e")
         fieldType = "shadow_enemy";
+      else if (ch === "i")
+        fieldType = "shadow_enemy_bound";
       else if (ch === "r")
         fieldType = "shotgun";
       else if (ch === "0")
