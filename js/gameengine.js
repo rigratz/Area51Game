@@ -27,6 +27,8 @@ function GameEngine() {
 
   this.bulletDamage = 10;
 
+  this.eyeBossHealth = 1000;
+
   this.currentSong = null;
     this.entities = [];
     this.platforms = [];
@@ -221,13 +223,10 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
               } else if (ch === "shadow_enemy_bound") {
                     this.addEntity(new ShadowEnemyBound(this, i * 50, j * 50));
               } else if (ch === "eye_boss") {
-                    console.log('eye boss');
                     this.addEntity(new EyeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
               } else if (ch === "eye_boss_weakspot") {
-                  console.log('weakspot');
                     this.addEntity(new EyeBossWeakSpot(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
               }
-
 
           /************************
            * Upgrade related symbols
@@ -574,7 +573,6 @@ GameEngine.prototype.update = function () {
 
     for (var i = 0; i < entitiesCount; i++) {
         var entity = this.entities[i];
-
         if (!entity.removeFromWorld) {
             entity.update();
         }

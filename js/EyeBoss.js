@@ -34,6 +34,9 @@ EyeBoss.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 }
 EyeBoss.prototype.update = function() {
+    if (this.health > this.game.eyeBossHealth) {
+        this.health = this.game.eyeBossHealth;
+    }
     this.boundingRect = new BoundingRect(this.x, this.y, this.animation.frameWidth * 2 -10, this.animation.frameWidth * 2);
     for (var i = 0; i < this.game.entities.length; i++) {
         var entity = this.game.entities[i];
@@ -55,7 +58,6 @@ EyeBoss.prototype.update = function() {
 }
 
 EyeBoss.prototype.collide = function(other) {
-    console.log('get it');
     return (this.boundingRect.bottom > other.boundingRect.top) &&
         (this.boundingRect.left < other.boundingRect.right) &&
         (this.boundingRect.right > other.boundingRect.left) &&
@@ -99,6 +101,8 @@ EyeBossWeakSpot.prototype.update = function() {
                 this.health -= this.game.bulletDamage;
                 if (this.health <= 0) {
                     this.removeFromWorld = true;
+                    this.game.eyeBossHealth -= 100;
+                    console.log(this.game.eyeBossHealth);
                 }
                 entity.removeFromWorld = true;
             }
