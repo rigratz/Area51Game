@@ -44,11 +44,13 @@ ShadowEnemy.prototype.update = function() {
         var entity = this.game.entities[j];
         if (entity instanceof ShadowEnemyBound) {
             if (this.collideRight(entity)) {
+                console.log("collide right");
                 this.animation = this.leftAnimation;
                 this.x = entity.boundingRect.left - (2 * this.animation.frameWidth) - 1;
                 this.xvel *= -1;
             }
             if (this.collideLeft(entity)) {
+                console.log("collide left");
                 this.animation = this.rightAnimation;
                 this.x = entity.boundingRect.left +  15;
                 this.xvel *= -1;

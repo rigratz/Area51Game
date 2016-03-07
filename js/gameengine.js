@@ -220,7 +220,14 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                     this.addEntity(new ShadowEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/shadow_enemy.png"), 2));
               } else if (ch === "shadow_enemy_bound") {
                     this.addEntity(new ShadowEnemyBound(this, i * 50, j * 50));
+              } else if (ch === "eye_boss") {
+                  console.log('eye boss');
+                    //this.addEntity(new ShadowEnemyBound(this, i * 50, j * 50));
+              } else if (ch === "eye_boss_weakspot") {
+                  console.log('weakspot');
+                    this.addEntity(new EyeBossWeakSpot(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
               }
+
 
           /************************
            * Upgrade related symbols
@@ -345,7 +352,7 @@ GameEngine.prototype.start = function () {
       this.currentTime = 0;
       this.play();
     }, false);
-    this.currentSong.play();
+    //this.currentSong.play();
     //console.log("Make player");
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     //console.log("made player");

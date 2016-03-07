@@ -18,6 +18,7 @@ AM.queueDownload("./js/img/area51main.png");
 AM.queueDownload("./js/img/playerv2.png");
 AM.queueDownload("./js/img/bird_enemy_spritesheet.png");
 AM.queueDownload("./js/img/shadow_enemy.png");
+AM.queueDownload("./js/img/eye_boss_weakspot.png");
 AM.queueDownload("./js/img/cement_background.jpg");
 AM.queueDownload("./js/img/marble_background.jpg");
 AM.queueDownload("./js/img/sand_background.jpg");
