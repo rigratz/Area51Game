@@ -222,7 +222,6 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                     this.addEntity(new ShadowEnemyBound(this, i * 50, j * 50));
               }
 
-
           /************************
            * Upgrade related symbols
            ************************/
@@ -346,20 +345,20 @@ GameEngine.prototype.start = function () {
       this.currentTime = 0;
       this.play();
     }, false);
-    //this.currentSong.play();
+    this.currentSong.play();
     //console.log("Make player");
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     //console.log("made player");
     this.generateWorlds();
 
-    // this.currentWorld = this.worlds["Area 51"];
-    // this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
+    this.currentWorld = this.worlds["Area 51"];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
 
     // this.currentWorld = this.worlds["World 1"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
 
-    this.currentWorld = this.worlds["World 2"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
+    // this.currentWorld = this.worlds["World 2"];
+    // this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
 
     this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
             this, 736, 736);

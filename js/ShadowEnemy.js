@@ -1,27 +1,8 @@
-function distance(a, b) {
-    var dx = a.x - b.x;
-    var dy = a.y - b.y;
-    return Math.sqrt(dx * dx + dy * dy);
-}
-
-function ShadowEnemyBound(game, x, y) {
-    this.game = game;
-    this.ctx = game.ctx;
-    this.x = x;
-    this.y = y;
-    this.boundingRect = new BoundingRect(x, y, 50, 50);
-}
-
-ShadowEnemyBound.prototype = new Entity();
-ShadowEnemyBound.prototype.constructor = ShadowEnemyBound;
-
 function ShadowEnemy(game, x, y, spritesheet, xvel) {
     this.game = game;
     this.ctx = game.ctx;
     this.x = x;
     this.y = y;
-    //this.falling = true;
-    //this.yvel = 0;
     this.removeFromWorld = false;
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
@@ -34,9 +15,6 @@ function ShadowEnemy(game, x, y, spritesheet, xvel) {
     this.health = 60;
     this.damage = 5;
     this.xvel = xvel;
-    //this.following = false;
-    //this.speed = 1;
-
     Entity.call(this, game, this.x, this.y);
 }
 
@@ -47,13 +25,13 @@ ShadowEnemy.prototype.draw = function () {
     if (!this.game.running) return;
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     var bb = this.boundingRect;
-    //console.log(bb);
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
         this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
     }
     Entity.prototype.draw.call(this);
 }
+
 ShadowEnemy.prototype.update = function() {
     if (this.xvel > 0) {
         this.boundingRect = new BoundingRect(this.x + 40, this.y+30, 64, 64+20);
@@ -61,7 +39,6 @@ ShadowEnemy.prototype.update = function() {
     if (this.xvel < 0) {
         this.boundingRect = new BoundingRect(this.x + 20, this.y+30, 64, 64+20);
     }
-
     this.x += this.xvel;
     for (var j = 0; j < this.game.entities.length; j++) {
         var entity = this.game.entities[j];
@@ -84,7 +61,6 @@ ShadowEnemy.prototype.update = function() {
                 if(this.health <= 0) {
                     this.removeFromWorld = true;
                     var rand = Math.random();
-                    console.log(rand);
                     if (rand < 0.25) {
                         var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 25, this.y + 40, 30, 30);
                         this.game.addEntity(health);
@@ -93,9 +69,7 @@ ShadowEnemy.prototype.update = function() {
                 entity.removeFromWorld = true;
             }
         }
-        //console.log(this.x);
         for (var i = 0; i < this.game.platforms.length; i++) {
-
             if (this.collide(this.game.platforms[i])) {
                 this.collidePlatform = true;
                 if(this.collideBottom(this.game.platforms[i])) {
@@ -137,5 +111,14 @@ ShadowEnemy.prototype.collideBottom = function(other) {
     return this.boundingRect.bottom >= other.boundingRect.top &&
         this.boundingRect.top <= other.boundingRect.top &&
         this.boundingRect.bottom <= other.boundingRect.bottom;
-        //There were comments
 }
+
+function ShadowEnemyBound(game, x, y) {
+    this.game = game;
+    this.ctx = game.ctx;
+    this.x = x;
+    this.y = y;
+    this.boundingRect = new BoundingRect(x, y, 50, 50);
+}
+ShadowEnemyBound.prototype = new Entity();
+ShadowEnemyBound.prototype.constructor = ShadowEnemyBound;
