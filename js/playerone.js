@@ -339,11 +339,20 @@ PlayerOne.prototype.update = function() {
                           bullet2.yvel = 120;
                     }
                     else {
-                        bullet.xvel = 500;
+                        if (this.game.right) {
+                            bullet.xvel = 1000;
+                        }
+                        else if (this.game.left) {
+                            bullet.xvel = -1000;
+                        }
                     }
                    bullet.y += 20;
                 }
-                if(this.facing === "left" && !this.game.up) {
+                if (this.facing === "left"  && !this.game.up) {
+                    console.log("facing left");
+                    // if (this.animation = this.crouchLeftAnimation) {
+                    //     bullet.x
+                    // }
                     if (this.game.currentPowerUp === "R") {
                           bullet1.x -= 70;
                           bullet2.x -= 70;
