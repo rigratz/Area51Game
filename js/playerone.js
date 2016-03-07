@@ -348,7 +348,7 @@ PlayerOne.prototype.update = function() {
                     }
                    bullet.y += 20;
                 }
-                if (this.facing === "left"  && !this.game.up) {                    
+                if (this.facing === "left"  && !this.game.up) {
                     if (this.game.currentPowerUp === "R") {
                           bullet1.x -= 70;
                           bullet2.x -= 70;
@@ -587,13 +587,27 @@ PlayerOne.prototype.update = function() {
                       this.reset();
                   }
              }
-             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy) {
+             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy || entity instanceof EyeBoss) {
                     if (entity.collide(this) && !this.invincible) {
                           this.recoiling = true;
                           this.invincible = true;
                           if (this.collideLeft(entity) && !this.jumping) {
-                                this.hitEffect(entity);
-                                this.recoilX = 50;
+                              this.hitEffect(entity);
+                              if (entity instanceof EyeBoss) {
+                                  this.recoilX = 1000;
+                              }
+                              else {
+                                  this.recoilX = 50;
+                              }
+                          } else if (this.collideLeft(entity) && this.jumping) {
+                                    this.hitEffect(entity);
+                                    if (entity instanceof EyeBoss) {
+                                        this.recoilX = 1000;
+                                    }
+                                    else {
+                                        this.recoilX = 50;
+                                    }
+                                    console.log("collide left jumping");
                           } else if (this.collideRight(entity) && !this.jumping) {
                                     this.hitEffect(entity);
                                     console.log("collide right walking");
@@ -612,10 +626,6 @@ PlayerOne.prototype.update = function() {
                                     else {
                                         this.recoilX = -50;
                                     }
-                          } else if (this.collideLeft(entity) && this.jumping) {
-                                    this.hitEffect(entity);
-                                    console.log("collide left jumping");
-                                    this.recoilX = 50;
                           } else if (this.collideBottom(entity)) {
                                      this.hitEffect(entity);
                                      this.recoilY = -50;

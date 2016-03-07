@@ -8,7 +8,7 @@ function EyeBoss(game, x, y, spritesheet) {
     this.removeFromWorld = false;
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = false;
+    this.debug = true;
     this.health = 500;
     this.damage = 10;
 
@@ -30,16 +30,11 @@ EyeBoss.prototype.draw = function () {
     if (this.debug) {
         this.ctx.strokeStyle = "blue";
         this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
-        bb = this.attack.boundingRect;
-        this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
-        bb = this.attack2.boundingRect;
-        this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
-        bb = this.attack3.boundingRect;
-        this.ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
     }
     Entity.prototype.draw.call(this);
 }
 EyeBoss.prototype.update = function() {
+    this.boundingRect = new BoundingRect(this.x, this.y, this.animation.frameWidth * 2 -10, this.animation.frameWidth * 2);
     for (var i = 0; i < this.game.entities.length; i++) {
         var entity = this.game.entities[i];
         if (entity instanceof Bullet && entity.x > 0) {
@@ -60,6 +55,7 @@ EyeBoss.prototype.update = function() {
 }
 
 EyeBoss.prototype.collide = function(other) {
+    console.log('get it');
     return (this.boundingRect.bottom > other.boundingRect.top) &&
         (this.boundingRect.left < other.boundingRect.right) &&
         (this.boundingRect.right > other.boundingRect.left) &&
