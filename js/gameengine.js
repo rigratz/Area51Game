@@ -139,6 +139,15 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
       this.play();
     }, false);
     this.currentSong.play();
+  } else if (this.currentWorld.name === "World 2" && this.currentSong != AM.getAudioAsset("./js/sound/world2.mp3")) {
+    this.currentSong.pause();
+    this.currentSong.currentTime = 0;
+    this.currentSong = AM.getAudioAsset("./js/sound/world2.mp3");
+    this.currentSong.addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+    }, false);
+    this.currentSong.play();
   }
   this.setLevel("south");
 }
