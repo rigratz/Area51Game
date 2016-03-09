@@ -98,13 +98,13 @@ SnakeEnemy.prototype.update = function() {
             if (dist < 350) {
                 if(this.right) {
                     this.animation = this.rightAnimation;
-                    console.log("right attack")
+                    //console.log("right attack")
                     if(this.animation.frame === 2) {
                         this.x += 15;
                     }
                 } else {
                     this.animation = this.attackAnimation;
-                    console.log("left attack");
+                    //console.log("left attack");
                     if(this.animation.frame === 5) {
                         this.x -= 15;
                     }
@@ -114,10 +114,10 @@ SnakeEnemy.prototype.update = function() {
                 }
             } else {
                 if(this.right) {
-                    console.log("right idle");
+                    //console.log("right idle");
                     this.animation = this.idleAnimationRight;
                 } else {
-                    console.log("left idle")
+                    //console.log("left idle")
                     this.animation = this.idleAnimation;
                 }
             }
