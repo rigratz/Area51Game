@@ -1,4 +1,4 @@
-function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDuration, frames, loop, reverse, type) {
+function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDuration, frames, loop, reverse, type, size) {
     this.entityType = entityType;
     this.spriteSheet = spriteSheet;
     this.frameWidth = frameWidth;
@@ -13,6 +13,7 @@ function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDurati
     this.timesLooped = 0;
     this.time = 0;
     this.frame = 0;
+    this.size = size;
 }
 
 Animation.prototype.drawFrame = function (tick, ctx, x, y) {
@@ -311,11 +312,11 @@ Animation.prototype.drawFrameSnakeEnemy = function(tick, ctx, x, y) {
 
     if(this.type === "rightidle") {
         //console.log("right and idle!")
-        yframe = 150;
+        yframe = 145;
         xindex = this.frame % 3;
         xframe = xindex * this.frameWidth + 600;
     } else if(this.type === "rightattack") {
-        yframe = 150;
+        yframe = 145;
         xindex = this.frame % 6;
         xframe = xindex * this.frameWidth;
     } else if(this.type === "idle") {
@@ -340,12 +341,18 @@ Animation.prototype.drawFrameSnakeEnemy = function(tick, ctx, x, y) {
     if(this.frame === 5) {
         //x = x - 100;
     }
-    var width_mult = 1;
+    var width_mult = 1.25;
     var height_mult = 1;
+
+    if(this.size === 2) {
+        width_mult = 2;
+        height_mult = 1.5;
+    }
+
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,
-        x, y,
+        x, y + (5*this.size),
         this.frameWidth * width_mult,
         this.frameHeight * height_mult);
 }

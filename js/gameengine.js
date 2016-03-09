@@ -223,9 +223,9 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
             } else if (ch === "dragon") {
                 this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
             } else if (ch === "snake_enemy") {
-                this.addEntity(new SnakeEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/snake.png")), 1);
+                this.addEntity(new SnakeEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/snake.png"), 1));
             } else if (ch === "snake_boss") {
-                this.addEntity(new SnakeEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/snake-blue.png")), 1);
+                this.addEntity(new SnakeEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/snake-blue.png"), 2));
             } else if (ch === "tree_boss" && !this.treeBossDead) {
                 this.addEntity(new TreeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/boss.png"), 0));
             } else if (ch === "shadow_enemy") {

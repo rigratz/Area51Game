@@ -1,4 +1,10 @@
-function SnakeEnemy(game, x, y, spritesheet) {
+function distance(a, b) {
+    var dx = a.x - b.x;
+    var dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+function SnakeEnemy(game, x, y, spritesheet, size) {
     this.game = game;
     this.ctx = game.ctx;
     this.x = x;
@@ -6,14 +12,14 @@ function SnakeEnemy(game, x, y, spritesheet) {
     this.xvel = 100;
     this.yvel = 0;
     this.boundingRect = new BoundingRect(x, y, 40, 50);
-    this.debug = false;
+    this.debug = true;
     this.collided = false;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
-    this.attackAnimation = new Animation("snake_enemy", spritesheet, 196.67, 150, 0.2, 6, true, false, "attack");
-    this.idleAnimation = new Animation("snake_enemy", spritesheet, 196.67, 150, 0.2, 6, true, false, "idle");
-    this.rightAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "rightattack");
-    this.idleAnimationRight = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "rightidle");
-
+    this.attackAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "attack", size);
+    this.idleAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "idle", size);
+    this.rightAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "rightattack", size);
+    this.idleAnimationRight = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "rightidle", size);
+    this.size = size;
     this.animation = this.idleAnimation;
     this.health = 60;
     this.damage = 10;
@@ -43,9 +49,17 @@ SnakeEnemy.prototype.draw = function () {
 }
 SnakeEnemy.prototype.update = function() {
     if(this.animation === this.rightAnimation || this.animation === this.idleAnimationRight) {
-        this.boundingRect = new BoundingRect(this.x + 20, this.y + 10, 160, 120);
+        if(this.size === 2) { // boss snake
+            this.boundingRect = new BoundingRect(this.x + 40, this.y + 20, 320, 190);
+        } else {
+            this.boundingRect = new BoundingRect(this.x + 20, this.y + 10, 200, 115);
+        }
     } else {
-        this.boundingRect = new BoundingRect(this.x, this.y + 20, 160, 120); // 180 height for big one 1.5
+        if(this.size === 2) {
+            this.boundingRect = new BoundingRect(this.x, this.y + 30, 320, 190);
+        } else {
+            this.boundingRect = new BoundingRect(this.x, this.y + 20, 200, 112); // 180 height for big one 1.5
+        }
     }
 
     if (this.falling) {
@@ -55,7 +69,12 @@ SnakeEnemy.prototype.update = function() {
         if (this.collide(this.game.platforms[i])) {
             if (this.collideBottom(this.game.platforms[i])) {
                 this.yvel = 0;
-                this.y = this.game.platforms[i].y - (this.boundingRect.bottom - this.y);
+                //this.y = this.game.platforms[i].y - (this.boundingRect.bottom - this.y);
+                if(this.size === 2) {
+                    // keep this.y the same because he won't be falling off any platforms
+                } else {
+                    this.y = this.game.platforms[i].y - (this.boundingRect.bottom - this.y) + 0.2;
+                }
                 this.falling = false;
             }
         } else {

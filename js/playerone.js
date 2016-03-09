@@ -619,11 +619,11 @@ PlayerOne.prototype.update = function() {
                                     this.recoilX = 50;
                           } else if (this.collideBottom(entity)) {
                                      this.hitEffect(entity);
-                                     this.recoilY = -50;
+                                     //this.recoilY = -50;
                                      console.log("collide bottom");
                           }  else if (this.collideTop(entity)) {
                                      this.hitEffect(entity);
-                                     this.recoilY = 50;
+                                     //this.recoilY = 50;
                                      console.log("colliding top");
                           }
                           if (this.game.health <= 0) {
