@@ -109,15 +109,6 @@ CrazyCatEnemy.prototype.update = function() {
             var entity = this.game.entities[i];
             if (entity instanceof PlayerOne) {
                 var dist = distance(this, entity);
-                // for (var i = 0; i < this.game.platforms.length; i++) {
-                //     if (this.collide(this.game.platforms[i])) {
-                //         if(this.collideLeft(this.game.platforms[i])) {
-                //             this.x += (2 * this.size);
-                //         } else if(this.collideRight(this.game.platforms[i])) {
-                //             this.x -= (2 * this.size);
-                //         }
-                //     }
-                // }
 
                 if (dist < 250) {   // "visual radius" the bird will start attacking the player at
                     var difX = ((entity.x - this.x) / dist) * this.size;
