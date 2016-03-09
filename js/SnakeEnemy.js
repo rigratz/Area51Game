@@ -9,10 +9,10 @@ function SnakeEnemy(game, x, y, spritesheet) {
     this.debug = false;
     this.collided = false;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
-    this.attackAnimation = new Animation("snake_enemy", spritesheet, 196, 150, 0.2, 6, true, false, "attack");
-    this.idleAnimation = new Animation("snake_enemy", spritesheet, 196, 150, 0.2, 6, true, false, "idle");
-    this.rightAnimation = new Animation("snake_enemy", spritesheet, 196, 130, 0.2, 6, true, false, "rightattack");
-    this.idleAnimationRight = new Animation("snake_enemy", spritesheet, 196, 130, 0.2, 6, true, false, "rightidle");
+    this.attackAnimation = new Animation("snake_enemy", spritesheet, 196.67, 150, 0.2, 6, true, false, "attack");
+    this.idleAnimation = new Animation("snake_enemy", spritesheet, 196.67, 150, 0.2, 6, true, false, "idle");
+    this.rightAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "rightattack");
+    this.idleAnimationRight = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "rightidle");
 
     this.animation = this.idleAnimation;
     this.health = 60;
@@ -45,7 +45,7 @@ SnakeEnemy.prototype.update = function() {
     if(this.animation === this.rightAnimation || this.animation === this.idleAnimationRight) {
         this.boundingRect = new BoundingRect(this.x + 20, this.y + 10, 160, 120);
     } else {
-        this.boundingRect = new BoundingRect(this.x, this.y + 20, 160, 120);
+        this.boundingRect = new BoundingRect(this.x, this.y + 20, 160, 120); // 180 height for big one 1.5
     }
 
     if (this.falling) {

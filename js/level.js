@@ -64,6 +64,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "healthpack";
       else if (ch === "k")
         fieldType = "snake_enemy";
+      else if (ch === "K")
+        fieldType = "snake_boss";
       else if (ch === "p")
         fieldType = "password";
       gridLine.push(fieldType);
