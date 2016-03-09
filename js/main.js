@@ -49,6 +49,7 @@ AM.queueAudioDownload("./js/sound/enemy_damage_sound.wav");
 AM.queueAudioDownload("./js/sound/maintheme.mp3");
 AM.queueAudioDownload("./js/sound/bossmusic.mp3");
 AM.queueAudioDownload("./js/sound/world1.mp3");
+AM.queueAudioDownload("./js/sound/world2.mp3");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
