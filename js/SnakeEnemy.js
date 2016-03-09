@@ -17,6 +17,7 @@ function SnakeEnemy(game, x, y, spritesheet) {
     this.animation = this.idleAnimation;
     this.health = 60;
     this.damage = 10;
+    this.right = false;
     Entity.call(this, game, this.x, this.y);
     // console.log("this.x = ");
     // console.log(this.x);
@@ -48,7 +49,7 @@ SnakeEnemy.prototype.update = function() {
     }
 
     if (this.falling) {
-        this.yvel += 5;
+        this.yvel += 10;
     }
     for (var i = 0; i < this.game.platforms.length; i ++) {
         if (this.collide(this.game.platforms[i])) {
@@ -97,22 +98,30 @@ SnakeEnemy.prototype.update = function() {
             if (dist < 350) {
                 if(this.right) {
                     this.animation = this.rightAnimation;
+                    console.log("right attack")
                     if(this.animation.frame === 2) {
                         this.x += 15;
                     }
                 } else {
                     this.animation = this.attackAnimation;
+                    console.log("left attack");
                     if(this.animation.frame === 5) {
                         this.x -= 15;
                     }
                 }
+                if(this.y > entity.y) {
+                    this.animation = this.idleAnimation;
+                }
             } else {
                 if(this.right) {
+                    console.log("right idle");
                     this.animation = this.idleAnimationRight;
                 } else {
+                    console.log("left idle")
                     this.animation = this.idleAnimation;
                 }
             }
+
 
         }
     }
