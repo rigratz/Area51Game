@@ -310,7 +310,7 @@ Animation.prototype.drawFrameSnakeEnemy = function(tick, ctx, x, y) {
     var yframe = 0;
 
     if(this.type === "rightidle") {
-        console.log("right and idle!")
+        //console.log("right and idle!")
         yframe = 150;
         xindex = this.frame % 3;
         xframe = xindex * this.frameWidth + 600;
