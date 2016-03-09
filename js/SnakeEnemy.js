@@ -94,16 +94,16 @@ SnakeEnemy.prototype.update = function() {
                 this.right = false;
             }
 
-            if (dist < 250) {
+            if (dist < 350) {
                 if(this.right) {
                     this.animation = this.rightAnimation;
                     if(this.animation.frame === 2) {
-                        this.x += 10;
+                        this.x += 15;
                     }
                 } else {
                     this.animation = this.attackAnimation;
                     if(this.animation.frame === 5) {
-                        this.x -= 10;
+                        this.x -= 15;
                     }
                 }
             } else {
