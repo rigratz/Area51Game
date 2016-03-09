@@ -50,15 +50,15 @@ SnakeEnemy.prototype.draw = function () {
 SnakeEnemy.prototype.update = function() {
     if(this.animation === this.rightAnimation || this.animation === this.idleAnimationRight) {
         if(this.size === 2) { // boss snake
-            this.boundingRect = new BoundingRect(this.x + 40, this.y + 20, 320, 190);
+            this.boundingRect = new BoundingRect(this.x + 100, this.y + 10, 440, 265);
         } else {
-            this.boundingRect = new BoundingRect(this.x + 20, this.y + 10, 200, 115);
+            this.boundingRect = new BoundingRect(this.x + 20, this.y + 10, 200, 125);
         }
     } else {
         if(this.size === 2) {
-            this.boundingRect = new BoundingRect(this.x, this.y + 30, 320, 190);
+            this.boundingRect = new BoundingRect(this.x, this.y + 20, 440, 265);
         } else {
-            this.boundingRect = new BoundingRect(this.x, this.y + 20, 200, 112); // 180 height for big one 1.5
+            this.boundingRect = new BoundingRect(this.x, this.y + 20, 200, 125);
         }
     }
 
@@ -114,18 +114,18 @@ SnakeEnemy.prototype.update = function() {
                 this.right = false;
             }
 
-            if (dist < 350) {
+            if (dist < (350 * this.size)) {
                 if(this.right) {
                     this.animation = this.rightAnimation;
                     //console.log("right attack")
                     if(this.animation.frame === 2) {
-                        this.x += 15;
+                        this.x += 15 * this.size;
                     }
                 } else {
                     this.animation = this.attackAnimation;
                     //console.log("left attack");
                     if(this.animation.frame === 5) {
-                        this.x -= 15;
+                        this.x -= 15 * this.size;
                     }
                 }
                 if(this.y > entity.y) {

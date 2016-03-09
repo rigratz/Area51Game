@@ -345,14 +345,18 @@ Animation.prototype.drawFrameSnakeEnemy = function(tick, ctx, x, y) {
     var height_mult = 1;
 
     if(this.size === 2) {
-        width_mult = 2;
-        height_mult = 1.5;
+        width_mult = 3;
+        height_mult = 2;
+        y = y - 12;
+    } else {
+        y = y + 5;
     }
+
 
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,
-        x, y + (5*this.size),
+        x, y,
         this.frameWidth * width_mult,
         this.frameHeight * height_mult);
 }
