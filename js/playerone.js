@@ -587,7 +587,8 @@ PlayerOne.prototype.update = function() {
                       this.reset();
                   }
              }
-             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy) {
+             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy ||
+             entity instanceof SnakeEnemy) {
                     if (entity.collide(this) && !this.invincible) {
                           this.recoiling = true;
                           this.invincible = true;
@@ -599,8 +600,7 @@ PlayerOne.prototype.update = function() {
                                     console.log("collide right walking");
                                     if (entity instanceof TreeBoss) {
                                         this.recoilX = -1000;
-                                    }
-                                    else {
+                                    } else {
                                         this.recoilX = -50;
                                     }
                           } else if (this.collideRight(entity) && this.jumping) {
@@ -618,11 +618,11 @@ PlayerOne.prototype.update = function() {
                                     this.recoilX = 50;
                           } else if (this.collideBottom(entity)) {
                                      this.hitEffect(entity);
-                                     this.recoilY = -50;
+                                     //this.recoilY = -50;
                                      console.log("collide bottom");
                           }  else if (this.collideTop(entity)) {
                                      this.hitEffect(entity);
-                                     this.recoilY = 50;
+                                     //this.recoilY = 50;
                                      console.log("colliding top");
                           }
                           if (this.game.health <= 0) {

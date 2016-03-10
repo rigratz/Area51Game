@@ -67,6 +67,12 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "tree_boss";
       else if (ch === "P")
         fieldType = "healthpack";
+      else if (ch === "k")
+        fieldType = "snake_enemy";
+      else if (ch === "K")
+        fieldType = "snake_boss";
+      else if (ch === "n")
+        fieldType = "snail";
       else if (ch === "p")
         fieldType = "password";
       else if (ch === "[")

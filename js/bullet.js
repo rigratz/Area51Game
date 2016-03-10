@@ -30,16 +30,16 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     if(this.game.hasBulletUpgrade) {
         this.damage = 20;
     } else {
-      this.damage = 10;
+        this.damage = 10;
     }
 
     this.distanceTraveled = 0;
     if (dir === "up") {
-      this.yvel = -speed;
+        this.yvel = -speed;
     } else if (dir === "left") {
-      this.xvel = -speed;
+        this.xvel = -speed;
     } else if (dir === "right") {
-      this.xvel = speed;
+        this.xvel = speed;
     }
     this.boundingRect = new BoundingRect(x, y, 10, 10);
     //this.debug = true;
@@ -49,10 +49,10 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
 }
 
 Bullet.prototype.update = function() {
-  this.x += this.xvel * this.game.clockTick;
-  this.y += this.yvel * this.game.clockTick;
-  this.distanceTraveled = (this.x - this.startX) + (this.y - this.startY);
-  if (Math.abs(this.distanceTraveled) > 650) this.removeFromWorld = true;
+    this.x += this.xvel * this.game.clockTick;
+    this.y += this.yvel * this.game.clockTick;
+    this.distanceTraveled = (this.x - this.startX) + (this.y - this.startY);
+    if (Math.abs(this.distanceTraveled) > 650) this.removeFromWorld = true;
 
 
     if(this.dir === "up") {
@@ -68,21 +68,21 @@ Bullet.prototype.update = function() {
 
 
     //console.log(this.animation.type);
-  for (var i = 0; i < this.game.platforms.length; i++) {
-    if (this.collideEnemy(this.game.platforms[i])) {
-      this.removeFromWorld = true;
-      break;
+    for (var i = 0; i < this.game.platforms.length; i++) {
+        if (this.collideEnemy(this.game.platforms[i])) {
+            this.removeFromWorld = true;
+            break;
+        }
     }
-  }
 
 
 }
 
 Bullet.prototype.draw = function () {
-  // this.ctx.strokeStyle = "yellow";
-  // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
-  // this.ctx.fillStyle = "orange";
-  // this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    // this.ctx.strokeStyle = "yellow";
+    // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+    // this.ctx.fillStyle = "orange";
+    // this.ctx.fillRect(this.x, this.y, this.width, this.height);
 
     // this stuff is used for drawing the image of the bullet
     if(this.game.currentPowerUp === "B") {
@@ -104,12 +104,12 @@ Bullet.prototype.draw = function () {
 
 // for some reason can't get this to work using the bullet bounding box, so I used x and y
 Bullet.prototype.collideEnemy = function(other) {
-  // return (this.boundingRect.bottom >= other.boundingRect.top) &&
-  //     (this.boundingRect.left <= other.boundingRect.right) &&
-  //     (this.boundingRect.right >= other.boundingRect.left) &&
-  //     (this.boundingRect.top <= other.boundingRect.bottom);
+    // return (this.boundingRect.bottom >= other.boundingRect.top) &&
+    //     (this.boundingRect.left <= other.boundingRect.right) &&
+    //     (this.boundingRect.right >= other.boundingRect.left) &&
+    //     (this.boundingRect.top <= other.boundingRect.bottom);
     //  return (this.x <= (other.boundingRect.right - (other.boundingRect.width / 2))) &&
-         return (this.x <= other.boundingRect.right) &&
-         (this.x > other.boundingRect.left) &&
-         (this.y > (other.boundingRect.top) && (this.y < other.boundingRect.bottom));
+    return (this.x <= other.boundingRect.right) &&
+        (this.x > other.boundingRect.left) &&
+        (this.y > (other.boundingRect.top) && (this.y < other.boundingRect.bottom));
 }
