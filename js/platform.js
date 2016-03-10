@@ -27,15 +27,6 @@ Platform.prototype.reset = function () {
 }
 
 Platform.prototype.draw = function (ctx) {
-    // if (this.platType === "B") {
-    //   ctx.drawImage(this.textureSheet,
-    //       0, 300,  // source from sheet
-    //       50, 50,
-    //       this.x, this.y,
-    //       50,
-    //       50);
-    //   return;
-    // }
     var topx = 0;
     var topy = 0;
     var bottomx = 0;
@@ -59,7 +50,7 @@ Platform.prototype.draw = function (ctx) {
     } else if (this.platType === "B3") {
       topx = 200; topy = 400;
       bottomx = 200; bottomy = 400;
-    } else if (this.platType === "B") {
+  } else if (this.platType === "B" || this.playType === "EB") {
       topx = 0; topy = 300;
       bottomx = 0; bottomy = 300;
     }

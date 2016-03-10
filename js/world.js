@@ -23,6 +23,9 @@ World.prototype.makeRoomPlans = function (name) {
   }
 
   if (name === "Area 51") {
+
+          //this.rooms[0][5] = new Level(builder, 0, 6, this.game);
+
     builder = [
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -2084,9 +2087,9 @@ World.prototype.makeRoomPlans = function (name) {
     builder = [
       "Xxxxxxxxxxxxxxxx",
       "XXXXXXXXxxxxxxxx",
-      "O       XXXXxxxx",
+      "O        XXXxxxx",
       "O           Xxxx",
-      "O W          Xxx",
+      "O Ws         Xxx",
       "XXXX          Xx",
       "xxxX          Xx",
       "xxxX          Xx",
@@ -2208,5 +2211,60 @@ World.prototype.makeRoomPlans = function (name) {
       "XXXXXXXXXXXXXXXX"
     ];
     this.rooms[8][4] = new Level(builder, 8, 4, this.game);
+
+    //BOSS ROOM GO HERE
+    builder = [
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "X                                                           O",
+      "X    &                                                      O",
+      "X                                                       E   O",
+      "X    e                                                      O",
+      "X i    i                                              XXXXXXX",
+      "X  XXXX                                           e      &  X",
+      "X                                               i     i     X",
+      "X         XX              $                   X  XXXXX      X",
+      "X                                                           X",
+      "X    XX        XX                                           X",
+      "X                     XXX                                   X",
+      "X                                              X            X",
+      "X          XX                XXX                            X",
+      "X             X                     XXX      X              X",
+      "X                                                           X",
+      "X              X                                            X",
+      "X                                                           X",
+      "X                                                           X",
+      "X                XX                                      &  X",
+      "X                                                           X",
+      "X                    X    XXXX   X    XXXXX      XX     XXXXX",
+      "X                                                           X",
+      "X                                                           X",
+      "X                                             X             X",
+      "X     &                                                     X",
+      "X                                  &                        X",
+      "XXX                                                        XX",
+      "X                        * *               X          X     X",
+      "X                                                           X",
+      "X                                                           X",
+      "X                   *                                      XX",
+      "X                                             X      X      X",
+      "X          XXXXXXXXXXX                                      X",
+      "X         X          >                                      X",
+      "X  &     X           >        e            X              XXX",
+      "X       X            >      i   i                           X",
+      "X      X              X      XXX      X                     X",
+      "XXXXXXX               X      XX       X            XX       X",
+      "X                     X      XX       X                     X",
+      "X                     X      XX      XXXX                XXXX",
+      "O                     X      XX       X                     X",
+      "O                     X               X                     X",
+      "O W                   X   eeeeeeeee   X                  &  X",
+      "O                     Xi             iXXXXXXX               X",
+      "XXXXXXXXX        X    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXXXXXXXX  eeee  X ee XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXXXXXXXXi      iXi  iXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    ];
+    this.rooms[0][4] = new Level(builder, 0, 4, this.game);
   }
 };

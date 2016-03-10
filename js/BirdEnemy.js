@@ -31,7 +31,6 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
 BirdEnemy.prototype = new Entity();
 BirdEnemy.prototype.constructor = BirdEnemy;
 
-
 BirdEnemy.prototype.draw = function () {
     if (!this.game.running) return;
 
@@ -58,7 +57,6 @@ BirdEnemy.prototype.update = function() {
         var entity = this.game.entities[i];
         if (entity instanceof Bullet && entity.x > 0) {
             if (entity.collideEnemy(this)) {
-                console.log(this.health);
                 this.damageSound.play();
                 this.health -= this.game.bulletDamage;
                 if (this.health <= 0) {

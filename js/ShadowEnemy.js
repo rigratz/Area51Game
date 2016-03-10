@@ -6,7 +6,7 @@ function ShadowEnemy(game, x, y, spritesheet, xvel) {
     this.removeFromWorld = false;
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = true;
+    this.debug = false;
     this.spritesheet = spritesheet;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.rightAnimation = new Animation("shadow_enemy", spritesheet, 64, 64, 0.09, 6, true, false, "right");
