@@ -50,7 +50,16 @@ Platform.prototype.draw = function (ctx) {
       topx = 0; topy = 400;
       bottomx = 100; bottomy = 400;
     }
-    if (this.platType === "B") {
+    if (this.platType === "B1") {
+      topx = 400; topy = 100;
+      bottomx = 400; bottomy = 100;
+    } else if (this.platType === "B2") {
+      topx = 200; topy = 500;
+      bottomx = 200; bottomy = 500;
+    } else if (this.platType === "B3") {
+      topx = 200; topy = 400;
+      bottomx = 200; bottomy = 400;
+    } else if (this.platType === "B") {
       topx = 0; topy = 300;
       bottomx = 0; bottomy = 300;
     }

@@ -97,6 +97,9 @@ SnakeEnemy.prototype.update = function() {
                 this.damageSound.play();
                 this.health -= this.game.bulletDamage;
                 if (this.health <= 0) {
+                    if (this.size === 2) {
+                      this.game.snakeBossDead = true;
+                    }
                     this.removeFromWorld = true;
                     var rand = Math.random();
                     console.log(rand);
