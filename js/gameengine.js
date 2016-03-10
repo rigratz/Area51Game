@@ -119,7 +119,7 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
             //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
             //     this, 736, 736); // Replace 736 with actual height and width
             this.currentWorld = this.worlds["World 3"];
-            this.currentWorld.currentRoom = this.currentWorld.rooms[2][7];
+            this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
         } else if (goingTo === "Final Boss") {
             //console.log("PORTAL TO 2");
             //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
@@ -144,7 +144,10 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
             this, 736, 736);
         this.currentWorld = this.worlds["Area 51"];
         //IF PORTAL ONE OR PORTAL TWO...
-        this.currentWorld.currentRoom = this.currentWorld.rooms[5][1];
+        if (this.currentWorld.currentRoom === this.currentWorld.rooms[8][4]) {
+          this.currentWorld.currentRoom = this.currentWorld.rooms[2][0];
+        }
+
     }
   if (this.currentWorld.name === "Area 51" && this.currentSong != AM.getAudioAsset("./js/sound/maintheme.mp3")) {
     this.currentSong.pause();
@@ -206,6 +209,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
     var ch;
     for (var i = 0; i < currLevel.grid[0].length; i++) {
         for (var j = 0; j < currLevel.grid.length; j++) {
+
             ch = currLevel.grid[j][i];
 
             /************************
@@ -403,16 +407,7 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
         }
 
     }
-    // if (this.currentWorld.name === "Area 51") {
-    //     this.currentWorld.name = "World 1";
-    //     this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
-    //     this, 736, 736); // Replace 736 with actual height and width
-    // } else if (this.currentWorld.name === "World 1") {
-    //   this.currentWorld.name = "Area 51";
-    //   this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
-    //   this, 736, 736);
-    // }
-    //console.log("switching");
+
     this.setLevel(exitedFrom);
 }
 GameEngine.prototype.start = function () {
@@ -434,8 +429,11 @@ GameEngine.prototype.start = function () {
     // this.currentWorld = this.worlds["World 1"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
 
-     //this.currentWorld = this.worlds["World 2"];
-     //this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
+    //  this.currentWorld = this.worlds["World 2"];
+    //  this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
+
+    //  this.currentWorld = this.worlds["World 3"];
+    //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
 
     //this.currentWorld = this.worlds["World 3"];
     //this.currentWorld.currentRoom = this.currentWorld.rooms[0][4];
@@ -556,7 +554,7 @@ GameEngine.prototype.draw = function () {
     if(this.camera != null && this.running) {
         this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
-        this.ctx.fillText("HP " + this.health + "    Lives " + this.lives, this.camera.xView + 15, this.camera.yView + 15);
+        this.ctx.fillText("HP " + this.health, this.camera.xView + 15, this.camera.yView + 15);
         this.ctx.fillStyle = "black";
         this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 150, 15);
         if (this.health > 66) {
@@ -569,17 +567,8 @@ GameEngine.prototype.draw = function () {
         this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 150 * this.percent, 15);
         this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
-// <<<<<<< HEAD
-//         this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
-//         this.ctx.fillText("Current Powerup", this.camera.xView + 500, this.camera.yView + 15);
-//         //console.log(this.currentPowerUp);
-//         //console.log(this.powerups.length);
-// =======
-        // this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
         this.ctx.fillText("Current Powerup", this.camera.xView + 600, this.camera.yView + 15);
-        // console.log(this.currentPowerUp);
-        // console.log(this.powerups.length);
-//>>>>>>> 55354a41f0791bab100849861bf47409812967d2
+
         if (this.currentPowerUp === null || this.currentPowerUp === " ") {
             this.ctx.strokeStyle = "black";
             this.ctx.strokeRect(this.camera.xView + 750, this.camera.yView + 5, 50, 50);
