@@ -40,6 +40,10 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
         this.xvel = -speed;
     } else if (dir === "right") {
         this.xvel = speed;
+    } else if(this.dir === "snail") {
+        this.xvel = 800;
+    } else if(this.dir === "snail_left") {
+        this.xvel = -800;
     }
     this.boundingRect = new BoundingRect(x, y, 10, 10);
     //this.debug = true;
@@ -85,20 +89,34 @@ Bullet.prototype.draw = function () {
     // this.ctx.fillRect(this.x, this.y, this.width, this.height);
 
     // this stuff is used for drawing the image of the bullet
-    if(this.game.currentPowerUp === "B") {
-        this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-        Entity.prototype.draw.call(this);
-    } else {
+    if(this.dir === "snail" || this.dir === "snail_left") {
         this.ctx.save();
         this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
-        this.ctx.fillStyle = "orange";
+        this.ctx.arc(this.x, this.y, 4, 0, 2 * Math.PI, false);
+        this.ctx.fillStyle = "turquoise";
         this.ctx.fill();
         this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = "red";
+        this.ctx.strokeStyle = "black";
         this.ctx.stroke();
         this.ctx.restore();
+    } else {
+        if(this.game.currentPowerUp === "B") {
+            this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+            Entity.prototype.draw.call(this);
+        } else {
+            this.ctx.save();
+            this.ctx.beginPath();
+            this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+            this.ctx.fillStyle = "orange";
+            this.ctx.fill();
+            this.ctx.lineWidth = 1;
+            this.ctx.strokeStyle = "red";
+            this.ctx.stroke();
+            this.ctx.restore();
+        }
     }
+
+
 }
 
 

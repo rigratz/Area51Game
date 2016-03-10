@@ -182,7 +182,7 @@ PlayerOne.prototype.update = function() {
     }
     if (this.invincible) {
           this.invincibilityTime += this.game.clockTick;
-          if (this.invincibilityTime >= 2) {
+          if (this.invincibilityTime >= 1) {
                 this.invincible = false;
                 this.invincibilityTime = 0;
           }
@@ -553,23 +553,14 @@ PlayerOne.prototype.update = function() {
         }
         for (var i = 0; i < this.game.entities.length; i++) {
               var entity = this.game.entities[i];
-            //   if (entity instanceof TreeBoss) {
-            //          /*
-            //          This kills the player instantly until we get knockback working!
-            //          Doesnt show the end game screen!
-            //          */
-            //          if (entity.collide(this)) {
-            //              this.damageSound.play();
-            //              this.game.health -= 1;
-            //              this.game.percent = this.game.health / this.game.maxHealth;
-            //              entity.collided = true;
-            //          }
-            //          if (this.game.health <= 0) {
-            //             this.removeFromWorld = true;
-            //             this.dead = true;
-            //             this.reset();
-            //          }
-            //   }
+            if(entity instanceof Bullet && (entity.dir === "snail" || entity.dir === "snail_left")) {
+                if(entity.collideEnemy(this)) {
+                    this.game.health -= 0.5;
+                    this.damageSound.play();
+                    this.game.percent = this.game.health / this.game.maxHealth;
+                    entity.removeFromWorld = true;
+                }
+            }
               if (entity instanceof TreeBossAttack) {
                   if (entity.collide(this) && entity.canDamage) {
                       this.damageSound.play();
