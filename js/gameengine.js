@@ -429,8 +429,11 @@ GameEngine.prototype.start = function () {
     // this.currentWorld = this.worlds["World 1"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
 
-     //this.currentWorld = this.worlds["World 2"];
-     //this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
+    //  this.currentWorld = this.worlds["World 2"];
+    //  this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
+
+    //  this.currentWorld = this.worlds["World 3"];
+    //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
 
     this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
         this, 736, 736);
@@ -561,7 +564,6 @@ GameEngine.prototype.draw = function () {
         this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 150 * this.percent, 15);
         this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
-
         this.ctx.fillText("Current Powerup", this.camera.xView + 600, this.camera.yView + 15);
 
         if (this.currentPowerUp === null || this.currentPowerUp === " ") {
