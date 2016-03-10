@@ -600,8 +600,7 @@ PlayerOne.prototype.update = function() {
                                     console.log("collide right walking");
                                     if (entity instanceof TreeBoss) {
                                         this.recoilX = -1000;
-                                    }
-                                    else {
+                                    } else {
                                         this.recoilX = -50;
                                     }
                           } else if (this.collideRight(entity) && this.jumping) {

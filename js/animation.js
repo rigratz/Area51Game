@@ -44,6 +44,9 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     else if(this.entityType === 'snake_enemy') {
         this.drawFrameSnakeEnemy(tick, ctx, x, y);
     }
+    else if(this.entityType === 'snail_enemy') {
+        this.drawFrameSnailEnemy(tick, ctx, x, y);
+    }
 }
 
 Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
@@ -346,11 +349,41 @@ Animation.prototype.drawFrameSnakeEnemy = function(tick, ctx, x, y) {
 
     if(this.size === 2) {
         width_mult = 3;
-        height_mult = 2;
-        y = y - 12;
+        height_mult = 3;
+        y = y - 250;
     } else {
         y = y + 5;
     }
+
+
+    ctx.drawImage(this.spriteSheet,
+        xframe, yframe,  // source from sheet
+        this.frameWidth, this.frameHeight,
+        x, y,
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
+}
+
+Animation.prototype.drawFrameSnailEnemy = function(tick, ctx, x, y) {
+    this.elapsedTime += tick;
+    this.time += tick;
+    if(this.isDone()) {
+        if (this.loop) this.elapsedTime = 0;
+    }
+    this.frame = this.currentFrame();
+    var xindex = this.frame % 8;
+    var xframe = xindex * this.frameWidth + 50;
+
+    var yindex = 0;
+    //var xframe = 0;
+    var yframe = 50;
+
+    //xframe = xindex * this.frameWidth;
+
+    var width_mult = 2;
+    var height_mult = 2;
+
+
 
 
     ctx.drawImage(this.spriteSheet,
