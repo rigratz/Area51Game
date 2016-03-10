@@ -40,6 +40,9 @@ Platform.prototype.draw = function (ctx) {
     } else if (this.game.currentWorld.name === "World 2") {
       topx = 0; topy = 400;
       bottomx = 100; bottomy = 400;
+    } else if (this.game.currentWorld.name === "World 3") {
+      topx = 0; topy = 500;
+      bottomx = 100; bottomy = 500;
     }
     if (this.platType === "B1") {
       topx = 400; topy = 100;

@@ -119,7 +119,7 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
             //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
             //     this, 736, 736); // Replace 736 with actual height and width
             this.currentWorld = this.worlds["World 3"];
-            this.currentWorld.currentRoom = this.currentWorld.rooms[2][7];
+            this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
         } else if (goingTo === "Final Boss") {
             //console.log("PORTAL TO 2");
             //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
@@ -144,7 +144,10 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
             this, 736, 736);
         this.currentWorld = this.worlds["Area 51"];
         //IF PORTAL ONE OR PORTAL TWO...
-        this.currentWorld.currentRoom = this.currentWorld.rooms[5][1];
+        if (this.currentWorld.currentRoom === this.currentWorld.rooms[8][4]) {
+          this.currentWorld.currentRoom = this.currentWorld.rooms[2][0];
+        }
+
     }
   if (this.currentWorld.name === "Area 51" && this.currentSong != AM.getAudioAsset("./js/sound/maintheme.mp3")) {
     this.currentSong.pause();
