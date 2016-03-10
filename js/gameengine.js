@@ -65,8 +65,6 @@ function GameEngine() {
     this.speed = 10;
     this.maxspeed = 250;
 
-    // this.deadBirds = 0;
-    // this.shotsFired = 0;
     this.maxHealth = 100;
     this.health = 100;
 
@@ -84,8 +82,6 @@ GameEngine.prototype.init = function (ctx) {
     this.startInput();
     this.timer = new Timer();
     console.log('game initialized');
-    //  this.playGame = new PlayGame(this, 300, 300);
-    //   this.addEntity(this.playGame);
 }
 
 GameEngine.prototype.generateWorlds = function() {
@@ -96,32 +92,24 @@ GameEngine.prototype.generateWorlds = function() {
   //this.worlds["Final Boss"] = new World("Final Boss", this);
 }
 GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
-    //console.log("PORTAL");
-    //console.log(comingFrom);
-    //console.log(goingTo);
     this.clearLevel();
     if (comingFrom === "Area 51") {
         if (goingTo === "World 1") {
-            //console.log("PORTAL TO 1");
             this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
                 this, 736, 736); // Replace 736 with actual height and width
             this.currentWorld = this.worlds["World 1"];
             this.currentWorld.currentRoom = this.currentWorld.rooms[5][5];
-            //this.setLevel();
         } else if (goingTo === "World 2") {
-            //console.log("PORTAL TO 2");
             //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
             //     this, 736, 736); // Replace 736 with actual height and width
             this.currentWorld = this.worlds["World 2"];
             this.currentWorld.currentRoom = this.currentWorld.rooms[2][7];
         } else if (goingTo === "World 3") {
-            //console.log("PORTAL TO 2");
             //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
             //     this, 736, 736); // Replace 736 with actual height and width
             this.currentWorld = this.worlds["World 3"];
             this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
         } else if (goingTo === "Final Boss") {
-            //console.log("PORTAL TO 2");
             //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
             //     this, 736, 736); // Replace 736 with actual height and width
             this.currentWorld = this.worlds["Final Boss"];
@@ -146,6 +134,8 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
         //IF PORTAL ONE OR PORTAL TWO...
         if (this.currentWorld.currentRoom === this.currentWorld.rooms[8][4]) {
           this.currentWorld.currentRoom = this.currentWorld.rooms[2][0];
+        } else if (this.currentWorld.currentRoom === this.currentWorld.rooms[0][2]) {
+          this.currentWorld.currentRoom = this.currentWorld.rooms[4][5];
         }
 
     }
@@ -461,29 +451,6 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
         }
       }
     }
-    // if (this.currentWorld.name === "World 1" && this.currentWorld.currentRoom.bossRoom) {
-    //     if (!this.treeBossDead && this.currentSong != AM.getAudioAsset("./js/sound/bossmusic.mp3")) {
-    //         this.currentSong.pause();
-    //         this.currentSong.currentTime = 0;
-    //         this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
-    //         this.currentSong.addEventListener('ended', function() {
-    //             this.currentTime = 0;
-    //             this.play();
-    //         }, false);
-    //         this.currentSong.play();
-    //     } else if (this.treeBossDead && this.currentSong != AM.getAudioAsset("./js/sound/world1.mp3")){
-    //         this.currentSong.pause();
-    //         this.currentSong.currentTime = 0;
-    //         this.currentSong = AM.getAudioAsset("./js/sound/world1.mp3");
-    //         this.currentSong.addEventListener('ended', function() {
-    //             this.currentTime = 0;
-    //             this.play();
-    //         }, false);
-    //         this.currentSong.play();
-    //     }
-    //
-    // }
-
     this.setLevel(exitedFrom);
 }
 GameEngine.prototype.start = function () {
@@ -700,14 +667,12 @@ GameEngine.prototype.draw = function () {
 
           this.ctx.fillRect(this.camera.xView +275 + (i * 25) ,this.camera.yView + 200 + (j * 25) , 25, 25);
           if (this.currentWorld.rooms[j][i].portalRoom) {
-            //console.log("PORTAAAALS");
             this.ctx.drawImage(AM.getAsset("./js/img/textures.png"),
                 0, 200,  // source from sheet
                 50, 50,
                 this.camera.xView +275 + (i * 25), this.camera.yView + 200 + (j * 25),
                 25,
                 25);
-                //this.y += 50;
           } else if (this.currentWorld.rooms[j][i].bossRoom) {
             this.ctx.drawImage(AM.getAsset("./js/img/textures.png"),
                 0, 300,  // source from sheet
@@ -715,9 +680,7 @@ GameEngine.prototype.draw = function () {
                 this.camera.xView +275 + (i * 25), this.camera.yView + 200 + (j * 25),
                 25,
                 25);
-
           } else if (this.currentWorld.rooms[j][i].saveRoom) {
-            //MAKE SAVE TILE
             this.ctx.drawImage(AM.getAsset("./js/img/textures.png"),
                 0, 600,  // source from sheet
                 50, 50,
@@ -749,11 +712,9 @@ GameEngine.prototype.update = function () {
         }
     }
 
-    //   console.log(this.entities.length);
     for (var i = this.entities.length - 1; i >= 0; --i) {
         if (this.entities[i].removeFromWorld) {
             this.entities.splice(i, 1);
-            //console.log("be gone!");
         }
     }
     for (var i = this.platforms.length - 1; i >= 0; --i) {
