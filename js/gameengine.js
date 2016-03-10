@@ -86,6 +86,8 @@ GameEngine.prototype.generateWorlds = function() {
   this.worlds["Area 51"] = new World("Area 51", this);
   this.worlds["World 1"] = new World("World 1", this);
   this.worlds["World 2"] = new World("World 2", this);
+  this.worlds["World 3"] = new World("World 3", this);
+  //this.worlds["Final Boss"] = new World("Final Boss", this);
 }
 GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
   //console.log("PORTAL");
@@ -282,8 +284,27 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                   this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 2"));
               } else if (ch === "portal3") {
                   this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 3"));
+              } else if (ch === "portal4") {
+                  this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "Final Boss"));
               } else if (ch === "bosstile") {
                   this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
+              } else if (ch === "boss1block" && !this.treeBossDead) {
+                  var mult = 1;
+                  while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "boss1block") {
+                    currLevel.grid[j+mult][i] = "used_boss1block";
+                    mult += 1;
+                  }
+                  this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "B")));
+              } else if (ch === "boss2block") {
+                  this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
+              } else if (ch === "boss3block") {
+                  this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
+              } else if (ch === "used_boss1block") {
+                currLevel.grid[j][i] = "boss1block";
+              } else if (ch === "used_boss2block") {
+                currLevel.grid[j][i] = "boss2block";
+              } else if (ch === "used_boss3block") {
+                currLevel.grid[j][i] = "boss3block";
               }
               else if (ch === "password") {
                     saveRoom = true;
@@ -562,6 +583,32 @@ GameEngine.prototype.draw = function () {
           }
 
           this.ctx.fillRect(this.camera.xView +275 + (i * 25) ,this.camera.yView + 200 + (j * 25) , 25, 25);
+          if (this.currentWorld.rooms[j][i].portalRoom) {
+            //console.log("PORTAAAALS");
+            this.ctx.drawImage(AM.getAsset("./js/img/textures.png"),
+                0, 200,  // source from sheet
+                50, 50,
+                this.camera.xView +275 + (i * 25), this.camera.yView + 200 + (j * 25),
+                25,
+                25);
+                //this.y += 50;
+          } else if (this.currentWorld.rooms[j][i].bossRoom) {
+            this.ctx.drawImage(AM.getAsset("./js/img/textures.png"),
+                0, 300,  // source from sheet
+                50, 50,
+                this.camera.xView +275 + (i * 25), this.camera.yView + 200 + (j * 25),
+                25,
+                25);
+
+          } else if (this.currentWorld.rooms[j][i].saveRoom) {
+            //MAKE SAVE TILE
+            // this.ctx.drawImage(AM.getAsset("./js/img/textures.png"),
+            //     0, 300,  // source from sheet
+            //     50, 50,
+            //     this.camera.xView +275 + (i * 25), this.camera.yView + 200 + (j * 25),
+            //     25,
+            //     25);
+          }
         }
       }
     }

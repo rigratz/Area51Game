@@ -5,6 +5,9 @@ function Level(plan, i, j, gameEngine) {
   this.iIndex = i;
   this.jIndex = j;
   this.visited = false;
+  this.saveRoom = false;
+  this.bossRoom = false;
+  this.portalRoom = false;
 
   for (var y = 0; y < this.height; y++) {
     var line = plan[y], gridLine = [];
@@ -58,12 +61,20 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "portal2";
       else if (ch === "3")
         fieldType = "portal3";
+      else if (ch === "4")
+        fieldType = "portal4";
       else if (ch === "H")
         fieldType = "tree_boss";
       else if (ch === "P")
         fieldType = "healthpack";
       else if (ch === "p")
         fieldType = "password";
+      else if (ch === "[")
+        fieldType = "boss1block";
+      else if (ch === "]")
+        fieldType = "boss2block";
+      else if (ch === "|")
+        fieldType = "boss3block";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
