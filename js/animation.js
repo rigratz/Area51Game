@@ -352,7 +352,7 @@ Animation.prototype.drawFrameSnakeEnemy = function(tick, ctx, x, y) {
         height_mult = 3;
         y = y - 250;
     } else {
-        y = y + 5;
+        //y = y - 25;
     }
 
 

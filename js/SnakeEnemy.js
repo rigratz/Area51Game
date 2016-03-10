@@ -22,7 +22,11 @@ function SnakeEnemy(game, x, y, spritesheet, size) {
     this.idleAnimationRight = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.25, 6, true, false, "rightidle", size);
     this.size = size;
     this.animation = this.idleAnimation;
-    this.health = 700;
+    if(this.size === 2) {
+        this.health = 700;
+    } else {
+        this.health = 100;
+    }
     this.damage = 10;
     this.right = false;
     this.count = 0;
@@ -61,7 +65,7 @@ SnakeEnemy.prototype.update = function() {
         if(this.size === 2) {
             this.boundingRect = new BoundingRect(this.x, this.y - 200, 440, 340);
         } else {
-            this.boundingRect = new BoundingRect(this.x, this.y + 20, 200, 125);
+            this.boundingRect = new BoundingRect(this.x, this.y + 10, 200, 125);
         }
     }
 
@@ -160,13 +164,13 @@ SnakeEnemy.prototype.update = function() {
                         this.animation = this.rightAnimation;
                         //console.log("right attack")
                         if(this.animation.frame === 2) {
-                            this.x += 15 * this.size;
+                            this.x += 5;
                         }
                     } else {
                         this.animation = this.attackAnimation;
                         //console.log("left attack");
                         if(this.animation.frame === 5) {
-                            this.x -= 15 * this.size;
+                            this.x -= 5;
                         }
                     }
                     if(this.y > entity.y) {

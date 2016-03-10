@@ -34,7 +34,7 @@ function PlayerOne(game, x, y, spritesheet) {
 
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
-    this.debug = true;
+    this.debug = false;
 
     this.falling = false;
     this.fallTime = 0;
@@ -348,7 +348,7 @@ PlayerOne.prototype.update = function() {
                     }
                    bullet.y += 20;
                 }
-                if (this.facing === "left"  && !this.game.up) {                    
+                if (this.facing === "left"  && !this.game.up) {
                     if (this.game.currentPowerUp === "R") {
                           bullet1.x -= 70;
                           bullet2.x -= 70;
