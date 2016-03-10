@@ -19,7 +19,7 @@ function SnailEnemy(game, x, y, spritesheet, size) {
     this.leftAnimation = new Animation("snail_enemy", spritesheet, 50, 50, 0.2, 10, true, false, "left", size);
     this.animation = this.rightAnimation;
     this.size = size;
-    this.health = 60;
+    this.health = 150;
     this.damage = 10;
     this.right = false;
     this.bullet = null;
