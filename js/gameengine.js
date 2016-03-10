@@ -523,7 +523,7 @@ GameEngine.prototype.start = function () {
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
 
      //this.currentWorld = this.worlds["World 2"];
-     //this.currentWorld.currentRoom = this.currentWorld.rooms[6][2];
+     //this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
 
     this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
         this, 736, 736);
