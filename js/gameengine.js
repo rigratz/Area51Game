@@ -182,7 +182,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
     var ch;
     for (var i = 0; i < currLevel.grid[0].length; i++) {
         for (var j = 0; j < currLevel.grid.length; j++) {
-// <<<<<<< HEAD
+
 //               ch = currLevel.grid[j][i];
 //
 //           /************************
@@ -311,7 +311,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
 //                     saveI = i;
 //                     saveJ = j
 //               }
-// =======
+
             ch = currLevel.grid[j][i];
 
             /************************
