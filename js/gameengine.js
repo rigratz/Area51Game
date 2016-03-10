@@ -227,6 +227,8 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                     this.addEntity(new EyeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
               } else if (ch === "eye_boss_weakspot") {
                     this.addEntity(new EyeBossWeakSpot(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
+              } else if (ch === "shadow_bird") {
+                    this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/ShadowBird.png")));
               }
 
           /************************
@@ -281,6 +283,9 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
               } else if (ch === "portal3") {
                   this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 3"));
               } else if (ch === "bosstile") {
+                  this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
+              } else if (ch === "eye_boss_tile" && !this.eyeBossDead) {
+                  console.log('wy');
                   this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
               }
               else if (ch === "password") {

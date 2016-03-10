@@ -31,7 +31,6 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
 BirdEnemy.prototype = new Entity();
 BirdEnemy.prototype.constructor = BirdEnemy;
 
-
 BirdEnemy.prototype.draw = function () {
     if (!this.game.running) return;
 

@@ -595,7 +595,7 @@ PlayerOne.prototype.update = function() {
                           if (this.collideLeft(entity) && !this.jumping) {
                               this.hitEffect(entity);
                               if (entity instanceof EyeBoss) {
-                                  this.recoilX = 1000;
+                                  this.recoilX = 50;
                               }
                               else {
                                   this.recoilX = 50;
@@ -603,7 +603,7 @@ PlayerOne.prototype.update = function() {
                           } else if (this.collideLeft(entity) && this.jumping) {
                                     this.hitEffect(entity);
                                     if (entity instanceof EyeBoss) {
-                                        this.recoilX = 1000;
+                                        this.recoilX = 50;
                                     }
                                     else {
                                         this.recoilX = 50;

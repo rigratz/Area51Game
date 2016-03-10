@@ -9,8 +9,10 @@ function EyeBoss(game, x, y, spritesheet) {
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
     this.debug = true;
-    this.health = 500;
+    this.health = 1000;
     this.damage = 10;
+    this.collidePlatform = false;
+    this.speed = 3;
 
     this.idleAnimation = new Animation("eye_boss", spritesheet, 120, 130, 0.2, 6, true, false, "idle");
 
@@ -51,8 +53,32 @@ EyeBoss.prototype.update = function() {
                 entity.removeFromWorld = true;
             }
         }
-        if (entity instanceof PlayerOne) {
-
+        /*Follow*/
+        for (var i = 0; i < this.game.entities.length; i++) {
+            var entity = this.game.entities[i];
+            if (entity instanceof PlayerOne) {
+                var dist = distance(this, entity);
+                for (var i = 0; i < this.game.platforms.length; i++) {
+                    if (this.collide(this.game.platforms[i])) {
+                        this.collidePlatform = true;
+                        if(this.collideBottom(this.game.platforms[i])) {
+                            this.y -= 1;
+                        } else if(this.collideTop(this.game.platforms[i])) {
+                            this.y += 0.75;
+                        } else if(this.collideLeft(this.game.platforms[i])) {
+                            this.x += 2;
+                        } else if(this.collideRight(this.game.platforms[i])) {
+                            this.x -= 3;
+                        }
+                    }
+                }
+                if (dist < 1000) {   // "visual radius" the bird will start attacking the player at
+                    var difX = (entity.x - this.x) / dist;
+                    this.x += difX * this.speed;
+                    var difY = (entity.y - this.y) / dist;
+                    this.y += difY * this.speed;
+                }
+            }
         }
     }
 }
@@ -101,11 +127,48 @@ EyeBossWeakSpot.prototype.update = function() {
                 this.health -= this.game.bulletDamage;
                 if (this.health <= 0) {
                     this.removeFromWorld = true;
-                    this.game.eyeBossHealth -= 100;
+                    this.game.eyeBossHealth -= 200;
                     console.log(this.game.eyeBossHealth);
                 }
                 entity.removeFromWorld = true;
             }
         }
     }
+}
+EyeBoss.prototype.collide = function(other) {
+    return (this.boundingRect.bottom > other.boundingRect.top) &&
+        (this.boundingRect.left < other.boundingRect.right) &&
+        (this.boundingRect.right > other.boundingRect.left) &&
+        (this.boundingRect.top < other.boundingRect.bottom);
+}
+EyeBoss.prototype.collideTop = function(other) {
+
+    return this.boundingRect.top <= other.boundingRect.bottom &&
+        this.boundingRect.bottom >= other.boundingRect.bottom;
+}
+EyeBoss.prototype.collideLeft = function(other) {
+
+
+    return this.boundingRect.left <= other.boundingRect.right &&
+        this.boundingRect.right >= other.boundingRect.right;
+}
+EyeBoss.prototype.collideRight = function(other) {
+
+
+    return this.boundingRect.right >= other.boundingRect.left &&
+        this.boundingRect.left <= other.boundingRect.left;
+}
+EyeBoss.prototype.collideBottom = function(other) {
+
+
+    return this.boundingRect.bottom >= other.boundingRect.top &&
+        this.boundingRect.top <= other.boundingRect.top &&
+        this.boundingRect.bottom <= other.boundingRect.bottom;  // added this line because if the character's bottom
+    // is less than the platform bottom then we know he is standing on the platform. otherwise collisions are still detected
+    // even when he is just standing next to the platform
+}
+function distance(a, b) {
+    var dx = a.x - b.x;
+    var dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
 }
