@@ -13,7 +13,7 @@ function SnakeEnemy(game, x, y, spritesheet, size) {
     this.xvel = 100;
     this.yvel = 0;
     this.boundingRect = new BoundingRect(x, y, 40, 50);
-    this.debug = true;
+    this.debug = false;
     this.collided = false;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.attackAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.25, 6, true, false, "attack", size);
@@ -137,14 +137,14 @@ SnakeEnemy.prototype.update = function() {
                 } else if(!this.count % 500 === 0 && !this.switched) {  // idling left
                     this.animation = this.attackAnimation;
                     if(this.animation.frame === 4 ||this.animation.frame === 5 || this.animation.frame === 6) {
-                        this.x -= 15;
+                        this.x -= 20;
                     } else {
                         this.x = this.positionX;
                     }
                 } else if(!this.count % 500 === 0 && this.switched) {   // idling right
                     this.animation = this.rightAnimation;
                     if(this.animation.frame === 1 || this.animation.frame === 2 || this.animation.frame === 6) {
-                        this.x += 15;
+                        this.x += 20;
                     } else {
                         this.x = this.positionX - 2000;
                     }
