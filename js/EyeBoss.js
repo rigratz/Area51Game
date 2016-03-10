@@ -8,7 +8,7 @@ function EyeBoss(game, x, y, spritesheet) {
     this.removeFromWorld = false;
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = true;
+    this.debug = false;
     this.health = 1000;
     this.damage = 10;
     this.collidePlatform = false;
@@ -38,6 +38,10 @@ EyeBoss.prototype.draw = function () {
 EyeBoss.prototype.update = function() {
     if (this.health > this.game.eyeBossHealth) {
         this.health = this.game.eyeBossHealth;
+        if (this.health <= 0) {
+            this.game.eyeBossDead = true;
+            this.removeFromWorld = true;
+        }
     }
     this.boundingRect = new BoundingRect(this.x, this.y, this.animation.frameWidth * 2 -10, this.animation.frameWidth * 2);
     for (var i = 0; i < this.game.entities.length; i++) {
@@ -95,7 +99,7 @@ function EyeBossWeakSpot(game, x, y, spritesheet) {
     this.ctx = this.game.ctx;
     this.x = x;
     this.y = y;
-    this.debug = true;
+    this.debug = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.spriteSheet = spritesheet;
@@ -127,7 +131,7 @@ EyeBossWeakSpot.prototype.update = function() {
                 this.health -= this.game.bulletDamage;
                 if (this.health <= 0) {
                     this.removeFromWorld = true;
-                    this.game.eyeBossHealth -= 200;
+                    this.game.eyeBossHealth -= 1000;
                     console.log(this.game.eyeBossHealth);
                 }
                 entity.removeFromWorld = true;

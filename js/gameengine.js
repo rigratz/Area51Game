@@ -285,8 +285,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
               } else if (ch === "bosstile") {
                   this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
               } else if (ch === "eye_boss_tile" && !this.eyeBossDead) {
-                  console.log('wy');
-                  this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
+                  this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "EB")));
               }
               else if (ch === "password") {
                     saveRoom = true;
@@ -574,7 +573,14 @@ GameEngine.prototype.draw = function () {
 }
 
 GameEngine.prototype.update = function () {
-  //console.log(this.entities);
+    if (this.eyeBossDead) {
+        for (var i = 0; i < this.platforms.length; i++) {
+            if(this.platforms[i].platType === "EB") {
+                this.platforms.splice(i, 1);
+            }
+        }
+    }
+
     var entitiesCount = this.entities.length;
 
     for (var i = 0; i < entitiesCount; i++) {

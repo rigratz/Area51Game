@@ -27,7 +27,7 @@ Platform.prototype.reset = function () {
 }
 
 Platform.prototype.draw = function (ctx) {
-    if (this.platType === "B") {
+    if (this.platType === "B" || this.platType === "EB") {
       ctx.drawImage(this.textureSheet,
           0, 300,  // source from sheet
           50, 50,
