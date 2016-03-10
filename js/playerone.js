@@ -579,7 +579,7 @@ PlayerOne.prototype.update = function() {
                   }
              }
              if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy ||
-             entity instanceof SnakeEnemy) {
+             entity instanceof SnakeEnemy || entity instanceof SnailEnemy) {
                     if (entity.collide(this) && !this.invincible) {
                           this.recoiling = true;
                           this.invincible = true;
