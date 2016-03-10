@@ -176,6 +176,15 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
       this.play();
     }, false);
     this.currentSong.play();
+  } else if (this.currentWorld.name === "World 3" && this.currentSong != AM.getAudioAsset("./js/sound/world3.mp3")) {
+    this.currentSong.pause();
+    this.currentSong.currentTime = 0;
+    this.currentSong = AM.getAudioAsset("./js/sound/world3.mp3");
+    this.currentSong.addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+    }, false);
+    this.currentSong.play();
   }
   this.setLevel("south");
 }
@@ -385,28 +394,95 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
     this.currentWorld.currentRoom.visited = true;
 
 
-    if (this.currentWorld.name === "World 1" && this.currentWorld.currentRoom === this.currentWorld.rooms[2][4]) {
-        if (!this.treeBossDead && this.currentSong != AM.getAudioAsset("./js/sound/bossmusic.mp3")) {
-            this.currentSong.pause();
-            this.currentSong.currentTime = 0;
-            this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
-            this.currentSong.addEventListener('ended', function() {
-                this.currentTime = 0;
-                this.play();
-            }, false);
-            this.currentSong.play();
-        } else if (this.treeBossDead && this.currentSong != AM.getAudioAsset("./js/sound/world1.mp3")){
-            this.currentSong.pause();
-            this.currentSong.currentTime = 0;
-            this.currentSong = AM.getAudioAsset("./js/sound/world1.mp3");
-            this.currentSong.addEventListener('ended', function() {
-                this.currentTime = 0;
-                this.play();
-            }, false);
-            this.currentSong.play();
+    if (this.currentWorld.name === "World 1") {
+      if (this.currentWorld.currentRoom.bossRoom && !this.treeBossDead) {
+        this.currentSong.pause();
+        this.currentSong.currentTime = 0;
+        this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
+        this.currentSong.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        this.currentSong.play();
+      } else {
+        if (this.currentSong != AM.getAudioAsset("./js/sound/world1.mp3")) {
+          this.currentSong.pause();
+          this.currentSong.currentTime = 0;
+          this.currentSong = AM.getAudioAsset("./js/sound/world1.mp3");
+          this.currentSong.addEventListener('ended', function() {
+              this.currentTime = 0;
+              this.play();
+          }, false);
+          this.currentSong.play();
         }
-
+      }
+    } else if (this.currentWorld.name === "World 2") {
+      if (this.currentWorld.currentRoom.bossRoom && !this.snakeBossDead) {
+        this.currentSong.pause();
+        this.currentSong.currentTime = 0;
+        this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
+        this.currentSong.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        this.currentSong.play();
+      } else {
+        if (this.currentSong != AM.getAudioAsset("./js/sound/world2.mp3")) {
+          this.currentSong.pause();
+          this.currentSong.currentTime = 0;
+          this.currentSong = AM.getAudioAsset("./js/sound/world2.mp3");
+          this.currentSong.addEventListener('ended', function() {
+              this.currentTime = 0;
+              this.play();
+          }, false);
+          this.currentSong.play();
+        }
+      }
+    } else if (this.currentWorld.name === "World 3") {
+      if (this.currentWorld.currentRoom.bossRoom && !this.eyeBossDead) {
+        this.currentSong.pause();
+        this.currentSong.currentTime = 0;
+        this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
+        this.currentSong.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        this.currentSong.play();
+      } else {
+        if (this.currentSong != AM.getAudioAsset("./js/sound/world3.mp3")) {
+          this.currentSong.pause();
+          this.currentSong.currentTime = 0;
+          this.currentSong = AM.getAudioAsset("./js/sound/world3.mp3");
+          this.currentSong.addEventListener('ended', function() {
+              this.currentTime = 0;
+              this.play();
+          }, false);
+          this.currentSong.play();
+        }
+      }
     }
+    // if (this.currentWorld.name === "World 1" && this.currentWorld.currentRoom.bossRoom) {
+    //     if (!this.treeBossDead && this.currentSong != AM.getAudioAsset("./js/sound/bossmusic.mp3")) {
+    //         this.currentSong.pause();
+    //         this.currentSong.currentTime = 0;
+    //         this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
+    //         this.currentSong.addEventListener('ended', function() {
+    //             this.currentTime = 0;
+    //             this.play();
+    //         }, false);
+    //         this.currentSong.play();
+    //     } else if (this.treeBossDead && this.currentSong != AM.getAudioAsset("./js/sound/world1.mp3")){
+    //         this.currentSong.pause();
+    //         this.currentSong.currentTime = 0;
+    //         this.currentSong = AM.getAudioAsset("./js/sound/world1.mp3");
+    //         this.currentSong.addEventListener('ended', function() {
+    //             this.currentTime = 0;
+    //             this.play();
+    //         }, false);
+    //         this.currentSong.play();
+    //     }
+    //
+    // }
 
     this.setLevel(exitedFrom);
 }
@@ -417,7 +493,7 @@ GameEngine.prototype.start = function () {
         this.currentTime = 0;
         this.play();
     }, false);
-    //this.currentSong.play();
+    this.currentSong.play();
     //console.log("Make player");
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     //console.log("made player");
