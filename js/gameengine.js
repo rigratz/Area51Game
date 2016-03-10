@@ -201,135 +201,6 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
     for (var i = 0; i < currLevel.grid[0].length; i++) {
         for (var j = 0; j < currLevel.grid.length; j++) {
 
-//               ch = currLevel.grid[j][i];
-//
-//           /************************
-//            * Player related symbols
-//            ************************/
-//               if (ch === "playernorth" && exitedFrom === "south") {
-//                     var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
-//                     this.addEntity(player);
-//                     this.player = player;
-//                     this.camera.follow(player, 100, 100);
-//               } else if (ch === "playersouth" && exitedFrom === "north") {
-//                     var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
-//                     this.addEntity(player);
-//                     this.player = player;
-//                     this.camera.follow(player, 100, 100);
-//               } else if (ch === "playereast" && exitedFrom === "west") {
-//                     var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
-//                     this.addEntity(player);
-//                     this.player = player;
-//                     this.camera.follow(player, 100, 100);
-//               } else if (ch === "playerwest" && exitedFrom === "east") {
-//                     var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
-//                     this.addEntity(player);
-//                     this.player = player;
-//                     this.camera.follow(player, 100, 100);
-//               }
-//
-//           /************************
-//            * Enemy related symbols
-//            ************************/
-//               else if (ch === "bird") {
-//                     this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"), 10));
-//               } else if (ch === "catbird") {
-//                     this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/grumpy_cat.png"), 2));
-//               } else if (ch === "smallcrazycat") {
-//                     this.addEntity(new CrazyCatEnemy(this, i * 50, (j * 50), AM.getAsset("./js/img/alien.png"), 0.6));
-//               } else if (ch === "idle_bird") {
-//                     this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/bird_enemy_spritesheet.png"),0));
-//               } else if (ch === "bigcrazycat") {
-//                     this.addEntity(new CrazyCatEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/alien.png"), 1));
-//               } else if (ch === "dragon") {
-//                     this.addEntity(new Dragon(this, i * 50, j * 50, AM.getAsset("./js/img/dragon.png")));
-//               } else if (ch === "tree_boss" && !this.treeBossDead) {
-//                     this.addEntity(new TreeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/boss.png"), 0));
-//               } else if (ch === "shadow_enemy") {
-//                     this.addEntity(new ShadowEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/shadow_enemy.png"), 2));
-//               } else if (ch === "shadow_enemy_bound") {
-//                     this.addEntity(new ShadowEnemyBound(this, i * 50, j * 50));
-//               }
-//
-//           /************************
-//            * Upgrade related symbols
-//            ************************/
-//               else if (ch == "speedboost") {
-//                     if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
-//               }
-//               else if (ch == "bullet_upgrade") {
-//                     if (!this.hasBulletUpgrade) this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
-//               }
-//               else if (ch == "shotgun") {
-//                     if (!this.hasShotgun) this.addEntity(new PowerUp(AM.getAsset("./js/img/multishot_icon.png"), this, i * 50, j * 50, 50, 50, "R"));
-//               }
-//               else if (ch == "doublejump") {
-//                   if (!this.hasDoublejump) this.addEntity(new PowerUp(AM.getAsset("./js/img/double_jump_icon.png"), this, i * 50, j * 50, 50, 50, "J"));
-//               }
-//               else if (ch === "healthpack") {
-//                   if (!this.usedHealth) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50));
-//               }
-//
-//           /************************
-//            * Level related symbols
-//            ************************/
-//                 else if (ch === "platform") {
-//                      var mult = 1;
-//                      while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "platform") {
-//                        currLevel.grid[j+mult][i] = "used_platform";
-//                        mult += 1;
-//                      }
-//                      this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "X")));
-//                } else if (ch === "exit") {
-//                     var exitDir = null;
-//                     if (i === 0) {
-//                       exitDir = "west";
-//                     } else if (i === currLevel.grid[0].length - 1) {
-//                       exitDir = "east";
-//                     } else if (j === 0) {
-//                       exitDir = "north";
-//                     } else if (j === currLevel.grid.length - 1) {
-//                       exitDir = "south";
-//                     }
-//                     this.exits.push((new Exit(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "exit", exitDir)));
-//               } else if (ch === "used_platform") {
-//                   currLevel.grid[j][i] = "platform";
-//               } else if (ch === "portal0") {
-//                   this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "Area 51"));
-//               } else if (ch === "portal1") {
-//                   this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 1"));
-//               } else if (ch === "portal2") {
-//                   this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 2"));
-//               } else if (ch === "portal3") {
-//                   this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "World 3"));
-//               } else if (ch === "portal4") {
-//                   this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "Final Boss"));
-//               } else if (ch === "bosstile") {
-//                   this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
-//               } else if (ch === "boss1block" && !this.treeBossDead) {
-//                   var mult = 1;
-//                   while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "boss1block") {
-//                     currLevel.grid[j+mult][i] = "used_boss1block";
-//                     mult += 1;
-//                   }
-//                   this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "B")));
-//               } else if (ch === "boss2block") {
-//                   this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
-//               } else if (ch === "boss3block") {
-//                   this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
-//               } else if (ch === "used_boss1block") {
-//                 currLevel.grid[j][i] = "boss1block";
-//               } else if (ch === "used_boss2block") {
-//                 currLevel.grid[j][i] = "boss2block";
-//               } else if (ch === "used_boss3block") {
-//                 currLevel.grid[j][i] = "boss3block";
-//               }
-//               else if (ch === "password") {
-//                     saveRoom = true;
-//                     saveI = i;
-//                     saveJ = j
-//               }
-
             ch = currLevel.grid[j][i];
 
             /************************
@@ -519,16 +390,7 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
         }
 
     }
-    // if (this.currentWorld.name === "Area 51") {
-    //     this.currentWorld.name = "World 1";
-    //     this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
-    //     this, 736, 736); // Replace 736 with actual height and width
-    // } else if (this.currentWorld.name === "World 1") {
-    //   this.currentWorld.name = "Area 51";
-    //   this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
-    //   this, 736, 736);
-    // }
-    //console.log("switching");
+
     this.setLevel(exitedFrom);
 }
 GameEngine.prototype.start = function () {
@@ -665,7 +527,7 @@ GameEngine.prototype.draw = function () {
     if(this.camera != null && this.running) {
         this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
-        this.ctx.fillText("HP " + this.health + "    Lives " + this.lives, this.camera.xView + 15, this.camera.yView + 15);
+        this.ctx.fillText("HP " + this.health, this.camera.xView + 15, this.camera.yView + 15);
         this.ctx.fillStyle = "black";
         this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 150, 15);
         if (this.health > 66) {
@@ -678,17 +540,9 @@ GameEngine.prototype.draw = function () {
         this.ctx.fillRect(this.camera.xView + 20, this.camera.yView + 20, 150 * this.percent, 15);
         this.ctx.fillStyle = "Red";
         this.ctx.font = "bold 18px sans-serif";
-// <<<<<<< HEAD
-//         this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
-//         this.ctx.fillText("Current Powerup", this.camera.xView + 500, this.camera.yView + 15);
-//         //console.log(this.currentPowerUp);
-//         //console.log(this.powerups.length);
-// =======
-        // this.ctx.fillText("Lives " + this.lives, this.camera.xView + 720, this.camera.yView + 15);
+
         this.ctx.fillText("Current Powerup", this.camera.xView + 600, this.camera.yView + 15);
-        // console.log(this.currentPowerUp);
-        // console.log(this.powerups.length);
-//>>>>>>> 55354a41f0791bab100849861bf47409812967d2
+
         if (this.currentPowerUp === null || this.currentPowerUp === " ") {
             this.ctx.strokeStyle = "black";
             this.ctx.strokeRect(this.camera.xView + 750, this.camera.yView + 5, 50, 50);
