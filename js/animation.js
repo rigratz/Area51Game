@@ -374,9 +374,10 @@ Animation.prototype.drawFrameSnailEnemy = function(tick, ctx, x, y) {
     var xindex = this.frame % 8;
     var xframe = xindex * this.frameWidth + 50;
 
+
     var yindex = 0;
     //var xframe = 0;
-    var yframe = 50;
+    var yframe = 0;
 
     //xframe = xindex * this.frameWidth;
 
@@ -384,6 +385,11 @@ Animation.prototype.drawFrameSnailEnemy = function(tick, ctx, x, y) {
     var height_mult = 2;
 
 
+    if(this.type === "left") {
+        yframe = 150;
+    } else {
+        yframe = 50;
+    }
 
 
     ctx.drawImage(this.spriteSheet,

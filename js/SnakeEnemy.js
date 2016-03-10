@@ -93,22 +93,24 @@ SnakeEnemy.prototype.update = function() {
         var entity = this.game.entities[i];
         if (entity instanceof Bullet && entity.x > 0) {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
-            if (entity.collideEnemy(this)) {
-                this.damageSound.play();
-                this.health -= this.game.bulletDamage;
-                if (this.health <= 0) {
-                    if (this.size === 2) {
-                      this.game.snakeBossDead = true;
+            if(entity.dir != "snail"){
+                if (entity.collideEnemy(this)) {
+                    this.damageSound.play();
+                    this.health -= this.game.bulletDamage;
+                    if (this.health <= 0) {
+                        if (this.size === 2) {
+                          this.game.snakeBossDead = true;
+                        }
+                        this.removeFromWorld = true;
+                        var rand = Math.random();
+                        console.log(rand);
+                        if (rand < 0.25) {
+                            var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 40, this.y + 35, 30, 30);
+                            this.game.addEntity(health);
+                        }
                     }
-                    this.removeFromWorld = true;
-                    var rand = Math.random();
-                    console.log(rand);
-                    if (rand < 0.25) {
-                        var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 40, this.y + 35, 30, 30);
-                        this.game.addEntity(health);
-                    }
+                    entity.removeFromWorld = true;
                 }
-                entity.removeFromWorld = true;
             }
         }
     }
