@@ -1837,7 +1837,7 @@ World.prototype.makeRoomPlans = function (name) {
     builder = [
       "Xxxxxxxxxxxxxxxx",
       "XXXXXXXXxxxxxxxx",
-      "O       XXXXxxxx",
+      "O        XXXxxxx",
       "O           Xxxx",
       "O W          Xxx",
       "XXXX          Xx",

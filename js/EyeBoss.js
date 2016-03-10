@@ -45,7 +45,7 @@ EyeBoss.prototype.update = function() {
                 this.damageSound.play();
                 this.health -= this.damage;
                 if (this.health <= 0) {
-                    //this.game.eyeBossDead = true;
+                    this.game.eyeBossDead = true;
                     this.removeFromWorld = true;
                 }
                 entity.removeFromWorld = true;

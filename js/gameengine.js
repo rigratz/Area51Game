@@ -16,6 +16,7 @@ function GameEngine() {
   this.hasSpeed = false;
 
   this.treeBossDead = false;
+  this.eyeBossDead = false;
 
   this.hasBulletUpgrade = false;
 
@@ -183,22 +184,22 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                     var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
                     this.addEntity(player);
                     this.player = player;
-                    this.camera.follow(player, 100, 100);
+                    this.camera.follow(player, 400, 325);
               } else if (ch === "playersouth" && exitedFrom === "north") {
                     var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
                     this.addEntity(player);
                     this.player = player;
-                    this.camera.follow(player, 100, 100);
+                    this.camera.follow(player, 400, 325);
               } else if (ch === "playereast" && exitedFrom === "west") {
                     var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
                     this.addEntity(player);
                     this.player = player;
-                    this.camera.follow(player, 100, 100);
+                    this.camera.follow(player, 400, 325);
               } else if (ch === "playerwest" && exitedFrom === "east") {
                     var player = new PlayerOne(this, i * 50, j * 50 - 52, AM.getAsset("./js/img/playerv2.png"));
                     this.addEntity(player);
                     this.player = player;
-                    this.camera.follow(player, 100, 100);
+                    this.camera.follow(player, 400, 325);
               }
 
           /************************
@@ -222,7 +223,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                     this.addEntity(new ShadowEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/shadow_enemy.png"), 2));
               } else if (ch === "shadow_enemy_bound") {
                     this.addEntity(new ShadowEnemyBound(this, i * 50, j * 50));
-              } else if (ch === "eye_boss") {
+              } else if (ch === "eye_boss" && !this.eyeBossDead) {
                     this.addEntity(new EyeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
               } else if (ch === "eye_boss_weakspot") {
                     this.addEntity(new EyeBossWeakSpot(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
