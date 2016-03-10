@@ -29,6 +29,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "bosstile";
       else if (ch === "B")
         fieldType = "bird";
+      else if (ch === "*")
+        fieldType = "shadow_bird";
       else if (ch === "b")
         fieldType = "idle_bird";
       else if (ch === "D")
@@ -51,6 +53,12 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "shadow_enemy";
       else if (ch === "i")
         fieldType = "shadow_enemy_bound";
+      else if (ch === "$")
+        fieldType = "eye_boss";
+      else if (ch === "&")
+        fieldType = "eye_boss_weakspot";
+      else if (ch === ">")
+         fieldType = "eye_boss_tile";
       else if (ch === "r")
         fieldType = "shotgun";
       else if (ch === "0")

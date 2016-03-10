@@ -151,7 +151,7 @@ PlayerOne.prototype.reset = function () {
     this.moveState = 0;
     this.animation = this.idleAnimation;
 
-    this.game.camera.follow(this, 400, 175);
+    //this.game.camera.follow(this, 400, 325);
     this.game.camera.update();
 }
 PlayerOne.prototype.draw = function () {
@@ -187,7 +187,7 @@ PlayerOne.prototype.update = function() {
                 this.invincibilityTime = 0;
           }
     }
-    this.game.camera.follow(this, 100, 100);
+    this.game.camera.follow(this, 400, 325);
     //var collideExit = false;
     for (var i = 0; i < this.game.exits.length; i++) {
           if (this.collide(this.game.exits[i])) {
@@ -386,7 +386,8 @@ PlayerOne.prototype.update = function() {
               this.boundingRect.bottom = this.boundingRect.y + 60;
           }
           if (this.jumping) {
-                this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
+                //this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
+                this.boudingRect = new BoundingRect(this.x, this.y, 70, 124);
                 if (this.facing === "left") {
                     this.animation = this.jumpLeftAnimation;
                 } else {
@@ -578,14 +579,28 @@ PlayerOne.prototype.update = function() {
                       this.reset();
                   }
              }
-             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy ||
+             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy || entity instanceof EyeBoss ||
              entity instanceof SnakeEnemy || entity instanceof SnailEnemy) {
                     if (entity.collide(this) && !this.invincible) {
                           this.recoiling = true;
                           this.invincible = true;
                           if (this.collideLeft(entity) && !this.jumping) {
-                                this.hitEffect(entity);
-                                this.recoilX = 50;
+                              this.hitEffect(entity);
+                              if (entity instanceof EyeBoss) {
+                                  this.recoilX = 50;
+                              }
+                              else {
+                                  this.recoilX = 50;
+                              }
+                          } else if (this.collideLeft(entity) && this.jumping) {
+                                    this.hitEffect(entity);
+                                    if (entity instanceof EyeBoss) {
+                                        this.recoilX = 50;
+                                    }
+                                    else {
+                                        this.recoilX = 50;
+                                    }
+                                    console.log("collide left jumping");
                           } else if (this.collideRight(entity) && !this.jumping) {
                                     this.hitEffect(entity);
                                     console.log("collide right walking");
@@ -603,10 +618,6 @@ PlayerOne.prototype.update = function() {
                                     else {
                                         this.recoilX = -50;
                                     }
-                          } else if (this.collideLeft(entity) && this.jumping) {
-                                    this.hitEffect(entity);
-                                    console.log("collide left jumping");
-                                    this.recoilX = 50;
                           } else if (this.collideBottom(entity)) {
                                      this.hitEffect(entity);
                                      //this.recoilY = -50;
@@ -720,7 +731,7 @@ PlayerOne.prototype.update = function() {
             }
         }
         Entity.prototype.update.call(this);
-        this.game.camera.follow(this, 400, 175);
+        //this.game.camera.follow(this, 400, 325);
         this.game.camera.update();
     /*************************************************************
     This is is the end of the if statement starting at line 230!!!

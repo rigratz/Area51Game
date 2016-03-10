@@ -18,6 +18,7 @@ function GameEngine() {
     this.treeBossDead = false;
     this.snakeBossDead = false;
     this.hasBulletUpgrade = false;
+    this.eyeBossDead = false;
 
     this.hasShotgun = false;
 
@@ -27,7 +28,12 @@ function GameEngine() {
 
     this.bulletDamage = 10;
 
+    this.bulletDamage = 10;
+
+    this.eyeBossHealth = 1000;
+
     this.currentSong = null;
+
     this.entities = [];
     this.platforms = [];
     this.powerups = [];
@@ -255,6 +261,12 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                 this.addEntity(new ShadowEnemyBound(this, i * 50, j * 50));
             } else if (ch === "snail") {
                 this.addEntity(new SnailEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/snail.png")));
+            } else if (ch === "eye_boss" && !this.eyeBossDead) {
+                  this.addEntity(new EyeBoss(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
+            } else if (ch === "eye_boss_weakspot") {
+                  this.addEntity(new EyeBossWeakSpot(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
+            } else if (ch === "shadow_bird") {
+                  this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/ShadowBird.png")));
             }
 
             /************************
@@ -312,6 +324,8 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                 this.exits.push(new Portal(AM.getAsset("./js/img/textures.png"), this, i*50, j*50, 50, 50, "portal", "Final Boss"));
             } else if (ch === "bosstile") {
                 this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "B")));
+            } else if (ch === "eye_boss_tile" && !this.eyeBossDead) {
+                this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50, "EB")));
             } else if (ch === "boss1block" && !this.treeBossDead) {
                 var mult = 1;
                 while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "boss1block") {
@@ -400,7 +414,7 @@ GameEngine.prototype.start = function () {
         this.currentTime = 0;
         this.play();
     }, false);
-    this.currentSong.play();
+    //this.currentSong.play();
     //console.log("Make player");
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     //console.log("made player");
@@ -417,6 +431,10 @@ GameEngine.prototype.start = function () {
 
     this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
         this, 736, 736);
+
+    // this.backgroundImage = new Background(AM.getAsset("./js/img/black_background.jpg"),
+    //         this, 685, 391);
+
     this.setLevel("east");
 
     var that = this;
@@ -633,12 +651,18 @@ GameEngine.prototype.draw = function () {
 }
 
 GameEngine.prototype.update = function () {
-    //console.log(this.entities);
+
+    if (this.eyeBossDead) {
+        for (var i = 0; i < this.platforms.length; i++) {
+            if(this.platforms[i].platType === "EB") {
+                this.platforms.splice(i, 1);
+            }
+        }
+    }
     var entitiesCount = this.entities.length;
 
     for (var i = 0; i < entitiesCount; i++) {
         var entity = this.entities[i];
-
         if (!entity.removeFromWorld) {
             entity.update();
         }
