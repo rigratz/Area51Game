@@ -71,7 +71,7 @@ Dragon.prototype.update = function() {
     for (var i = 0; i < this.game.entities.length; i++) {
         var entity = this.game.entities[i];
         if (entity instanceof PlayerOne && this.bullet != null) {
-            console.log("player!");
+           // console.log("player!");
              if (this.bullet.flameCollidePlayer(entity)) {
                 this.bullet = null;
               }

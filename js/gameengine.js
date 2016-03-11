@@ -471,14 +471,14 @@ GameEngine.prototype.start = function () {
     //console.log("made player");
     this.generateWorlds();
 
-    //this.currentWorld = this.worlds["Area 51"];
-    //this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
+    this.currentWorld = this.worlds["Area 51"];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
 
     // this.currentWorld = this.worlds["World 1"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
 
-      this.currentWorld = this.worlds["World 2"];
-      this.currentWorld.currentRoom = this.currentWorld.rooms[7][5];
+      // this.currentWorld = this.worlds["World 2"];
+      // this.currentWorld.currentRoom = this.currentWorld.rooms[7][5];
 
     //  this.currentWorld = this.worlds["World 3"];
     //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];

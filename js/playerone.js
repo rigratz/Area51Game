@@ -19,7 +19,7 @@ function PlayerOne(game, x, y, spritesheet) {
     this.recoilY = 0;
     this.recoilTime = 0;
 
-    this.jumpcount = 0;
+    this.jumpCount = 0;
 
     this.invincible = false;
     this.invincibilityTime = 0;
@@ -126,6 +126,8 @@ PlayerOne.prototype.reset = function () {
     this.jumpTime = 0;
     this.totalJump = 2;
 
+    this.jumpCount = 0;
+
     this.speed = 10;
     this.maxSpeed = 250;
 
@@ -181,6 +183,7 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
+  console.log(this.game.currentPowerUp);
     if (this.recoiling) {
           this.recoilTime += this.game.clockTick;
           if (this.recoilTime >= 0.20) {
@@ -429,11 +432,13 @@ PlayerOne.prototype.update = function() {
                 }
                 this.jumpTime += this.game.clockTick;
                 this.yvel += this.jumpTime * 60;
-               // console.log(count);
+             //   console.log("before doublde jump");
                 if (this.yvel > 0 && this.game.jump) {
+                  console.log("before doublde jump");
+                  console.log(this.jumpCount);
                   if (this.jumpCount < 1 && this.game.currentPowerUp === "J") {
                       this.jumpCount++;
-                    //  console.log(count);
+                      console.log("here!");
                       this.jumping = false;
                       this.jumpTime = 0;
                       this.yvel = 0;
