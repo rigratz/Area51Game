@@ -19,7 +19,7 @@ function PlayerOne(game, x, y, spritesheet) {
     this.recoilY = 0;
     this.recoilTime = 0;
 
-    this.jumpcount = 0;
+    this.jumpCount = 0;
 
     this.invincible = false;
     this.invincibilityTime = 0;
@@ -32,9 +32,11 @@ function PlayerOne(game, x, y, spritesheet) {
         this.game.powerups.push(" ");
     this.currentPowerUp = " ";
 
+    this.scale = 1;
+
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
-    this.debug = false;
+    this.debug = true;
 
     this.falling = false;
     this.fallTime = 0;
@@ -44,8 +46,6 @@ function PlayerOne(game, x, y, spritesheet) {
     this.jumpTime = 0;
     this.totalJump = 2;
 
-  //  this.game.health = 100;
-    this.game.maxHealth = 100;
     this.game.percent = this.game.health / this.game.maxHealth;
 
     this.canShoot = true;
@@ -106,6 +106,8 @@ PlayerOne.prototype.reset = function () {
     this.boundingRect = new BoundingRect(this.x, this.y, 90, 124);
     this.debug = false;
 
+    this.scale = 1;
+
     this.recoiling = false;
     this.recoilX = 0;
     this.recoilY = 0;
@@ -121,6 +123,8 @@ PlayerOne.prototype.reset = function () {
     this.jumpHeight = 300;
     this.jumpTime = 0;
     this.totalJump = 2;
+
+    this.jumpCount = 0;
 
     this.speed = 10;
     this.maxSpeed = 250;
@@ -151,16 +155,21 @@ PlayerOne.prototype.reset = function () {
     this.moveState = 0;
     this.animation = this.idleAnimation;
 
-    this.game.camera.follow(this, 400, 175);
+    //this.game.camera.follow(this, 400, 325);
     this.game.camera.update();
 }
 PlayerOne.prototype.draw = function () {
     if (this.dead || !this.game.running) return;
     var rand = Math.random();
+    if (this.game.currentPowerUp === "T") {
+      this.scale = .5;
+    } else {
+      this.scale = 1;
+    }
     if (this.invincible && rand < .5) {
       return;
     } else {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, this.scale);
     }
     var bb = this.boundingRect;
 
@@ -172,6 +181,7 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
+  console.log(this.game.currentPowerUp);
     if (this.recoiling) {
           this.recoilTime += this.game.clockTick;
           if (this.recoilTime >= 0.20) {
@@ -182,12 +192,12 @@ PlayerOne.prototype.update = function() {
     }
     if (this.invincible) {
           this.invincibilityTime += this.game.clockTick;
-          if (this.invincibilityTime >= 2) {
+          if (this.invincibilityTime >= 1) {
                 this.invincible = false;
                 this.invincibilityTime = 0;
           }
     }
-    this.game.camera.follow(this, 100, 100);
+    this.game.camera.follow(this, 400, 325);
     //var collideExit = false;
     for (var i = 0; i < this.game.exits.length; i++) {
           if (this.collide(this.game.exits[i])) {
@@ -217,6 +227,27 @@ PlayerOne.prototype.update = function() {
     } else {
       this.game.bulletDamage = 10;
     }
+
+    if (this.game.currentPowerUp === "T") {
+         this.canShoot = false;
+         this.game.jump = false;
+    }
+    if (this.game.currentPowerUp === "T") {
+         for (var i = 0; i < this.game.platforms.length; i++) {
+             var plat = this.game.platforms[i];
+          //   console.log(plat.boundingRect.bottom);
+          //   console.log(this.boundingRect.top);
+             if (plat.boundingRect.bottom < this.boundingRect.top) {
+               if (this.boundingRect.top - 8  <= plat.boundingRect.bottom) {
+                            console.log(plat.boundingRect.bottom);
+            console.log(this.boundingRect.top);
+              //    this.boundingRect.bottom >= plat.boundingRect.bottom) {
+                    console.log("im colling!!!");
+                  //  this.changePowerUp = false;
+              }
+            }
+         }
+    } 
 
     /***************************************
     This if statement ends on line 656!!
@@ -380,13 +411,18 @@ PlayerOne.prototype.update = function() {
               }
               this.xvel = 0;
           }
-          this.boundingRect = new BoundingRect(this.x, this.y, 80, 102);
+          if (this.game.currentPowerUp === "T") {
+            this.boundingRect = new BoundingRect(this.x, this.y + 60, 80 * this.scale, 102 * this.scale + 15);
+          } else {
+          this.boundingRect = new BoundingRect(this.x, this.y, 90, 124);
+        }
           if (this.game.jump) {
               this.boundingRect.height = 60;
               this.boundingRect.bottom = this.boundingRect.y + 60;
           }
           if (this.jumping) {
-                this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
+                //this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
+                this.boudingRect = new BoundingRect(this.x, this.y, 70, 124);
                 if (this.facing === "left") {
                     this.animation = this.jumpLeftAnimation;
                 } else {
@@ -394,11 +430,13 @@ PlayerOne.prototype.update = function() {
                 }
                 this.jumpTime += this.game.clockTick;
                 this.yvel += this.jumpTime * 60;
-               // console.log(count);
+             //   console.log("before doublde jump");
                 if (this.yvel > 0 && this.game.jump) {
+                  console.log("before doublde jump");
+                  console.log(this.jumpCount);
                   if (this.jumpCount < 1 && this.game.currentPowerUp === "J") {
                       this.jumpCount++;
-                    //  console.log(count);
+                      console.log("here!");
                       this.jumping = false;
                       this.jumpTime = 0;
                       this.yvel = 0;
@@ -543,6 +581,11 @@ PlayerOne.prototype.update = function() {
                           this.canShoot = true;
                           this.shotCooldown = 0;
                       }
+                  } else if (this.game.currentPowerUp === "F") {
+                      if (this.shotCooldown > 0.2) {
+                          this.canShoot = true;
+                          this.shotCooldown = 0;
+                      }
                   }
                   else {
                       if (this.shotCooldown > 0.45) {
@@ -553,23 +596,25 @@ PlayerOne.prototype.update = function() {
         }
         for (var i = 0; i < this.game.entities.length; i++) {
               var entity = this.game.entities[i];
-            //   if (entity instanceof TreeBoss) {
-            //          /*
-            //          This kills the player instantly until we get knockback working!
-            //          Doesnt show the end game screen!
-            //          */
-            //          if (entity.collide(this)) {
-            //              this.damageSound.play();
-            //              this.game.health -= 1;
-            //              this.game.percent = this.game.health / this.game.maxHealth;
-            //              entity.collided = true;
-            //          }
-            //          if (this.game.health <= 0) {
-            //             this.removeFromWorld = true;
-            //             this.dead = true;
-            //             this.reset();
-            //          }
-            //   }
+            if(entity instanceof Bullet && (entity.dir === "snail" || entity.dir === "snail_left")) {
+                if(entity.collideEnemy(this)) {
+                    this.game.health -= 0.5;
+                    this.damageSound.play();
+                    this.game.percent = this.game.health / this.game.maxHealth;
+                    entity.removeFromWorld = true;
+                }
+            } else if(entity instanceof Bullet && entity.dir === "dragon") {
+                if(entity.flameCollidePlayer(this) && !this.invincible) {
+                    console.log("hit player!");
+                    //entity.removeFromWorld = true;
+                    this.game.health -= 0.5;
+                    this.damageSound.play();
+                    this.game.percent = this.game.health / this.game.maxHealth;
+                    this.invincible = true;
+                   // entity.removeFromWorld = true;
+
+                }
+            }
               if (entity instanceof TreeBossAttack) {
                   if (entity.collide(this) && entity.canDamage) {
                       this.damageSound.play();
@@ -587,21 +632,34 @@ PlayerOne.prototype.update = function() {
                       this.reset();
                   }
              }
-             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy ||
-             entity instanceof SnakeEnemy) {
+             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy || entity instanceof EyeBoss ||
+             entity instanceof SnakeEnemy || entity instanceof SnailEnemy) {
                     if (entity.collide(this) && !this.invincible) {
                           this.recoiling = true;
                           this.invincible = true;
                           if (this.collideLeft(entity) && !this.jumping) {
-                                this.hitEffect(entity);
-                                this.recoilX = 50;
+                              this.hitEffect(entity);
+                              if (entity instanceof EyeBoss) {
+                                  this.recoilX = 50;
+                              }
+                              else {
+                                  this.recoilX = 50;
+                              }
+                          } else if (this.collideLeft(entity) && this.jumping) {
+                                    this.hitEffect(entity);
+                                    if (entity instanceof EyeBoss) {
+                                        this.recoilX = 50;
+                                    }
+                                    else {
+                                        this.recoilX = 50;
+                                    }
+                                    console.log("collide left jumping");
                           } else if (this.collideRight(entity) && !this.jumping) {
                                     this.hitEffect(entity);
                                     console.log("collide right walking");
                                     if (entity instanceof TreeBoss) {
                                         this.recoilX = -1000;
-                                    }
-                                    else {
+                                    } else {
                                         this.recoilX = -50;
                                     }
                           } else if (this.collideRight(entity) && this.jumping) {
@@ -613,10 +671,6 @@ PlayerOne.prototype.update = function() {
                                     else {
                                         this.recoilX = -50;
                                     }
-                          } else if (this.collideLeft(entity) && this.jumping) {
-                                    this.hitEffect(entity);
-                                    console.log("collide left jumping");
-                                    this.recoilX = 50;
                           } else if (this.collideBottom(entity)) {
                                      this.hitEffect(entity);
                                      //this.recoilY = -50;
@@ -710,32 +764,64 @@ PlayerOne.prototype.update = function() {
 
                }
 
-            }
+            }  else if (entity.boostType === "T") {
+                            if (this.game.powerups.length === 1) {
+                                    this.game.powerups.push("T");
+                                    this.game.currentPowerUp = "T";
+                            }
+                            else {
+                                var flag = true;
+                                for (var i = 0; i < this.game.powerups.length; i++) {
+                                    if (this.game.powerups[i] === entity.boostType) {
+                                        flag = false;
+                                    }
+                                }
+                                if (flag) {
+                                    this.game.powerups.push(entity.boostType);
+                                }
+                                entity.removeFromWorld = true;
+                                this.game.hasShrink = true;
+                            }
+            }   else if (entity.boostType === "F") {
+                            if (this.game.powerups.length === 1) {
+                                    this.game.powerups.push("F");
+                                    this.game.currentPowerUp = "F";
+                            }
+                            else {
+                                var flag = true;
+                                for (var i = 0; i < this.game.powerups.length; i++) {
+                                    if (this.game.powerups[i] === entity.boostType) {
+                                        flag = false;
+                                    }
+                                }
+                                if (flag) {
+                                    this.game.powerups.push(entity.boostType);
+                                }
+                                entity.removeFromWorld = true;
+                                this.game.hasRapidFire = true;
+                            }
+                     }
           }
        }
             else if (entity instanceof HealthPack) {
                 if (entity.collide(this)) {
                     //console.log("collide health pack");
                     entity.removeFromWorld = true;
-                    this.game.usedHealth = true;
-                    if (this.game.health <= 60) {
-                        this.game.health += 40;
-                        this.game.percent = this.game.health / this.game.maxHealth;
-                    }
-                    else {
-                        this.game.health = 100;
-                        this.game.percent = this.game.health / this.game.maxHealth;
-                    }
+                    //this.game.usedHealth = true;
+                    this.game.maxHealth += 10;
+                    this.game.health = this.game.maxHealth;
+                    this.game.hasHealthUp[entity.char] = true;
                 }
             }
         }
         Entity.prototype.update.call(this);
-        this.game.camera.follow(this, 400, 175);
+        //this.game.camera.follow(this, 400, 325);
         this.game.camera.update();
     /*************************************************************
     This is is the end of the if statement starting at line 230!!!
     **************************************************************/
     }
+
     // This is to fix a recoil bug.
     // Its not ideal, but its better than what was.
     if (this.game.jump && this.recoiling) {

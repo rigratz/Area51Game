@@ -8,22 +8,29 @@ function SnakeEnemy(game, x, y, spritesheet, size) {
     this.game = game;
     this.ctx = game.ctx;
     this.x = x;
+    this.positionX = x;
     this.y = y;
     this.xvel = 100;
     this.yvel = 0;
     this.boundingRect = new BoundingRect(x, y, 40, 50);
-    this.debug = true;
+    this.debug = false;
     this.collided = false;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
-    this.attackAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "attack", size);
-    this.idleAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "idle", size);
-    this.rightAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "rightattack", size);
-    this.idleAnimationRight = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.2, 6, true, false, "rightidle", size);
+    this.attackAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.25, 6, true, false, "attack", size);
+    this.idleAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.25, 6, true, false, "idle", size);
+    this.rightAnimation = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.25, 6, true, false, "rightattack", size);
+    this.idleAnimationRight = new Animation("snake_enemy", spritesheet, 196.67, 130, 0.25, 6, true, false, "rightidle", size);
     this.size = size;
     this.animation = this.idleAnimation;
-    this.health = 60;
+    if(this.size === 2) {
+        this.health = 700;
+    } else {
+        this.health = 100;
+    }
     this.damage = 10;
     this.right = false;
+    this.count = 0;
+    this.switched = false;
     Entity.call(this, game, this.x, this.y);
     // console.log("this.x = ");
     // console.log(this.x);
@@ -50,15 +57,15 @@ SnakeEnemy.prototype.draw = function () {
 SnakeEnemy.prototype.update = function() {
     if(this.animation === this.rightAnimation || this.animation === this.idleAnimationRight) {
         if(this.size === 2) { // boss snake
-            this.boundingRect = new BoundingRect(this.x + 100, this.y + 10, 440, 265);
+            this.boundingRect = new BoundingRect(this.x + 100, this.y - 200, 440, 340);
         } else {
             this.boundingRect = new BoundingRect(this.x + 20, this.y + 10, 200, 125);
         }
     } else {
         if(this.size === 2) {
-            this.boundingRect = new BoundingRect(this.x, this.y + 20, 440, 265);
+            this.boundingRect = new BoundingRect(this.x, this.y - 200, 440, 340);
         } else {
-            this.boundingRect = new BoundingRect(this.x, this.y + 20, 200, 125);
+            this.boundingRect = new BoundingRect(this.x, this.y + 10, 200, 125);
         }
     }
 
@@ -86,19 +93,24 @@ SnakeEnemy.prototype.update = function() {
         var entity = this.game.entities[i];
         if (entity instanceof Bullet && entity.x > 0) {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
-            if (entity.collideEnemy(this)) {
-                this.damageSound.play();
-                this.health -= this.game.bulletDamage;
-                if (this.health <= 0) {
-                    this.removeFromWorld = true;
-                    var rand = Math.random();
-                    console.log(rand);
-                    if (rand < 0.25) {
-                        var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 40, this.y + 35, 30, 30);
-                        this.game.addEntity(health);
+            if(entity.dir != "snail" && entity.dir != "dragon"){
+                if (entity.collideEnemy(this)) {
+                    this.damageSound.play();
+                    this.health -= this.game.bulletDamage;
+                    if (this.health <= 0) {
+                        if (this.size === 2) {
+                          this.game.snakeBossDead = true;
+                        }
+                        this.removeFromWorld = true;
+                        var rand = Math.random();
+                        console.log(rand);
+                        if (rand < 0.25) {
+                            var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 40, this.y + 35, 30, 30);
+                            this.game.addEntity(health);
+                        }
                     }
+                    entity.removeFromWorld = true;
                 }
-                entity.removeFromWorld = true;
             }
         }
     }
@@ -113,33 +125,75 @@ SnakeEnemy.prototype.update = function() {
             } else {
                 this.right = false;
             }
+            //console.log(dist);
 
-            if (dist < (350 * this.size)) {
-                if(this.right) {
-                    this.animation = this.rightAnimation;
-                    //console.log("right attack")
-                    if(this.animation.frame === 2) {
-                        this.x += 15 * this.size;
-                    }
-                } else {
+
+            if(this.size === 2) { // boss
+                this.count++;
+                /**
+                 * Where the snake switching positions happens, along with the player recoil
+                 */
+                if(this.count % 500 === 0 && !this.switched) {  // attacking left, switch sides
+                    this.x -= 2000;
+                    this.switched = true;
+                } else if(this.count % 500 === 0 && this.switched) {    // attacking right, switch sides
+                    this.x += 1300;
+                    this.switched = false;
+                } else if(!this.count % 500 === 0 && !this.switched) {  // idling left
                     this.animation = this.attackAnimation;
-                    //console.log("left attack");
-                    if(this.animation.frame === 5) {
-                        this.x -= 15 * this.size;
+                    if(this.animation.frame === 4 ||this.animation.frame === 5 || this.animation.frame === 6) {
+                        this.x -= 15;
+                    } else {
+                        this.x = this.positionX;
+                    }
+                } else if(!this.count % 500 === 0 && this.switched) {   // idling right
+                    this.animation = this.rightAnimation;
+                    if(this.animation.frame === 1 || this.animation.frame === 2 || this.animation.frame === 6) {
+                        this.x += 15;
+                    } else {
+                        this.x = this.positionX - 2000;
                     }
                 }
-                if(this.y > entity.y) {
-                    this.animation = this.idleAnimation;
+
+                if(!this.switched && this.collide(entity)) {
+                    entity.recoilX = -1100;
+                } else if (this.switched && this.collide(entity)) {
+                    entity.recoilX = 1100;
                 }
+
+
+
             } else {
-                if(this.right) {
-                    //console.log("right idle");
-                    this.animation = this.idleAnimationRight;
+                if (dist < (350 * this.size)) {
+                    if(this.right) {
+                        this.animation = this.rightAnimation;
+                        //console.log("right attack")
+                        if(this.animation.frame === 2) {
+                            this.x += 5;
+                        }
+                    } else {
+                        this.animation = this.attackAnimation;
+                        //console.log("left attack");
+                        if(this.animation.frame === 5) {
+                            this.x -= 5;
+                        }
+                    }
+                    if(this.y > entity.y) {
+                        this.animation = this.idleAnimation;
+                    }
                 } else {
-                    //console.log("left idle")
-                    this.animation = this.idleAnimation;
+                    if(this.right) {
+                        //console.log("right idle");
+                        this.animation = this.idleAnimationRight;
+                    } else {
+                        //console.log("left idle")
+                        this.animation = this.idleAnimation;
+                    }
                 }
             }
+
+
+
 
 
         }

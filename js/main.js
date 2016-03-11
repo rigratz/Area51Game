@@ -17,11 +17,16 @@ AM.queueDownload("./js/img/mainscreen.png");
 AM.queueDownload("./js/img/area51main.png");
 AM.queueDownload("./js/img/playerv2.png");
 AM.queueDownload("./js/img/bird_enemy_spritesheet.png");
+AM.queueDownload("./js/img/ShadowBird.png");
 AM.queueDownload("./js/img/shadow_enemy.png");
+AM.queueDownload("./js/img/eye_boss_weakspot.png");
 AM.queueDownload("./js/img/cement_background.jpg");
 AM.queueDownload("./js/img/marble_background.jpg");
 AM.queueDownload("./js/img/sand_background.jpg");
 AM.queueDownload("./js/img/sand2_background.jpg");
+AM.queueDownload("./js/img/world2_background.png");
+AM.queueDownload("./js/img/world3_background.jpg");
+AM.queueDownload("./js/img/black_background.jpg");
 AM.queueDownload("./js/img/textures.png");
 AM.queueDownload("./js/img/dragon.png");
 AM.queueDownload("./js/img/grumpy_cat.png");
@@ -37,6 +42,10 @@ AM.queueDownload("./js/img/health_icon.png");
 AM.queueDownload("./js/img/health.png");
 AM.queueDownload("./js/img/snake-blue.png");
 AM.queueDownload("./js/img/snake.png");
+AM.queueDownload("./js/img/snail.png");
+AM.queueDownload("./js/img/shrink.png");
+AM.queueDownload("./js/img/fireball.png");
+AM.queueDownload("./js/img/rapidFire.png");
 
 
 
@@ -53,6 +62,7 @@ AM.queueAudioDownload("./js/sound/maintheme.mp3");
 AM.queueAudioDownload("./js/sound/bossmusic.mp3");
 AM.queueAudioDownload("./js/sound/world1.mp3");
 AM.queueAudioDownload("./js/sound/world2.mp3");
+AM.queueAudioDownload("./js/sound/world3.mp3");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");

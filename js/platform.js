@@ -27,15 +27,6 @@ Platform.prototype.reset = function () {
 }
 
 Platform.prototype.draw = function (ctx) {
-    if (this.platType === "B") {
-      ctx.drawImage(this.textureSheet,
-          0, 300,  // source from sheet
-          50, 50,
-          this.x, this.y,
-          50,
-          50);
-      return;
-    }
     var topx = 0;
     var topy = 0;
     var bottomx = 0;
@@ -49,6 +40,22 @@ Platform.prototype.draw = function (ctx) {
     } else if (this.game.currentWorld.name === "World 2") {
       topx = 0; topy = 400;
       bottomx = 100; bottomy = 400;
+    } else if (this.game.currentWorld.name === "World 3") {
+      topx = 0; topy = 500;
+      bottomx = 100; bottomy = 500;
+    }
+    if (this.platType === "B1") {
+      topx = 400; topy = 100;
+      bottomx = 400; bottomy = 100;
+    } else if (this.platType === "B2") {
+      topx = 200; topy = 500;
+      bottomx = 200; bottomy = 500;
+    } else if (this.platType === "B3") {
+      topx = 200; topy = 400;
+      bottomx = 200; bottomy = 400;
+  } else if (this.platType === "B" || this.playType === "EB") {
+      topx = 0; topy = 300;
+      bottomx = 0; bottomy = 300;
     }
 
     var mult = this.height / 50;

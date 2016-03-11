@@ -1,12 +1,13 @@
-function HealthPack(icon, game, x, y, w, h) {
+function HealthPack(icon, game, x, y, w, h, char) {
     this.icon = icon;
     this.ctx = game.ctx;
     this.x = x;
     this.y = y;
     this.width = w;
     this.height = h;
+    this.char = char;
     this.debug = false;
-   // this.boostType = type;
+
     this.boundingRect = new BoundingRect(x, y, w, h);
     this.game = game;
     this.collided = true;
