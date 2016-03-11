@@ -74,7 +74,35 @@ function Level(plan, i, j, gameEngine) {
       else if (ch === "H")
         fieldType = "tree_boss";
       else if (ch === "P")
-        fieldType = "healthpack";
+        fieldType = "healthpackP";
+      else if (ch === "a")
+        fieldType = "healthpacka";
+      else if (ch === "c")
+        fieldType = "healthpackc";
+      else if (ch === "z")
+        fieldType = "healthpackz";
+      else if (ch === "Z")
+        fieldType = "healthpackZ";
+      else if (ch === "v")
+        fieldType = "healthpackv";
+      else if (ch === "V")
+        fieldType = "healthpackV";
+      else if (ch === "9")
+        fieldType = "healthpack9";
+      else if (ch === "8")
+        fieldType = "healthpack8";
+      else if (ch === "7")
+        fieldType = "healthpack7";
+      else if (ch === "6")
+        fieldType = "healthpack6";
+      else if (ch === "5")
+        fieldType = "healthpack5";
+      else if (ch === "(")
+        fieldType = "healthpack(";
+      else if (ch === ")")
+        fieldType = "healthpack)";
+      else if (ch === "~")
+        fieldType = "healthpack~";
       else if (ch === "k")
         fieldType = "snake_enemy";
       else if (ch === "K")

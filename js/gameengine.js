@@ -9,6 +9,63 @@ window.requestAnimFrame = (function () {
         };
 })();
 
+GameEngine.prototype.createHealthBools = function() {
+  var bools = [];
+  bools["a"] = false;
+  bools["c"] = false;
+  bools["P"] = false;
+  bools["z"] = false;
+  bools["Z"] = false;
+  bools["v"] = false;
+  bools["V"] = false;
+  bools["9"] = false;
+  bools["8"] = false;
+  bools["7"] = false;
+  bools["6"] = false;
+  bools["5"] = false;
+  bools[")"] = false;
+  bools["("] = false;
+  bools["~"] = false;
+
+  return bools;
+};
+
+GameEngine.prototype.setHealthUps = function(ch, i, j) {
+  console.log("setting healths");
+  console.log(this.hasHealthUp);
+  if (ch === "healthpacka") {
+      if (!this.hasHealthUp["a"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "a"));
+  } else if (ch === "healthpackc") {
+      if (!this.hasHealthUp["c"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "c"));
+  } else if (ch === "healthpackP") {
+      if (!this.hasHealthUp["P"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "P"));
+  } else if (ch === "healthpackz") {
+      if (!this.hasHealthUp["z"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "z"));
+  } else if (ch === "healthpackZ") {
+      if (!this.hasHealthUp["Z"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "Z"));
+  } else if (ch === "healthpackV") {
+      if (!this.hasHealthUp["V"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "V"));
+  } else if (ch === "healthpackv") {
+      if (!this.hasHealthUp["v"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "v"));
+  } else if (ch === "healthpack9") {
+      if (!this.hasHealthUp["9"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "9"));
+  } else if (ch === "healthpack8") {
+      if (!this.hasHealthUp["8"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "8"));
+  } else if (ch === "healthpack7") {
+      if (!this.hasHealthUp["7"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "7"));
+  } else if (ch === "healthpack6") {
+      if (!this.hasHealthUp["6"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "6"));
+  } else if (ch === "healthpack5") {
+      if (!this.hasHealthUp["5"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "5"));
+  } else if (ch === "healthpack)") {
+      if (!this.hasHealthUp[")"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, ")"));
+  } else if (ch === "healthpack(") {
+      if (!this.hasHealthUp["("]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "("));
+  } else if (ch === "healthpack~") {
+      if (!this.hasHealthUp["~"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "~"));
+  }
+};
+
 function GameEngine() {
     //console.log("here");
     this.player = null;
@@ -21,7 +78,8 @@ function GameEngine() {
     this.eyeBossDead = false;
 
     this.hasShotgun = false;
-
+    this.hasHealthUp = this.createHealthBools();
+    //console.log(this.hasHealthUp);
     this.finished = false;
 
     this.hasDoublejump = false;
@@ -192,6 +250,7 @@ GameEngine.prototype.clearLevel = function() {
 }
 
 GameEngine.prototype.setLevel = function(exitedFrom) {
+  console.log(this.hasHealthUp);
     var newIndex = this.entities.length;
 
     var currLevel = this.currentWorld.currentRoom;
@@ -286,9 +345,6 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
             else if (ch == "doublejump") {
                 if (!this.hasDoublejump) this.addEntity(new PowerUp(AM.getAsset("./js/img/double_jump_icon.png"), this, i * 50, j * 50, 50, 50, "J"));
             }
-            else if (ch === "healthpack") {
-                if (!this.usedHealth) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50));
-            }
 
             /************************
              * Level related symbols
@@ -360,12 +416,23 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                   saveRoom = true;
                   saveI = i;
                   saveJ = j
+
+            /************************
+             * Health related symbols
+             ************************/
+            } else if (ch === "healthpacka" || ch === "healthpackc" || ch === "healthpackP"
+                      || ch === "healthpackz" || ch === "healthpackZ" || ch === "healthpackv"
+                      || ch === "healthpackV" || ch === "healthpack9" || ch === "healthpack8"
+                      || ch === "healthpack7" || ch === "healthpack6" || ch === "healthpack5"
+                      || ch === "healthpack)" || ch === "healthpack(" || ch === "healthpack~") {
+              this.setHealthUps(ch, i, j);
             }
         }
     }
     if (saveRoom) {
         this.platforms.push((new Pedestal(AM.getAsset("./js/img/save_pedestal.png"), this, saveI * 50, saveJ * 50, 300, 200, "Save Pedestal")));
     }
+
     this.currentWorld.currentRoom.visited = true;
 }
 
@@ -695,7 +762,6 @@ GameEngine.prototype.draw = function () {
 }
 
 GameEngine.prototype.update = function () {
-
     if (this.eyeBossDead) {
         for (var i = 0; i < this.platforms.length; i++) {
             if(this.platforms[i].platType === "EB") {

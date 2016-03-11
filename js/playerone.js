@@ -44,8 +44,6 @@ function PlayerOne(game, x, y, spritesheet) {
     this.jumpTime = 0;
     this.totalJump = 2;
 
-  //  this.game.health = 100;
-    this.game.maxHealth = 100;
     this.game.percent = this.game.health / this.game.maxHealth;
 
     this.canShoot = true;
@@ -718,15 +716,10 @@ PlayerOne.prototype.update = function() {
                 if (entity.collide(this)) {
                     //console.log("collide health pack");
                     entity.removeFromWorld = true;
-                    this.game.usedHealth = true;
-                    if (this.game.health <= 60) {
-                        this.game.health += 40;
-                        this.game.percent = this.game.health / this.game.maxHealth;
-                    }
-                    else {
-                        this.game.health = 100;
-                        this.game.percent = this.game.health / this.game.maxHealth;
-                    }
+                    //this.game.usedHealth = true;
+                    this.game.maxHealth += 10;
+                    this.game.health = this.game.maxHealth;
+                    this.game.hasHealthUp[entity.char] = true;
                 }
             }
         }
