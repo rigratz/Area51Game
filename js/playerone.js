@@ -34,7 +34,7 @@ function PlayerOne(game, x, y, spritesheet) {
 
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
-    this.debug = false;
+    this.debug = true;
 
     this.falling = false;
     this.fallTime = 0;
@@ -560,6 +560,12 @@ PlayerOne.prototype.update = function() {
                     this.damageSound.play();
                     this.game.percent = this.game.health / this.game.maxHealth;
                     entity.removeFromWorld = true;
+                }
+            } else if(entity instanceof Bullet && entity.dir === "dragon") {
+                if(entity.flameCollidePlayer(this)) {
+                    console.log("hit player!");
+                    entity.removeFromWorld = true;
+
                 }
             }
               if (entity instanceof TreeBossAttack) {

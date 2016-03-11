@@ -2014,6 +2014,8 @@ World.prototype.makeRoomPlans = function (name) {
       "XX            XX",
       "XX            XX",
       "XX            XX",
+      "XX            XX",
+      "XX            XX",
       "O              O",
       "O              O",
       "O W         E  O",

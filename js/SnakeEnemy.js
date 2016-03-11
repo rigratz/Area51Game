@@ -93,7 +93,7 @@ SnakeEnemy.prototype.update = function() {
         var entity = this.game.entities[i];
         if (entity instanceof Bullet && entity.x > 0) {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
-            if(entity.dir != "snail"){
+            if(entity.dir != "snail" && entity.dir != "dragon"){
                 if (entity.collideEnemy(this)) {
                     this.damageSound.play();
                     this.health -= this.game.bulletDamage;
@@ -142,14 +142,14 @@ SnakeEnemy.prototype.update = function() {
                 } else if(!this.count % 500 === 0 && !this.switched) {  // idling left
                     this.animation = this.attackAnimation;
                     if(this.animation.frame === 4 ||this.animation.frame === 5 || this.animation.frame === 6) {
-                        this.x -= 20;
+                        this.x -= 15;
                     } else {
                         this.x = this.positionX;
                     }
                 } else if(!this.count % 500 === 0 && this.switched) {   // idling right
                     this.animation = this.rightAnimation;
                     if(this.animation.frame === 1 || this.animation.frame === 2 || this.animation.frame === 6) {
-                        this.x += 20;
+                        this.x += 15;
                     } else {
                         this.x = this.positionX - 2000;
                     }

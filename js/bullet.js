@@ -12,9 +12,11 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.startX = x;
     this.startY = y;
     this.spritesheet = spritesheet;
-    this.animation = new Animation("bullet", spritesheet, 258, 108, 0.40, 1, true, false);
+    this.rightAnimation = new Animation("bullet", spritesheet, 258, 108, 0.40, 1, true, false);
     this.leftAnimation = new Animation("bullet", spritesheet, 258, 108, 0.40, 1, true, false);
     this.upAnimation = new Animation("bullet", spritesheet, 108, 258, 0.40, 1, true, false, "up");
+    this.animation = this.rightAnimation;
+    this.flameAnimation = new Animation("flame", spritesheet, 137, 285, 0.15, 2, true, false);
 
     this.dir = dir;
     if(this.game.currentPowerUp === 'B') {
@@ -45,7 +47,15 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     } else if(this.dir === "snail_left") {
         this.xvel = -800;
     }
-    this.boundingRect = new BoundingRect(x, y, 10, 10);
+
+
+
+    if(this.dir === "dragon") {
+        this.xvel = 0;
+        this.yvel = 250;
+    } else {
+        this.boundingRect = new BoundingRect(x, y, 10, 10);
+    }
     //this.debug = true;
 
     Entity.call(this, game, this.x, this.y);
@@ -67,7 +77,7 @@ Bullet.prototype.update = function() {
         this.animation = this.leftAnimation;
     } else if (this.dir === "right") {
         //console.log("aiming right!");
-        //this.animation = this.rightAnimation;
+        this.animation = this.rightAnimation;
     }
 
 
@@ -99,7 +109,7 @@ Bullet.prototype.draw = function () {
         this.ctx.strokeStyle = "black";
         this.ctx.stroke();
         this.ctx.restore();
-    } else {
+    } else if(this.dir != "dragon") {
         if(this.game.currentPowerUp === "B") {
             this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
             Entity.prototype.draw.call(this);
@@ -116,6 +126,11 @@ Bullet.prototype.draw = function () {
         }
     }
 
+    if (this.debug) {
+        this.ctx.strokeStyle = "blue";
+        this.ctx.strokeRect(this.boundingRect.x, this.boundingRect.y, this.boundingRect.width, this.boundingRect.height);
+    }
+
 
 }
 
@@ -130,4 +145,9 @@ Bullet.prototype.collideEnemy = function(other) {
     return (this.x <= other.boundingRect.right) &&
         (this.x > other.boundingRect.left) &&
         (this.y > (other.boundingRect.top) && (this.y < other.boundingRect.bottom));
+}
+
+Bullet.prototype.flameCollidePlayer = function(other) {
+    return (this.boundingRect.bottom > other.boundingRect.top) && (this.boundingRect.left > other.boundingRect.left)
+        && (this.boundingRect.right < other.boundingRect.right);
 }

@@ -429,8 +429,8 @@ GameEngine.prototype.start = function () {
     // this.currentWorld = this.worlds["World 1"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
 
-    //  this.currentWorld = this.worlds["World 2"];
-    //  this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
+      this.currentWorld = this.worlds["World 2"];
+      this.currentWorld.currentRoom = this.currentWorld.rooms[7][5];
 
     //  this.currentWorld = this.worlds["World 3"];
     //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
@@ -679,8 +679,9 @@ GameEngine.prototype.update = function () {
     //   console.log(this.entities.length);
     for (var i = this.entities.length - 1; i >= 0; --i) {
         if (this.entities[i].removeFromWorld) {
+
             this.entities.splice(i, 1);
-            //console.log("be gone!");
+            console.log("be gone!");
         }
     }
     for (var i = this.platforms.length - 1; i >= 0; --i) {
