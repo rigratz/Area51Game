@@ -181,7 +181,7 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
-  console.log(this.game.currentPowerUp);
+  //console.log(this.game.currentPowerUp);
     if (this.recoiling) {
           this.recoilTime += this.game.clockTick;
           if (this.recoilTime >= 0.20) {
@@ -232,22 +232,7 @@ PlayerOne.prototype.update = function() {
          this.canShoot = false;
          this.game.jump = false;
     }
-    if (this.game.currentPowerUp === "T") {
-         for (var i = 0; i < this.game.platforms.length; i++) {
-             var plat = this.game.platforms[i];
-          //   console.log(plat.boundingRect.bottom);
-          //   console.log(this.boundingRect.top);
-             if (plat.boundingRect.bottom < this.boundingRect.top) {
-               if (this.boundingRect.top - 8  <= plat.boundingRect.bottom) {
-                            console.log(plat.boundingRect.bottom);
-            console.log(this.boundingRect.top);
-              //    this.boundingRect.bottom >= plat.boundingRect.bottom) {
-                    console.log("im colling!!!");
-                  //  this.changePowerUp = false;
-              }
-            }
-         }
-    } 
+
 
     /***************************************
     This if statement ends on line 656!!
@@ -298,6 +283,27 @@ PlayerOne.prototype.update = function() {
                       this.changePowerUp = true;
                       this.powerUpCooldown = 0;
                 }
+          }
+          if (this.game.currentPowerUp === "T") {
+            console.log(this.boundingRect.top);
+               for (var i = 0; i < this.game.platforms.length; i++) {
+                   var plat = this.game.platforms[i];
+                //   console.log(plat.boundingRect.bottom);
+                //   console.log(this.boundingRect.top);
+                   if (plat.boundingRect.bottom < this.boundingRect.top) {
+                     //console.log("higher plat");
+                     if (//this.boundingRect.top - 8  >= plat.boundingRect.bottom
+                        (this.boundingRect.left > plat.boundingRect.left && this.boundingRect.left < plat.boundingRect.right)
+                           && (plat.boundingRect.bottom + 9  >= this.boundingRect.top)) {
+                                  //console.log(plat.boundingRect.bottom);
+                                  //console.log(this.boundingRect.top);
+                    //    this.boundingRect.bottom >= plat.boundingRect.bottom)
+                          console.log("im colling!!!");
+                          console.log(plat.boundingRect.bottom);
+                          this.changePowerUp = false;
+                    }
+                  }
+               }
           }
           if (this.game.jump) {
                 this.animation = this.jumpAnimation;
