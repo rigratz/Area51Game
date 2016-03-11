@@ -36,7 +36,7 @@ function PlayerOne(game, x, y, spritesheet) {
 
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
-    this.debug = true;
+    this.debug = false;
 
     this.falling = false;
     this.fallTime = 0;
