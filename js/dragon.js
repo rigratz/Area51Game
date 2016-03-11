@@ -6,7 +6,7 @@ function Dragon(game, x, y, spritesheet) {
     this.xvel = 100;
     this.yvel = 0;
     this.boundingRect = new BoundingRect(x, y, 40, 50);
-    this.debug = true;
+    this.debug = false;
     this.collided = false;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.animation = new Animation("dragon", spritesheet, 96, 96, 0.14, 3, true, false, "idle");
@@ -32,13 +32,13 @@ Dragon.prototype.draw = function () {
         this.bullet = new Bullet(this.game, this.x + 38, this.y + 65, AM.getAsset("./js/img/fireball.png"), "dragon");
         this.game.addEntity(this.bullet);
     } else {
-        if (Math.abs(this.bullet.distanceTraveled) > 200) {
+        if (Math.abs(this.bullet.distanceTraveled) > 300) {
             this.bullet = new Bullet(this.game, this.x + 38, this.y + 65, AM.getAsset("./js/img/fireball.png"), "dragon");
             this.game.addEntity(this.bullet);
         }
     }
 
-    this.bullet.debug = true;
+    //this.bullet.debug = true;
     //if(this.bullet.deb)
     this.bullet.boundingRect = new BoundingRect(this.bullet.x + 10, this.bullet.y, 45, 130);
     this.bullet.animation = this.bullet.flameAnimation;

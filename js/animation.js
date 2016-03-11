@@ -470,8 +470,6 @@ Animation.prototype.drawFrameFireball = function(tick, ctx, x, y) {
     var xframe = xindex * this.frameWidth;
     var yframe = 15;
 
-    //console.log(this.type);
-    console.log(frame);
     var width_mult = 0.5;
     var height_mult = 0.5;
     ctx.drawImage(this.spriteSheet,

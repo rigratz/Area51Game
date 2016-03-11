@@ -562,9 +562,13 @@ PlayerOne.prototype.update = function() {
                     entity.removeFromWorld = true;
                 }
             } else if(entity instanceof Bullet && entity.dir === "dragon") {
-                if(entity.flameCollidePlayer(this)) {
+                if(entity.flameCollidePlayer(this) && !this.invincible) {
                     console.log("hit player!");
-                    entity.removeFromWorld = true;
+                    //entity.removeFromWorld = true;
+                    this.game.health -= 0.5;
+                    this.damageSound.play();
+                    this.game.percent = this.game.health / this.game.maxHealth;
+                    this.invincible = true;
 
                 }
             }
