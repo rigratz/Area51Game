@@ -181,7 +181,7 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
-  console.log(this.game.currentPowerUp);
+  //console.log(this.game.currentPowerUp);
     if (this.recoiling) {
           this.recoilTime += this.game.clockTick;
           if (this.recoilTime >= 0.20) {
