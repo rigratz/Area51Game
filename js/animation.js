@@ -16,9 +16,9 @@ function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDurati
     this.size = size;
 }
 
-Animation.prototype.drawFrame = function (tick, ctx, x, y) {
+Animation.prototype.drawFrame = function (tick, ctx, x, y, scaleBy) {
     if (this.entityType === 'player') {
-        this.drawFramePlayerOne(tick, ctx, x, y);
+        this.drawFramePlayerOne(tick, ctx, x, y, scaleBy);
     }
     else if (this.entityType === 'bird_enemy') {
         this.drawFrameBirdEnemy(tick, ctx, x, y);
@@ -55,7 +55,8 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     }
 }
 
-Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
+Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y, scaleBy) {
+    var scaleBy = scaleBy || 1;
     this.elapsedTime += tick;
     this.time += tick;
     if (this.isDone()) {
@@ -100,14 +101,23 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
       yframe = 687;
         y = y - 37;
     }
+    if (scaleBy != 1) {
+        y = y + 50;
+    }
+    if (scaleBy != 1 && this.type === "crouch" || scaleBy != 1 && this.type === "crouchleft") {
+        y = y - 10;
+    }
+    if (scaleBy != 1 && this.type === "up") {
+        y = y + 19;
+    }
     var width_mult = 2.5;
     var height_mult = 2.5;
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,
         x, y,
-        this.frameWidth,
-        this.frameHeight);
+        this.frameWidth * scaleBy,
+        this.frameHeight * scaleBy);
 }
 
 Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {
