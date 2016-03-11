@@ -2636,6 +2636,7 @@ World.prototype.makeRoomPlans = function (name) {
     ];
     this.rooms[0][4] = new Level(builder, 0, 4, this.game);
     this.rooms[0][4].bossRoom = true;
+    this.currentRoom = this.rooms[0][4];
 
     builder = [
       "00000000000000000X",
