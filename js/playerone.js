@@ -583,6 +583,11 @@ PlayerOne.prototype.update = function() {
                           this.canShoot = true;
                           this.shotCooldown = 0;
                       }
+                  } else if (this.game.currentPowerUp === "F") {
+                      if (this.shotCooldown > 0.2) {
+                          this.canShoot = true;
+                          this.shotCooldown = 0;
+                      }
                   }
                   else {
                       if (this.shotCooldown > 0.45) {
@@ -778,6 +783,24 @@ PlayerOne.prototype.update = function() {
                                 }
                                 entity.removeFromWorld = true;
                                 this.game.hasShrink = true;
+                            }
+            }   else if (entity.boostType === "F") {
+                            if (this.game.powerups.length === 1) {
+                                    this.game.powerups.push("F");
+                                    this.game.currentPowerUp = "F";
+                            }
+                            else {
+                                var flag = true;
+                                for (var i = 0; i < this.game.powerups.length; i++) {
+                                    if (this.game.powerups[i] === entity.boostType) {
+                                        flag = false;
+                                    }
+                                }
+                                if (flag) {
+                                    this.game.powerups.push(entity.boostType);
+                                }
+                                entity.removeFromWorld = true;
+                                this.game.hasRapidFire = true;
                             }
                      }
           }

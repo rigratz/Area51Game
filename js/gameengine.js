@@ -24,6 +24,8 @@ function GameEngine() {
 
     this.hasShrink = false;
 
+    this.hasRapidFire = false;
+
     this.finished = false;
 
     this.hasDoublejump = false;
@@ -278,6 +280,9 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
              ************************/
             else if (ch == "speedboost") {
                 if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
+            }
+            else if (ch == "rapidfire") {
+                if (!this.hasRapidFire) this.addEntity(new PowerUp(AM.getAsset("./js/img/rapidFire.png"), this, i * 50, j * 50, 50, 50, "F"));
             }
                else if (ch == "shrink") {
                 if (!this.hasShrink) this.addEntity(new PowerUp(AM.getAsset("./js/img/shrink.png"), this, i * 50, j * 50, 50, 50, "T"));
@@ -633,6 +638,11 @@ GameEngine.prototype.draw = function () {
         }
         else if (this.currentPowerUp === "B") {
             var img = AM.getAsset("./js/img/bullet_upgrade_icon.png");
+            this.ctx.drawImage(img,
+                0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
+        }
+        else if (this.currentPowerUp === "F") {
+            var img = AM.getAsset("./js/img/rapidFire.png");
             this.ctx.drawImage(img,
                 0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
         }

@@ -91,6 +91,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "boss3block";
       else if (ch === "t")
         fieldType = "shrink";
+      else if (ch === "F")
+        fieldType = "rapidfire";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
