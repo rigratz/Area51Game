@@ -41,6 +41,10 @@ AM.queueDownload("./js/img/health.png");
 AM.queueDownload("./js/img/snake-blue.png");
 AM.queueDownload("./js/img/snake.png");
 AM.queueDownload("./js/img/snail.png");
+AM.queueDownload("./js/img/shrink.png");
+AM.queueDownload("./js/img/fireball.png");
+AM.queueDownload("./js/img/rapidFire.png");
+
 
 
 AM.queueDownload("./js/img/alien.png");

@@ -16,9 +16,9 @@ function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDurati
     this.size = size;
 }
 
-Animation.prototype.drawFrame = function (tick, ctx, x, y) {
+Animation.prototype.drawFrame = function (tick, ctx, x, y, scaleBy) {
     if (this.entityType === 'player') {
-        this.drawFramePlayerOne(tick, ctx, x, y);
+        this.drawFramePlayerOne(tick, ctx, x, y, scaleBy);
     }
     else if (this.entityType === 'bird_enemy') {
         this.drawFrameBirdEnemy(tick, ctx, x, y);
@@ -53,9 +53,13 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     else if(this.entityType === 'eye_boss_weakspot') {
         this.drawFrameEyeBossWeakSpot(tick, ctx, x, y);
     }
+    else if(this.entityType === 'flame') {
+        this.drawFrameFireball(tick, ctx, x, y);
+    }
 }
 
-Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
+Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y, scaleBy) {
+    var scaleBy = scaleBy || 1;
     this.elapsedTime += tick;
     this.time += tick;
     if (this.isDone()) {
@@ -100,14 +104,23 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y) {
       yframe = 687;
         y = y - 37;
     }
+    if (scaleBy != 1) {
+        y = y + 50;
+    }
+    if (scaleBy != 1 && this.type === "crouch" || scaleBy != 1 && this.type === "crouchleft") {
+        y = y - 10;
+    }
+    if (scaleBy != 1 && this.type === "up") {
+        y = y + 19;
+    }
     var width_mult = 2.5;
     var height_mult = 2.5;
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,
         x, y,
-        this.frameWidth,
-        this.frameHeight);
+        this.frameWidth * scaleBy,
+        this.frameHeight * scaleBy);
 }
 
 Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {
@@ -154,8 +167,9 @@ Animation.prototype.drawFrameDragon = function(tick, ctx, x, y) {
         if (this.loop) this.elapsedTime = 0;
     }
 
-    var frame = this.currentFrame();
-    var xindex = frame % 3;
+    this.frame = this.currentFrame();
+    //console.log(frame);
+    var xindex = this.frame % 3;
     var yindex = 0;
     var xframe = 0;
     var yframe = 0;
@@ -445,6 +459,29 @@ Animation.prototype.drawFrameSnailEnemy = function(tick, ctx, x, y) {
     }
 
 
+    ctx.drawImage(this.spriteSheet,
+        xframe, yframe,  // source from sheet
+        this.frameWidth, this.frameHeight,
+        x, y,
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
+}
+
+Animation.prototype.drawFrameFireball = function(tick, ctx, x, y) {
+    this.elapsedTime += tick;
+    this.time += tick
+    if(this.isDone()) {
+        if (this.loop) this.elapsedTime = 0;
+    }
+
+    var frame = this.currentFrame();
+    var xindex = frame % 2;
+    var yindex = 0;
+    var xframe = xindex * this.frameWidth;
+    var yframe = 15;
+
+    var width_mult = 0.5;
+    var height_mult = 0.5;
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,

@@ -78,8 +78,12 @@ function GameEngine() {
     this.eyeBossDead = false;
 
     this.hasShotgun = false;
+
     this.hasHealthUp = this.createHealthBools();
-    //console.log(this.hasHealthUp);
+
+    this.hasShrink = false;
+    this.hasRapidFire = false;
+
     this.finished = false;
 
     this.hasDoublejump = false;
@@ -336,6 +340,12 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
             else if (ch == "speedboost") {
                 if (!this.hasSpeed) this.addEntity(new PowerUp(AM.getAsset("./js/img/speed_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "S"));
             }
+            else if (ch == "rapidfire") {
+                if (!this.hasRapidFire) this.addEntity(new PowerUp(AM.getAsset("./js/img/rapidFire.png"), this, i * 50, j * 50, 50, 50, "F"));
+            }
+               else if (ch == "shrink") {
+                if (!this.hasShrink) this.addEntity(new PowerUp(AM.getAsset("./js/img/shrink.png"), this, i * 50, j * 50, 50, 50, "T"));
+            }
             else if (ch == "bullet_upgrade") {
                 if (!this.hasBulletUpgrade) this.addEntity(new PowerUp(AM.getAsset("./js/img/bullet_upgrade_icon.png"), this, i * 50, j * 50, 50, 50, "B"));
             }
@@ -539,11 +549,14 @@ GameEngine.prototype.start = function () {
     // this.currentWorld = this.worlds["World 1"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
 
-    //  this.currentWorld = this.worlds["World 2"];
-    //  this.currentWorld.currentRoom = this.currentWorld.rooms[6][7];
+      // this.currentWorld = this.worlds["World 2"];
+      // this.currentWorld.currentRoom = this.currentWorld.rooms[7][5];
 
     //  this.currentWorld = this.worlds["World 3"];
     //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
+
+    //this.currentWorld = this.worlds["World 3"];
+    //this.currentWorld.currentRoom = this.currentWorld.rooms[0][4];
 
     this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
         this, 736, 736);
@@ -695,8 +708,18 @@ GameEngine.prototype.draw = function () {
             this.ctx.drawImage(img,
                 0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
         }
+        else if (this.currentPowerUp === "F") {
+            var img = AM.getAsset("./js/img/rapidFire.png");
+            this.ctx.drawImage(img,
+                0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
+        }
         else if (this.currentPowerUp === "J") {
             var img = AM.getAsset("./js/img/double_jump_icon.png");
+            this.ctx.drawImage(img,
+                0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
+        }
+        else if (this.currentPowerUp === "T") {
+            var img = AM.getAsset("./js/img/shrink.png");
             this.ctx.drawImage(img,
                 0, 0,  50, 50, this.camera.xView + 750, this.camera.yView + 5, 50, 50);
         }
@@ -762,6 +785,7 @@ GameEngine.prototype.draw = function () {
 }
 
 GameEngine.prototype.update = function () {
+
     if (this.eyeBossDead) {
         for (var i = 0; i < this.platforms.length; i++) {
             if(this.platforms[i].platType === "EB") {
