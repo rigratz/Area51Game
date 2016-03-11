@@ -151,7 +151,7 @@ GameEngine.prototype.generateWorlds = function() {
   this.worlds["World 1"] = new World("World 1", this);
   this.worlds["World 2"] = new World("World 2", this);
   this.worlds["World 3"] = new World("World 3", this);
-  //this.worlds["Final Boss"] = new World("Final Boss", this);
+  this.worlds["Final Boss"] = new World("Final Boss", this);
 }
 GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
     this.clearLevel();
@@ -172,8 +172,8 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
             this.currentWorld = this.worlds["World 3"];
             this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
         } else if (goingTo === "Final Boss") {
-            //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
-            //     this, 736, 736); // Replace 736 with actual height and width
+            this.backgroundImage = new Background(AM.getAsset("./js/img/finalboss_background.jpg"),
+                 this, 1920, 1200); // Replace 736 with actual height and width
             this.currentWorld = this.worlds["Final Boss"];
             this.currentWorld.currentRoom = this.currentWorld.rooms[4][4];
         }
@@ -548,7 +548,7 @@ GameEngine.prototype.start = function () {
     this.generateWorlds();
 
     this.currentWorld = this.worlds["Area 51"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[7][7];
 
     // this.currentWorld = this.worlds["World 1"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
