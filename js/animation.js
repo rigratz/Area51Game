@@ -53,6 +53,9 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y, scaleBy) {
     else if(this.entityType === 'eye_boss_weakspot') {
         this.drawFrameEyeBossWeakSpot(tick, ctx, x, y);
     }
+    else if(this.entityType === 'flame') {
+        this.drawFrameFireball(tick, ctx, x, y);
+    }
 }
 
 Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y, scaleBy) {
@@ -164,8 +167,9 @@ Animation.prototype.drawFrameDragon = function(tick, ctx, x, y) {
         if (this.loop) this.elapsedTime = 0;
     }
 
-    var frame = this.currentFrame();
-    var xindex = frame % 3;
+    this.frame = this.currentFrame();
+    //console.log(frame);
+    var xindex = this.frame % 3;
     var yindex = 0;
     var xframe = 0;
     var yframe = 0;
@@ -455,6 +459,29 @@ Animation.prototype.drawFrameSnailEnemy = function(tick, ctx, x, y) {
     }
 
 
+    ctx.drawImage(this.spriteSheet,
+        xframe, yframe,  // source from sheet
+        this.frameWidth, this.frameHeight,
+        x, y,
+        this.frameWidth * width_mult,
+        this.frameHeight * height_mult);
+}
+
+Animation.prototype.drawFrameFireball = function(tick, ctx, x, y) {
+    this.elapsedTime += tick;
+    this.time += tick
+    if(this.isDone()) {
+        if (this.loop) this.elapsedTime = 0;
+    }
+
+    var frame = this.currentFrame();
+    var xindex = frame % 2;
+    var yindex = 0;
+    var xframe = xindex * this.frameWidth;
+    var yframe = 15;
+
+    var width_mult = 0.5;
+    var height_mult = 0.5;
     ctx.drawImage(this.spriteSheet,
         xframe, yframe,  // source from sheet
         this.frameWidth, this.frameHeight,
