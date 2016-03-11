@@ -557,7 +557,7 @@ GameEngine.prototype.start = function () {
     //   this.currentWorld.currentRoom = this.currentWorld.rooms[7][5];
 
     //  this.currentWorld = this.worlds["World 3"];
-    //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
+    //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][5];
 
     // this.currentWorld = this.worlds["World 3"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[0][5];
