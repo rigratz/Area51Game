@@ -868,7 +868,7 @@ GameEngine.prototype.draw = function () {
                 25);
           } else if (this.currentWorld.rooms[j][i].saveRoom) {
             this.ctx.drawImage(AM.getAsset("./js/img/textures.png"),
-                0, 600,  // source from sheet
+                0, 700,  // source from sheet
                 50, 50,
                 this.camera.xView +275 + (i * 25), this.camera.yView + 200 + (j * 25),
                 25,
