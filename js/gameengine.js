@@ -146,6 +146,7 @@ function GameEngine() {
     this.socket.on("load", function (data) {
     var studentName = data.studentname;
     var stateName = data.statename;
+    MasterGame.currentWorld = MasterGame.worlds[data.worldName];
     MasterGame.hasHealthUp = data.healthup;
     MasterGame.hasBulletUpgrade = data.bullet;
     MasterGame.hasShotgun =  data.shotgun;
@@ -160,7 +161,10 @@ function GameEngine() {
     MasterGame.powerups = data.powerUps;
     MasterGame.health = data.health;
     MasterGame.maxhealth = data.maxhealth;
-                                                    
+    console.log(data.roomi);
+    console.log(data.roomj);
+    console.log(MasterGame.currentWorld.currentRoom);
+    MasterGame.switchLevel("save", data.roomi, data.roomj);
 
      });
 
@@ -320,7 +324,7 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
     var saveRoom = false;
     var saveI = -1;
     var saveJ = -1;
-
+console.log(currLevel);
     var levelWidth = currLevel.grid[0].length;
     var levelHeight = currLevel.grid.length;
     this.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
@@ -517,6 +521,9 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
         this.currentWorld.currentRoom = this.currentWorld.rooms[i][j+1];
     } else if (exitedFrom === "west") {
         this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
+    } else if (exitedFrom === "save") {
+      this.currentWorld.currentRoom = this.currentWorld.rooms[i][j];
+      exitedFrom = "north";
     }
 
     this.currentWorld.currentRoom.visited = true;

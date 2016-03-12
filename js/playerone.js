@@ -835,7 +835,8 @@ PlayerOne.prototype.update = function() {
                                                       bullet: this.game.hasBulletUpgrade, shotgun: this.game.hasShotgun, rapidFire: this.game.hasRapidFire,
                                                       speed: this.game.hasSpeed, doubleJump: this.game.hasDoubleJump, shrink: this.game.hasShrink,
                                                     treeBos: this.game.treeBossDead, snakeBoss: this.game.snakeBossDead, eyeBoss: this.game.eyeBossDead,
-                                                    alienBoss: this.game.alienBossDead, health: this.game.health, maxHealth: this.game.maxHealth});
+                                                    alienBoss: this.game.alienBossDead, health: this.game.health, maxHealth: this.game.maxHealth,
+                                                    roomi: this.game.currentWorld.currentRoom.iIndex, roomj: this.game.currentWorld.currentRoom.jIndex, worldName: this.game.currentWorld.name});
 
 
 
