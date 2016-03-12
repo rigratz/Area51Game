@@ -15,7 +15,7 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
     this.debug = false;
-    this.health = 40;
+    this.health = 30;
     this.damage = 10;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "idle");
@@ -62,7 +62,7 @@ BirdEnemy.prototype.update = function() {
                 if (this.health <= 0) {
                     this.removeFromWorld = true;
                     var rand = Math.random();
-                    console.log(rand);
+                    //console.log(rand);
                     if (rand < 0.25) {
                         var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 45, this.y + 50, 30, 30);
                         this.game.addEntity(health);

@@ -12,8 +12,8 @@ function ShadowEnemy(game, x, y, spritesheet, xvel) {
     this.rightAnimation = new Animation("shadow_enemy", spritesheet, 64, 64, 0.09, 6, true, false, "right");
     this.leftAnimation = new Animation("shadow_enemy", spritesheet, 64, 64, 0.09, 6, true, false, "left");
     this.animation = this.rightAnimation;
-    this.health = 60;
-    this.damage = 5;
+    this.health = 50;
+    this.damage = 10;
     this.xvel = xvel;
     Entity.call(this, game, this.x, this.y);
 }

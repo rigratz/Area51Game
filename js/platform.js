@@ -89,7 +89,7 @@ function Pedestal(textureSheet, game, x, y, w, h, type) {
     this.y = y;
     this.width = w;
     this.height = h;
-    this.debug = true;
+    this.debug = false;
     this.removeFromWorld = false;
     this.platType = type;
     this.boundingRect = new BoundingRect(x+100, y, w-200, h);

@@ -23,7 +23,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.spritesheet = spritesheet;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.animation = new Animation("crazycat", spritesheet, 150, 150, 0.10, 7, true, false, size);
-    this.health = 40;
+    this.health = 30;
     this.damage = 5;
     this.size = size;
     this.following = false;
@@ -93,7 +93,7 @@ CrazyCatEnemy.prototype.update = function() {
                 if(this.health <= 0) {
                     this.removeFromWorld = true;
                     var rand = Math.random();
-                    console.log(rand);
+                    //console.log(rand);
                     if (rand < .25) {
                         var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 25, this.y + 40, 30, 30);
                         this.game.addEntity(health);

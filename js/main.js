@@ -1,4 +1,5 @@
 var AM = new AssetManager();
+var MasterGame = null;
 
 function BoundingRect(x, y, w, h) {
     this.x = x;
@@ -69,13 +70,13 @@ AM.queueAudioDownload("./js/sound/world3.mp3");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
-    var gameEngine = new GameEngine();
+    MasterGame = new GameEngine();
     console.log("created");
-    gameEngine.init(ctx);
+    MasterGame.init(ctx);
 
-    gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
+    // gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
 
-    gameEngine.start();
+    MasterGame.start();
 
     console.log("All Done!");
     console.log("Controls:");
@@ -88,4 +89,5 @@ AM.downloadAll(function () {
     console.log("Toggle Powerups: Space");
     console.log("View Map: M (Hold)");
 
-});
+
+ });

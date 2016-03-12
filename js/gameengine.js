@@ -31,8 +31,8 @@ GameEngine.prototype.createHealthBools = function() {
 };
 
 GameEngine.prototype.setHealthUps = function(ch, i, j) {
-  console.log("setting healths");
-  console.log(this.hasHealthUp);
+  //console.log("setting healths");
+  //console.log(this.hasHealthUp);
   if (ch === "healthpacka") {
       if (!this.hasHealthUp["a"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "a"));
   } else if (ch === "healthpackc") {
@@ -66,6 +66,7 @@ GameEngine.prototype.setHealthUps = function(ch, i, j) {
   }
 };
 
+
 function GameEngine() {
     //console.log("here");
     this.player = null;
@@ -97,6 +98,10 @@ function GameEngine() {
 
     this.currentSong = null;
 
+    this.password = null;
+
+    this.save = false;
+
     this.entities = [];
     this.platforms = [];
     this.powerups = [];
@@ -123,9 +128,9 @@ function GameEngine() {
     this.click = null;
     this.running = false;
     this.lives = 1;
-
     this.usedHealth = false;
     this.speed = 10;
+
     this.maxspeed = 250;
 
     this.maxHealth = 100;
@@ -133,8 +138,41 @@ function GameEngine() {
 
     this.birdDamage = 10; //probably should move this to entitiy.
     this.percent = this.health / this.maxHealth;
+    this.socket = io.connect("http://76.28.150.193:8888");
+             this.socket.on("connect", function () {
+        console.log("Socket connected.")
+    });
+
+    this.socket.on("load", function (data) {
+    var studentName = data.studentname;
+    var stateName = data.statename;
+    console.log(MasterGame.hashealthUp);
+    MasterGame.currentWorld = MasterGame.worlds[data.worldName];
+    MasterGame.hasHealthUp = data.healthup;
+    MasterGame.hasBulletUpgrade = data.bullet;
+    MasterGame.hasShotgun =  data.shotgun;
+    MasterGame.hasRapidFire = data.rapidfire;
+    MasterGame.hasSpeed = data.speed;
+    MasterGame.hasDoublejump = data.doublejump;
+    MasterGame.hasShrink = data.shrink;
+    MasterGame.treeBossDead = data.treeBos;
+    MasterGame.snakeBossDead = data.snakeBoss;
+    MasterGame.eyeBossDead = data.eyeBoss;
+    MasterGame.alienBossDead = data.alienBoss;
+    MasterGame.powerups = data.powerUps;
+    MasterGame.health = data.health;
+    MasterGame.maxHealth = data.maxHealth;
+    console.log(MasterGame.hasHealthUp);
+    console.log(data.healthup);
+    //console.log(data.roomj);
+    //console.log(MasterGame.currentWorld.currentRoom);
+    MasterGame.switchLevel("save", data.roomi, data.roomj);
+
+     });
+
 
 }
+
 
 GameEngine.prototype.init = function (ctx) {
     this.ctx = ctx;
@@ -170,8 +208,15 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
         } else if (goingTo === "World 3") {
             this.backgroundImage = new Background(AM.getAsset("./js/img/world3_background.jpg"),
                 this, 1920, 1080); // Replace 736 with actual height and width
+                var x = this.currentWorld.currentRoom.iIndex;
+                var y = this.currentWorld.currentRoom.jIndex;
             this.currentWorld = this.worlds["World 3"];
-            this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
+            if (x === 4 && y === 5) {
+              this.currentWorld.currentRoom = this.currentWorld.rooms[0][3];
+            } else if (x === 2 && y === 0) {
+              this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
+            }
+            // this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
         } else if (goingTo === "Final Boss") {
             this.backgroundImage = new Background(AM.getAsset("./js/img/finalboss_background.jpg"),
                  this, 1920, 1200); // Replace 736 with actual height and width
@@ -193,13 +238,23 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
     } else if (comingFrom === "World 3") {
         this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
             this, 736, 736);
-        this.currentWorld = this.worlds["Area 51"];
+
+            var x = this.currentWorld.currentRoom.iIndex;
+            var y = this.currentWorld.currentRoom.jIndex;
+          this.currentWorld = this.worlds["Area 51"];
         //IF PORTAL ONE OR PORTAL TWO...
-        if (this.currentWorld.currentRoom === this.currentWorld.rooms[8][4]) {
-          this.currentWorld.currentRoom = this.currentWorld.rooms[2][0];
-        } else if (this.currentWorld.currentRoom === this.currentWorld.rooms[0][2]) {
+        if (x === 0 && y === 3) {
           this.currentWorld.currentRoom = this.currentWorld.rooms[4][5];
+        } else if (x === 8 && y === 4) {
+          this.currentWorld.currentRoom = this.currentWorld.rooms[2][0];
         }
+        // if (this.currentWorld.currentRoom === this.currentWorld.rooms[8][4]) {
+        //
+        //   this.currentWorld.currentRoom = this.currentWorld.rooms[2][0];
+        // } else if (this.currentWorld.currentRoom === this.currentWorld.rooms[0][2]) {
+        //
+        //   this.currentWorld.currentRoom = this.currentWorld.rooms[4][5];
+        // }
 
     }
   if (this.currentWorld.name === "Area 51" && this.currentSong != AM.getAudioAsset("./js/sound/maintheme.mp3")) {
@@ -264,14 +319,30 @@ GameEngine.prototype.clearLevel = function() {
 }
 
 GameEngine.prototype.setLevel = function(exitedFrom) {
-  console.log(this.hasHealthUp);
+  //console.log(this.hasHealthUp);
+  if (this.currentWorld.name === "Area 51") {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
+        this, 736, 736);
+  } else if (this.currentWorld.name === "World 1") {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
+        this, 736, 736); // Replace 736 with actual height and width
+  } else if (this.currentWorld.name === "World 2") {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/world2_background.png"),
+         this, 2000, 1000); // Replace 736 with actual height and width
+  } else if (this.currentWorld.name === "World 3" && this.currentWorld.currentRoom != this.currentWorld.rooms[0][4]) {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/world3_background.jpg"),
+        this, 1920, 1080); // Replace 736 with actual height and width
+  } else if (this.currentWorld.name === "Final Boss") {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/finalboss_background.jpg"),
+         this, 1920, 1200); // Replace 736 with actual height and width
+  }
     var newIndex = this.entities.length;
 
     var currLevel = this.currentWorld.currentRoom;
     var saveRoom = false;
     var saveI = -1;
     var saveJ = -1;
-
+//console.log(currLevel);
     var levelWidth = currLevel.grid[0].length;
     var levelHeight = currLevel.grid.length;
     this.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
@@ -413,14 +484,14 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                   mult += 1;
                 }
                 this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "B1")));
-            } else if (ch === "boss2block" && !this.snakeBossDead) {
+            } else if (ch === "boss2block" && !this.eyeBossDead) {
                 var mult = 1;
                 while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "boss2block") {
                   currLevel.grid[j+mult][i] = "used_boss2block";
                   mult += 1;
                 }
                 this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "B2")));
-            } else if (ch === "boss3block" && !this.faceBossDead) {
+            } else if (ch === "boss3block" && !this.snakeBossDead) {
                 var mult = 1;
                 while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "boss3block") {
                   currLevel.grid[j+mult][i] = "used_boss3block";
@@ -468,6 +539,9 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
         this.currentWorld.currentRoom = this.currentWorld.rooms[i][j+1];
     } else if (exitedFrom === "west") {
         this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
+    } else if (exitedFrom === "save") {
+      this.currentWorld.currentRoom = this.currentWorld.rooms[i][j];
+      exitedFrom = "north";
     }
 
     this.currentWorld.currentRoom.visited = true;
@@ -573,14 +647,12 @@ GameEngine.prototype.start = function () {
     this.currentWorld = this.worlds["Area 51"];
     this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
 
-    // this.currentWorld = this.worlds["World 1"];
-    // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
 
-    //   this.currentWorld = this.worlds["World 2"];
-    //   this.currentWorld.currentRoom = this.currentWorld.rooms[7][5];
+      // this.currentWorld = this.worlds["World 2"];
+      // this.currentWorld.currentRoom = this.currentWorld.rooms[6][3];
 
     //  this.currentWorld = this.worlds["World 3"];
-    //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][5];
+    //  this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
 
     // this.currentWorld = this.worlds["World 3"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[0][5];
@@ -755,15 +827,15 @@ GameEngine.prototype.draw = function () {
         this.ctx.fillText("Use Arrow Keys to move!                                                                      Z = Jump    X = Shoot      Space = Toggle Powers (when available)       M = View Map" , 100, 100);
         //this.ctx.fillText("Z = Jump", 100, 100);
     }
-    // if (this.finished) {
-    //     //this.ctx.drawImage(this.bg, 0, 0, 800, 650, 0, 0, 800, 650);
-    //     this.ctx.font = "  24pt Impact";
-    //     this.ctx.fillStyle = "red";
-    //
-    //     this.ctx.fillText("You survived the Tree Boss and earned a speed boost!", this.camera.xView + 75, this.camera.yView + 100);
-    //     this.ctx.fillText("Use new powers to explore new areas in the full game!", this.camera.xView + 75, this.camera.yView + 300);
-    //     this.ctx.fillText("Coming Soon!", this.camera.xView + 340, this.camera.yView + 400);
-    // }
+    if (this.alienBossDead) {
+        //this.ctx.drawImage(this.bg, 0, 0, 800, 650, 0, 0, 800, 650);
+        this.ctx.font = "  24pt Impact";
+        this.ctx.fillStyle = "white";
+
+        this.ctx.fillText("Congratulations! You have saved the world or something!", this.camera.xView + 35, this.camera.yView + 100);
+        this.ctx.fillText("But I think you can play through faster than that...", this.camera.xView + 105, this.camera.yView + 300);
+        this.ctx.fillText("Refresh your browser to start over.", this.camera.xView + 170, this.camera.yView + 400);
+    }
     if (this.map) {
       this.ctx.fillStyle = "green";
       for (var i = 0; i < 10; i++) {
@@ -809,6 +881,7 @@ GameEngine.prototype.draw = function () {
 }
 
 GameEngine.prototype.update = function () {
+
 
     if (this.eyeBossDead) {
         for (var i = 0; i < this.platforms.length; i++) {
@@ -857,6 +930,7 @@ GameEngine.prototype.loop = function () {
     this.draw();
     this.click = null;
 }
+
 
 
 function Entity(game, x, y) {

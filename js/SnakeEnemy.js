@@ -23,11 +23,12 @@ function SnakeEnemy(game, x, y, spritesheet, size) {
     this.size = size;
     this.animation = this.idleAnimation;
     if(this.size === 2) {
-        this.health = 700;
+        this.health = 600;
     } else {
-        this.health = 100;
+        this.health = 50;
     }
     this.damage = 10;
+    this.speed = 75;
     this.right = false;
     this.count = 0;
     this.switched = false;
@@ -57,13 +58,13 @@ SnakeEnemy.prototype.draw = function () {
 SnakeEnemy.prototype.update = function() {
     if(this.animation === this.rightAnimation || this.animation === this.idleAnimationRight) {
         if(this.size === 2) { // boss snake
-            this.boundingRect = new BoundingRect(this.x + 100, this.y - 200, 440, 340);
+            this.boundingRect = new BoundingRect(this.x + 100, this.y - 200, 420, 340);
         } else {
             this.boundingRect = new BoundingRect(this.x + 20, this.y + 10, 200, 125);
         }
     } else {
         if(this.size === 2) {
-            this.boundingRect = new BoundingRect(this.x, this.y - 200, 440, 340);
+            this.boundingRect = new BoundingRect(this.x+75, this.y - 200, 380, 340);
         } else {
             this.boundingRect = new BoundingRect(this.x, this.y + 10, 200, 125);
         }
@@ -93,7 +94,7 @@ SnakeEnemy.prototype.update = function() {
         var entity = this.game.entities[i];
         if (entity instanceof Bullet && entity.x > 0) {
             //console.log("bullet: ", entity.x, ", ", "bird: ", this.x);
-            if(entity.dir != "snail" && entity.dir != "dragon"){
+            if(entity.dir != "snail" && entity.dir != "snail_left" && entity.dir != "dragon"){
                 if (entity.collideEnemy(this)) {
                     this.damageSound.play();
                     this.health -= this.game.bulletDamage;
@@ -103,7 +104,7 @@ SnakeEnemy.prototype.update = function() {
                         }
                         this.removeFromWorld = true;
                         var rand = Math.random();
-                        console.log(rand);
+                        //console.log(rand);
                         if (rand < 0.25) {
                             var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 40, this.y + 35, 30, 30);
                             this.game.addEntity(health);
@@ -134,22 +135,22 @@ SnakeEnemy.prototype.update = function() {
                  * Where the snake switching positions happens, along with the player recoil
                  */
                 if(this.count % 500 === 0 && !this.switched) {  // attacking left, switch sides
-                    this.x -= 2000;
+                    this.xvel = -200;
                     this.switched = true;
                 } else if(this.count % 500 === 0 && this.switched) {    // attacking right, switch sides
-                    this.x += 1300;
+                    this.xvel = 200;
                     this.switched = false;
                 } else if(!this.count % 500 === 0 && !this.switched) {  // idling left
                     this.animation = this.attackAnimation;
                     if(this.animation.frame === 4 ||this.animation.frame === 5 || this.animation.frame === 6) {
-                        this.x -= 15;
+                        this.xvel = -200;
                     } else {
                         this.x = this.positionX;
                     }
                 } else if(!this.count % 500 === 0 && this.switched) {   // idling right
                     this.animation = this.rightAnimation;
                     if(this.animation.frame === 1 || this.animation.frame === 2 || this.animation.frame === 6) {
-                        this.x += 15;
+                        this.xvel = 200;
                     } else {
                         this.x = this.positionX - 2000;
                     }
@@ -199,6 +200,17 @@ SnakeEnemy.prototype.update = function() {
         }
     }
 
+    for (var i = 0; i < this.game.entities.length; i++) {
+        var entity = this.game.entities[i];
+        if (entity instanceof PlayerOne) {
+            var dist = distance(this, entity);
+            if (dist < 400) {   // "visual radius" the bird will start attacking the player at
+                var difX = (entity.x - this.x) / dist;
+                this.xvel += difX * this.speed;
+              }
+          }
+      }
+    if (this.size === 2) this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
 }
 SnakeEnemy.prototype.collide = function(other) {

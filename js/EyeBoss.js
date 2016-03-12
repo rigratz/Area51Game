@@ -131,8 +131,8 @@ EyeBossWeakSpot.prototype.update = function() {
                 this.health -= this.game.bulletDamage;
                 if (this.health <= 0) {
                     this.removeFromWorld = true;
-                    this.game.eyeBossHealth -= 1000;
-                    console.log(this.game.eyeBossHealth);
+                    this.game.eyeBossHealth -= 200;
+                    //console.log(this.game.eyeBossHealth);
                 }
                 entity.removeFromWorld = true;
             }

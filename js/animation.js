@@ -132,7 +132,7 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y, scaleBy) {
         this.frameHeight * scaleBy);
 }
 Animation.prototype.drawFrameAlienBoss = function(tick, ctx, x, y) {
-  console.log("drawing boss");
+  //console.log("drawing boss");
   ctx.drawImage(this.spriteSheet,
       781, 300,  // source from sheet
       this.frameWidth, this.frameHeight,

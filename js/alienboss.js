@@ -152,7 +152,7 @@ LeftHand.prototype.draw = function () {
 LeftHand.prototype.update = function () {
   if (this.boss.leftMoving) {
     // this.yvel = 75;
-    console.log("should be moving");
+    //console.log("should be moving");
     // this.xvel = 0;
     if (this.yvel === 175 && this.y >= 700) {
       this.yvel = 0;

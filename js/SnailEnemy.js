@@ -12,14 +12,14 @@ function SnailEnemy(game, x, y, spritesheet, size) {
     this.xvel = 100;
     this.yvel = 0;
     this.boundingRect = new BoundingRect(x, y, 100, 100);
-    this.debug = true;
+    this.debug = false;
     this.collided = false;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.rightAnimation = new Animation("snail_enemy", spritesheet, 50, 50, 0.2, 10, true, false, "right", size);
     this.leftAnimation = new Animation("snail_enemy", spritesheet, 50, 50, 0.2, 10, true, false, "left", size);
     this.animation = this.rightAnimation;
     this.size = size;
-    this.health = 150;
+    this.health = 30;
     this.damage = 10;
     this.right = false;
     this.bullet = null;
@@ -73,7 +73,7 @@ SnailEnemy.prototype.update = function() {
                 if (this.health <= 0) {
                     this.removeFromWorld = true;
                     var rand = Math.random();
-                    console.log(rand);
+                  //  console.log(rand);
                     if (rand < 0.25) {
                         var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 40, this.y + 35, 30, 30);
                         this.game.addEntity(health);
