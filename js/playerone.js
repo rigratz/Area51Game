@@ -220,10 +220,10 @@ PlayerOne.prototype.update = function() {
           this.maxSpeed = 250;
     }
     if (this.game.currentPowerUp === "B") {
-          this.game.bulletDamage = 20;
+          this.game.bulletDamage = 30;
     }
     else if (this.game.currentPowerUp === "R") {
-          this.game.bulletDamage = 5;
+          this.game.bulletDamage = 8;
     } else {
       this.game.bulletDamage = 10;
     }
@@ -604,21 +604,30 @@ PlayerOne.prototype.update = function() {
               var entity = this.game.entities[i];
             if(entity instanceof Bullet && (entity.dir === "snail" || entity.dir === "snail_left")) {
                 if(entity.collideEnemy(this)) {
-                    this.game.health -= 0.5;
+                    this.game.health -= 2;
                     this.damageSound.play();
                     this.game.percent = this.game.health / this.game.maxHealth;
                     entity.removeFromWorld = true;
+                    if (this.game.health <= 0) {
+                        this.removeFromWorld = true;
+                        this.dead = true;
+                        this.reset();
+                    }
                 }
             } else if(entity instanceof Bullet && entity.dir === "dragon") {
                 if(entity.flameCollidePlayer(this) && !this.invincible) {
                     console.log("hit player!");
                     //entity.removeFromWorld = true;
-                    this.game.health -= 0.5;
+                    this.game.health -= 5;
                     this.damageSound.play();
                     this.game.percent = this.game.health / this.game.maxHealth;
                     this.invincible = true;
                    // entity.removeFromWorld = true;
-
+                   if (this.game.health <= 0) {
+                       this.removeFromWorld = true;
+                       this.dead = true;
+                       this.reset();
+                   }
                 }
             }
               if (entity instanceof TreeBossAttack) {

@@ -39,7 +39,7 @@ function TreeBossAttack(game, x, y, spritesheet, xvel) {
     this.collided = false;
     this.canDamage = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = true;
+    this.debug = false;
     this.speed = 2;
     this.animation = new Animation("tree_boss_attack", spritesheet, 218, 100, 0.15, 8, true, false, "attacking");
     Entity.call(this, game, this.x, this.y);

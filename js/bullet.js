@@ -21,6 +21,7 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.dir = dir;
     if(this.game.currentPowerUp === 'B') {
         var speed = 300;
+        this.damage = 30;
     }
     else if(this.game.currentPowerUp === 'R') {
         var speed = 300;
@@ -29,11 +30,11 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
         var speed = 1000;
     }
 
-    if(this.game.hasBulletUpgrade) {
-        this.damage = 20;
-    } else {
-        this.damage = 10;
-    }
+    // if(this.game.hasBulletUpgrade) {
+    //     this.damage = 20;
+    // } else {
+    //     this.damage = 10;
+    // }
 
     this.distanceTraveled = 0;
     if (dir === "up") {

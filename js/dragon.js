@@ -6,7 +6,7 @@ function Dragon(game, x, y, spritesheet) {
     this.xvel = 100;
     this.yvel = 0;
     this.boundingRect = new BoundingRect(x, y, 40, 50);
-    this.debug = true;
+    this.debug = false;
     this.collided = false;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.animation = new Animation("dragon", spritesheet, 96, 96, 0.14, 3, true, false, "idle");

@@ -15,7 +15,7 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.collided = false;
     this.boundingRect = new BoundingRect(x, y, 0, 0);
     this.debug = false;
-    this.health = 40;
+    this.health = 30;
     this.damage = 10;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.idleAnimation = new Animation("bird_enemy", spritesheet, 95, 100, 0.10, 8, true, false, "idle");

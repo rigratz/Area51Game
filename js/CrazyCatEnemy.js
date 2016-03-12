@@ -23,7 +23,7 @@ function CrazyCatEnemy(game, x, y, spritesheet, size) {
     this.spritesheet = spritesheet;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.animation = new Animation("crazycat", spritesheet, 150, 150, 0.10, 7, true, false, size);
-    this.health = 40;
+    this.health = 30;
     this.damage = 5;
     this.size = size;
     this.following = false;

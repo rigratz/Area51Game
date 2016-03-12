@@ -6,7 +6,7 @@ function Exit(textureSheet, game, x, y, w, h, type, exitDir) {
     this.width = w;
     this.height = h;
     this.removeFromWorld = false;
-    this.debug = true;
+    this.debug = false;
     this.type = type;
     this.exitDir = exitDir;
     this.boundingRect = new BoundingRect(x, y, w, h);
