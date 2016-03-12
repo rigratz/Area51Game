@@ -183,6 +183,8 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
+  console.log(this.game.currentWorld.currentRoom.iIndex);
+  console.log(this.game.currentWorld.currentRoom.jIndex);
     if (this.recoiling) {
           this.recoilTime += this.game.clockTick;
           if (this.recoilTime >= 0.20) {
@@ -835,7 +837,9 @@ PlayerOne.prototype.update = function() {
                                                       bullet: this.game.hasBulletUpgrade, shotgun: this.game.hasShotgun, rapidFire: this.game.hasRapidFire,
                                                       speed: this.game.hasSpeed, doubleJump: this.game.hasDoubleJump, shrink: this.game.hasShrink,
                                                     treeBos: this.game.treeBossDead, snakeBoss: this.game.snakeBossDead, eyeBoss: this.game.eyeBossDead,
-                                                    alienBoss: this.game.alienBossDead, health: this.game.health, maxHealth: this.game.maxHealth});
+                                                    alienBoss: this.game.alienBossDead, health: this.game.health, maxHealth: this.game.maxHealth,
+                                                    roomi: this.game.currentWorld.currentRoom.iIndex, roomj: this.game.currentWorld.currentRoom.jIndex
+                                                  }); //world: this.game.currentWorld CANT PASS THIS IN, ITS TO BIG;
 
 
 

@@ -160,6 +160,7 @@ function GameEngine() {
     MasterGame.powerups = data.powerUps;
     MasterGame.health = data.health;
     MasterGame.maxhealth = data.maxhealth;
+    MasterGame.currentWorld.currentRoom = this.currentWorld.rooms[data.roomi][data.roomj];
                                                 
      });
 
@@ -620,7 +621,7 @@ GameEngine.prototype.start = function () {
 
 
     this.currentWorld = this.worlds["Area 51"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[1][9];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
 
     // this.currentWorld = this.worlds["Area 51"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[7][7];
