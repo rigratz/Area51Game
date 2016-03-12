@@ -831,7 +831,15 @@ PlayerOne.prototype.update = function() {
                       this.game.password = prompt("Please enter a unique save password!");
                       console.log(this.game.password);
                       this.game.saveGame = true;
-                      this.game.socket.emit("save", { studentname: this.game.password, statename: "savedArea51", health: this.game.health, maxHealth: this.game.maxHealth});
+                      this.game.socket.emit("save", { healthup: this.game.hasHealthUp, studentname: this.game.password, statename: "savedArea51", powerUps: this.game.powerups,
+                                                      bullet: this.game.hasBulletUpgrade, shotgun: this.game.hasShotgun, rapidFire: this.game.hasRapidFire,
+                                                      speed: this.game.hasSpeed, doubleJump: this.game.hasDoubleJump, shrink: this.game.hasShrink,
+                                                    treeBos: this.game.treeBossDead, snakeBoss: this.game.snakeBossDead, eyeBoss: this.game.eyeBossDead,
+                                                    alienBoss: this.game.alienBossDead, health: this.game.health, maxHealth: this.game.maxHealth});
+
+
+
+
                       console.log(this.game.hasHealthUp);
                       this.game.left = false;
                       this.game.right = false;

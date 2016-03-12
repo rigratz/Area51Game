@@ -146,13 +146,22 @@ function GameEngine() {
     this.socket.on("load", function (data) {
     var studentName = data.studentname;
     var stateName = data.statename;
-    // var player_score = data.player_score;
-    // var computer_score = data.computer_score;
-    this.health = data.health - 60;
-    this.maxHealth = data.maxHealth; //health being sent is correct, its just not displaying correctly
-    console.log(this.health);
-    this.percent = this.health / this.maxHealth;
-    // HOW DO I GET IT TO DRAW??
+    MasterGame.hasHealthUp = data.healthup;
+    MasterGame.hasBulletUpgrade = data.bullet;
+    MasterGame.hasShotgun =  data.shotgun;
+    MasterGame.hasRapidFire = data.rapidfire;
+    MasterGame.hasSpeed = data.speed;
+    MasterGame.hasDoublejump = data.doublejump;
+    MasterGame.hasShrink = data.shrink;
+    MasterGame.treeBossDead = data.treeBos;
+    MasterGame.snakeBossDead = data.snakeBoss;
+    MasterGame.eyeBossDead = data.eyeBoss;
+    MasterGame.alienBossDead = data.alienBoss;
+    MasterGame.powerups = data.powerUps;
+    MasterGame.health = data.health;
+    MasterGame.maxhealth = data.maxhealth;
+                                                    
+
      });
 
 
@@ -612,7 +621,7 @@ GameEngine.prototype.start = function () {
 
 
     this.currentWorld = this.worlds["Area 51"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[1][9];
 
     // this.currentWorld = this.worlds["Area 51"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[7][7];
