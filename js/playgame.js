@@ -48,18 +48,14 @@ PlayGame.prototype.draw = function (ctx) {
         //if (this.game.mouse) { this.ctx.fillStyle = "white"; }
         if (this.game.lives > 0) {
             this.ctx.fillText("GoldOne presents...", 100, 100);
-            if (this.game.mouse) {
-             this.ctx.fillStyle = "white"; 
-           //   console.log(this.game.mouse);
-            }
-            this.ctx.strokeStyle = "black";
-            this.ctx.strokeRect(25, 550, 145, 70);
-            this.ctx.strokeRect(178, 550, 145, 70);
+            this.ctx.fillStyle = "black";
+            this.ctx.fillRect(25, 550, 145, 70);
+            this.ctx.fillRect(178, 550, 145, 70);
             this.ctx.fillStyle = "yellow";
             this.ctx.fillText("New Game", 30, 600);
             this.ctx.fillText("Load Game", 180, 600);
-        }
-        else {
+
+        } else {
 
             this.ctx.fillText("Oh no! The Aliens have won! Better luck next time!", 100, 200);
         }
