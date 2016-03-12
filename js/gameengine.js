@@ -160,11 +160,10 @@ function GameEngine() {
     MasterGame.powerups = data.powerUps;
     MasterGame.health = data.health;
     MasterGame.maxhealth = data.maxhealth;
-                                                    
-
+                                                
      });
 
-
+    this.percent = this.health / this.maxHealth;
 }
 
 
