@@ -315,8 +315,8 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
     var levelWidth = currLevel.grid[0].length;
     var levelHeight = currLevel.grid.length;
     this.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
-    this.playGame = new PlayGame(this, 300, 300);
-    this.addEntity(this.playGame);
+    // this.playGame = new PlayGame(this, 300, 300);
+    // this.addEntity(this.playGame);
 
     var ch;
     for (var i = 0; i < currLevel.grid[0].length; i++) {

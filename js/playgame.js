@@ -36,7 +36,7 @@ PlayGame.prototype.update = function () {
      //   console.log("game over!");
       this.game.running = false;
     }
-    Entity.prototype.update.call(this);
+   // Entity.prototype.update.call(this);
 }
 
 PlayGame.prototype.draw = function (ctx) {
