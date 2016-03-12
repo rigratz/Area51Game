@@ -170,8 +170,15 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
         } else if (goingTo === "World 3") {
             this.backgroundImage = new Background(AM.getAsset("./js/img/world3_background.jpg"),
                 this, 1920, 1080); // Replace 736 with actual height and width
+                var x = this.currentWorld.currentRoom.iIndex;
+                var y = this.currentWorld.currentRoom.jIndex;
             this.currentWorld = this.worlds["World 3"];
-            this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
+            if (x === 4 && y === 5) {
+              this.currentWorld.currentRoom = this.currentWorld.rooms[0][3];
+            } else if (x === 2 && y === 0) {
+              this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
+            }
+            // this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
         } else if (goingTo === "Final Boss") {
             this.backgroundImage = new Background(AM.getAsset("./js/img/finalboss_background.jpg"),
                  this, 1920, 1200); // Replace 736 with actual height and width
@@ -193,13 +200,23 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
     } else if (comingFrom === "World 3") {
         this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
             this, 736, 736);
-        this.currentWorld = this.worlds["Area 51"];
+
+            var x = this.currentWorld.currentRoom.iIndex;
+            var y = this.currentWorld.currentRoom.jIndex;
+          this.currentWorld = this.worlds["Area 51"];
         //IF PORTAL ONE OR PORTAL TWO...
-        if (this.currentWorld.currentRoom === this.currentWorld.rooms[8][4]) {
-          this.currentWorld.currentRoom = this.currentWorld.rooms[2][0];
-        } else if (this.currentWorld.currentRoom === this.currentWorld.rooms[0][2]) {
+        if (x === 0 && y === 3) {
           this.currentWorld.currentRoom = this.currentWorld.rooms[4][5];
+        } else if (x === 8 && y === 4) {
+          this.currentWorld.currentRoom = this.currentWorld.rooms[2][0];
         }
+        // if (this.currentWorld.currentRoom === this.currentWorld.rooms[8][4]) {
+        //
+        //   this.currentWorld.currentRoom = this.currentWorld.rooms[2][0];
+        // } else if (this.currentWorld.currentRoom === this.currentWorld.rooms[0][2]) {
+        //
+        //   this.currentWorld.currentRoom = this.currentWorld.rooms[4][5];
+        // }
 
     }
   if (this.currentWorld.name === "Area 51" && this.currentSong != AM.getAudioAsset("./js/sound/maintheme.mp3")) {
@@ -413,14 +430,14 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                   mult += 1;
                 }
                 this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "B1")));
-            } else if (ch === "boss2block" && !this.snakeBossDead) {
+            } else if (ch === "boss2block" && !this.eyeBossDead) {
                 var mult = 1;
                 while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "boss2block") {
                   currLevel.grid[j+mult][i] = "used_boss2block";
                   mult += 1;
                 }
                 this.platforms.push((new Platform(AM.getAsset("./js/img/textures.png"), this, i * 50, j * 50, 50, 50 * mult, "B2")));
-            } else if (ch === "boss3block" && !this.faceBossDead) {
+            } else if (ch === "boss3block" && !this.snakeBossDead) {
                 var mult = 1;
                 while (j + mult < currLevel.grid.length && currLevel.grid[j+mult][i] === "boss3block") {
                   currLevel.grid[j+mult][i] = "used_boss3block";
@@ -571,7 +588,7 @@ GameEngine.prototype.start = function () {
     this.generateWorlds();
 
     this.currentWorld = this.worlds["Area 51"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[7][7];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
 
     // this.currentWorld = this.worlds["World 1"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
@@ -580,7 +597,7 @@ GameEngine.prototype.start = function () {
     //   this.currentWorld.currentRoom = this.currentWorld.rooms[7][5];
 
     //  this.currentWorld = this.worlds["World 3"];
-    //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][5];
+    //  this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
 
     // this.currentWorld = this.worlds["World 3"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[0][5];

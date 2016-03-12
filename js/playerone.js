@@ -35,7 +35,7 @@ function PlayerOne(game, x, y, spritesheet) {
     this.scale = 1;
 
 
-    this.boundingRect = new BoundingRect(x, y, 90, 124);
+    this.boundingRect = new BoundingRect(x, y, 85, 105);
     this.debug = false;
 
     this.falling = false;
@@ -103,7 +103,7 @@ PlayerOne.prototype.reset = function () {
     this.powerups = [];
     this.currentPowerup = null;
 
-    this.boundingRect = new BoundingRect(this.x, this.y, 90, 124);
+    this.boundingRect = new BoundingRect(this.x, this.y, 85, 105);
     this.debug = false;
 
     this.scale = 1;
@@ -420,15 +420,15 @@ PlayerOne.prototype.update = function() {
           if (this.game.currentPowerUp === "T") {
             this.boundingRect = new BoundingRect(this.x, this.y + 60, 80 * this.scale, 102 * this.scale + 15);
           } else {
-          this.boundingRect = new BoundingRect(this.x, this.y, 90, 124);
+          this.boundingRect = new BoundingRect(this.x, this.y, 85, 105);
         }
           if (this.game.jump) {
               this.boundingRect.height = 60;
               this.boundingRect.bottom = this.boundingRect.y + 50;  //CHANGED THIS FROM +60. Keep an eye on it.
           }
           if (this.jumping) {
-                //this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
-                this.boudingRect = new BoundingRect(this.x, this.y, 70, 124);
+                this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
+                //this.boudingRect = new BoundingRect(this.x, this.y, 70, 124);
                 if (this.facing === "left") {
                     this.animation = this.jumpLeftAnimation;
                 } else {

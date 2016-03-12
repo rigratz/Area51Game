@@ -17,7 +17,7 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.upAnimation = new Animation("bullet", spritesheet, 108, 258, 0.40, 1, true, false, "up");
     this.animation = this.rightAnimation;
     this.flameAnimation = new Animation("flame", spritesheet, 137, 285, 0.15, 2, true, false);
-    this.debug = true;
+    this.debug = false;
     this.dir = dir;
     if(this.game.currentPowerUp === 'B') {
         var speed = 300;
@@ -169,6 +169,11 @@ Bullet.prototype.collideEnemy = function(other) {
 Bullet.prototype.flameCollidePlayer = function(other) {
   console.log(other);
   console.log(this);
-    return (this.boundingRect.bottom > other.boundingRect.top) && ((this.boundingRect.left > other.boundingRect.left)
-        && (this.boundingRect.right < other.boundingRect.right));
+    // return (this.boundingRect.bottom > other.boundingRect.top) && (this.boundingRect.top < other.boundingRect.bottom) && ((this.boundingRect.left > other.boundingRect.right)
+    //     && (this.boundingRect.right < other.boundingRect.left) );
+
+    return (this.boundingRect.bottom >= other.boundingRect.top) &&
+    (this.boundingRect.left <= other.boundingRect.right) &&
+    (this.boundingRect.right >= other.boundingRect.left) &&
+    (this.boundingRect.top <= other.boundingRect.bottom);
 }
