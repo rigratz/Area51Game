@@ -840,20 +840,7 @@ PlayerOne.prototype.update = function() {
                }
           }
     }
-         this.game.socket.on("connect", function () {
-        console.log("Socket connected.")
-    });
-    this.game.socket.on("load", function (data) {
-    var studentName = data.studentname;
-    var stateName = data.statename;
-    // var player_score = data.player_score;
-    // var computer_score = data.computer_score;
-    this.game.health = data.health - 60;
-    this.game.maxHealth = data.maxHealth; //health being sent is correct, its just not displaying correctly
-    console.log(this.game.health);
-    this.game.percent = this.game.health / this.game.maxHealth;
 
-     });
 
         Entity.prototype.update.call(this);
         this.game.camera.follow(this, 400, 325);

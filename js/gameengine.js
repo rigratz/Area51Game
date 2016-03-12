@@ -66,6 +66,7 @@ GameEngine.prototype.setHealthUps = function(ch, i, j) {
   }
 };
 
+
 function GameEngine() {
     //console.log("here");
     this.player = null;
@@ -138,6 +139,21 @@ function GameEngine() {
     this.birdDamage = 10; //probably should move this to entitiy.
     this.percent = this.health / this.maxHealth;
     this.socket = io.connect("http://76.28.150.193:8888");
+             this.socket.on("connect", function () {
+        console.log("Socket connected.")
+    });
+
+    this.socket.on("load", function (data) {
+    var studentName = data.studentname;
+    var stateName = data.statename;
+    // var player_score = data.player_score;
+    // var computer_score = data.computer_score;
+    this.health = data.health - 60;
+    this.maxHealth = data.maxHealth; //health being sent is correct, its just not displaying correctly
+    console.log(this.health);
+    this.percent = this.health / this.maxHealth;
+    // HOW DO I GET IT TO DRAW??
+     });
 
 
 }
@@ -888,6 +904,7 @@ GameEngine.prototype.loop = function () {
     this.draw();
     this.click = null;
 }
+
 
 
 function Entity(game, x, y) {
