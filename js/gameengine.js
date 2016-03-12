@@ -772,15 +772,15 @@ GameEngine.prototype.draw = function () {
         this.ctx.fillText("Use Arrow Keys to move!                                                                      Z = Jump    X = Shoot      Space = Toggle Powers (when available)       M = View Map" , 100, 100);
         //this.ctx.fillText("Z = Jump", 100, 100);
     }
-    // if (this.finished) {
-    //     //this.ctx.drawImage(this.bg, 0, 0, 800, 650, 0, 0, 800, 650);
-    //     this.ctx.font = "  24pt Impact";
-    //     this.ctx.fillStyle = "red";
-    //
-    //     this.ctx.fillText("You survived the Tree Boss and earned a speed boost!", this.camera.xView + 75, this.camera.yView + 100);
-    //     this.ctx.fillText("Use new powers to explore new areas in the full game!", this.camera.xView + 75, this.camera.yView + 300);
-    //     this.ctx.fillText("Coming Soon!", this.camera.xView + 340, this.camera.yView + 400);
-    // }
+    if (this.alienBossDead) {
+        //this.ctx.drawImage(this.bg, 0, 0, 800, 650, 0, 0, 800, 650);
+        this.ctx.font = "  24pt Impact";
+        this.ctx.fillStyle = "white";
+
+        this.ctx.fillText("Congratulations! You have saved the world or something!", this.camera.xView + 35, this.camera.yView + 100);
+        this.ctx.fillText("But I think you can play through faster than that...", this.camera.xView + 105, this.camera.yView + 300);
+        this.ctx.fillText("Refresh your browser to start over.", this.camera.xView + 170, this.camera.yView + 400);
+    }
     if (this.map) {
       this.ctx.fillStyle = "green";
       for (var i = 0; i < 10; i++) {
