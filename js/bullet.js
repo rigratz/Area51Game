@@ -17,7 +17,7 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.upAnimation = new Animation("bullet", spritesheet, 108, 258, 0.40, 1, true, false, "up");
     this.animation = this.rightAnimation;
     this.flameAnimation = new Animation("flame", spritesheet, 137, 285, 0.15, 2, true, false);
-    this.debug = true;
+    this.debug = false;
     this.dir = dir;
     if(this.game.currentPowerUp === 'B') {
         var speed = 300;

@@ -20,7 +20,7 @@ function AlienBoss(game, x, y, spritesheet) {
 
     this.laserEyeTime = 0;
 
-    this.debug = true;
+    this.debug = false;
     this.health = 1000;
     this.damage = 10;
     this.collidePlatform = false;
@@ -126,7 +126,7 @@ function LeftHand(game, x, y, spritesheet, boss) {
     this.collided = false;
 
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = true;
+    this.debug = false;
     this.damage = 10;
     this.collidePlatform = false;
     this.speed = 3;
@@ -224,7 +224,7 @@ function RightHand(game, x, y, spritesheet, boss) {
     this.collided = false;
 
     this.boundingRect = new BoundingRect(x, y, 0, 0);
-    this.debug = true;
+    this.debug = false;
     this.damage = 10;
     this.collidePlatform = false;
     this.speed = 3;
