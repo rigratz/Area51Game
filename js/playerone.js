@@ -72,6 +72,8 @@ function PlayerOne(game, x, y, spritesheet) {
 
     this.facing = "right";
 
+    this.testcount = 0;
+
     this.moveState = 0;
     this.idleAnimation = new Animation("player", spritesheet, 94, 105, 0.40, 2, true, false, "idle");
     this.idleLeftAnimation = new Animation("player", spritesheet, 93, 105, 0.40, 2, true, false, "idleleft");
@@ -181,7 +183,6 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
-  //console.log(this.game.currentPowerUp);
     if (this.recoiling) {
           this.recoilTime += this.game.clockTick;
           if (this.recoilTime >= 0.20) {
@@ -820,6 +821,40 @@ PlayerOne.prototype.update = function() {
                 }
             }
         }
+        for (var i = 0; i < this.game.platforms.length; i++) {
+          var plat = this.game.platforms[i];
+          if (plat instanceof Pedestal) {
+               if (this.collide(plat) && this.testcount < 1) {
+                   this.testcount++;
+                   var answer = confirm("would you like to save?");
+                   if (answer) {
+                      this.game.password = prompt("Please enter a unique save password!");
+                      console.log(this.game.password);
+                      this.game.saveGame = true;
+                      this.game.socket.emit("save", { studentname: this.game.password, statename: "savedArea51", health: this.game.health, maxHealth: this.game.maxHealth});
+                      console.log(this.game.hasHealthUp);
+                      this.game.left = false;
+                      this.game.right = false;
+
+                   }
+               }
+          }
+    }
+         this.game.socket.on("connect", function () {
+        console.log("Socket connected.")
+    });
+    this.game.socket.on("load", function (data) {
+    var studentName = data.studentname;
+    var stateName = data.statename;
+    // var player_score = data.player_score;
+    // var computer_score = data.computer_score;
+    this.game.health = data.health - 60;
+    this.game.maxHealth = data.maxHealth; //health being sent is correct, its just not displaying correctly
+    console.log(this.game.health);
+    this.game.percent = this.game.health / this.game.maxHealth;
+
+     });
+
         Entity.prototype.update.call(this);
         this.game.camera.follow(this, 400, 325);
         this.game.camera.update();
@@ -827,6 +862,7 @@ PlayerOne.prototype.update = function() {
     This is is the end of the if statement starting at line 230!!!
     **************************************************************/
     }
+
 
     // This is to fix a recoil bug.
     // Its not ideal, but its better than what was.

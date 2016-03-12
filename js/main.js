@@ -24,9 +24,6 @@ AM.queueDownload("./js/img/cement_background.jpg");
 AM.queueDownload("./js/img/marble_background.jpg");
 AM.queueDownload("./js/img/sand_background.jpg");
 AM.queueDownload("./js/img/sand2_background.jpg");
-AM.queueDownload("./js/img/world2_background.png");
-AM.queueDownload("./js/img/world3_background.jpg");
-AM.queueDownload("./js/img/finalboss_background.jpg");
 AM.queueDownload("./js/img/black_background.jpg");
 AM.queueDownload("./js/img/textures.png");
 AM.queueDownload("./js/img/dragon.png");
@@ -88,4 +85,7 @@ AM.downloadAll(function () {
     console.log("Toggle Powerups: Space");
     console.log("View Map: M (Hold)");
 
-});
+
+ });
+
+

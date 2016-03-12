@@ -97,6 +97,10 @@ function GameEngine() {
 
     this.currentSong = null;
 
+    this.password = null;
+
+    this.save = false;
+
     this.entities = [];
     this.platforms = [];
     this.powerups = [];
@@ -123,9 +127,9 @@ function GameEngine() {
     this.click = null;
     this.running = false;
     this.lives = 1;
-
     this.usedHealth = false;
     this.speed = 10;
+
     this.maxspeed = 250;
 
     this.maxHealth = 100;
@@ -133,8 +137,11 @@ function GameEngine() {
 
     this.birdDamage = 10; //probably should move this to entitiy.
     this.percent = this.health / this.maxHealth;
+    this.socket = io.connect("http://76.28.150.193:8888");
+
 
 }
+
 
 GameEngine.prototype.init = function (ctx) {
     this.ctx = ctx;
@@ -581,17 +588,23 @@ GameEngine.prototype.start = function () {
         this.currentTime = 0;
         this.play();
     }, false);
-    this.currentSong.play();
+ //   this.currentSong.play();
     //console.log("Make player");
     this.player = new PlayerOne(this, 0, 0, AM.getAsset("./js/img/area51main.png"));
     //console.log("made player");
     this.generateWorlds();
 
+
     this.currentWorld = this.worlds["Area 51"];
     this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
 
-    // this.currentWorld = this.worlds["World 1"];
-    // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
+    // this.currentWorld = this.worlds["Area 51"];
+    // this.currentWorld.currentRoom = this.currentWorld.rooms[7][7];
+
+   // this.currentWorld = this.worlds["World 1"];
+  //  this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
+
+
 
     //   this.currentWorld = this.worlds["World 2"];
     //   this.currentWorld.currentRoom = this.currentWorld.rooms[7][5];
@@ -826,6 +839,7 @@ GameEngine.prototype.draw = function () {
 }
 
 GameEngine.prototype.update = function () {
+
 
     if (this.eyeBossDead) {
         for (var i = 0; i < this.platforms.length; i++) {
