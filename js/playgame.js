@@ -8,6 +8,7 @@ function PlayGame(game, x, y) {
     this.bg = AM.getAsset("./js/img/mainscreen.png");
     this.removeFromWorld = false;
     Entity.call(this, game, x, y);
+    this.count = 0;
 }
 
 PlayGame.prototype = new Entity();
@@ -18,14 +19,24 @@ PlayGame.prototype.reset = function () {
 }
 PlayGame.prototype.update = function () {
     if (this.game.click && this.game.lives > 0) {
-       // console.log("Thanks for clicking! game is running = " + this.game.running);
-        this.game.running = true;
-        this.removeFromWorld = true;
+        if (this.game.mouse.y >= 17) {
+            if (this.game.mouse.x >= 1 && this.game.mouse.x <= 4) {
+               this.game.running = true;
+               this.removeFromWorld = true;
+            }
+            if (this.game.mouse.x >= 6 && this.game.mouse.x <= 9) {
+              this.game.password = prompt("Please enter your save code!");  //GRRRRRRR IT KEEPS POPPING UP TWO PROMPTS!!!
+             // console.log(this.game.password);
+              this.game.socket.emit("load", { studentname: this.game.password, statename: "savedArea51"});
+              this.game.running = true;
+              this.removeFromWorld = true;       
+           }
+        }
     } else if (this.game.lives <= 0) {
      //   console.log("game over!");
       this.game.running = false;
     }
-    Entity.prototype.update.call(this);
+   // Entity.prototype.update.call(this);
 }
 
 PlayGame.prototype.draw = function (ctx) {
@@ -37,10 +48,14 @@ PlayGame.prototype.draw = function (ctx) {
         //if (this.game.mouse) { this.ctx.fillStyle = "white"; }
         if (this.game.lives > 0) {
             this.ctx.fillText("GoldOne presents...", 100, 100);
-            if (this.game.mouse) { this.ctx.fillStyle = "white"; }
-            this.ctx.fillText("Click to play the game!", 250, 600);
-        }
-        else {
+            this.ctx.fillStyle = "black";
+            this.ctx.fillRect(25, 550, 145, 70);
+            this.ctx.fillRect(178, 550, 145, 70);
+            this.ctx.fillStyle = "yellow";
+            this.ctx.fillText("New Game", 30, 600);
+            this.ctx.fillText("Load Game", 180, 600);
+
+        } else {
 
             this.ctx.fillText("Oh no! The Aliens have won! Better luck next time!", 100, 200);
         }

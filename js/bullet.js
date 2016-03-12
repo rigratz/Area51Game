@@ -168,8 +168,8 @@ Bullet.prototype.collideEnemy = function(other) {
 }
 
 Bullet.prototype.flameCollidePlayer = function(other) {
-  console.log(other);
-  console.log(this);
+  //console.log(other);
+  //console.log(this);
     // return (this.boundingRect.bottom > other.boundingRect.top) && (this.boundingRect.top < other.boundingRect.bottom) && ((this.boundingRect.left > other.boundingRect.right)
     //     && (this.boundingRect.right < other.boundingRect.left) );
 

@@ -1,4 +1,5 @@
 var AM = new AssetManager();
+var MasterGame = null;
 
 function BoundingRect(x, y, w, h) {
     this.x = x;
@@ -24,9 +25,6 @@ AM.queueDownload("./js/img/cement_background.jpg");
 AM.queueDownload("./js/img/marble_background.jpg");
 AM.queueDownload("./js/img/sand_background.jpg");
 AM.queueDownload("./js/img/sand2_background.jpg");
-AM.queueDownload("./js/img/world2_background.png");
-AM.queueDownload("./js/img/world3_background.jpg");
-AM.queueDownload("./js/img/finalboss_background.jpg");
 AM.queueDownload("./js/img/black_background.jpg");
 AM.queueDownload("./js/img/textures.png");
 AM.queueDownload("./js/img/dragon.png");
@@ -69,13 +67,13 @@ AM.queueAudioDownload("./js/sound/world3.mp3");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
-    var gameEngine = new GameEngine();
+    MasterGame = new GameEngine();
     console.log("created");
-    gameEngine.init(ctx);
+    MasterGame.init(ctx);
 
-    gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
+    // gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
 
-    gameEngine.start();
+    MasterGame.start();
 
     console.log("All Done!");
     console.log("Controls:");
@@ -88,4 +86,7 @@ AM.downloadAll(function () {
     console.log("Toggle Powerups: Space");
     console.log("View Map: M (Hold)");
 
-});
+
+ });
+
+

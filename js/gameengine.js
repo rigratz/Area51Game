@@ -31,8 +31,8 @@ GameEngine.prototype.createHealthBools = function() {
 };
 
 GameEngine.prototype.setHealthUps = function(ch, i, j) {
-  console.log("setting healths");
-  console.log(this.hasHealthUp);
+  //console.log("setting healths");
+  //console.log(this.hasHealthUp);
   if (ch === "healthpacka") {
       if (!this.hasHealthUp["a"]) this.addEntity(new HealthPack(AM.getAsset("./js/img/health_icon.png"), this, i * 50, j * 50, 50, 50, "a"));
   } else if (ch === "healthpackc") {
@@ -66,6 +66,7 @@ GameEngine.prototype.setHealthUps = function(ch, i, j) {
   }
 };
 
+
 function GameEngine() {
     //console.log("here");
     this.player = null;
@@ -97,6 +98,10 @@ function GameEngine() {
 
     this.currentSong = null;
 
+    this.password = null;
+
+    this.save = false;
+
     this.entities = [];
     this.platforms = [];
     this.powerups = [];
@@ -123,9 +128,9 @@ function GameEngine() {
     this.click = null;
     this.running = false;
     this.lives = 1;
-
     this.usedHealth = false;
     this.speed = 10;
+
     this.maxspeed = 250;
 
     this.maxHealth = 100;
@@ -133,8 +138,41 @@ function GameEngine() {
 
     this.birdDamage = 10; //probably should move this to entitiy.
     this.percent = this.health / this.maxHealth;
+    this.socket = io.connect("http://76.28.150.193:8888");
+             this.socket.on("connect", function () {
+        console.log("Socket connected.")
+    });
+
+    this.socket.on("load", function (data) {
+    var studentName = data.studentname;
+    var stateName = data.statename;
+    console.log(MasterGame.hashealthUp);
+    MasterGame.currentWorld = MasterGame.worlds[data.worldName];
+    MasterGame.hasHealthUp = data.healthup;
+    MasterGame.hasBulletUpgrade = data.bullet;
+    MasterGame.hasShotgun =  data.shotgun;
+    MasterGame.hasRapidFire = data.rapidfire;
+    MasterGame.hasSpeed = data.speed;
+    MasterGame.hasDoublejump = data.doublejump;
+    MasterGame.hasShrink = data.shrink;
+    MasterGame.treeBossDead = data.treeBos;
+    MasterGame.snakeBossDead = data.snakeBoss;
+    MasterGame.eyeBossDead = data.eyeBoss;
+    MasterGame.alienBossDead = data.alienBoss;
+    MasterGame.powerups = data.powerUps;
+    MasterGame.health = data.health;
+    MasterGame.maxHealth = data.maxHealth;
+    console.log(MasterGame.hasHealthUp);
+    console.log(data.healthup);
+    //console.log(data.roomj);
+    //console.log(MasterGame.currentWorld.currentRoom);
+    MasterGame.switchLevel("save", data.roomi, data.roomj);
+
+     });
+
 
 }
+
 
 GameEngine.prototype.init = function (ctx) {
     this.ctx = ctx;
@@ -281,14 +319,30 @@ GameEngine.prototype.clearLevel = function() {
 }
 
 GameEngine.prototype.setLevel = function(exitedFrom) {
-  console.log(this.hasHealthUp);
+  //console.log(this.hasHealthUp);
+  if (this.currentWorld.name === "Area 51") {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
+        this, 736, 736);
+  } else if (this.currentWorld.name === "World 1") {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
+        this, 736, 736); // Replace 736 with actual height and width
+  } else if (this.currentWorld.name === "World 2") {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/world2_background.png"),
+         this, 2000, 1000); // Replace 736 with actual height and width
+  } else if (this.currentWorld.name === "World 3" && this.currentWorld.currentRoom != this.currentWorld.rooms[0][4]) {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/world3_background.jpg"),
+        this, 1920, 1080); // Replace 736 with actual height and width
+  } else if (this.currentWorld.name === "Final Boss") {
+    this.backgroundImage = new Background(AM.getAsset("./js/img/finalboss_background.jpg"),
+         this, 1920, 1200); // Replace 736 with actual height and width
+  }
     var newIndex = this.entities.length;
 
     var currLevel = this.currentWorld.currentRoom;
     var saveRoom = false;
     var saveI = -1;
     var saveJ = -1;
-
+//console.log(currLevel);
     var levelWidth = currLevel.grid[0].length;
     var levelHeight = currLevel.grid.length;
     this.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
@@ -485,6 +539,9 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
         this.currentWorld.currentRoom = this.currentWorld.rooms[i][j+1];
     } else if (exitedFrom === "west") {
         this.currentWorld.currentRoom = this.currentWorld.rooms[i][j-1];
+    } else if (exitedFrom === "save") {
+      this.currentWorld.currentRoom = this.currentWorld.rooms[i][j];
+      exitedFrom = "north";
     }
 
     this.currentWorld.currentRoom.visited = true;
@@ -587,11 +644,12 @@ GameEngine.prototype.start = function () {
     //console.log("made player");
     this.generateWorlds();
 
+
      this.currentWorld = this.worlds["Area 51"];
      this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
 
-    // this.currentWorld = this.worlds["World 1"];
-    // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
+
+
 
       // this.currentWorld = this.worlds["World 2"];
       // this.currentWorld.currentRoom = this.currentWorld.rooms[6][3];
@@ -827,6 +885,7 @@ GameEngine.prototype.draw = function () {
 
 GameEngine.prototype.update = function () {
 
+
     if (this.eyeBossDead) {
         for (var i = 0; i < this.platforms.length; i++) {
             if(this.platforms[i].platType === "EB") {
@@ -874,6 +933,7 @@ GameEngine.prototype.loop = function () {
     this.draw();
     this.click = null;
 }
+
 
 
 function Entity(game, x, y) {

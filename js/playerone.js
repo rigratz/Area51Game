@@ -72,6 +72,8 @@ function PlayerOne(game, x, y, spritesheet) {
 
     this.facing = "right";
 
+    this.testcount = 0;
+
     this.moveState = 0;
     this.idleAnimation = new Animation("player", spritesheet, 94, 105, 0.40, 2, true, false, "idle");
     this.idleLeftAnimation = new Animation("player", spritesheet, 93, 105, 0.40, 2, true, false, "idleleft");
@@ -181,7 +183,6 @@ PlayerOne.prototype.draw = function () {
 }
 
 PlayerOne.prototype.update = function() {
-  //console.log(this.game.currentPowerUp);
     if (this.recoiling) {
           this.recoilTime += this.game.clockTick;
           if (this.recoilTime >= 0.20) {
@@ -285,7 +286,7 @@ PlayerOne.prototype.update = function() {
                 }
           }
           if (this.game.currentPowerUp === "T") {
-            console.log(this.boundingRect.top);
+            //console.log(this.boundingRect.top);
                for (var i = 0; i < this.game.platforms.length; i++) {
                    var plat = this.game.platforms[i];
                 //   console.log(plat.boundingRect.bottom);
@@ -298,8 +299,8 @@ PlayerOne.prototype.update = function() {
                                   //console.log(plat.boundingRect.bottom);
                                   //console.log(this.boundingRect.top);
                     //    this.boundingRect.bottom >= plat.boundingRect.bottom)
-                          console.log("im colling!!!");
-                          console.log(plat.boundingRect.bottom);
+                          //console.log("im colling!!!");
+                          //console.log(plat.boundingRect.bottom);
                           this.changePowerUp = false;
                     }
                   }
@@ -438,11 +439,11 @@ PlayerOne.prototype.update = function() {
                 this.yvel += this.jumpTime * 60;
              //   console.log("before doublde jump");
                 if (this.yvel > 0 && this.game.jump) {
-                  console.log("before doublde jump");
-                  console.log(this.jumpCount);
+                  //console.log("before doublde jump");
+                  //console.log(this.jumpCount);
                   if (this.jumpCount < 1 && this.game.currentPowerUp === "J") {
                       this.jumpCount++;
-                      console.log("here!");
+                    //  console.log("here!");
                       this.jumping = false;
                       this.jumpTime = 0;
                       this.yvel = 0;
@@ -616,7 +617,7 @@ PlayerOne.prototype.update = function() {
                 }
             } else if(entity instanceof Bullet && entity.dir === "dragon") {
                 if(entity.flameCollidePlayer(this) && !this.invincible) {
-                    console.log("hit player!");
+                    //console.log("hit player!");
                     //entity.removeFromWorld = true;
                     this.game.health -= 5;
                     this.damageSound.play();
@@ -668,10 +669,10 @@ PlayerOne.prototype.update = function() {
                                     else {
                                         this.recoilX = 50;
                                     }
-                                    console.log("collide left jumping");
+                                  //  console.log("collide left jumping");
                           } else if (this.collideRight(entity) && !this.jumping) {
                                     this.hitEffect(entity);
-                                    console.log("collide right walking");
+                                    //console.log("collide right walking");
                                     if (entity instanceof TreeBoss) {
                                         this.recoilX = -1000;
                                     } else {
@@ -679,7 +680,7 @@ PlayerOne.prototype.update = function() {
                                     }
                           } else if (this.collideRight(entity) && this.jumping) {
                                     this.hitEffect(entity);
-                                    console.log("collide right jumping");
+                                    //console.log("collide right jumping");
                                     if (entity instanceof TreeBoss) {
                                         this.recoilX = -1000;
                                     }
@@ -689,11 +690,11 @@ PlayerOne.prototype.update = function() {
                           } else if (this.collideBottom(entity)) {
                                      this.hitEffect(entity);
                                      //this.recoilY = -50;
-                                     console.log("collide bottom");
+                                    // console.log("collide bottom");
                           }  else if (this.collideTop(entity)) {
                                      this.hitEffect(entity);
                                      //this.recoilY = 50;
-                                     console.log("colliding top");
+                                    // console.log("colliding top");
                           }
                           if (this.game.health <= 0) {
                                 this.removeFromWorld = true;
@@ -829,6 +830,36 @@ PlayerOne.prototype.update = function() {
                 }
             }
         }
+        for (var i = 0; i < this.game.platforms.length; i++) {
+          var plat = this.game.platforms[i];
+          if (plat instanceof Pedestal) {
+               if (this.collide(plat) && this.testcount < 1) {
+                   this.testcount++;
+                   var answer = confirm("would you like to save?");
+                   if (answer) {
+                      this.game.password = prompt("Please enter a unique save password!");
+                      console.log(this.game.password);
+                      this.game.saveGame = true;
+                      this.game.socket.emit("save", { healthup: this.game.hasHealthUp, studentname: this.game.password, statename: "savedArea51", powerUps: this.game.powerups,
+                                                      bullet: this.game.hasBulletUpgrade, shotgun: this.game.hasShotgun, rapidFire: this.game.hasRapidFire,
+                                                      speed: this.game.hasSpeed, doubleJump: this.game.hasDoubleJump, shrink: this.game.hasShrink,
+                                                    treeBos: this.game.treeBossDead, snakeBoss: this.game.snakeBossDead, eyeBoss: this.game.eyeBossDead,
+                                                    alienBoss: this.game.alienBossDead, health: this.game.health, maxHealth: this.game.maxHealth,
+                                                    roomi: this.game.currentWorld.currentRoom.iIndex, roomj: this.game.currentWorld.currentRoom.jIndex, worldName: this.game.currentWorld.name});
+
+
+
+
+                      //console.log(this.game.hasHealthUp);
+                      this.game.left = false;
+                      this.game.right = false;
+
+                   }
+               }
+          }
+    }
+
+
         Entity.prototype.update.call(this);
         this.game.camera.follow(this, 400, 325);
         this.game.camera.update();
@@ -836,6 +867,7 @@ PlayerOne.prototype.update = function() {
     This is is the end of the if statement starting at line 230!!!
     **************************************************************/
     }
+
 
     // This is to fix a recoil bug.
     // Its not ideal, but its better than what was.

@@ -104,7 +104,7 @@ SnakeEnemy.prototype.update = function() {
                         }
                         this.removeFromWorld = true;
                         var rand = Math.random();
-                        console.log(rand);
+                        //console.log(rand);
                         if (rand < 0.25) {
                             var health = new Health(AM.getAsset("./js/img/health.png"), this.game, this.x + 40, this.y + 35, 30, 30);
                             this.game.addEntity(health);
