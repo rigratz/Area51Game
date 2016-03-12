@@ -70,7 +70,7 @@ AM.downloadAll(function () {
     console.log("created");
     gameEngine.init(ctx);
 
-    gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
+    // gameEngine.addEntity(new PlayGame(gameEngine, 300, 300));
 
     gameEngine.start();
 
