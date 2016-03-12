@@ -76,6 +76,7 @@ function GameEngine() {
     this.snakeBossDead = false;
     this.hasBulletUpgrade = false;
     this.eyeBossDead = false;
+    this.alienBossDead = false;
 
     this.hasShotgun = false;
 
@@ -151,7 +152,7 @@ GameEngine.prototype.generateWorlds = function() {
   this.worlds["World 1"] = new World("World 1", this);
   this.worlds["World 2"] = new World("World 2", this);
   this.worlds["World 3"] = new World("World 3", this);
-  //this.worlds["Final Boss"] = new World("Final Boss", this);
+  this.worlds["Final Boss"] = new World("Final Boss", this);
 }
 GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
     this.clearLevel();
@@ -162,18 +163,18 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
             this.currentWorld = this.worlds["World 1"];
             this.currentWorld.currentRoom = this.currentWorld.rooms[5][5];
         } else if (goingTo === "World 2") {
-            //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
-            //     this, 736, 736); // Replace 736 with actual height and width
+            this.backgroundImage = new Background(AM.getAsset("./js/img/world2_background.png"),
+                 this, 2000, 1000); // Replace 736 with actual height and width
             this.currentWorld = this.worlds["World 2"];
             this.currentWorld.currentRoom = this.currentWorld.rooms[2][7];
         } else if (goingTo === "World 3") {
-            //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
-            //     this, 736, 736); // Replace 736 with actual height and width
+            this.backgroundImage = new Background(AM.getAsset("./js/img/world3_background.jpg"),
+                this, 1920, 1080); // Replace 736 with actual height and width
             this.currentWorld = this.worlds["World 3"];
             this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
         } else if (goingTo === "Final Boss") {
-            //this.backgroundImage = new Background(AM.getAsset("./js/img/sand2_background.jpg"),
-            //     this, 736, 736); // Replace 736 with actual height and width
+            this.backgroundImage = new Background(AM.getAsset("./js/img/finalboss_background.jpg"),
+                 this, 1920, 1200); // Replace 736 with actual height and width
             this.currentWorld = this.worlds["Final Boss"];
             this.currentWorld.currentRoom = this.currentWorld.rooms[4][4];
         }
@@ -219,7 +220,7 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
       this.play();
     }, false);
     this.currentSong.play();
-  } else if (this.currentWorld.name === "World 2" && this.currentSong != AM.getAudioAsset("./js/sound/world2.mp3")) {
+} else if (this.currentWorld.name === "World 2" && this.currentSong != AM.getAudioAsset("./js/sound/.mp3")) {
     this.currentSong.pause();
     this.currentSong.currentTime = 0;
     this.currentSong = AM.getAudioAsset("./js/sound/world2.mp3");
@@ -232,6 +233,15 @@ GameEngine.prototype.switchWorlds = function(comingFrom, goingTo) {
     this.currentSong.pause();
     this.currentSong.currentTime = 0;
     this.currentSong = AM.getAudioAsset("./js/sound/world3.mp3");
+    this.currentSong.addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+    }, false);
+    this.currentSong.play();
+  } else if (this.currentWorld.name === "Final Boss" && this.currentSong != AM.getAudioAsset("./js/sound/bossmusic.mp3")) {
+    this.currentSong.pause();
+    this.currentSong.currentTime = 0;
+    this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
     this.currentSong.addEventListener('ended', function() {
       this.currentTime = 0;
       this.play();
@@ -332,6 +342,8 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
                   this.addEntity(new EyeBossWeakSpot(this, i * 50, j * 50, AM.getAsset("./js/img/eye_boss_weakspot.png")));
             } else if (ch === "shadow_bird") {
                   this.addEntity(new BirdEnemy(this, i * 50, j * 50, AM.getAsset("./js/img/ShadowBird.png")));
+            } else if (ch === "alienboss" && !this.alienBossDead) {
+                  this.addEntity(new AlienBoss(this, i * 50, j * 50, AM.getAsset("./js/img/alien_boss.png")));
             }
 
             /************************
@@ -507,6 +519,8 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
       }
     } else if (this.currentWorld.name === "World 3") {
       if (this.currentWorld.currentRoom.bossRoom && !this.eyeBossDead) {
+       this.backgroundImage = new Background(AM.getAsset("./js/img/black_background.jpg"),
+              this, 685, 391);
         this.currentSong.pause();
         this.currentSong.currentTime = 0;
         this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
@@ -516,6 +530,8 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
         }, false);
         this.currentSong.play();
       } else {
+        this.backgroundImage = new Background(AM.getAsset("./js/img/world3_background.jpg"),
+            this, 1920, 1080);
         if (this.currentSong != AM.getAudioAsset("./js/sound/world3.mp3")) {
           this.currentSong.pause();
           this.currentSong.currentTime = 0;
@@ -526,6 +542,17 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
           }, false);
           this.currentSong.play();
         }
+      }
+    } else if (this.currentWorld.name === "Final Boss") {
+      if (this.currentSong != AM.getAudioAsset("./js/sound/bossmusic.mp3")) {
+        this.currentSong.pause();
+        this.currentSong.currentTime = 0;
+        this.currentSong = AM.getAudioAsset("./js/sound/bossmusic.mp3");
+        this.currentSong.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        this.currentSong.play();
       }
     }
     this.setLevel(exitedFrom);
@@ -544,25 +571,22 @@ GameEngine.prototype.start = function () {
     this.generateWorlds();
 
     this.currentWorld = this.worlds["Area 51"];
-    this.currentWorld.currentRoom = this.currentWorld.rooms[0][6];
+    this.currentWorld.currentRoom = this.currentWorld.rooms[7][7];
 
     // this.currentWorld = this.worlds["World 1"];
     // this.currentWorld.currentRoom = this.currentWorld.rooms[2][4];
 
-      // this.currentWorld = this.worlds["World 2"];
-      // this.currentWorld.currentRoom = this.currentWorld.rooms[7][5];
+    //   this.currentWorld = this.worlds["World 2"];
+    //   this.currentWorld.currentRoom = this.currentWorld.rooms[7][5];
 
     //  this.currentWorld = this.worlds["World 3"];
-    //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][4];
+    //  this.currentWorld.currentRoom = this.currentWorld.rooms[8][5];
 
-    //this.currentWorld = this.worlds["World 3"];
-    //this.currentWorld.currentRoom = this.currentWorld.rooms[0][4];
+    // this.currentWorld = this.worlds["World 3"];
+    // this.currentWorld.currentRoom = this.currentWorld.rooms[0][5];
 
-    this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
-        this, 736, 736);
-
-    // this.backgroundImage = new Background(AM.getAsset("./js/img/black_background.jpg"),
-    //         this, 685, 391);
+    // this.backgroundImage = new Background(AM.getAsset("./js/img/cement_background.jpg"),
+    //     this, 736, 736);
 
     this.setLevel("east");
 

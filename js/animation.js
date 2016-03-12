@@ -56,6 +56,15 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y, scaleBy) {
     else if(this.entityType === 'flame') {
         this.drawFrameFireball(tick, ctx, x, y);
     }
+    else if(this.entityType === 'alien_head') {
+        this.drawFrameAlienBoss(tick, ctx, x, y);
+    }
+    else if(this.entityType === 'alien_lhand') {
+        this.drawFrameAlienBossLeft(tick, ctx, x, y);
+    }
+    else if(this.entityType === 'alien_rhand') {
+        this.drawFrameAlienBossRight(tick, ctx, x, y);
+    }
 }
 
 Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y, scaleBy) {
@@ -122,7 +131,33 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y, scaleBy) {
         this.frameWidth * scaleBy,
         this.frameHeight * scaleBy);
 }
-
+Animation.prototype.drawFrameAlienBoss = function(tick, ctx, x, y) {
+  console.log("drawing boss");
+  ctx.drawImage(this.spriteSheet,
+      781, 300,  // source from sheet
+      this.frameWidth, this.frameHeight,
+      x, y,
+      this.frameWidth,
+      this.frameHeight);
+}
+Animation.prototype.drawFrameAlienBossLeft = function(tick, ctx, x, y) {
+  //console.log("drawing boss");
+  ctx.drawImage(this.spriteSheet,
+      297, 578,  // source from sheet
+      this.frameWidth, this.frameHeight,
+      x, y,
+      this.frameWidth,
+      this.frameHeight);
+}
+Animation.prototype.drawFrameAlienBossRight = function(tick, ctx, x, y) {
+  //console.log("drawing boss");
+  ctx.drawImage(this.spriteSheet,
+      1077, 600,  // source from sheet
+      this.frameWidth, this.frameHeight,
+      x, y,
+      this.frameWidth,
+      this.frameHeight);
+}
 Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick;

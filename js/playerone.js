@@ -36,7 +36,7 @@ function PlayerOne(game, x, y, spritesheet) {
 
 
     this.boundingRect = new BoundingRect(x, y, 90, 124);
-    this.debug = true;
+    this.debug = false;
 
     this.falling = false;
     this.fallTime = 0;
@@ -197,7 +197,7 @@ PlayerOne.prototype.update = function() {
                 this.invincibilityTime = 0;
           }
     }
-    this.game.camera.follow(this, 400, 325);
+    //this.game.camera.follow(this, 400, 325);
     //var collideExit = false;
     for (var i = 0; i < this.game.exits.length; i++) {
           if (this.collide(this.game.exits[i])) {
@@ -424,7 +424,7 @@ PlayerOne.prototype.update = function() {
         }
           if (this.game.jump) {
               this.boundingRect.height = 60;
-              this.boundingRect.bottom = this.boundingRect.y + 60;
+              this.boundingRect.bottom = this.boundingRect.y + 50;  //CHANGED THIS FROM +60. Keep an eye on it.
           }
           if (this.jumping) {
                 //this.boundingRect = new BoundingRect(this.x, this.y, 70, 60);
@@ -638,7 +638,7 @@ PlayerOne.prototype.update = function() {
                       this.reset();
                   }
              }
-             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss || entity instanceof ShadowEnemy || entity instanceof EyeBoss ||
+             if (entity instanceof BirdEnemy || entity instanceof Dragon || entity instanceof CrazyCatEnemy || entity instanceof TreeBoss ||  entity instanceof LeftHand || entity instanceof RightHand || entity instanceof ShadowEnemy || entity instanceof EyeBoss ||
              entity instanceof SnakeEnemy || entity instanceof SnailEnemy) {
                     if (entity.collide(this) && !this.invincible) {
                           this.recoiling = true;
@@ -821,7 +821,7 @@ PlayerOne.prototype.update = function() {
             }
         }
         Entity.prototype.update.call(this);
-        //this.game.camera.follow(this, 400, 325);
+        this.game.camera.follow(this, 400, 325);
         this.game.camera.update();
     /*************************************************************
     This is is the end of the if statement starting at line 230!!!

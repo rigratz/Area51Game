@@ -43,6 +43,9 @@ Platform.prototype.draw = function (ctx) {
     } else if (this.game.currentWorld.name === "World 3") {
       topx = 0; topy = 500;
       bottomx = 100; bottomy = 500;
+  } else if (this.game.currentWorld.name === "Final Boss") {
+      topx = 0; topy = 600;   //Switch to other texture if you'd like
+      bottomx = 100; bottomy = 600;
     }
     if (this.platType === "B1") {
       topx = 400; topy = 100;

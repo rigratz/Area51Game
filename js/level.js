@@ -121,6 +121,8 @@ function Level(plan, i, j, gameEngine) {
         fieldType = "shrink";
       else if (ch === "F")
         fieldType = "rapidfire";
+      else if (ch === "y")
+        fieldType = "alienboss";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
