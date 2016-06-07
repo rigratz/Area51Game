@@ -2,4 +2,4 @@
 
 Group project for TCSS491 Computational Worlds.
 
-As of Spring 2016 game is currently not loading properly in browsers. May be because of socket connections. Will investigate in the future.
+If you attempt to play the game and the browser won't load, please let me know. It may be an issue with the server it connects to for saving and loading, which I don't have access to. If the server is down, those features may need to be disabled to allow playability.
