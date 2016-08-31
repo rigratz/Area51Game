@@ -2,8 +2,9 @@
 
 Group project for TCSS491 Computational Worlds.
 
-If you attempt to play the game and the browser won't load, please let me know. It may be an issue with the server it connects to for saving and loading, which I don't have access to. If the server is down, those features may need to be disabled to allow playability.
+If you experience any crashes, bugs, or anything out of the ordinary please let me know (rigratz@uw.edu). Game save functionality was recently removed because it used a server I have no access to and was therefore unreliable.
 
 Playable Link: http://rigratz.github.io/TCSS491GoldOne/
+(It may take a while to load.)
 
 Game Trailer: https://www.youtube.com/watch?v=xgxC1cRoe7Y
