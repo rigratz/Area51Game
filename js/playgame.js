@@ -25,11 +25,11 @@ PlayGame.prototype.update = function () {
                this.removeFromWorld = true;
             }
             if (this.game.mouse.x >= 6 && this.game.mouse.x <= 9) {
-              this.game.password = prompt("Please enter your save code!");  //GRRRRRRR IT KEEPS POPPING UP TWO PROMPTS!!!
-             // console.log(this.game.password);
-              this.game.socket.emit("load", { studentname: this.game.password, statename: "savedArea51"});
+              // this.game.password = prompt("Please enter your save code!");
+              this.game.password = prompt("Saving currently disabled."); 
+              //this.game.socket.emit("load", { studentname: this.game.password, statename: "savedArea51"});
               this.game.running = true;
-              this.removeFromWorld = true;       
+              this.removeFromWorld = true;
            }
         }
     } else if (this.game.lives <= 0) {

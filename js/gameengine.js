@@ -138,37 +138,37 @@ function GameEngine() {
 
     this.birdDamage = 10; //probably should move this to entitiy.
     this.percent = this.health / this.maxHealth;
-    this.socket = io.connect("http://76.28.150.193:8888");
-             this.socket.on("connect", function () {
-        console.log("Socket connected.")
-    });
+    // this.socket = io.connect("http://76.28.150.193:8888");
+    //          this.socket.on("connect", function () {
+    //     console.log("Socket connected.")
+    // });
 
-    this.socket.on("load", function (data) {
-    var studentName = data.studentname;
-    var stateName = data.statename;
-    console.log(MasterGame.hashealthUp);
-    MasterGame.currentWorld = MasterGame.worlds[data.worldName];
-    MasterGame.hasHealthUp = data.healthup;
-    MasterGame.hasBulletUpgrade = data.bullet;
-    MasterGame.hasShotgun =  data.shotgun;
-    MasterGame.hasRapidFire = data.rapidfire;
-    MasterGame.hasSpeed = data.speed;
-    MasterGame.hasDoublejump = data.doublejump;
-    MasterGame.hasShrink = data.shrink;
-    MasterGame.treeBossDead = data.treeBos;
-    MasterGame.snakeBossDead = data.snakeBoss;
-    MasterGame.eyeBossDead = data.eyeBoss;
-    MasterGame.alienBossDead = data.alienBoss;
-    MasterGame.powerups = data.powerUps;
-    MasterGame.health = data.health;
-    MasterGame.maxHealth = data.maxHealth;
-    console.log(MasterGame.hasHealthUp);
-    console.log(data.healthup);
-    //console.log(data.roomj);
-    //console.log(MasterGame.currentWorld.currentRoom);
-    MasterGame.switchLevel("save", data.roomi, data.roomj);
-
-     });
+    // this.socket.on("load", function (data) {
+    // var studentName = data.studentname;
+    // var stateName = data.statename;
+    // console.log(MasterGame.hashealthUp);
+    // MasterGame.currentWorld = MasterGame.worlds[data.worldName];
+    // MasterGame.hasHealthUp = data.healthup;
+    // MasterGame.hasBulletUpgrade = data.bullet;
+    // MasterGame.hasShotgun =  data.shotgun;
+    // MasterGame.hasRapidFire = data.rapidfire;
+    // MasterGame.hasSpeed = data.speed;
+    // MasterGame.hasDoublejump = data.doublejump;
+    // MasterGame.hasShrink = data.shrink;
+    // MasterGame.treeBossDead = data.treeBos;
+    // MasterGame.snakeBossDead = data.snakeBoss;
+    // MasterGame.eyeBossDead = data.eyeBoss;
+    // MasterGame.alienBossDead = data.alienBoss;
+    // MasterGame.powerups = data.powerUps;
+    // MasterGame.health = data.health;
+    // MasterGame.maxHealth = data.maxHealth;
+    // console.log(MasterGame.hasHealthUp);
+    // console.log(data.healthup);
+    // //console.log(data.roomj);
+    // //console.log(MasterGame.currentWorld.currentRoom);
+    // MasterGame.switchLevel("save", data.roomi, data.roomj);
+    //
+    //  });
 
 
 }
@@ -342,7 +342,9 @@ GameEngine.prototype.setLevel = function(exitedFrom) {
     var saveRoom = false;
     var saveI = -1;
     var saveJ = -1;
-//console.log(currLevel);
+    console.log(currLevel.grid);
+    console.log(currLevel.grid[0]);
+    console.log(currLevel.grid[0].length);
     var levelWidth = currLevel.grid[0].length;
     var levelHeight = currLevel.grid.length;
     this.camera = new Camera(0, 0, 800, 650, currLevel.width * 50, currLevel.height * 50);
@@ -543,10 +545,7 @@ GameEngine.prototype.switchLevel = function(exitedFrom, i, j) {
       this.currentWorld.currentRoom = this.currentWorld.rooms[i][j];
       exitedFrom = "north";
     }
-
     this.currentWorld.currentRoom.visited = true;
-
-
     if (this.currentWorld.name === "World 1") {
       if (this.currentWorld.currentRoom.bossRoom && !this.treeBossDead) {
         this.currentSong.pause();
