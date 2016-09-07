@@ -1,3 +1,8 @@
+/*
+  The bullet object is used for projectile attacks fired by either the player
+  or select enemy types in the game. It handles the speed, damage, and
+  appearance of the projectile.
+*/
 function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
     this.game = game;
     this.ctx = game.ctx;
@@ -30,12 +35,6 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
         var speed = 1000;
     }
 
-    // if(this.game.hasBulletUpgrade) {
-    //     this.damage = 20;
-    // } else {
-    //     this.damage = 10;
-    // }
-
     this.distanceTraveled = 0;
     if (dir === "up") {
         this.yvel = -speed;
@@ -67,6 +66,11 @@ function Bullet(game, x, y, spritesheet, dir) {//, spritesheet) {
 Bullet.prototype = new Entity();
 Bullet.prototype.constructor = Bullet;
 
+/*
+  update function updates the state of the Bullet projectile as it travels
+  across the screen. It determines if it hits a player, enemy, wall, or has
+  traveled further than it is allowed to.
+*/
 Bullet.prototype.update = function() {
     this.x += this.xvel * this.game.clockTick;
     this.y += this.yvel * this.game.clockTick;
@@ -75,18 +79,13 @@ Bullet.prototype.update = function() {
 
 
     if(this.dir === "up") {
-        //console.log("aiming up!");
         this.animation = this.upAnimation;
     } else if (this.dir === "left") {
-        //console.log("aiming left!");
         this.animation = this.leftAnimation;
     } else if (this.dir === "right") {
-        //console.log("aiming right!");
         this.animation = this.rightAnimation;
     }
 
-
-    //console.log(this.animation.type);
     for (var i = 0; i < this.game.platforms.length; i++) {
         if (this.collideEnemy(this.game.platforms[i])) {
             this.removeFromWorld = true;
@@ -99,13 +98,11 @@ Bullet.prototype.update = function() {
 Entity.prototype.update.call(this);
 }
 
+/*
+  draw function displays the image of the projectile as it travels across the
+  screen.
+*/
 Bullet.prototype.draw = function () {
-    // this.ctx.strokeStyle = "yellow";
-    // this.ctx.strokeRect(this.x, this.y, this.width, this.height);
-    // this.ctx.fillStyle = "orange";
-    // this.ctx.fillRect(this.x, this.y, this.width, this.height);
-
-    // this stuff is used for drawing the image of the bullet
     if(this.dir === "snail" || this.dir === "snail_left") {
         this.ctx.save();
         this.ctx.beginPath();
@@ -143,8 +140,9 @@ Entity.prototype.draw.call(this);
 
 }
 
-
-// for some reason can't get this to work using the bullet bounding box, so I used x and y
+/*
+  Collision function to determine if a Bullet has collided with an enemy entity.
+*/
 Bullet.prototype.collideEnemy = function(other) {
   if (other instanceof AlienBoss && this.dir != "dragon") {
     return ((this.x <= other.leftEye.right) &&
@@ -155,11 +153,6 @@ Bullet.prototype.collideEnemy = function(other) {
             (this.y > (other.rightEye.top) && (this.y < other.rightEye.bottom)));
   } else if (other instanceof AlienBoss && this.dir === "dragon") {
     //IGNORE IT
-    // return (this.boundingRect.bottom >= other.boundingRect.top) &&
-    //     (this.boundingRect.left <= other.boundingRect.right) &&
-    //     (this.boundingRect.right >= other.boundingRect.left) &&
-    //     (this.boundingRect.top <= other.boundingRect.bottom);
-    //  return (this.x <= (other.boundingRect.right - (other.boundingRect.width / 2))) &&
   }else {
     return (this.x <= other.boundingRect.right) &&
         (this.x > other.boundingRect.left) &&
@@ -167,12 +160,10 @@ Bullet.prototype.collideEnemy = function(other) {
   }
 }
 
+/*
+  Collision function specifically for the flame projectile.
+*/
 Bullet.prototype.flameCollidePlayer = function(other) {
-  //console.log(other);
-  //console.log(this);
-    // return (this.boundingRect.bottom > other.boundingRect.top) && (this.boundingRect.top < other.boundingRect.bottom) && ((this.boundingRect.left > other.boundingRect.right)
-    //     && (this.boundingRect.right < other.boundingRect.left) );
-
     return (this.boundingRect.bottom >= other.boundingRect.top) &&
     (this.boundingRect.left <= other.boundingRect.right) &&
     (this.boundingRect.right >= other.boundingRect.left) &&

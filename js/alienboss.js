@@ -1,4 +1,11 @@
-//alienboss.js
+/*
+  AlienBoss is the final boss of the game. The following object contains
+  all of the functions necessary to handle its AI, collision detection, health
+  data, sounds, and animation.
+
+  The boss is comprised of a head, a left hand, and a right hand. the AlienBoss
+  class represents the head.
+*/
 function AlienBoss(game, x, y, spritesheet) {
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
     this.game = game;
@@ -34,6 +41,11 @@ function AlienBoss(game, x, y, spritesheet) {
 }
 AlienBoss.prototype = new Entity();
 AlienBoss.prototype.constructor = AlienBoss;
+
+/*
+  draw function is used to draw the current frame of the AlienBoss. If debug is
+  set to true, also draws the enemy's bounding box.
+*/
 AlienBoss.prototype.draw = function () {
   if (!this.game.running) return;
   this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
@@ -49,6 +61,12 @@ AlienBoss.prototype.draw = function () {
   }
   Entity.prototype.draw.call(this);
 }
+
+/*
+  update function is responsible for managing the current state of AlienBoss
+  based on its AI functionality or any damage it may have recieved from the
+  player.
+*/
 AlienBoss.prototype.update = function () {
   if (this.xvel === 100 && this.x >= 900) this.xvel = -100;
   if (this.xvel === -100 && this.x <= 300) this.xvel = 100;
@@ -80,12 +98,23 @@ AlienBoss.prototype.update = function () {
       }
   }
 }
+
+/*
+  collide function is used to check if the current entity's bounding box
+  has intersected with another entity's bounding box, which would necessitate
+  some sort of collision response.
+*/
 AlienBoss.prototype.collide = function(other) {
     return (this.boundingRect.bottom > other.boundingRect.top) &&
         (this.boundingRect.left < other.boundingRect.right) &&
         (this.boundingRect.right > other.boundingRect.left) &&
         (this.boundingRect.top < other.boundingRect.bottom);
 }
+
+/*
+  The following 4 collision methods are used to check where specifically a
+  bounding box intersection/collision may have occured.
+*/
 AlienBoss.prototype.collideTop = function(other) {
 
     return this.boundingRect.top <= other.boundingRect.bottom &&
@@ -112,6 +141,11 @@ AlienBoss.prototype.collideBottom = function(other) {
     // is less than the platform bottom then we know he is standing on the platform. otherwise collisions are still detected
     // even when he is just standing next to the platform
 }
+
+/*
+  LeftHand represents the left hand of the AlienBoss. It moves independently
+  of the head, and contains its own logic and animation.
+*/
 function LeftHand(game, x, y, spritesheet, boss) {
     this.boss = boss;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
@@ -139,6 +173,11 @@ function LeftHand(game, x, y, spritesheet, boss) {
 }
 LeftHand.prototype = new Entity();
 LeftHand.prototype.constructor = LeftHand;
+
+/*
+  draw function is used to draw the current frame of the LeftHand. If debug is
+  set to true, also draws the enemy's bounding box.
+*/
 LeftHand.prototype.draw = function () {
   if (!this.game.running) return;
   this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
@@ -149,11 +188,13 @@ LeftHand.prototype.draw = function () {
   }
   Entity.prototype.draw.call(this);
 }
+
+/*
+  update function is responsible for managing the current state of LeftHand
+  based on its AI movement behavior.
+*/
 LeftHand.prototype.update = function () {
   if (this.boss.leftMoving) {
-    // this.yvel = 75;
-    //console.log("should be moving");
-    // this.xvel = 0;
     if (this.yvel === 175 && this.y >= 700) {
       this.yvel = 0;
       this.xvel = 250;
@@ -177,12 +218,21 @@ LeftHand.prototype.update = function () {
     this.boundingRect = new BoundingRect(this.x + 75, this.y +75, 175, 200);
   }
 }
+/*
+  collide function is used to check if the current entity's bounding box
+  has intersected with another entity's bounding box, which would necessitate
+  some sort of collision response.
+*/
 LeftHand.prototype.collide = function(other) {
     return (this.boundingRect.bottom > other.boundingRect.top) &&
         (this.boundingRect.left < other.boundingRect.right) &&
         (this.boundingRect.right > other.boundingRect.left) &&
         (this.boundingRect.top < other.boundingRect.bottom);
 }
+/*
+  The following 4 collision methods are used to check where specifically a
+  bounding box intersection/collision may have occured.
+*/
 LeftHand.prototype.collideTop = function(other) {
 
     return this.boundingRect.top <= other.boundingRect.bottom &&
@@ -209,6 +259,11 @@ LeftHand.prototype.collideBottom = function(other) {
     // is less than the platform bottom then we know he is standing on the platform. otherwise collisions are still detected
     // even when he is just standing next to the platform
 }
+
+/*
+  RightHand represents the right hand of the AlienBoss. It moves independently
+  of the head, and contains its own logic and animation.
+*/
 function RightHand(game, x, y, spritesheet, boss) {
     this.boss = boss;
     this.damageSound = AM.getAudioAsset("./js/sound/enemy_damage_sound.wav");
@@ -237,6 +292,11 @@ function RightHand(game, x, y, spritesheet, boss) {
 }
 RightHand.prototype = new Entity();
 RightHand.prototype.constructor = RightHand;
+
+/*
+  draw function is used to draw the current frame of the RightHand. If debug is
+  set to true, also draws the enemy's bounding box.
+*/
 RightHand.prototype.draw = function () {
   if (!this.game.running) return;
   this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
@@ -247,6 +307,11 @@ RightHand.prototype.draw = function () {
   }
   Entity.prototype.draw.call(this);
 }
+
+/*
+  update function is responsible for managing the current state of RightHand
+  based on its AI movement behavior.
+*/
 RightHand.prototype.update = function () {
     if (this.boss.rightMoving) {
 
@@ -273,12 +338,23 @@ RightHand.prototype.update = function () {
       this.boundingRect = new BoundingRect(this.x + 150, this.y +75, 200, 175);
     }
 }
+
+/*
+  collide function is used to check if the current entity's bounding box
+  has intersected with another entity's bounding box, which would necessitate
+  some sort of collision response.
+*/
 RightHand.prototype.collide = function(other) {
     return (this.boundingRect.bottom > other.boundingRect.top) &&
         (this.boundingRect.left < other.boundingRect.right) &&
         (this.boundingRect.right > other.boundingRect.left) &&
         (this.boundingRect.top < other.boundingRect.bottom);
 }
+
+/*
+  The following 4 collision methods are used to check where specifically a
+  bounding box intersection/collision may have occured.
+*/
 RightHand.prototype.collideTop = function(other) {
 
     return this.boundingRect.top <= other.boundingRect.bottom &&

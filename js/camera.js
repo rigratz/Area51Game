@@ -5,6 +5,10 @@ var AXIS = {
         BOTH: "both"
     };
 
+/*
+  Rectangle object is used to create rectangle representations. It keeps track
+  of coordinates as well as dimensions.
+*/
 function Rectangle(left, top, width, height){
         this.left = left || 0;
         this.top = top || 0;
@@ -14,6 +18,10 @@ function Rectangle(left, top, width, height){
         this.bottom = this.top + this.height;
     }
 
+    /*
+      set is used to manually set the location or (optionally) dimensions of
+      the Rectangle.
+    */
     Rectangle.prototype.set = function(left, top, /*optional*/width, /*optional*/height){
         this.left = left;
         this.top = top;
@@ -22,14 +30,18 @@ function Rectangle(left, top, width, height){
         this.right = (this.left + this.width);
         this.bottom = (this.top + this.height);
     }
-
+    /*
+      within returns true if another Rectangle is inside the current Rectangle.
+    */
     Rectangle.prototype.within = function(r) {
         return (r.left <= this.left &&
                 r.right >= this.right &&
                 r.top <= this.top &&
                 r.bottom >= this.bottom);
     }
-
+    /*
+      overlaps returns true if another Rectangle overlaps with the current Rectangle.
+    */
     Rectangle.prototype.overlaps = function(r) {
         return (this.left < r.right &&
                 r.left < this.right &&
@@ -37,6 +49,11 @@ function Rectangle(left, top, width, height){
                 r.top < this.bottom);
     }
 
+/*
+  The Camera object is used to track and follow the player through a room or
+  level in the event that the room is too large to be drawn on the screen all
+  at once.
+*/
 function Camera(xView, yView, canvasWidth, canvasHeight, worldWidth, worldHeight)
     {
         // position of camera (left-top coordinate)

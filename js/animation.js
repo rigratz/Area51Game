@@ -1,3 +1,7 @@
+/*
+  The following Animation object contains the functions needed to animate the
+  various entities (player, enemies, boss, portals, etc) within the game.
+*/
 function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDuration, frames, loop, reverse, type, size) {
     this.entityType = entityType;
     this.spriteSheet = spriteSheet;
@@ -15,7 +19,16 @@ function Animation(entityType, spriteSheet, frameWidth, frameHeight, frameDurati
     this.frame = 0;
     this.size = size;
 }
+/*
+  drawFrame is used to draw the current frame of the current Animation's
+  entity type. Since different entities in different states require different
+  x/y offsets in the spritesheet, a separate function call will handle the
+  specific case.
 
+  NOTE: To refactor, when an entity's draw function calls drawFrame, it could
+  instead just call it's unique function (eg. drawFramePlayerOne). This
+  particular function would then become unnecessary.
+*/
 Animation.prototype.drawFrame = function (tick, ctx, x, y, scaleBy) {
     if (this.entityType === 'player') {
         this.drawFramePlayerOne(tick, ctx, x, y, scaleBy);
@@ -67,6 +80,9 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y, scaleBy) {
     }
 }
 
+/*
+  Helper function to draw the frame of a PlayerOne entity.
+*/
 Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y, scaleBy) {
     var scaleBy = scaleBy || 1;
     this.elapsedTime += tick;
@@ -131,6 +147,10 @@ Animation.prototype.drawFramePlayerOne = function(tick, ctx, x, y, scaleBy) {
         this.frameWidth * scaleBy,
         this.frameHeight * scaleBy);
 }
+
+/*
+  Helper function to draw the frame of an AlienBoss entity.
+*/
 Animation.prototype.drawFrameAlienBoss = function(tick, ctx, x, y) {
   //console.log("drawing boss");
   ctx.drawImage(this.spriteSheet,
@@ -140,6 +160,9 @@ Animation.prototype.drawFrameAlienBoss = function(tick, ctx, x, y) {
       this.frameWidth,
       this.frameHeight);
 }
+/*
+  Helper function to draw the frame of a LeftHand entity.
+*/
 Animation.prototype.drawFrameAlienBossLeft = function(tick, ctx, x, y) {
   //console.log("drawing boss");
   ctx.drawImage(this.spriteSheet,
@@ -149,6 +172,9 @@ Animation.prototype.drawFrameAlienBossLeft = function(tick, ctx, x, y) {
       this.frameWidth,
       this.frameHeight);
 }
+/*
+  Helper function to draw the frame of a RightHand entity.
+*/
 Animation.prototype.drawFrameAlienBossRight = function(tick, ctx, x, y) {
   //console.log("drawing boss");
   ctx.drawImage(this.spriteSheet,
@@ -158,6 +184,9 @@ Animation.prototype.drawFrameAlienBossRight = function(tick, ctx, x, y) {
       this.frameWidth,
       this.frameHeight);
 }
+/*
+  Helper function to draw the frame of a BirdEnemy entity.
+*/
 Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick;
@@ -194,7 +223,9 @@ Animation.prototype.drawFrameBirdEnemy = function(tick, ctx, x, y) {
         this.frameWidth * width_mult,
         this.frameHeight * height_mult);
 }
-
+/*
+  Helper function to draw the frame of a Dragon entity.
+*/
 Animation.prototype.drawFrameDragon = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick
@@ -222,7 +253,9 @@ Animation.prototype.drawFrameDragon = function(tick, ctx, x, y) {
         this.frameHeight * height_mult);
 }
 
-// for use with the bullet animation sprite sheet, regular bullet doesn't need this
+/*
+  Helper function to draw the frame of a Bullet entity (when using Bullet upgrade).
+*/
 Animation.prototype.drawFrameBullet = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick
@@ -248,6 +281,9 @@ Animation.prototype.drawFrameBullet = function(tick, ctx, x, y) {
         this.frameHeight * height_mult);
 }
 
+/*
+  Helper function to draw the frame of a CrazyCat entity.
+*/
 Animation.prototype.drawFrameCrazyCat = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick
@@ -276,6 +312,9 @@ Animation.prototype.drawFrameCrazyCat = function(tick, ctx, x, y) {
         this.frameHeight * height_mult);
 }
 
+/*
+  Helper function to draw the frame of a TreeBoss entity.
+*/
 Animation.prototype.drawFrameTreeBoss = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick;
@@ -298,6 +337,10 @@ Animation.prototype.drawFrameTreeBoss = function(tick, ctx, x, y) {
         this.frameWidth * width_mult,
         this.frameHeight * height_mult);
 }
+
+/*
+  Helper function to draw the frame of a TreeBoss' attack.
+*/
 Animation.prototype.drawFrameTreeBossAttack = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick;
@@ -325,6 +368,9 @@ Animation.prototype.drawFrameTreeBossAttack = function(tick, ctx, x, y) {
         this.frameHeight * height_mult);
 }
 
+/*
+  Helper function to draw the frame of a ShadowEnemy entity.
+*/
 Animation.prototype.drawFrameShadowEnemy = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick
@@ -355,6 +401,10 @@ Animation.prototype.drawFrameShadowEnemy = function(tick, ctx, x, y) {
         this.frameWidth * width_mult,
         this.frameHeight * height_mult);
 }
+
+/*
+  Helper function to draw the frame of an EyeBoss entity.
+*/
 Animation.prototype.drawFrameEyeBoss = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick
@@ -379,6 +429,9 @@ Animation.prototype.drawFrameEyeBoss = function(tick, ctx, x, y) {
         this.frameHeight * height_mult);
 }
 
+/*
+  Helper function to draw the frame of an EyeBoss' weak spot.
+*/
 Animation.prototype.drawFrameEyeBossWeakSpot = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick
@@ -403,6 +456,9 @@ Animation.prototype.drawFrameEyeBossWeakSpot = function(tick, ctx, x, y) {
         this.frameHeight * height_mult);
 }
 
+/*
+  Helper function to draw the frame of a SnakeEnemy entity.
+*/
 Animation.prototype.drawFrameSnakeEnemy = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick;
@@ -466,6 +522,9 @@ Animation.prototype.drawFrameSnakeEnemy = function(tick, ctx, x, y) {
         this.frameHeight * height_mult);
 }
 
+/*
+  Helper function to draw the frame of a SnailEnemy entity.
+*/
 Animation.prototype.drawFrameSnailEnemy = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick;
@@ -502,6 +561,9 @@ Animation.prototype.drawFrameSnailEnemy = function(tick, ctx, x, y) {
         this.frameHeight * height_mult);
 }
 
+/*
+  Helper function to draw the frame of a Fireball.
+*/
 Animation.prototype.drawFrameFireball = function(tick, ctx, x, y) {
     this.elapsedTime += tick;
     this.time += tick
@@ -525,10 +587,17 @@ Animation.prototype.drawFrameFireball = function(tick, ctx, x, y) {
         this.frameHeight * height_mult);
 }
 
+/*
+  Helper function to determine the current frame of an Animation.
+*/
 Animation.prototype.currentFrame = function () {
     return Math.floor(this.elapsedTime / this.frameDuration);
 }
 
+/*
+  Helper function to determine if the Animation is finished. Returns true if
+  Animation is finished.
+*/
 Animation.prototype.isDone = function () {
     return (this.elapsedTime >= this.totalTime);
 }

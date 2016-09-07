@@ -1,9 +1,16 @@
+/*
+  Helper function to compute the distance between two entities.
+*/
 function distance(a, b) {
     var dx = a.x - b.x;
     var dy = a.y - b.y;
     return Math.sqrt(dx * dx + dy * dy);
 }
-
+/*
+  The BirdEnemy object represents the flying enemies found in many of the game's
+  rooms. It contains all of the functions necessary to handle its AI, collision
+  detection, health data, sounds, and animation.
+*/
 function BirdEnemy(game, x, y, spritesheet, xvel) {
     this.game = game;
     this.ctx = game.ctx;
@@ -31,6 +38,10 @@ function BirdEnemy(game, x, y, spritesheet, xvel) {
 BirdEnemy.prototype = new Entity();
 BirdEnemy.prototype.constructor = BirdEnemy;
 
+/*
+  draw function is used to draw the current frame of the BirdEnemy. If debug is
+  set to true, also draws the enemy's bounding box.
+*/
 BirdEnemy.prototype.draw = function () {
     if (!this.game.running) return;
 
@@ -42,6 +53,11 @@ BirdEnemy.prototype.draw = function () {
     }
     Entity.prototype.draw.call(this);
 }
+/*
+  update function is responsible for managing the current state of BirdEnemy
+  based on its AI functionality or any damage it may have recieved from the
+  player.
+*/
 BirdEnemy.prototype.update = function() {
     this.boundingRect = new BoundingRect(this.x+45, this.y+50, this.animation.frameWidth+45, this.animation.frameHeight+45);
     if (this.xvel === 0) this.animation = this.idleAnimation;
@@ -107,6 +123,11 @@ BirdEnemy.prototype.update = function() {
     }
 }
 
+/*
+  collide function is used to check if the current entity's bounding box
+  has intersected with another entity's bounding box, which would necessitate
+  some sort of collision response.
+*/
 BirdEnemy.prototype.collide = function(other) {
     return (this.boundingRect.bottom > other.boundingRect.top) &&
         (this.boundingRect.left < other.boundingRect.right) &&
@@ -114,6 +135,10 @@ BirdEnemy.prototype.collide = function(other) {
         (this.boundingRect.top < other.boundingRect.bottom);
 }
 
+/*
+  The following 4 collision methods are used to check where specifically a
+  bounding box intersection/collision may have occured.
+*/
 BirdEnemy.prototype.collideTop = function(other) {
 
     return this.boundingRect.top <= other.boundingRect.bottom &&
